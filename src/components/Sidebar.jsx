@@ -16,6 +16,34 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         setActiveItem(activeItem === index ? null : index);
     };
 
+    const menuItems = [
+        {
+            label: 'Home',
+            icon: <RiHome6Line />,
+            submenu: ['List View', 'Calendar View', 'Leave Application', 'Holidays', 'Setting']
+        },
+        {
+            label: 'Profile',
+            icon: <HiOutlineUser />,
+            submenu: ['Profile View', 'Edit Profile', 'Security Settings']
+        },
+        {
+            label: 'Organization',
+            icon: <MdOutlineWorkOutline />,
+            submenu: ['Department', 'Teams', 'Hierarchy', 'Policies']
+        },
+        {
+            label: 'Task',
+            icon: <FiClock />,
+            submenu: ['Task List', 'Completed Tasks', 'Pending Tasks']
+        },
+        {
+            label: 'Attendance',
+            icon: <MdOutlineDateRange />,
+            submenu: ['Attendance Report', 'Request Leave', 'Attendance History']
+        }
+    ];
+
     return (
         <div className={`sidebar ${isOpen ? 'open' : 'close'}`}>
             <div id='top_bar' className="slide-btn">
@@ -24,30 +52,22 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 </button>
             </div>
             <ul id='top-ul-hide'>
-                {['Home', 'Profile', 'Organization', 'Task', 'Attendance'].map((item, index) => (
+                {menuItems.map((item, index) => (
                     <li key={index} className={`${activeItem === index ? 'li' : ''}`}>
                         <span onClick={() => handleClick(index)}>
-                            {index === 0 && <RiHome6Line />}
-                            {index === 1 && <HiOutlineUser />}
-                            {index === 2 && <MdOutlineWorkOutline />}
-                            {index === 3 && <FiClock />}
-                            {index === 4 && <MdOutlineDateRange />}
+                            {item.icon}
                         </span>
-                        {isOpen && <p>{item}</p>}
+                        {isOpen && <p>{item.label}</p>}
                         <div className={`hover_menu ${activeItem === index ? 'show' : ''}`}>
                             <div className='side_arrow'>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
+                                {item.submenu.map((_, subIndex) => (
+                                    <div key={subIndex}></div>
+                                ))}
                             </div>
                             <ul>
-                                <li>List View</li>
-                                <li>Calendar View</li>
-                                <li>Leave Application</li>
-                                <li>Holidays</li>
-                                <li>Setting</li>
+                                {item.submenu.map((submenuItem, subIndex) => (
+                                    <li key={subIndex}>{submenuItem}</li>
+                                ))}
                             </ul>
                         </div>
                     </li>
