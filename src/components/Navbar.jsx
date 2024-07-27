@@ -1,7 +1,11 @@
 // import React from 'react';
-import { FaSearch, FaBell, FaCog, FaUserCircle } from 'react-icons/fa';
 import '../styles/Navbar.scss';
 import logo from "../assets/logo.png"
+import { CiCircleChevLeft, CiCircleChevRight, CiSearch } from "react-icons/ci";
+import { IoSettingsOutline } from "react-icons/io5";
+import { IoIosNotificationsOutline } from "react-icons/io";
+
+import user from '../assets/user.png'
 const Navbar = () => {
     return (
         <div className="navbar">
@@ -14,13 +18,20 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="navbar-right">
+                <div className="leftIcon">
+                    <div></div>
+                    <CiCircleChevLeft/>
+                    <CiCircleChevRight />
+                </div>
                 <div className="search-bar">
                     <input type="text" placeholder="Search employee" />
-                    <FaSearch />
+                    <CiSearch />
                 </div>
-                <FaBell className="icon" />
-                <FaCog className="icon" />
-                <FaUserCircle className="icon" />
+                <div className="iconRight">
+                    <IoIosNotificationsOutline className="icon" />
+                    <IoSettingsOutline className="icon" />
+                    <img src={user} alt="" />
+               </div>
             </div>
         </div>
     );
