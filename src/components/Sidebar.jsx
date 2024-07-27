@@ -75,15 +75,17 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 <li><h5>MORE</h5></li>
                 <li><div className='border-b'></div></li>
             </ul>
-            <ul className={` ${isOpen ? '' : 'side'}`}>
-                <div className={` ${isOpen ? '' : 'sideLine'}`}>
+            <div className={` ${isOpen ? '' : 'side'} `}>
+                <div className={` ${isOpen ? '' : 'sideLine'} `}>
                     <div className='dot'></div>
-                    <li><span><TbFileMinus /></span>{isOpen && <p>Files</p>}</li>
-                    <li><span><TbGraph /></span>{isOpen && <p>Performance</p>}</li>
-                    <li><span><TbFolderSymlink /></span>{isOpen && <p>Onboarding</p>}</li>
-                    <li><span><BsClipboardData /></span>{isOpen && <p>Report</p>}</li>
+                    <ul className='ul2'>
+                        <li><span><TbFileMinus /></span>{isOpen && <p>Files</p>}</li>
+                        <li><span><TbGraph /></span>{isOpen && <p>Performance</p>}</li>
+                        <li><span><TbFolderSymlink /></span>{isOpen && <p>Onboarding</p>}</li>
+                        <li><span><BsClipboardData /></span>{isOpen && <p>Report</p>}</li>
+                   </ul>
                 </div>
-            </ul>
+            </div>
             <div className="fix-add">
                 <span><MdAdd /></span>
             </div>
