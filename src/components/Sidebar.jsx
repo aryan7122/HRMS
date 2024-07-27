@@ -66,7 +66,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                             </div>
                             <ul>
                                 {item.submenu.map((submenuItem, subIndex) => (
-                                    <li key={subIndex}>{submenuItem}</li>
+                                    <li onClick={() => handleClick(index)} key={subIndex}>{submenuItem}</li>
                                 ))}
                             </ul>
                         </div>
@@ -79,10 +79,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 <div className={` ${isOpen ? '' : 'sideLine'} `}>
                     <div className='dot'></div>
                     <ul className='ul2'>
-                        <li><span><TbFileMinus /></span>{isOpen && <p>Files</p>}</li>
-                        <li><span><TbGraph /></span>{isOpen && <p>Performance</p>}</li>
-                        <li><span><TbFolderSymlink /></span>{isOpen && <p>Onboarding</p>}</li>
-                        <li><span><BsClipboardData /></span>{isOpen && <p>Report</p>}</li>
+                        <li><span><TbFileMinus /></span>{isOpen && <p>Files</p>} {isOpen ? '' : <div className='hover_P'><p>Files</p> <div></div></div>}</li>
+                        <li><span><TbGraph /></span>{isOpen && <p>Performance</p>}  {isOpen ? '' : <div className='hover_P'><p>Performance</p> <div></div></div>}</li>
+                        <li><span><TbFolderSymlink /></span>{isOpen && <p>Onboarding</p>}  {isOpen ? '' : <div className='hover_P'><p>Onboarding</p> <div></div></div>}</li>
+                        <li><span><BsClipboardData /></span>{isOpen && <p>Report</p>}  {isOpen ? '' : <div className='hover_P'><p>Report</p> <div></div></div>}</li>
                    </ul>
                 </div>
             </div>
