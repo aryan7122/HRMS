@@ -1,10 +1,21 @@
-// import React from 'react';
+import {useState} from 'react';
 import '../styles/EmployeeForm.scss';
 import { HiUserPlus } from "react-icons/hi2";
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
+import { GrCloudUpload } from "react-icons/gr";
 
 const EmployeeForm = () => {
+    const [fileName, setFileName] = useState('');
+    const [isUploaded, setIsUploaded] = useState(false);
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.name);
+            setIsUploaded(true);
+        }
+    };
     return (
         <div className="employee-form">
             <div className="top-bar">
@@ -49,7 +60,6 @@ const EmployeeForm = () => {
                     <div className="form-group">
                         <label>Gender</label>
                         <select
-
                         >
                             <option>Male</option>
                             <option>Female</option>
@@ -98,6 +108,22 @@ const EmployeeForm = () => {
                         <input type="date" required />
                     </div>
                     <div className="form-group">
+                        <label>Upload Profile Picture</label>
+                        <div className="file-upload">
+                            <input
+                                type="file"
+                                accept="image/*"
+                                id="file"
+                                onChange={handleFileChange}
+                                style={{ display: 'none' }}
+                            />
+                            <label htmlFor="file" className="custom-file-upload">
+                                {!isUploaded && <GrCloudUpload className="upload-icon" />}
+                                {isUploaded ? fileName : 'Upload Photo'}
+                            </label>
+                        </div>
+                    </div>
+                    <div className="form-group">
                         <label>Marital Status</label>
                         <select required>
                             <option>Single</option>
@@ -112,10 +138,7 @@ const EmployeeForm = () => {
                             <option>Inactive</option>
                         </select>
                     </div>
-                    <div className="form-group">
-                        <label>Upload Profile Picture</label>
-                        <input type="file" required />
-                    </div>
+                    
                     <div className="form-group">
                         <label>Employment Type</label>
                         <select required>
