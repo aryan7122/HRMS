@@ -143,3 +143,53 @@
     }
   }
 }
+
+#submitBtn{
+  width: 180px;
+  color: #fff;
+  position: absolute;
+  bottom: 20px;
+  left: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  .div{
+      background-color: #400F6F;
+    display: flex;
+    padding: 5px 10px ;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .div button {
+    font-size: 1rem;
+    border: none;
+    outline: none;
+      background-color: #400F6F;
+    color: #fff;
+    
+  }
+  .div span{
+        font-size: 1rem;
+    padding-left: 5px;
+    padding-top: 6px;
+    font-weight: 500;
+  }
+  .lineBar{
+    width: 1px;
+    height: 30px;
+    background: #00000041;
+  }
+  .x{
+    color: #000;
+    font-size: 0.8rem;
+    font-weight: 200;
+    span{
+      padding: 5px;
+      border: 1px solid black;
+      display: flex;
+      align-items: center;
+      border-radius: 5px;
+    }
+  }
+}

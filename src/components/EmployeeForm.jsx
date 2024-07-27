@@ -1,6 +1,8 @@
 // import React from 'react';
 import '../styles/EmployeeForm.scss';
 import { HiUserPlus } from "react-icons/hi2";
+import { CiCircleChevRight } from "react-icons/ci";
+import { TfiClose } from "react-icons/tfi";
 
 const EmployeeForm = () => {
     return (
@@ -137,7 +139,16 @@ const EmployeeForm = () => {
                         <input type="date" />
                     </div>
                 </div>
-                <button type="submit">Submit</button>
+                <div id='submitBtn' >
+                    <div className='div'>
+                        <button type="submit">Submit </button>
+                        <span><CiCircleChevRight /></span>
+                    </div>
+                    <div className="lineBar"></div>
+                    <div className='x'>
+                        <span> <TfiClose /></span>
+                    </div>
+                </div>
             </form>
         </div>
     );
