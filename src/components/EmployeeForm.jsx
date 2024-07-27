@@ -20,12 +20,19 @@ const EmployeeForm = () => {
         <div className="employee-form">
             <div className="top-bar">
                 <h2><span><HiUserPlus /></span>Add Employee</h2>
-                {/* <div className="">
-                    <span className=""></span>
-                    <span className=""></span>
-                    <span className=""></span>
-                    <span className=""></span>
-                </div> */}
+                <span className="close_nav"><TfiClose/></span>
+                <div className="">
+                    <span className="1"></span>
+                    <span className="2"></span>
+                    <span className="3"></span>
+                    <span className="4"></span>
+                    <span className="5"></span>
+                    <span className="6"></span>
+                    <span className="7"></span>
+                    <span className="8"></span>
+                    <span className="9"></span>
+                    <span className="10"></span>
+                </div>
             </div>
 
             <div className="navbar-items">
@@ -132,13 +139,9 @@ const EmployeeForm = () => {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label>Employee Status</label>
-                        <select required>
-                            <option>Active</option>
-                            <option>Inactive</option>
-                        </select>
+                        <label>Date of Exit</label>
+                        <input type="date" />
                     </div>
-                    
                     <div className="form-group">
                         <label>Employment Type</label>
                         <select required>
@@ -149,6 +152,15 @@ const EmployeeForm = () => {
                         </select>
                     </div>
                     <div className="form-group">
+                        <label>Employee Status</label>
+                        <select required>
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                    </div>
+                    
+                   
+                    <div className="form-group">
                         <label>Source of Hire</label>
                         <select required>
                             <option>Website</option>
@@ -157,10 +169,7 @@ const EmployeeForm = () => {
                         </select>
                     </div>
 
-                    <div className="form-group">
-                        <label>Date of Exit</label>
-                        <input type="date" />
-                    </div>
+                   
                 </div>
                 <div id='submitBtn' >
                     <div className='div'>

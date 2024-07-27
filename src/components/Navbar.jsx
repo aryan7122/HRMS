@@ -1,9 +1,10 @@
 // import React from 'react';
 import '../styles/Navbar.scss';
 import logo from "../assets/logo.png"
-import { CiCircleChevLeft, CiCircleChevRight, CiSearch } from "react-icons/ci";
+import { CiSearch } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 
 import user from '../assets/user.png'
 const Navbar = () => {
@@ -14,14 +15,14 @@ const Navbar = () => {
                     <img src={logo} alt="HRMS" />
                 </div>
                 <div className="nav-items">
-                    
+
                 </div>
             </div>
             <div className="navbar-right">
                 <div className="leftIcon">
                     <div></div>
-                    <CiCircleChevLeft/>
-                    <CiCircleChevRight />
+                    <IoIosArrowDropleft />
+                    <IoIosArrowDropright />
                 </div>
                 <div className="search-bar">
                     <input type="text" placeholder="Search employee" />
@@ -31,7 +32,7 @@ const Navbar = () => {
                     <IoIosNotificationsOutline className="icon" />
                     <IoSettingsOutline className="icon" />
                     <img src={user} alt="" />
-               </div>
+                </div>
             </div>
         </div>
     );
