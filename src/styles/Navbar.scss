@@ -4,7 +4,7 @@
   align-items: center;
   background-color: #4b187a;
   padding: 0px 10px;
-  height: 5vh;
+  height: 6vh;
 
   .navbar-left {
     display: flex;
@@ -49,22 +49,33 @@
     justify-content: space-between;
     width: 100%;
     padding: 0px 10px;
+    
     img{
       padding-left: 20px;
+      
+    }
+    .iconRight{
+
+      // border: 1px solid red;
+      border-left: 1px solid #ffffff31;
     }
     .leftIcon {
+     
       div {
         width: 1px;
         height: 25px;
         background: #ffffff34;
         margin-right: 20px;
       }
-      // border: 1px solid red;
+      .icon2{
+        color: #ffffff67;
+      }
       color: greenyellow;
       font-size: 1.4rem;
       width: 70px;
       display: flex;
       justify-content: space-between;
+      
     }
     .search-bar {
       display: flex;
@@ -122,6 +133,7 @@
 
     .navbar-right {
       margin-top: 10px;
+      
 
       .search-bar {
         margin-right: 0;
