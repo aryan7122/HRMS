@@ -106,45 +106,46 @@
     li p {
       margin-top: -10px;
     }
-      li .hover_P {
-     display: none;
+    li .hover_P {
+      display: none;
     }
     li:hover .hover_P {
-     display: flex;
-     position: absolute;
-     background-color: #320b57e8;
-     box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.326);
-    border: 1px solid #c600fb;
-     width: 90px;
-     height: 20px;
-     padding: 5px;
-     left: 70px;
-     margin-top: 15px;
-     border-top-right-radius: 5px;
-     border-bottom-right-radius: 5px;
-     z-index: 9;
-     p{
-       color: #fff;
-       margin-top: 2px;
-       z-index: 9;
-       font-size: 1rem;
-       margin-left: -15px;
-     }
-     div{
-      border-bottom: 1px solid #c600fb;
-            border-left: 1px solid #c600fb;
+      display: flex;
       position: absolute;
-      width: 20px;
-      height: 22px;
-      margin-top: -2px;
-      rotate: 45deg;
-     background-color: #320b57e8;
-      margin-left: -16px;
-      z-index: 1;
-      border-bottom-left-radius: 5px;
-     }
+      background-color: #320b57e8;
+      box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.326);
+      border: 1px solid #c600fb;
+      width: 90px;
+      height: 20px;
+      padding: 5px;
+      left: 70px;
+      margin-top: 15px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      z-index: 9;
+      animation: slideIn 0.5s forwards;
+
+      p {
+        color: #fff;
+        margin-top: 2px;
+        z-index: 9;
+        font-size: 1rem;
+        margin-left: -15px;
+      }
+      div {
+        border-bottom: 1px solid #c600fb;
+        border-left: 1px solid #c600fb;
+        position: absolute;
+        width: 20px;
+        height: 22px;
+        margin-top: -2px;
+        rotate: 45deg;
+        background-color: #320b57e8;
+        margin-left: -16px;
+        z-index: 1;
+        border-bottom-left-radius: 5px;
+      }
     }
-  
 
     li span {
       cursor: pointer;
@@ -182,6 +183,8 @@
     }
     .li span {
       // border: 1px solid red;
+      background-color: #320b57;
+      z-index: 9;
       cursor: pointer;
       transition: height 0.3s ease-in-out;
       // color: #ffffffbe;
@@ -204,46 +207,96 @@
       display: flex;
       font-size: 0.5rem;
       width: 100px;
-      height: fit-content;
+      margin-bottom: 10px;
 
       .side_arrow {
         position: relative;
         height: fit-content;
         width: fit-content;
+        // border: 1px solid rgb(0, 255, 26);
+
         div {
-          padding: 20px;
+        padding:10px 20px;
         }
-        // border: 1px solid red;
+         div:nth-child(2){
+            padding: 20px 20px;
+          }
+           div:nth-child(3){
+            padding: 20px 20px;
+          }
+           div:nth-child(4){
+            padding: 18px 20px;
+          }
+           div:nth-child(5){
+            padding: 20px 20px;
+          }
+        margin-left: 30px;
+        // margin-bottom: 15px;
+
+        .leftArrow {
+          width: 1px;
+          height: 0px;
+          // border: 1px solid rgb(0, 255, 26);
+          .divL {
+            width: 2px;
+            height: 2px;
+            // border: 1px solid pink;
+            margin-top: 0px;
+            // border-left: 1px solid #c500fb93;
+            border-bottom: 1px solid #c500fb96;
+            border-bottom-left-radius: 8px;
+          }
+          .divL:nth-child(2){
+            height: 10px;
+          }
+          .divL:nth-child(3){
+            height: 10px;
+          }
+         
+        }
+      }
+      .lineS{
+        width: 1px;
+        // height: ;
+        background-color: #c500fb99;
+        margin-left: -20px;
       }
       ul {
-        width: 150px;
+        width: 145px;
         // border: 1px solid red;
         border-radius: 15px;
-        padding: 0px 15px;
+        padding: 0px 12px;
+        // margin-left: 20px;
         border: 0.4px solid #c500fb96;
         background-color: #320b57;
-        box-shadow: 0px 0px 10px 0.5px rgba(0, 0, 0, 0.473);
-        margin-left: 60px;
+        box-shadow: 0px 0px 10px 0.5px rgba(0, 0, 0, 0.213);
+        margin-left: 70px;
         position: absolute;
         display: flex;
         flex-direction: column;
         align-items: start;
         animation: slideIn 0.5s forwards;
-        padding-top: 5px;
-        padding-bottom: 5px;
+        // padding-top: 4px;
+        // padding-bottom: 5px;
+        margin-top: 5px;
 
         li {
-          margin-left: -11px;
+          margin-left: -8px !important;
           // margin-top: 5px;
           // margin-bottom: 5px;
-          padding: 10px;
+          padding: 7px;
+          // width: 100%;
+          margin: 2px 0px;
           border-radius: 10px;
           background-color: #320b57;
           border: 1px solid #c500fb00;
           animation: fadeIn 0.5s forwards;
           font-size: 1rem;
+          z-index: 0;
         }
         li:hover {
+          z-index: 9;
+          // padding: 10px;
           border: 1px solid #c500fb96;
           font-size: 1rem;
           display: flex;
@@ -251,17 +304,19 @@
           align-items: start;
           cursor: pointer;
           width: 100%;
-          box-shadow: 0px 0px 10px 0.5px rgba(0, 0, 0, 0.473);
+          box-shadow: 0px 10px 10px 1px rgba(0, 0, 0, 0.345);
           color: #fff;
+          animation: fadeIn 0.5s forwards;
+          transition: linear 0.3s;
         }
       }
     }
   }
-  .ul2 li span:hover{
+  .ul2 li span:hover {
     // border: 1px solid red;
-      box-shadow: 4px 10px 13px 0px #00000000;
-      border-left: 1px solid rgba(255, 255, 255, 0);
-      border-top: 1px solid rgba(255, 255, 255, 0);
+    box-shadow: 4px 10px 13px 0px #00000000;
+    border-left: 1px solid rgba(255, 255, 255, 0);
+    border-top: 1px solid rgba(255, 255, 255, 0);
   }
 
   .sideLine {
@@ -305,7 +360,6 @@
   .side {
     padding-left: 20px;
   }
-  
 }
 
 @keyframes slideIn {
@@ -321,9 +375,11 @@
 
 @keyframes fadeIn {
   from {
+    transform: translateY(-20px);
     opacity: 0;
   }
   to {
+    transform: translateY(0);
     opacity: 1;
   }
 }

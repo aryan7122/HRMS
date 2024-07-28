@@ -61,9 +61,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                         <div className={`hover_menu ${activeItem === index ? 'show' : ''}`}>
                             <div className='side_arrow'>
                                 {item.submenu.map((_, subIndex) => (
-                                    <div key={subIndex}></div>
+                                    <div className='leftArrow' key={subIndex}><div className='divL'></div></div>
                                 ))}
                             </div>
+                            <div className="lineS"></div>
                             <ul>
                                 {item.submenu.map((submenuItem, subIndex) => (
                                     <li onClick={() => handleClick(index)} key={subIndex}>{submenuItem}</li>
