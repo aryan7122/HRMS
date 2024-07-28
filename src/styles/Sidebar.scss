@@ -1,12 +1,12 @@
 .sidebar {
-  width: 110px;
+  width: 100px;
   height: 94vh;
   background-color: #320b57;
   color: white;
   transition: height 0.3s ease-in-out;
+  // position: fixed;
   @media (max-width: 1024px) {
-    position: fixed;
-    display: none;
+    // display: none;
 
     }
    @media (max-width: 777px) {

@@ -4,7 +4,7 @@ import { HiUserPlus } from "react-icons/hi2";
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
-import Confetti from 'react-confetti'
+import Confetti from 'react-confetti';
 
 const EmployeeForm = () => {
     const [fileName, setFileName] = useState('');
@@ -14,6 +14,7 @@ const EmployeeForm = () => {
         employeeId: '',
         firstName: '',
         lastName: '',
+        photo: '',
         dob: '',
         age: '',
         gender: '',
@@ -31,14 +32,15 @@ const EmployeeForm = () => {
     });
     const [showAlert, setShowAlert] = useState(false);
 
-    // alert(showAlert)
-    console.log(showAlert)
-
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
             setFileName(file.name);
             setIsUploaded(true);
+            setFormData(prevState => ({
+                ...prevState,
+                photo: file
+            }));
         }
     };
 
@@ -50,19 +52,15 @@ const EmployeeForm = () => {
         }));
     };
 
-
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(formData);
         setShowAlert(true);
 
-        // 3 seconds baad alert ko hide karne ke liye
         setTimeout(() => {
             setShowAlert(false);
-        }, 4000);
+        }, 4300);
 
-
-        // Form reset karna
         setFormData({
             employeeId: '',
             firstName: '',
@@ -76,6 +74,7 @@ const EmployeeForm = () => {
             department: '',
             designation: '',
             doj: '',
+            photo: '',
             maritalStatus: '',
             doe: '',
             employmentType: '',
@@ -85,9 +84,10 @@ const EmployeeForm = () => {
         setFileName('');
         setIsUploaded(false);
     };
+
     return (
         <>
-            {showAlert ? <div><Confetti /> <div id='showAlert'><p>Form Submit Successfully</p></div> </div>: ''}
+            {showAlert ? <div><Confetti /> <div id='showAlert'><p>Form Submit Successfully</p></div> </div> : ''}
             <div className="employee-form">
                 <div className="top-bar">
                     <h2><span><HiUserPlus /></span>Add Employee</h2>
@@ -222,7 +222,6 @@ const EmployeeForm = () => {
                         </div>
                     </div>
 
-
                     <div className="from1">
                         <div className="form-group">
                             <label>Department</label>
@@ -267,10 +266,11 @@ const EmployeeForm = () => {
                             <div className="file-upload">
                                 <input
                                     type="file"
+                                    name='photo'
                                     accept="image/*"
                                     id="file"
                                     onChange={handleFileChange}
-                                    style={{ display: 'none' }}
+                                    required
                                 />
                                 <label htmlFor="file" className="custom-file-upload">
                                     {!isUploaded && <GrCloudUpload className="upload-icon" />}
@@ -309,9 +309,10 @@ const EmployeeForm = () => {
                                 onChange={handleChange}
                                 required
                             >
-                                <option value="">Select type</option>
+                                <option value="">Select employment type</option>
                                 <option value="Permanent">Permanent</option>
-                                <option value="Intern">Intern</option>
+                                <option value="Contractual">Contractual</option>
+                                <option value="Internship">Internship</option>
                             </select>
                         </div>
                         <div className="form-group">
@@ -324,25 +325,26 @@ const EmployeeForm = () => {
                             >
                                 <option value="">Select status</option>
                                 <option value="Active">Active</option>
-                                <option value="In-Active">In-Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="On Leave">On Leave</option>
                             </select>
                         </div>
-
-
                         <div className="form-group">
                             <label>Source of Hire</label>
-                            <input
-                                type="text"
-                                placeholder="Enter source"
+                            <select
                                 name="sourceOfHire"
                                 value={formData.sourceOfHire}
                                 onChange={handleChange}
                                 required
-                            />
+                            >
+                                <option value="">Select source</option>
+                                <option value="Naukri.com">Naukri.com</option>
+                                <option value="LinkedIn">LinkedIn</option>
+                                <option value="Indeed">Indeed</option>
+                            </select>
                         </div>
-
-
                     </div>
+
                     <div id='submitBtn' >
                         <div className='div'>
                             <button type="submit">Submit </button>
@@ -360,4 +362,3 @@ const EmployeeForm = () => {
 };
 
 export default EmployeeForm;
-//
