@@ -90,7 +90,7 @@ const EmployeeForm = () => {
             {showAlert ? <div><Confetti /> <div id='showAlert'><p>Form Submit Successfully</p></div> </div> : ''}
             <div className="employee-form">
                 <div className="top-bar">
-                    <h2><span><HiUserPlus /></span>Add Employee</h2>
+                    <h2><div className='span'><HiUserPlus /></div>Add Employee</h2>
                     <span className="close_nav"><TfiClose /></span>
                     <div className="">
                         <span className="1"></span>
