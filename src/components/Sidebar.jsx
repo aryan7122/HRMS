@@ -57,7 +57,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                         <span onClick={() => handleClick(index)}>
                             {item.icon}
                         </span>
-                        {isOpen && <p>{item.label}</p>}
+                        {isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>{item.label}</p>}
                         <div className={`hover_menu ${activeItem === index ? 'show' : ''}`}>
                             <div className='side_arrow'>
                                 {item.submenu.map((_, subIndex) => (
@@ -78,12 +78,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </ul>
             <div className={` ${isOpen ? '' : 'side'} `}>
                 <div className={` ${isOpen ? '' : 'sideLine'} `}>
-                    <div className='dot'></div>
+                    <div className='dot'><div></div></div>
                     <ul className='ul2'>
-                        <li><span><TbFileMinus /></span>{isOpen && <p>Files</p>} {isOpen ? '' : <div className='hover_P'><p>Files</p> <div></div></div>}</li>
-                        <li><span><TbGraph /></span>{isOpen && <p>Performance</p>}  {isOpen ? '' : <div className='hover_P'><p>Performance</p> <div></div></div>}</li>
-                        <li><span><TbFolderSymlink /></span>{isOpen && <p>Onboarding</p>}  {isOpen ? '' : <div className='hover_P'><p>Onboarding</p> <div></div></div>}</li>
-                        <li><span><BsClipboardData /></span>{isOpen && <p>Report</p>}  {isOpen ? '' : <div className='hover_P'><p>Report</p> <div></div></div>}</li>
+                        <li><span><TbFileMinus /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Files</p>} {isOpen ? '' : <div className='hover_P'><p>Files</p> <div></div></div>}</li>
+                        <li><span><TbGraph /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Performance</p>}  {isOpen ? '' : <div className='hover_P'><p>Performance</p> <div></div></div>}</li>
+                        <li><span><TbFolderSymlink /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Onboarding</p>}  {isOpen ? '' : <div className='hover_P'><p>Onboarding</p> <div></div></div>}</li>
+                        <li><span><BsClipboardData /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Report</p>}  {isOpen ? '' : <div className='hover_P'><p>Report</p> <div></div></div>}</li>
                    </ul>
                 </div>
             </div>

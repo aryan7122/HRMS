@@ -26,7 +26,7 @@ const Navbar = () => {
                 </div>
                 <div className="search-bar">
                     <input type="text" placeholder="Search employee" />
-                    <CiSearch />
+                    <span> <CiSearch /></span>
                 </div>
                 <div className="iconRight">
                     <IoIosNotificationsOutline className="icon" />
