@@ -3,6 +3,14 @@
   padding: 0;
   font-family: Arial, sans-serif;
 font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        ::-webkit-scrollbar {
+          width: 0px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: red;
+          border-radius: 10px;
+        }
 }
 body{
   /* max-width: 3000px; */

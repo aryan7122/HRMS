@@ -3,6 +3,7 @@
   width: 100%;
   // border: 1px solid red;
   height: 87vh;
+ 
   @media (max-width: 1024px) {
     // padding-left: 110px;
   }
@@ -247,7 +248,7 @@
   .navbar-items {
     display: flex;
     border-radius: 10px;
-    border: 1.5px solid rgba(128, 128, 128, 0.281);
+    border: 1.8px solid rgba(128, 128, 128, 0.281);
     width: fit-content;
     margin: 20px 0px 0px 20px;
     span {
@@ -281,9 +282,33 @@
   }
   form {
     overflow-y: auto;
-    width: 80%;
+    width: 80%; 
+    // border :1px solid red;
+
+  }
+
+      @media (max-width: 1215px) {
+     form{
+      width: 90% !important;
+     }
+  }  
+  @media (max-width: 1024px) {
+    form{
+      padding-bottom: 100px !important;
+    }
+  }
+     @media (max-width: 1105px) {
+     form{
+      width: 95% !important;
+     }
+  }
+    @media (max-width: 905px) {
+     form{
+      width:100% !important;
+     }
   }
   form .from1 {
+
     overflow: auto;
     padding: 20px;
     border-radius: 20px;
@@ -331,8 +356,28 @@
         border-radius: 5px;
         color: #400f6f;
         font-size: 1rem;
+        
+       
        
       }
+      input:hover{
+        outline: none;
+         border: 1px solid #24a70669;
+      }
+       select:hover{
+        outline: none;
+         border: 1px solid #23a706;
+      }
+      input:focus{
+        outline: none;
+         border: 1px solid #650f6f;
+      }
+        @media (max-width: 1205px) {
+      input,
+      select ,label{
+      font-size: 0.9rem !important;
+     }
+  }
 
       // input[type="file"] {
       //   padding: 3px;
@@ -401,6 +446,7 @@
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+    box-shadow: 0px 0px 5px 1px black;
   }
   .div button {
     font-size: 1rem;
