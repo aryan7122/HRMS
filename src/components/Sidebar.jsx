@@ -25,7 +25,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         {
             label: 'Profile',
             icon: <HiOutlineUser />,
-            submenu: ['Profile View', 'Edit Profile', 'Security Settings']
+            submenu: ['Employee onboarding', 'Recruitment', 'Applicant tracking','Attendance tracking']
         },
         {
             label: 'Organization',

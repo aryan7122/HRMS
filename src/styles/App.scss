@@ -1,21 +1,19 @@
+// App.scss
+@import './variables';
+
 .app {
   display: flex;
 }
 
 .main-content {
   flex: 1;
-  transition: margin-left 0.3s;
+  transition: margin-left $animation-duration;
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow-y: auto;
-
-  // &.sidebar-open {
-  //   margin-left: 250px; 
-  // }
 }
 
-
 .content {
- overflow-y: auto;
+  overflow-y: auto;
 }

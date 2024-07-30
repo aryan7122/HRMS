@@ -1,3 +1,5 @@
+//SideBar.scss
+@import './variables';
 .openP {
   animation: zoomIn 0.3s forwards;
 }
@@ -9,11 +11,10 @@
 .sidebar {
   width: 100px;
   height: 93.5vh;
-  background-color: #320b57;
+  background-color: $primary-color;
   color: white;
-  transition: width 0.3s ease-in-out;
+  transition: height $animation-duration ease-in-out;
 
-  // position: fixed;
   @media (max-width: 1024px) {
     // display: none;
   }
@@ -43,30 +44,27 @@
       cursor: pointer;
     }
   }
-
+  
   #top_bar {
     border-top: 1px solid rgba(255, 255, 255, 0.15);
   }
-
+  
   #top-ul-hide {
     margin-top: -35px;
   }
-
+  
   ul {
     list-style-type: none;
     padding: 0;
     transition: height 0.3s ease-in-out;
+  
 
     // display: flex;
     // align-items: center;
     // justify-content: center;
     // flex-direction: column;
     li {
-      -webkit-transition: max-height 1s;
-      -moz-transition: max-height 1s;
-      -ms-transition: max-height 1s;
-      -o-transition: max-height 1s;
-      transition: max-height 1s;
+      // height: 70px;
       // padding: 15px 0px;
       //  width: 56px;
       // height: 56px;
@@ -228,15 +226,20 @@
       // border-left: 1px solid rgba(255, 255, 255, 0.158);
       // border-top: 1px solid rgba(255, 255, 255, 0.144);
     }
+    li span{
+      height: 60px;
+
+    }
 
     .li span {
+
       // border: 1px solid red;
       // animation: fadeIn 0.3s forwards;
 
       background-color: #320b57;
       z-index: 9;
       cursor: pointer;
-      transition: height 0.3s ease-in-out;
+      transition: height 0.5s ease-in;
       // color: #ffffffbe;
       display: flex;
       align-items: center;
@@ -245,8 +248,8 @@
       // border-left: 1px solid rgba(245, 222, 179, 0);
       // border-top: 1px solid rgba(245, 222, 179, 0);
       border-radius: 15px;
-      width: 56px;
       height: 56px;
+      width: 56px;
       margin-top: 10px;
       box-shadow: 4px 10px 13px 0px #0000004a;
       border-left: 1px solid rgba(255, 255, 255, 0.158);
@@ -264,7 +267,8 @@
         height: fit-content;
         width: fit-content;
         // border: 1px solid rgb(0, 255, 26);
-
+        transition: height 0.5s ease-in;
+        height: 100%;
         div {
           padding: 10px 20px;
         }
@@ -290,12 +294,14 @@
 
         .leftArrow {
           width: 1px;
-          animation: slideIn 0.3s forwards;
           height: 0px;
-
+          
           // border: 1px solid rgb(0, 255, 26);
           .divL {
             width: 2px;
+            animation: slideIn 0.3s forwards;
+                  transition: height 0.5s ease-in-out;
+
             height: 2px;
             // border: 1px solid pink;
             margin-top: 0px;
@@ -325,8 +331,8 @@
       }
 
       ul {
-        width: 145px;
-        border: 1px solid red;
+        width: fit-content;
+        // border: 1px solid red;
         border-radius: 15px;
         padding: 0px 12px;
         // margin-left: 20px;
@@ -339,6 +345,9 @@
         flex-direction: column;
         align-items: start;
         animation: slideIn 0.3s forwards;
+        transition: height 0.5s ease-in;
+        height: fit-content;
+
         // padding-top: 4px;
         // padding-bottom: 5px;
         margin-top: 5px;
