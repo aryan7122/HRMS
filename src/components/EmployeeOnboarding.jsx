@@ -155,12 +155,12 @@ const EmployeeOnboarding = () => {
                         <thead>
                             <tr>
                                 <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
-                                <th>Employee ID</th>
+                                <th><div>Employee ID <span><TiArrowUnsorted /></span></div></th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email ID</th>
                                 <th>Phone Number</th>
-                                <th>Department</th>
+                                <th><div>Department <span><TiArrowUnsorted /></span></div></th>
                                 <th>Date of Joining</th>
                                 <th>Status</th>
                             </tr>

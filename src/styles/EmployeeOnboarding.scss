@@ -512,10 +512,23 @@
         border-bottom: 1px solid #dddddd5d;
         border-left: 1px solid #dddddd5d;
         border:  1px solid #dddddd5d;
-      }
-
-      th {
+    }
+    
+    th {
+          color: $primary-color;
         background-color: $lightprimary;
+        div{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            span{
+            // margin-left: 10px;
+            cursor: pointer;
+            align-items: end;
+
+            align-self: flex-end;
+        }
+        }
       }
 
       tr:hover {
