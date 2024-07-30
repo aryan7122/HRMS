@@ -2,9 +2,13 @@ import { useState } from 'react';
 import { HiUserPlus } from "react-icons/hi2";
 import { CiMenuKebab } from "react-icons/ci";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import { IoMdAdd } from "react-icons/io";
+import { IoMdAdd, IoIosCloseCircleOutline } from "react-icons/io";
 import { FaList } from "react-icons/fa6";
 import { PiCheckSquare } from "react-icons/pi";
+import { GiBackstab, GiNotebook } from "react-icons/gi";
+import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
+import { BiRevision } from "react-icons/bi";
+import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 
 
 import '../styles/EmployeeOnboarding.scss';
@@ -63,34 +67,47 @@ const EmployeeOnboarding = () => {
                     </div>
                     <div className="active">
                         <div>
-                            <span><PiCheckSquare/></span>All
+                            <span><PiCheckSquare /></span>Active
                         </div>
                     </div>
                     <div className="inactive">
                         <div>
-                            <span>icon</span>All
+                            <span> <IoIosCloseCircleOutline /> </span>Inactive
                         </div>
                     </div>
                     <div className="resigned">
                         <div>
-                            <span>icon</span>All
+                            <span> <GiBackstab /> </span>Resigned
                         </div>
                     </div>
                     <div className="terminated">
                         <div>
-                            <span>icon</span>All
+                            <span><FaPersonWalkingArrowLoopLeft /></span>Terminated
                         </div>
                     </div>
                     <div className="notice_period">
                         <div>
-                            <span>icon</span>All
+                            <span><GiNotebook /></span>Notice Period
                         </div>
                     </div>
                 </div>
                 <div className="right">
-                    <div className="refresh"></div>
-                    <div className="search"></div>
-                    <div className="filter"></div>
+                    <div className="refresh">
+                        <div>
+                            <span><BiRevision /></span>
+                        </div>
+                    </div>
+                    <div className="search">
+                        <div className='search'>
+                            <span className='search_icon'><IoSearchSharp/></span>
+                            <input type="search" name="search" placeholder='Search Employee name, phone number...' />
+                        </div>
+                    </div>
+                    <div className="filter">
+                        <div>
+                            <span><IoFilterSharp /></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
