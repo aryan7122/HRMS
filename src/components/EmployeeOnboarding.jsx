@@ -3,11 +3,14 @@ import { HiUserPlus } from "react-icons/hi2";
 import { CiMenuKebab } from "react-icons/ci";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { IoMdAdd } from "react-icons/io";
+import { FaList } from "react-icons/fa6";
+import { PiCheckSquare } from "react-icons/pi";
+
 
 import '../styles/EmployeeOnboarding.scss';
 
 const EmployeeOnboarding = () => {
-    const [hidImport, setHidImport] = useState(false);
+    const [hidImport, setHidImport] = useState(true);
 
     const handleHidImport = () => {
         setHidImport(!hidImport);
@@ -31,7 +34,7 @@ const EmployeeOnboarding = () => {
                                 <div className="div_top"><CiMenuKebab /></div>
                                 <div className={`bottom_import  ${hidImport ? 'bottom_import_hide' : ''}`}>
                                     <AiOutlineCloudUpload /> Import
-                                    <input type="file" accept='image/*'/>
+                                    <input type="file" accept='image/*' />
                                 </div>
                             </div>
                         </div>
@@ -51,14 +54,38 @@ const EmployeeOnboarding = () => {
                 </div>
             </div>
             <div className="EmpOn_Second_Head">
-                
+
                 <div className="left">
-                    <div className="all"></div>
-                    <div className="active"></div>
-                    <div className="inactive"></div>
-                    <div className="resigned"></div>
-                    <div className="terminated"></div>
-                    <div className="notice_period"></div>
+                    <div className="all">
+                        <div className='listActive'>
+                            <span> <FaList /></span>All
+                        </div>
+                    </div>
+                    <div className="active">
+                        <div>
+                            <span><PiCheckSquare/></span>All
+                        </div>
+                    </div>
+                    <div className="inactive">
+                        <div>
+                            <span>icon</span>All
+                        </div>
+                    </div>
+                    <div className="resigned">
+                        <div>
+                            <span>icon</span>All
+                        </div>
+                    </div>
+                    <div className="terminated">
+                        <div>
+                            <span>icon</span>All
+                        </div>
+                    </div>
+                    <div className="notice_period">
+                        <div>
+                            <span>icon</span>All
+                        </div>
+                    </div>
                 </div>
                 <div className="right">
                     <div className="refresh"></div>
