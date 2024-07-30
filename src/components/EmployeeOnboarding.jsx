@@ -193,7 +193,19 @@ const EmployeeOnboarding = () => {
                                     <td>{emp.phone}</td>
                                     <td>{emp.department}</td>
                                     <td>{emp.dateOfJoining}</td>
-                                    <td>{emp.status}</td>
+                                    <td>
+                                        <select value={emp.status} onChange={(e) => {
+                                            const updatedEmployees = [...employees];
+                                            updatedEmployees[index].status = e.target.value;
+                                            setEmployees(updatedEmployees);
+                                        }}>
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                            <option value="Resigned">Resigned</option>
+                                            <option value="Terminated">Terminated</option>
+                                            <option value="Notice Period">Notice Period</option>
+                                        </select>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
