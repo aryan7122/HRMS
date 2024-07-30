@@ -19,7 +19,7 @@ const App = () => {
     <>
       <Navbar />
       <div className="app">
-        <Sidebar isOpen={isOpen} OnClick={toggleSidebar} />
+        <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
         <div className="content">
           {/* <EmployeeForm /> */}
           <EmployeeOnboarding/>

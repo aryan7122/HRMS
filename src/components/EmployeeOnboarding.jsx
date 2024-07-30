@@ -6,7 +6,7 @@ import { IoMdAdd, IoIosCloseCircleOutline } from "react-icons/io";
 import { FaList } from "react-icons/fa6";
 import { PiCheckSquare } from "react-icons/pi";
 import { GiBackstab, GiNotebook } from "react-icons/gi";
-import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
+import { FaPersonWalkingArrowLoopLeft, FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { BiRevision } from "react-icons/bi";
 import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 import { TiArrowUnsorted } from "react-icons/ti";
@@ -21,7 +21,7 @@ const EmployeeOnboarding = () => {
         setHidImport(!hidImport);
         // alert("Import button clicked");
     };
-    
+
 
     // 
     const [employees, setEmployees] = useState([
@@ -39,6 +39,8 @@ const EmployeeOnboarding = () => {
     ]);
 
     const [selectAll, setSelectAll] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const handleSelectAll = () => {
         const updatedEmployees = employees.map(emp => ({
@@ -54,7 +56,22 @@ const EmployeeOnboarding = () => {
         updatedEmployees[index].isChecked = !updatedEmployees[index].isChecked;
         setEmployees(updatedEmployees);
     };
-        // 
+
+    const indexOfLastEmployee = currentPage * rowsPerPage;
+    const indexOfFirstEmployee = indexOfLastEmployee - rowsPerPage;
+    const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+
+    const totalPages = Math.ceil(employees.length / rowsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const handleRowsPerPageChange = (e) => {
+        setRowsPerPage(Number(e.target.value));
+        setCurrentPage(1);
+    };
+    // 
 
     return (
         <div>
@@ -134,7 +151,7 @@ const EmployeeOnboarding = () => {
                     </div>
                     <div className="search">
                         <div className='search'>
-                            <span className='search_icon'><IoSearchSharp/></span>
+                            <span className='search_icon'><IoSearchSharp /></span>
                             <input type="search" name="search" placeholder='Search Employee name, phone number...' />
                         </div>
                     </div>
@@ -155,7 +172,7 @@ const EmployeeOnboarding = () => {
                         <thead>
                             <tr>
                                 <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
-                                <th><div>Employee ID <span><TiArrowUnsorted /></span></div></th>
+                                <th> <div>Employee ID<span><TiArrowUnsorted /></span></div></th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email ID</th>
@@ -166,9 +183,9 @@ const EmployeeOnboarding = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {employees.map((emp, index) => (
+                            {currentEmployees.map((emp, index) => (
                                 <tr key={index}>
-                                    <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(index)} /></td>
+                                    <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
                                     <td>{emp.id}</td>
                                     <td>{emp.firstName}</td>
                                     <td>{emp.lastName}</td>
@@ -176,23 +193,38 @@ const EmployeeOnboarding = () => {
                                     <td>{emp.phone}</td>
                                     <td>{emp.department}</td>
                                     <td>{emp.dateOfJoining}</td>
-                                    <td>
-                                        <select value={emp.status} onChange={(e) => {
-                                            const updatedEmployees = [...employees];
-                                            updatedEmployees[index].status = e.target.value;
-                                            setEmployees(updatedEmployees);
-                                        }}>
-                                            <option value="Active">Active</option>
-                                            <option value="Inactive">Inactive</option>
-                                            <option value="Resigned">Resigned</option>
-                                            <option value="Terminated">Terminated</option>
-                                            <option value="Notice Period">Notice Period</option>
-                                        </select>
-                                    </td>
+                                    <td>{emp.status}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
+                    <div className="pagination">
+                        <div className="rows-per-page">
+                            <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
+                                <option value={5}>5 par page</option>
+                                <option value={10}>10 par page</option>
+                                <option value={30}>30 par page</option>
+                                <option value={50}>50 par page</option>
+                                <option value={70}>70 par page</option>
+                                <option value={100}>100 par page</option>
+                            </select>
+                        </div>
+                        <div className="page-navigation">
+                            <div className="page-numbers">
+                                {[...Array(totalPages)].map((_, pageIndex) => (
+                                    <button
+                                        key={pageIndex + 1}
+                                        className={currentPage === pageIndex + 1 ? 'active' : ''}
+                                        onClick={() => handlePageChange(pageIndex + 1)}
+                                    >
+                                        {pageIndex + 1}
+                                    </button>
+                                ))}
+                            </div>
+                            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft/></button>
+                            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight/></button>
+                        </div>
+                    </div>
                 </div>
 
             </div>
