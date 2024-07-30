@@ -9,6 +9,7 @@ import { GiBackstab, GiNotebook } from "react-icons/gi";
 import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
 import { BiRevision } from "react-icons/bi";
 import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
+import { TiArrowUnsorted } from "react-icons/ti";
 
 
 import '../styles/EmployeeOnboarding.scss';
@@ -20,6 +21,40 @@ const EmployeeOnboarding = () => {
         setHidImport(!hidImport);
         // alert("Import button clicked");
     };
+    
+
+    // 
+    const [employees, setEmployees] = useState([
+        { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "ananya.singh@example.com", phone: "+918555031082", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
+        { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "vijay.shah@example.com", phone: "+917555232340", department: "Maintenance", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "arjun.reddy@example.com", phone: "+918555079422", department: "Manning", dateOfJoining: "16-May-2024", status: "Resigned", isChecked: false },
+        { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "aarti.pandey@example.com", phone: "+919955565042", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Terminated", isChecked: false },
+        { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "priya.sharma@example.com", phone: "+918553613128", department: "Operations", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false },
+        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "kavita.agarwal@example.com", phone: "+918555234569", department: "Engineering", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "raj.malhotra@example.com", phone: "+918555205575", department: "Manning", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
+        { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "rahul.mishra@example.com", phone: "+919255544527", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "meera.verma@example.com", phone: "+919555566270", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "manish.jain@example.com", phone: "+917555639758", department: "HSEQ", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "neha.patel@example.com", phone: "+919655516575", department: "IT", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false }
+    ]);
+
+    const [selectAll, setSelectAll] = useState(false);
+
+    const handleSelectAll = () => {
+        const updatedEmployees = employees.map(emp => ({
+            ...emp,
+            isChecked: !selectAll
+        }));
+        setEmployees(updatedEmployees);
+        setSelectAll(!selectAll);
+    };
+
+    const handleCheckboxChange = (index) => {
+        const updatedEmployees = [...employees];
+        updatedEmployees[index].isChecked = !updatedEmployees[index].isChecked;
+        setEmployees(updatedEmployees);
+    };
+        // 
 
     return (
         <div>
@@ -109,6 +144,57 @@ const EmployeeOnboarding = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            {/* All Employee  List*/}
+            <div className="allEmployeeList">
+                {/* <div className="head">
+                </div> */}
+                <div className="employee-table">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
+                                <th>Employee ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email ID</th>
+                                <th>Phone Number</th>
+                                <th>Department</th>
+                                <th>Date of Joining</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {employees.map((emp, index) => (
+                                <tr key={index}>
+                                    <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(index)} /></td>
+                                    <td>{emp.id}</td>
+                                    <td>{emp.firstName}</td>
+                                    <td>{emp.lastName}</td>
+                                    <td>{emp.email}</td>
+                                    <td>{emp.phone}</td>
+                                    <td>{emp.department}</td>
+                                    <td>{emp.dateOfJoining}</td>
+                                    <td>
+                                        <select value={emp.status} onChange={(e) => {
+                                            const updatedEmployees = [...employees];
+                                            updatedEmployees[index].status = e.target.value;
+                                            setEmployees(updatedEmployees);
+                                        }}>
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                            <option value="Resigned">Resigned</option>
+                                            <option value="Terminated">Terminated</option>
+                                            <option value="Notice Period">Notice Period</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
     );
