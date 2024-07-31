@@ -73,6 +73,18 @@ const EmployeeOnboarding = () => {
     };
     // 
 
+    const statuses = ['Active', 'Inactive', 'Resigned', 'Terminated', 'Notice Period'];
+
+    const [isOpen, setIsOpen] = useState(true);
+
+    const handleStatusChange = (index, newStatus) => {
+        const updatedEmployees = [...employees];
+        updatedEmployees[index].status = newStatus;
+        setEmployees(updatedEmployees);
+        setIsOpen(!isOpen);
+    };
+    //
+
     return (
         <div>
             <div className="EmpOn_main_container">
@@ -193,7 +205,7 @@ const EmployeeOnboarding = () => {
                                     <td>{emp.phone}</td>
                                     <td>{emp.department}</td>
                                     <td>{emp.dateOfJoining}</td>
-                                    <td>
+                                    {/* <td>
                                         <select value={emp.status} onChange={(e) => {
                                             const updatedEmployees = [...employees];
                                             updatedEmployees[index].status = e.target.value;
@@ -205,7 +217,36 @@ const EmployeeOnboarding = () => {
                                             <option value="Terminated">Terminated</option>
                                             <option value="Notice Period">Notice Period</option>
                                         </select>
+                                    </td> */}
+                                    <td>
+                                        <div className="status-dropdown">
+                                            <div key={index} className="status-container">
+                                                <div
+                                                    className={`status-display ${emp.status.toLowerCase().replace(' ', '-')}`}
+                                                    onClick={() => setIsOpen(isOpen === index ? null : index)}
+                                                >
+                                                    <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}
+                                                    ></span>
+                                                    {emp.status}
+                                                </div>
+                                                {isOpen === index && (
+                                                    <div className="status-options">
+                                                        {statuses.map(status => (
+                                                            <div
+                                                                key={status}
+                                                                className="status-option"
+                                                                onClick={() => handleStatusChange(index, status)}
+                                                            >
+                                                                {status}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
                                     </td>
+
+
                                 </tr>
                             ))}
                         </tbody>
@@ -233,8 +274,8 @@ const EmployeeOnboarding = () => {
                                     </button>
                                 ))}
                             </div>
-                            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft/></button>
-                            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight/></button>
+                            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
+                            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
                         </div>
                     </div>
                 </div>
