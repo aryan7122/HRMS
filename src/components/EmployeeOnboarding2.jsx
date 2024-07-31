@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { HiUserPlus } from "react-icons/hi2";
 import { CiMenuKebab } from "react-icons/ci";
 import { AiOutlineCloudUpload } from "react-icons/ai";
@@ -10,12 +10,20 @@ import { FaPersonWalkingArrowLoopLeft, FaAngleLeft, FaAngleRight } from "react-i
 import { BiRevision } from "react-icons/bi";
 import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 import { TiArrowUnsorted } from "react-icons/ti";
-import { MdDateRange } from "react-icons/md";
+
 
 import '../styles/EmployeeOnboarding.scss';
 
-const EmployeeOnboarding = () => {
+const EmployeeOnboarding2 = () => {
     const [hidImport, setHidImport] = useState(true);
+
+    const handleHidImport = () => {
+        setHidImport(!hidImport);
+        // alert("Import button clicked");
+    };
+
+
+    // 
     const [employees, setEmployees] = useState([
         { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "ananya.singh@example.com", phone: "+918555031082", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
         { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "vijay.shah@example.com", phone: "+917555232340", department: "Maintenance", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
@@ -29,39 +37,31 @@ const EmployeeOnboarding = () => {
         { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "manish.jain@example.com", phone: "+917555639758", department: "HSEQ", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
         { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "neha.patel@example.com", phone: "+919655516575", department: "IT", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false }
     ]);
-    const [filteredEmployees, setFilteredEmployees] = useState(employees);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [selectedDepartment, setSelectedDepartment] = useState('All');
-    const [selectedStatus, setSelectedStatus] = useState('All');
+
     const [selectAll, setSelectAll] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [isOpen, setIsOpen] = useState(null);
-    console.log(selectedDepartment)
-
-    const handleHidImport = () => {
-        setHidImport(!hidImport);
-    };
 
     const handleSelectAll = () => {
-        const updatedEmployees = filteredEmployees.map(emp => ({
+        const updatedEmployees = employees.map(emp => ({
             ...emp,
             isChecked: !selectAll
         }));
-        setFilteredEmployees(updatedEmployees);
+        setEmployees(updatedEmployees);
         setSelectAll(!selectAll);
     };
 
     const handleCheckboxChange = (index) => {
-        const updatedEmployees = [...filteredEmployees];
+        const updatedEmployees = [...employees];
         updatedEmployees[index].isChecked = !updatedEmployees[index].isChecked;
-        setFilteredEmployees(updatedEmployees);
+        setEmployees(updatedEmployees);
     };
 
     const indexOfLastEmployee = currentPage * rowsPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - rowsPerPage;
-    const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
-    const totalPages = Math.ceil(filteredEmployees.length / rowsPerPage);
+    const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+
+    const totalPages = Math.ceil(employees.length / rowsPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -71,82 +71,20 @@ const EmployeeOnboarding = () => {
         setRowsPerPage(Number(e.target.value));
         setCurrentPage(1);
     };
+    // 
 
     const statuses = ['Active', 'Inactive', 'Resigned', 'Terminated', 'Notice Period'];
-    const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
-    // const employeeType = ['All','Permanent', 'On Contract', 'Intern', 'Trainee'];
+
+    const [isOpen, setIsOpen] = useState(true);
 
     const handleStatusChange = (index, newStatus) => {
-        const updatedEmployees = [...filteredEmployees];
+        const updatedEmployees = [...employees];
         updatedEmployees[index].status = newStatus;
-        setFilteredEmployees(updatedEmployees);
-        setIsOpen(null);
+        setEmployees(updatedEmployees);
+        setIsOpen(!isOpen);
     };
+    //
 
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
-    };
-
-
-    const handleFilterChange = (e) => {
-        setSelectedDepartment(e.target.value);
-        let updatedEmployees = employees;
-
-        if (searchQuery) {
-            updatedEmployees = updatedEmployees.filter(emp =>
-                emp.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                emp.phone.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-        }
-
-        if (selectedDepartment !== 'All') {
-            updatedEmployees = updatedEmployees.filter(emp => emp.department === selectedDepartment);
-        }
-
-        if (selectedStatus !== 'All') {
-            updatedEmployees = updatedEmployees.filter(emp => emp.status === selectedStatus);
-        }
-
-        setFilteredEmployees(updatedEmployees);
-    };
-
-
-
-    const handleRefresh = () => {
-        setFilteredEmployees(employees);
-        setSearchQuery('');
-        setSelectedDepartment('All');
-        setSelectedStatus('All');
-        setCurrentPage(1);
-        setRowsPerPage(10);
-    };
-    // 
-    const [showFilter, setShowFilter] = useState(false);
-    const [showCustomDate, setShowCustomDate] = useState(false);
-    const [showEmploymentType, setShowEmploymentType] = useState(false);
-    const [showDepartment, setShowDepartment] = useState(false);
-
-    const showFilterHandle = () => {
-        setShowFilter(!showFilter)
-    }
-    const handleCustomDateClick = () => {
-        setShowCustomDate(!showCustomDate);
-        setShowEmploymentType(false);
-        setShowDepartment(false);
-    };
-
-    const handleEmploymentTypeClick = () => {
-        setShowEmploymentType(!showEmploymentType);
-        setShowCustomDate(false);
-        setShowDepartment(false);
-    };
-
-    const handleDepartmentClick = () => {
-        setShowDepartment(!showDepartment);
-        setShowCustomDate(false);
-        setShowEmploymentType(false);
-    };
-    
     return (
         <div>
             <div className="EmpOn_main_container">
@@ -184,6 +122,7 @@ const EmployeeOnboarding = () => {
                 </div>
             </div>
             <div className="EmpOn_Second_Head">
+
                 <div className="left">
                     <div className="all">
                         <div className='listActive'>
@@ -217,107 +156,22 @@ const EmployeeOnboarding = () => {
                     </div>
                 </div>
                 <div className="right">
-                    <div className="refresh divRight" onClick={handleRefresh}>
-                        <div className='div_box'>
+                    <div className="refresh">
+                        <div>
                             <span><BiRevision /></span>
                         </div>
                     </div>
-                    <div className="search divRight">
-                        <div className='search div_box'>
+                    <div className="search">
+                        <div className='search'>
                             <span className='search_icon'><IoSearchSharp /></span>
-                            <input
-                                type="search"
-                                name="search"
-                                placeholder='Search Employee name, phone number...'
-                                value={searchQuery}
-                                onChange={handleSearchChange}
-                                onKeyUp={handleFilterChange}
-                            />
+                            <input type="search" name="search" placeholder='Search Employee name, phone number...' />
                         </div>
                     </div>
-                    <div className="filter divRight">
-                        <div className='div_box' onClick={showFilterHandle}>
+                    <div className="filter">
+                        <div>
                             <span><IoFilterSharp /></span>
                         </div>
-                        {showFilter && (
-                            <div className="filter-container">
-                                <div className="filter-options">
-                                    <div className="filter-option" onClick={handleCustomDateClick}>
-                                        <p>Custom Date</p>
-                                        {showCustomDate && (
-                                            <div className="dropdown-content date-h">
-                                                <div><MdDateRange /> Select Custom date</div>
-                                                <input type="date" />
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="filter-option">
-                                        <p onClick={handleEmploymentTypeClick}>Employment Type</p>
-                                        {showEmploymentType && (
-                                            <div className="dropdown-content">
-                                                <ul>
-                                                    <li>
-                                                        <input type="radio" id="permanent" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="permanent">Permanent</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="contract" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="contract">On Contract</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="intern" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="intern">Intern</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="trainee" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="trainee">Trainee</label>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="filter-option">
-                                        <p onClick={handleDepartmentClick}>Department</p>
-                                        {showDepartment && (
-                                            <div className="dropdown-content">
-                                                <ul>
-                                                    <li>
-                                                        <input type="radio" id="all-department" name="department" className="custom-radio" />
-                                                        <label htmlFor="all-department">All Department</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="it" name="department" className="custom-radio" />
-                                                        <label htmlFor="it">IT</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="hr" name="department" className="custom-radio" />
-                                                        <label htmlFor="hr">HR</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="sales" name="department" className="custom-radio" />
-                                                        <label htmlFor="sales">Sales</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="management" name="department" className="custom-radio" />
-                                                        <label htmlFor="management">Management</label>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                        )}
-                        {/* <select value={selectedDepartment} onChange={handleFilterChange}>
-                                {departments.map((dept, i) => (
-                                    <option key={i} value={dept}>{dept}</option>
-
-                                ))}
-                            </select> */}
+                        
                     </div>
                 </div>
             </div>
@@ -428,8 +282,9 @@ const EmployeeOnboarding = () => {
                 </div>
 
             </div>
-        </div >
+        </div>
     );
-};
+}
 
-export default EmployeeOnboarding;
+export default EmployeeOnboarding2;
+//
