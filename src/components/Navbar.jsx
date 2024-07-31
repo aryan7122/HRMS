@@ -5,13 +5,22 @@ import { CiSearch } from "react-icons/ci";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
 
 import user from '../assets/user.png'
+
 const Navbar = () => {
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate('/');
+        
+    };
+
+
     return (
         <div className="navbar">
             <div className="navbar-left">
-                <div className="logo">
+                <div className="logo" onClick={handleClick}>
                     <img src={logo} alt="HRMS" />
                 </div>
                 <div className="nav-items">
