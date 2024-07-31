@@ -163,7 +163,7 @@
         margin-top: -47px;
         background: linear-gradient(
           240deg,
-         rgba(198, 22, 214, 0.064) 6.46%,
+          rgba(198, 22, 214, 0.064) 6.46%,
           rgba(172, 32, 182, 0.076) 10.46%,
           rgba(174, 21, 198, 0) 90.2%
         );
@@ -177,7 +177,7 @@
         margin-top: -33px;
         background: linear-gradient(
           240deg,
-         rgba(198, 22, 214, 0.165) 6.46%,
+          rgba(198, 22, 214, 0.165) 6.46%,
           rgba(172, 32, 182, 0.194) 10.46%,
           rgba(174, 21, 198, 0) 90.2%
         );
@@ -191,7 +191,7 @@
         margin-top: -39px;
         background: linear-gradient(
           240deg,
-         rgba(198, 22, 214, 0.165) 6.46%,
+          rgba(198, 22, 214, 0.165) 6.46%,
           rgba(172, 32, 182, 0.234) 10.46%,
           rgba(174, 21, 198, 0) 90.2%
         );
@@ -205,7 +205,7 @@
         margin-top: -39px;
         background: linear-gradient(
           240deg,
-         rgba(198, 22, 214, 0.237) 6.46%,
+          rgba(198, 22, 214, 0.237) 6.46%,
           rgba(172, 32, 182, 0.315) 10.46%,
           rgba(174, 21, 198, 0.105) 90.2%
         );
@@ -221,7 +221,7 @@
           240deg,
           rgba(198, 22, 214, 0.072) 6.46%,
           rgba(172, 32, 182, 0.118) 10.46%,
-          rgba(174, 21, 198, 0) 90.2% 
+          rgba(174, 21, 198, 0) 90.2%
         );
         transform: rotate(40deg);
       }
@@ -235,7 +235,7 @@
           240deg,
           rgba(198, 22, 214, 0.072) 6.46%,
           rgba(172, 32, 182, 0.076) 10.46%,
-          rgba(174, 21, 198, 0) 90.2% 
+          rgba(174, 21, 198, 0) 90.2%
         );
         transform: rotate(40deg);
       }
@@ -249,7 +249,7 @@
           240deg,
           rgba(198, 22, 214, 0.072) 6.46%,
           rgba(172, 32, 182, 0.266) 10.46%,
-          rgba(174, 21, 198, 0.064) 90.2% 
+          rgba(174, 21, 198, 0.064) 90.2%
         );
         transform: rotate(40deg);
       }
@@ -263,7 +263,7 @@
           240deg,
           rgba(198, 22, 214, 0.072) 6.46%,
           rgba(172, 32, 182, 0.118) 10.46%,
-          rgba(174, 21, 198, 0) 90.2% 
+          rgba(174, 21, 198, 0) 90.2%
         );
         transform: rotate(40deg);
       }
@@ -278,7 +278,7 @@
           240deg,
           rgba(198, 22, 214, 0.072) 6.46%,
           rgba(172, 32, 182, 0.118) 10.46%,
-          rgba(174, 21, 198, 0) 90.2% 
+          rgba(174, 21, 198, 0) 90.2%
         );
         transform: rotate(40deg);
       }
@@ -558,7 +558,6 @@
                 height: 12px;
                 background-color: $background-color;
               }
-
             }
             li:hover {
               cursor: pointer;
@@ -618,14 +617,19 @@
         border: 1px solid #dddddd5d;
 
         .status-dropdown {
+          width: fit-content;
           .status-container {
             position: relative;
             margin-bottom: 10px;
           }
 
           .status-display {
+            div {
+              display: flex;
+              gap: 5px;
+            }
             padding: 8px 12px;
-            border-radius: 4px;
+            border-radius: 44px;
             display: flex;
             cursor: pointer;
             align-items: center;

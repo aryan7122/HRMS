@@ -11,6 +11,7 @@ import { BiRevision } from "react-icons/bi";
 import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 import '../styles/EmployeeOnboarding.scss';
 
@@ -74,7 +75,7 @@ const EmployeeOnboarding = () => {
 
     const statuses = ['Active', 'Inactive', 'Resigned', 'Terminated', 'Notice Period'];
     const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
-    const employeeType = ['All','Permanent', 'On Contract', 'Intern', 'Trainee'];
+    const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
 
     const handleStatusChange = (index, newStatus) => {
         const updatedEmployees = [...filteredEmployees];
@@ -146,7 +147,7 @@ const EmployeeOnboarding = () => {
         setShowCustomDate(false);
         setShowEmploymentType(false);
     };
-    
+
     return (
         <div>
             <div className="EmpOn_main_container">
@@ -239,12 +240,12 @@ const EmployeeOnboarding = () => {
                         <div className='div_box' onClick={showFilterHandle}>
                             <span><IoFilterSharp /></span>
                         </div>
-                        
+
                         {showFilter && (
                             <div className="filter-container">
                                 <div className="filter-options">
                                     <div className="filter-option" onClick={handleCustomDateClick}>
-                                        <p>Custom Date</p>
+                                        <p>Custom Date </p>
                                         {showCustomDate && (
                                             <div className="dropdown-content date-h">
                                                 <div><MdDateRange /> Select Custom date</div>
@@ -370,7 +371,14 @@ const EmployeeOnboarding = () => {
                                                 >
                                                     <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}
                                                     ></span>
-                                                    {emp.status}
+                                                    <div>
+                                                        <div className="">
+                                                            {emp.status}
+                                                        </div>
+                                                        <div className="^wdown">
+                                                            <MdOutlineKeyboardArrowDown/>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 {isOpen === index && (
                                                     <div className="status-options">
