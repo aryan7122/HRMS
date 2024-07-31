@@ -74,7 +74,7 @@ const EmployeeOnboarding = () => {
 
     const statuses = ['Active', 'Inactive', 'Resigned', 'Terminated', 'Notice Period'];
     const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
-    // const employeeType = ['All','Permanent', 'On Contract', 'Intern', 'Trainee'];
+    const employeeType = ['All','Permanent', 'On Contract', 'Intern', 'Trainee'];
 
     const handleStatusChange = (index, newStatus) => {
         const updatedEmployees = [...filteredEmployees];
@@ -239,6 +239,7 @@ const EmployeeOnboarding = () => {
                         <div className='div_box' onClick={showFilterHandle}>
                             <span><IoFilterSharp /></span>
                         </div>
+                        
                         {showFilter && (
                             <div className="filter-container">
                                 <div className="filter-options">
@@ -312,12 +313,7 @@ const EmployeeOnboarding = () => {
 
 
                         )}
-                        {/* <select value={selectedDepartment} onChange={handleFilterChange}>
-                                {departments.map((dept, i) => (
-                                    <option key={i} value={dept}>{dept}</option>
 
-                                ))}
-                            </select> */}
                     </div>
                 </div>
             </div>
@@ -433,3 +429,4 @@ const EmployeeOnboarding = () => {
 };
 
 export default EmployeeOnboarding;
+// 
