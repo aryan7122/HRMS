@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaAngleLeft, FaChevronRight } from "react-icons/fa6";
 import { RiHome6Line } from "react-icons/ri";
@@ -26,7 +26,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             label: 'Home',
             icon: <RiHome6Line />,
             submenu: [
-                { label: 'List View', path: '/list-view' },
+                { label: 'Admin Dashboard', path: '/admin-dashboard' },
                 { label: 'Calendar View', path: '/calendar-view' },
                 { label: 'Leave Application', path: '/leave-application' },
                 { label: 'Holidays', path: '/holidays' },
