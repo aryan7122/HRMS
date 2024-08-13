@@ -8,11 +8,15 @@ import { TfiLayoutMenuSeparated } from "react-icons/tfi";
 import { RiUser6Line } from "react-icons/ri";
 import { IoMdTrendingDown, IoMdTrendingUp } from "react-icons/io";
 import { MdOutlineInsertChart } from "react-icons/md";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 
 import './AdminDashboard.scss'
 const AdminDashboard = () => {
     const [time, setTime] = useState('');
+    const [currentSlide, setCurrentSlide] = useState(0); // State to track current slide
 
     //   Live (*) time  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     useEffect(() => {
@@ -52,10 +56,10 @@ const AdminDashboard = () => {
     const [employees, setEmployees] = useState([
         { name: "Akash Shinde", Roll: "Lead Design", email: "Akashhrms@gmail.com", phone: "+918555031082", Image: img_emp1, DOB: '2024-08-12' },
         { name: "Ravi Kumar", Roll: "Developer", email: "ravikumar@gmail.com", phone: "+918888888881", Image: img_emp1, DOB: '2023-07-11' },
-        { name: "Sita Sharma", Roll: "Designer", email: "sitasharma@gmail.com", phone: "+918888888882", Image: img_emp1, DOB: '2024-08-01' },
+        { name: "Sita Sharma", Roll: "Designer", email: "sitasharma@gmail.com", phone: "+918888888882", Image: img_emp1, DOB: '2024-08-12' },
         { name: "Mohan Verma", Roll: "Tester", email: "mohanverma@gmail.com", phone: "+918888888883", Image: img_emp1, DOB: '2024-06-15' },
         { name: "New Employee 1", Roll: "HR", email: "newemp1@gmail.com", phone: "+918888888884", Image: img_emp1, DOB: '2024-08-10' },
-        { name: "New Employee 2", Roll: "Manager", email: "newemp2@gmail.com", phone: "+918888888885", Image: img_emp1, DOB: '2024-08-01' },
+        { name: "New Employee 2", Roll: "Manager", email: "newemp2@gmail.com", phone: "+918888888885", Image: img_emp1, DOB: '2024-08-12' },
         { name: "New Employee 3", Roll: "Support", email: "newemp3@gmail.com", phone: "+918888888886", Image: img_emp1, DOB: '2024-08-18' },
         { name: "New Employee 4", Roll: "Developer", email: "newemp4@gmail.com", phone: "+918888888887", Image: img_emp1, DOB: '2024-08-13' },
     ]);
@@ -75,6 +79,32 @@ const AdminDashboard = () => {
 
     const getTopNewEmployees = employees.slice(0, 4);
     // new join
+    // 
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        arrows: false,  // To hide next/prev buttons
+        beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex), // Track the current slide
+        customPaging: (i) => (
+            <div
+                style={{
+                    width: i === currentSlide ? "25px" : "10px",
+
+                    height: "3px",
+                    background: i === currentSlide ? "purple" : "gray",
+                    borderRadius: "10px",
+                    transition: "all 0.3s ease",
+                }}
+            />
+        ),
+        dotsClass: "slick-dots slick-thumb custom-dots", // Custom class for dots
+    };
+    // 
 
     return (
         <div className='ADMIN_EMP'>
@@ -155,20 +185,22 @@ const AdminDashboard = () => {
                         </div>
                         <div className="top_border"></div>
                         <div className="Emp">
-                            {employees.map((emp, i) => (
-                                emp.DOB === today && (
-                                    <div key={i} className='div_dob'>
-                                        <div className='img_dob_name'>
-                                            <img src={emp.Image} alt={emp.name} />
-                                            <div>
-                                                <h3>{emp.name}</h3>
-                                                <p> {formatDate(emp.DOB)}</p>
+                            <Slider {...settings}>
+                                {employees.map((emp, i) => (
+                                    emp.DOB === today && (
+                                        <div key={i} className='div_dob'>
+                                            <div className='img_dob_name'>
+                                                <img src={emp.Image} alt={emp.name} />
+                                                <div>
+                                                    <h3>{emp.name}</h3>
+                                                    <p>{formatDate(emp.DOB)}</p>
+                                                </div>
                                             </div>
+                                            <p>{emp.email}</p>
                                         </div>
-                                        <p>{emp.email}</p>
-                                    </div>
-                                )
-                            ))}
+                                    )
+                                ))}
+                            </Slider>
                         </div>
                     </div>
                 </div>
@@ -264,7 +296,7 @@ const AdminDashboard = () => {
                         <p>Last Month</p>
                     </div>
                 </div>
-                 <div className="box_">
+                <div className="box_">
                     <div className="head">
                         <p>All Employees</p>
                         <TfiLayoutMenuSeparated />
@@ -371,7 +403,7 @@ const AdminDashboard = () => {
                     </div>
                     <ul>
                         <li>
-                            <div className="icon"><MdOutlineInsertChart/></div>
+                            <div className="icon"><MdOutlineInsertChart /></div>
                             <div className="details">
                                 <h4>Launch Slot Pending</h4>
                                 <p>Lorem Ipsum Dolor Sit Amet Consectetur</p>
@@ -387,7 +419,7 @@ const AdminDashboard = () => {
                             <span>09:00am</span>
                         </li>
                         <li>
-                            <div className="icon"><MdOutlineInsertChart/></div>
+                            <div className="icon"><MdOutlineInsertChart /></div>
                             <div className="details">
                                 <h4>Meeting Will Be On Next Month</h4>
                                 <p>Lorem Ipsum Dolor Sit Amet Consectetur</p>

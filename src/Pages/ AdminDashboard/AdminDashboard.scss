@@ -3,6 +3,7 @@
 .ADMIN_EMP {
   overflow-y: scroll;
   width: 100%;
+  font-family: Inter;
   // border: 1px solid red;
   height: 93.4vh;
   .Top_Head_Admin_Dashboard {
@@ -247,6 +248,7 @@
               align-items: center;
               justify-content: center;
               border: 35px solid #ae3eff;
+              // background: linear-gradient(31.96deg, #ae3eff 55.43%, #8d31cf 132.82%);
               border-radius: 50%;
               position: fixed;
               margin-top: 140px;
@@ -256,7 +258,7 @@
 
               span {
                 font-size: 18px;
-                color: #fff;
+                color: #a39e9e;
               }
 
               h1 {
@@ -327,10 +329,19 @@
         }
         .Emp {
           padding: 15px 20px;
+          // display: flex;
+          // // overflow: hidden;
+          // width: 600px;
+          // overflow-x: auto;
+          width: 600px;
+
+          // border: 1px solid;
           .div_dob {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            // margin: 10px;
+            display: flex !important;
+            align-items: center !important;
+            // border: 1px solid red;
+            justify-content: space-between !important;
             p {
               color: rgb(89, 89, 89);
               font-size: 18px;
@@ -341,7 +352,6 @@
               justify-content: center;
               gap: 10px;
               img {
-                // border: 1px solid red;
 
                 width: 56px;
                 height: 56px;
@@ -364,6 +374,7 @@
             }
           }
         }
+        
       }
     }
     .center_Cart {
@@ -904,3 +915,5 @@
     }
   }
 }
+
+
