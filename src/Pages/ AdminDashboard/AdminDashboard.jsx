@@ -4,6 +4,9 @@ import { GiAlarmClock } from "react-icons/gi";
 import { FaAngleDown, FaChevronRight } from "react-icons/fa";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
 import img_emp1 from '../../assets/emp1.png'
+import { TfiLayoutMenuSeparated } from "react-icons/tfi";
+import { RiUser6Line } from "react-icons/ri";
+import { IoMdTrendingDown, IoMdTrendingUp } from "react-icons/io";
 
 
 import './AdminDashboard.scss'
@@ -73,7 +76,7 @@ const AdminDashboard = () => {
     // new join
 
     return (
-        <div>
+        <div className='ADMIN_EMP'>
             <div className="Top_Head_Admin_Dashboard">
                 {/* left */}
                 <div className="Left_admin_hello">
@@ -237,6 +240,86 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            {/* four div */}
+            <div className="content_emp_four" >
+                <div className="box_">
+                    <div className="head">
+                        <p>All Employees</p>
+                        <TfiLayoutMenuSeparated />
+                    </div>
+                    <div className="centerData">
+                        <div>
+                            <div><span> <RiUser6Line /></span></div>
+                            <h2>210</h2>
+                        </div>
+                        <div className='up'>
+                            <span> <IoMdTrendingDown /></span>
+                            <p>2%</p>
+                        </div>
+                    </div>
+                    <div className="bottom">
+                        <p>Last Month</p>
+                    </div>
+                </div>
+                 <div className="box_">
+                    <div className="head">
+                        <p>All Employees</p>
+                        <TfiLayoutMenuSeparated />
+                    </div>
+                    <div className="centerData">
+                        <div>
+                            <div><span> <RiUser6Line /></span></div>
+                            <h2>210</h2>
+                        </div>
+                        <div className='up'>
+                            <span> <IoMdTrendingDown /></span>
+                            <p>2%</p>
+                        </div>
+                    </div>
+                    <div className="bottom">
+                        <p>Last Month</p>
+                    </div>
+                </div>
+                <div className="box_">
+                    <div className="head">
+                        <p>All Employees</p>
+                        <TfiLayoutMenuSeparated />
+                    </div>
+                    <div className="centerData">
+                        <div>
+                            <div><span> <RiUser6Line /></span></div>
+                            <h2>210</h2>
+                        </div>
+                        <div className='down'>
+                            <span> <IoMdTrendingDown /></span>
+                            <p>2%</p>
+                        </div>
+                    </div>
+                    <div className="bottom">
+                        <p>Last Month</p>
+                    </div>
+                </div>
+                <div className="box_">
+                    <div className="head">
+                        <p>All Employees</p>
+                        <TfiLayoutMenuSeparated />
+                    </div>
+                    <div className="centerData">
+                        <div>
+                            <div><span> <RiUser6Line /></span></div>
+                            <h2>10</h2>
+                        </div>
+                        <div className='down'>
+                            <span> <IoMdTrendingDown /></span>
+                            <p>2%</p>
+                        </div>
+                    </div>
+                    <div className="bottom">
+                        <p>Last Month</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     );
