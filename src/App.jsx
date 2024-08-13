@@ -26,7 +26,7 @@ const App = () => {
             <Route path="/" element={<EmployeeForm />} />
             <Route path="/admin-dashboard" element={<AdminDashboard/>}></Route>
             <Route path='/*' element={<_404/>}/>
-            <Route path="/employee-onboarding" element={<EmployeeOnboarding />} />
+            <Route path="/employee-onboarding" element={<EmployeeOnboarding />}/>
           </Routes>
         </div>
       </div>

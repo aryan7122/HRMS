@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import Admin_IMG from '../../assets/user.png'
 import { GiAlarmClock } from "react-icons/gi";
-import { FaAngleDown, FaChevronRight } from "react-icons/fa";
+import { FaAngleDown, FaChevronRight, FaRegCalendarAlt } from "react-icons/fa";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
 import img_emp1 from '../../assets/emp1.png'
 import { TfiLayoutMenuSeparated } from "react-icons/tfi";
 import { RiUser6Line } from "react-icons/ri";
 import { IoMdTrendingDown, IoMdTrendingUp } from "react-icons/io";
+import { MdOutlineInsertChart } from "react-icons/md";
 
 
 import './AdminDashboard.scss'
@@ -77,6 +78,7 @@ const AdminDashboard = () => {
 
     return (
         <div className='ADMIN_EMP'>
+            {/* header time */}
             <div className="Top_Head_Admin_Dashboard">
                 {/* left */}
                 <div className="Left_admin_hello">
@@ -254,7 +256,7 @@ const AdminDashboard = () => {
                             <h2>210</h2>
                         </div>
                         <div className='up'>
-                            <span> <IoMdTrendingDown /></span>
+                            <span> <IoMdTrendingUp /></span>
                             <p>2%</p>
                         </div>
                     </div>
@@ -273,7 +275,7 @@ const AdminDashboard = () => {
                             <h2>210</h2>
                         </div>
                         <div className='up'>
-                            <span> <IoMdTrendingDown /></span>
+                            <span> <IoMdTrendingUp /></span>
                             <p>2%</p>
                         </div>
                     </div>
@@ -320,6 +322,106 @@ const AdminDashboard = () => {
                     </div>
                 </div>
 
+            </div>
+            {/*  */}
+            <div className="dashboard-container">
+                <div className="section upcoming-holidays">
+                    <div className="header">
+                        <h3>Upcoming Holidays</h3>
+                        <select>
+                            <option>This Month</option>
+                            <option>This Week</option>
+                        </select>
+                    </div>
+                    <ul>
+                        <li>
+                            <div className="date">02</div>
+                            <div className="details">
+                                <h4>Ganesh Chaturthi</h4>
+                                <p>Lorem Ipsum Dolor Sit Amet Consectetur</p>
+                            </div>
+                            <span>17-Apr</span>
+                        </li>
+                        <li>
+                            <div className="date icon2">07</div>
+                            <div className="details">
+                                <h4>Eid-Ul-Fitr</h4>
+                                <p>Lorem Ipsum Dolor Sit Amet Consectetur</p>
+                            </div>
+                            <span>17-Apr</span>
+                        </li>
+                        <li>
+                            <div className="date">10</div>
+                            <div className="details">
+                                <h4>Good Friday</h4>
+                                <p>Lorem Ipsum Dolor Sit Amet Consectetur</p>
+                            </div>
+                            <span>17-Apr</span>
+                        </li>
+                    </ul>
+                    <a href="#" className='a'>View All</a>
+                </div>
+
+                <div className="section announcements">
+                    <div className="header">
+                        <h3>Announcements</h3>
+                        <select>
+                            <option>Today</option>
+                        </select>
+                    </div>
+                    <ul>
+                        <li>
+                            <div className="icon"><MdOutlineInsertChart/></div>
+                            <div className="details">
+                                <h4>Launch Slot Pending</h4>
+                                <p>Lorem Ipsum Dolor Sit Amet Consectetur</p>
+                            </div>
+                            <span>09:00am</span>
+                        </li>
+                        <li>
+                            <div className="icon icon2"><FaRegCalendarAlt /></div>
+                            <div className="details">
+                                <h4>BOAT Event Upcoming</h4>
+                                <p>Lorem Ipsum Dolor Sit Amet Consectetur</p>
+                            </div>
+                            <span>09:00am</span>
+                        </li>
+                        <li>
+                            <div className="icon"><MdOutlineInsertChart/></div>
+                            <div className="details">
+                                <h4>Meeting Will Be On Next Month</h4>
+                                <p>Lorem Ipsum Dolor Sit Amet Consectetur</p>
+                            </div>
+                            <span>09:00am</span>
+                        </li>
+                    </ul>
+                    <a href="#" className='a'>View All</a>
+                </div>
+
+                <div className=" quick-links">
+                    <div className="header">
+                        <h3>Quick Links</h3>
+                        <a href="#" className='seeAll'>See All</a>
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="#">My Projects</a>
+                            <button>+</button>
+                        </li>
+                        <li>
+                            <a href="#">All Jobs</a>
+                            <button>+</button>
+                        </li>
+                        <li>
+                            <a href="#">All Employees</a>
+                            <button>+</button>
+                        </li>
+                        <li>
+                            <a href="#">All Employees</a>
+                            <button>+</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     );
