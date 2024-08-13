@@ -215,15 +215,13 @@ const EmployeeDashboard = () => {
 
                     <BarChart
                         series={[
-                            { data: [8, 8, 8, 3, 8, 8, 7], stack: 'A', label: 'Assigned Hours', color: '#591AB7' }, 
-                            { data: [8, 7, 8, 4, 8, 1, 5], stack: 'A', label: 'Total Hours Worked', color: '#7C3CE9' },
+                            { data: [9, 8, 8, 3, 8, 8, 6], stack: 'B', label: 'Assigned Hours', color: '#591AB7' }, 
+                            { data: [8, 7, 8, 4, 8, 1, 8], stack: 'A', label: 'Total Hours Worked', color: '#7C3CE9' },
                         ]}
                         xAxis={[
                             { scaleType: 'band', data: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], },
                         ]}
-                        width={900}
-                        height={480}
-                        
+                        style={{ width: '100%', height: '480px' }}
                     />
 
                 </div>
