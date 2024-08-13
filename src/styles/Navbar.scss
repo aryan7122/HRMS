@@ -4,21 +4,20 @@
   justify-content: space-between;
   align-items: center;
   background-color: #4b187a;
-  padding: 0px 10px;
+  padding: 0px 1rem; // Updated padding for better responsiveness
   height: 6.5vh;
+  
   .navbar-left {
     display: flex;
     align-items: center;
 
-   
-
     .nav-items {
       display: flex;
-      margin-left: 20px;
+      margin-left: 1.25rem; // Updated margin for better spacing
 
       span {
-        margin-right: 20px;
-        font-size: 16px;
+        margin-right: 1.25rem; // Updated margin for consistency
+        font-size: 1rem; // Updated font size using rem units
         color: white;
         cursor: pointer;
 
@@ -34,48 +33,48 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    // padding: 0px 10px;
-    
-    img{
-      padding-left: 20px;
-      width: 26px;
-      height: 26;
-      
+
+    img {
+      padding-left: 1.25rem; // Updated padding for better spacing
+      width: 1.625rem; // Updated width using rem units
+      height: 1.625rem; // Updated height using rem units
     }
-    .iconRight{
-      font-size: 18px;
-      // border: 1px solid red;
+
+    .iconRight {
+      font-size: 1.125rem; // Updated font size using rem units
       border-left: 1px solid #ffffff31;
     }
+
     .leftIcon {
-     
       div {
         width: 1px;
-        height: 25px;
+        height: 1.5625rem; // Updated height using rem units
         background: #ffffff34;
-        margin-right: 20px;
+        margin-right: 1.25rem; // Updated margin for spacing
       }
-      .icon2{
+
+      .icon2 {
         color: #ffffff67;
       }
+
       color: greenyellow;
-      font-size: 1.4rem;
-      width: 70px;
+      font-size: 1.4rem; // Font size using rem units
+      width: 4.375rem; // Updated width using rem units
       display: flex;
       justify-content: space-between;
-      
     }
+
     .search-bar {
       display: flex;
       align-items: center;
-      background-color: #3b0066; 
-      padding: 2px 15px;
-      border-radius: 5px;
-      // margin-right: 10px;
+      background-color: #3b0066;
+      padding: 0.125rem 1rem; // Updated padding for consistency
+      border-radius: 0.3125rem; // Updated border radius using rem units
       width: 30%;
-      span{
-        font-size: 26px;
-        padding-top: 3px;
+
+      span {
+        font-size: 1.2rem; // Updated font size using rem units
+        padding-top: 0.1875rem; // Updated padding using rem units
       }
 
       input {
@@ -83,12 +82,12 @@
         background: transparent;
         color: rgba(255, 255, 255, 0.676);
         outline: none;
-        margin-right: 5px;
+        margin-right: 0.3125rem; // Updated margin using rem units
         width: 100%;
-        font-size: 1.1rem;
+        font-size: 1rem; // Font size using rem units
 
         &::placeholder {
-          color: #b0a8c680; 
+          color: #b0a8c680;
         }
       }
 
@@ -99,9 +98,51 @@
 
     .icon {
       color: white;
-      font-size: 26px;
-      margin-left: 15px;
+      font-size: 1.625rem; // Updated font size using rem units
+      margin-left: 0.9375rem; // Updated margin using rem units
       cursor: pointer;
+    }
+  }
+}
+
+// Media Queries for Responsive Design
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0px 0.5rem; // Reduced padding for smaller screens
+
+    .navbar-left .nav-items {
+      margin-left: 0.5rem; // Adjusted margin for smaller screens
+
+      span {
+        font-size: 0.875rem; // Smaller font size for smaller screens
+        margin-right: 0.75rem; // Adjusted margin for smaller screens
+      }
+    }
+
+    .navbar-right img {
+      width: 1.25rem; // Adjusted width for smaller screens
+      height: 1.25rem; // Adjusted height for smaller screens
+    }
+
+    .navbar-right .leftIcon {
+      font-size: 1.2rem; // Smaller font size for smaller screens
+    }
+
+    .navbar-right .search-bar {
+      padding: 0.0625rem 0.75rem; // Adjusted padding for smaller screens
+
+      span {
+        font-size: 1.25rem; // Smaller font size for smaller screens
+      }
+
+      input {
+        font-size: 1rem; // Smaller font size for smaller screens
+      }
+    }
+
+    .navbar-right .icon {
+      font-size: 1.25rem; // Smaller font size for smaller screens
+      margin-left: 0.5rem; // Adjusted margin for smaller screens
     }
   }
 }
