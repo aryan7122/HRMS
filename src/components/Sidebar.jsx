@@ -27,7 +27,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             icon: <RiHome6Line />,
             submenu: [
                 { label: 'Admin Dashboard', path: '/admin-dashboard' },
-                { label: 'Calendar View', path: '/calendar-view' },
+                { label: 'Employee Dashboard', path: '/employee-dashboard' },
                 { label: 'Leave Application', path: '/leave-application' },
                 { label: 'Holidays', path: '/holidays' },
                 { label: 'Setting', path: '/setting' }
