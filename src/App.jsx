@@ -8,7 +8,7 @@ import './styles/App.scss';
 import _404 from './components/_404.jsx';
 import AdminDashboard from './Pages/ AdminDashboard/AdminDashboard.jsx';
 import EmployeeDashboard from './Pages/EmployeeDashboard/EmployeeDashboard.jsx';
-
+import AdminProfile from './Pages/AdminProfile/AdminProfile.jsx'
 const App = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -28,7 +28,7 @@ const App = () => {
             <Route path="/admin-dashboard" element={<AdminDashboard/>}></Route>
             <Route path='/*' element={<_404 />} />
             <Route path='/employee-onboarding' element={<EmployeeOnboarding />} />
-
+            <Route path='/admin-profile' element={<AdminProfile />} />
             <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
           </Routes>
         </div>

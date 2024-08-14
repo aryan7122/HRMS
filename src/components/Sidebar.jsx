@@ -28,7 +28,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             submenu: [
                 { label: 'Admin Dashboard', path: '/admin-dashboard' },
                 { label: 'Employee Dashboard', path: '/employee-dashboard' },
-                { label: 'Leave Application', path: '/leave-application' },
+                { label: 'Admin Profile', path: '/admin-profile' },
                 { label: 'Holidays', path: '/holidays' },
                 { label: 'Setting', path: '/setting' }
             ]
