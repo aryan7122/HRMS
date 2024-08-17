@@ -10,7 +10,7 @@
 
 .sidebar {
   z-index: 9;
-  width: 100px;
+  width: 105px;
   height: 93.5vh;
   background-color: $primary-color;
   color: white;
@@ -288,6 +288,8 @@
         width: fit-content;
         // transition:  0.5s ease-in-out;
         height: 100%;
+                margin-left: 30px;
+
         div {
           padding: 10px 20px;
         }
@@ -308,7 +310,6 @@
           padding: 20px 20px;
         }
 
-        margin-left: 30px;
         // margin-bottom: 15px;
 
         .leftArrow {

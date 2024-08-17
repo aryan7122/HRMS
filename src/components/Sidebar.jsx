@@ -37,9 +37,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             label: 'Profile',
             icon: <HiOutlineUser />,
             submenu: [
-                { label: 'Employee Onboarding', path: '/employee-onboarding' },
-                { label: 'Recruitment', path: '/recruitment' },
-                { label: 'Applicant Tracking', path: '/applicant-tracking' },
+                { label: 'All Employee List', path: '/all-employee-list' },
+                { label: 'Add Employee', path: '/add-employee' },
+                { label: 'Employee Details', path: '/employee-details' },
                 { label: 'Attendance Tracking', path: '/attendance-tracking' }
             ]
         },

@@ -4,7 +4,10 @@
 .app {
   display: flex;
 }
-
+#app_{
+  max-width: 2400px;
+  margin: 0 auto;
+}
 .main-content {
   flex: 1;
   transition: margin-left $animation-duration;

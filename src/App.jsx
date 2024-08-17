@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
-import EmployeeForm from './components/EmployeeForm';
-import EmployeeOnboarding from './components/EmployeeOnboarding.jsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import './styles/App.scss';
 import _404 from './components/_404.jsx';
-import AdminDashboard from './Pages/ AdminDashboard/AdminDashboard.jsx';
-import EmployeeDashboard from './Pages/EmployeeDashboard/EmployeeDashboard.jsx';
-import AdminProfile from './Pages/AdminProfile/AdminProfile.jsx'
+import Login from './components/Login';
+{/* dashboard & Profile Page */ }
+import AdminDashboard from './Pages/Dashboard and Profile/ AdminDashboard/AdminDashboard.jsx';
+import AdminProfile from './Pages/Dashboard and Profile/AdminProfile/AdminProfile.jsx';
+import EmployeeDashboard from './Pages/Dashboard and Profile/EmployeeDashboard/EmployeeDashboard.jsx';
+{/* {Employee onboarding } */ }
+import AllEmployeeList from './Pages/Employee onboarding/AllEmployeeList/AllEmployeeList.jsx';
+import AddEmloyee from './Pages/Employee onboarding/AddEmployee/AddEmloyee.jsx';
+import EmployeeDetails from './Pages/Employee onboarding/EmployeeDetail /EmployeeDetails.jsx';
+// import AddEmployee from './Pages/Employee onboarding/AddEmployee/NavbarForm.jsx';
+
+
 const App = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -18,21 +26,36 @@ const App = () => {
 
   return (
     <Router>
-      <Navbar />
-      <div className="app">
-        <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-        <div className="content">
-          <Routes>
-            {/* <Route path="/*" element={<_404 />} /> */}
-            <Route path="/" element={<EmployeeForm />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard/>}></Route>
-            <Route path='/*' element={<_404 />} />
-            <Route path='/employee-onboarding' element={<EmployeeOnboarding />} />
-            <Route path='/admin-profile' element={<AdminProfile />} />
-            <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
-          </Routes>
-        </div>
-      </div>
+      {!isLoggedIn ? (
+        <Login setIsLoggedIn={setIsLoggedIn} />
+      ) : (
+        <>
+          {/* nav bar */}
+          <div id="app_">
+            <Navbar />
+            <div className="app">
+              {/* side bar */}
+              <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+              <div className="content">
+                <Routes>
+                  {/* 404 page */}
+                  <Route path="/*" element={<_404 />} />
+                  {/* dashboard & Profile Page */}
+                  <Route path="/admin-dashboard" element={<AdminDashboard />}></Route>
+                  <Route path='/*' element={<_404 />} />
+                  <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
+                  {/* {Employee onboarding } */}
+                  <Route path="/admin-profile" element={<AdminProfile />} />
+                  <Route path="/all-employee-list" element={<AllEmployeeList />} />
+                  <Route path="/add-employee" element={<AddEmloyee />} />
+                  <Route path="/employee-details" element={<EmployeeDetails />} />
+
+                </Routes>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </Router>
   );
 };
