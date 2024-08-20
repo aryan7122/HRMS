@@ -18,7 +18,7 @@ import EmployeeDetails from './Pages/Employee onboarding/EmployeeDetail /Employe
 
 const App = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -27,21 +27,22 @@ const App = () => {
   return (
     <Router>
       {!isLoggedIn ? (
-        <Login setIsLoggedIn={setIsLoggedIn} />
+        <Login setIsLoggedIn={setIsLoggedIn}/>
       ) : (
         <>
           {/* nav bar */}
           <div id="app_">
-            <Navbar />
+              <Navbar setIsLoggedIn={setIsLoggedIn} />
             <div className="app">
               {/* side bar */}
               <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
               <div className="content">
                 <Routes>
                   {/* 404 page */}
-                  <Route path="/*" element={<_404 />} />
                   {/* dashboard & Profile Page */}
                   <Route path="/admin-dashboard" element={<AdminDashboard />}></Route>
+                    <Route path="/" element={<AdminDashboard />}></Route>
+
                   <Route path='/*' element={<_404 />} />
                   <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
                   {/* {Employee onboarding } */}

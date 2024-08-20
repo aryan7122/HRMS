@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import Select from 'react-select';
 import './AddEmloyee.scss';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
+import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 
-const cityOptions = [
-    { value: 'Delhi', label: 'Delhi' },
-    { value: 'Mumbai', label: 'Mumbai' },
-    { value: 'Bangalore', label: 'Bangalore' },
-    // Add more cities as needed
-];
+// const cityOptions = [
+//     { value: 'Delhi', label: 'Delhi' },
+//     { value: 'Mumbai', label: 'Mumbai' },
+//     { value: 'Bangalore', label: 'Bangalore' },
+//     // Add more cities as needed
+// ];
 
 const ContactsForm = ({ onSubmit }) => {
     const [formData, setFormData] = useState({
@@ -289,14 +290,21 @@ const ContactsForm = ({ onSubmit }) => {
                         </div>
                     </div>
 
-                    <div id='submitBtn'>
-                        <div className='div'>
-                            <button type="submit">Submit</button>
-                            <span><CiCircleChevRight /></span>
+                    <div id='submitBtn_next_main'>
+                        <div id='submitBtn' >
+                            <div className='div'>
+                                <button type="submit" >Submit </button>
+                                <span><CiCircleChevRight /></span>
+                            </div>
+                            <div className="lineBar"></div>
+                            <div className='x'>
+                                <span> <TfiClose /></span>
+                            </div>
                         </div>
-                        <div className="lineBar"></div>
-                        <div className='x'>
-                            <span> <TfiClose /></span>
+                        <div className="form">
+                            <p>Next Page</p>
+                            <span className='not_active'><IoIosArrowDropleft /></span>
+                            <button type='submit'><IoIosArrowDropright /></button>
                         </div>
                     </div>
                 </form>

@@ -62,7 +62,7 @@
                 height: 5px;
                 border-radius: 50%;
                 background: rgb(8, 227, 8);
-                animation: ping-animation 1s infinite;
+                // animation: ping-animation 0.9s infinite;
               }
             }
             h5 {
@@ -129,7 +129,7 @@
         border-radius: 50%;
         z-index: 1;
         clip-path: circle(43% at 50% 50%);
-        animation: roted-animation 12s infinite;
+        // animation: roted-animation 12s infinite;
       }
       &::after {
         content: "";
@@ -263,7 +263,7 @@
                 align-items: start;
                 justify-content: space-around;
                 p {
-                  color: #2a2a2a;
+                  color: #7e7676;
                 }
                 h3 {
                   color: #2a2a2a;
@@ -273,18 +273,20 @@
             h3 {
               color: #45237f;
               margin-bottom: 8px;
+              font-size: 15px;
             }
             p {
               color: #514e4ed8;
               margin-bottom: 8px;
-              font-size: 1rem;
+              font-size: 13px;
             }
             button {
+              margin-bottom: -5px;
               padding: 7px 11px;
               border-radius: 5px;
-              font-size: 1rem;
+              font-size: 14px;
               opacity: 0px;
-              margin-bottom: 5px;
+              // margin-bottom: 5px;
               outline: none;
               border: none;
               background-color: #5b238f;
@@ -313,7 +315,7 @@
           }
 
           h2 {
-            font-size: 1.5rem;
+            font-size: 16px;
             font-weight: bold;
           }
         }
@@ -337,6 +339,8 @@
                 padding: 0.75rem;
                 text-align: left;
                 font-weight: bold;
+                font-size: 13px;
+                opacity: 0.6;
               }
                th{
                 text-align: center;

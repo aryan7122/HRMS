@@ -4,7 +4,7 @@ import { GiAlarmClock } from "react-icons/gi";
 import { FaAngleDown, FaChevronRight, FaRegCalendarAlt } from "react-icons/fa";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
 import img_emp1 from '../../../assets/emp1.png'
-import { TfiLayoutMenuSeparated } from "react-icons/tfi";
+import { CiMenuKebab } from "react-icons/ci";
 import { RiUser6Line } from "react-icons/ri";
 import { IoMdTrendingDown, IoMdTrendingUp } from "react-icons/io";
 import { MdOutlineInsertChart } from "react-icons/md";
@@ -282,7 +282,7 @@ const AdminDashboard = () => {
                 <div className="box_">
                     <div className="head">
                         <p>All Employees</p>
-                        <TfiLayoutMenuSeparated />
+                        <span> <CiMenuKebab /></span>
                     </div>
                     <div className="centerData">
                         <div>
@@ -295,18 +295,18 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                     <div className="bottom">
-                        <p>Last Month</p>
+                        <p>Last Month: 173</p>
                     </div>
                 </div>
                 <div className="box_">
                     <div className="head">
                         <p>All Employees</p>
-                        <TfiLayoutMenuSeparated />
+                        <span> <CiMenuKebab /></span>
                     </div>
                     <div className="centerData">
                         <div>
                             <div><span> <RiUser6Line /></span></div>
-                            <h2>210</h2>
+                            <h2>27</h2>
                         </div>
                         <div className='up'>
                             <span> <IoMdTrendingUp /></span>
@@ -314,32 +314,13 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                     <div className="bottom">
-                        <p>Last Month</p>
+                        <p>Last Month: 7</p>
                     </div>
                 </div>
                 <div className="box_">
                     <div className="head">
                         <p>All Employees</p>
-                        <TfiLayoutMenuSeparated />
-                    </div>
-                    <div className="centerData">
-                        <div>
-                            <div><span> <RiUser6Line /></span></div>
-                            <h2>210</h2>
-                        </div>
-                        <div className='down'>
-                            <span> <IoMdTrendingDown /></span>
-                            <p>2%</p>
-                        </div>
-                    </div>
-                    <div className="bottom">
-                        <p>Last Month</p>
-                    </div>
-                </div>
-                <div className="box_">
-                    <div className="head">
-                        <p>All Employees</p>
-                        <TfiLayoutMenuSeparated />
+                        <span> <CiMenuKebab /></span>
                     </div>
                     <div className="centerData">
                         <div>
@@ -352,7 +333,26 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                     <div className="bottom">
-                        <p>Last Month</p>
+                        <p>Last Month: 6</p>
+                    </div>
+                </div>
+                <div className="box_">
+                    <div className="head">
+                        <p>All Employees</p>
+                        <span> <CiMenuKebab /></span>
+                    </div>
+                    <div className="centerData">
+                        <div>
+                            <div><span> <RiUser6Line /></span></div>
+                            <h2>10</h2>
+                        </div>
+                        <div className='down'>
+                            <span> <IoMdTrendingDown /></span>
+                            <p>2%</p>
+                        </div>
+                    </div>
+                    <div className="bottom">
+                        <p>Last Month: 6</p>
                     </div>
                 </div>
 

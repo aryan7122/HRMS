@@ -4,9 +4,9 @@
   justify-content: space-between;
   align-items: center;
   background-color: #4b187a;
-  padding: 0px 1rem; 
+  padding: 0px 1rem;
   height: 6.5vh;
-  
+
   .navbar-left {
     display: flex;
     align-items: center;
@@ -53,12 +53,13 @@
       display: flex;
       justify-content: space-between;
       margin-left: 10px;
-      &::before{
-        content: '';
+      margin-left: 20px;
+      &::before {
+        content: "";
         width: 1px;
         height: 25px;
         background: #e8d3e641;
-        margin-left: 10px;
+        margin-right: 10px;
       }
       div {
         width: 1px;
@@ -66,7 +67,7 @@
         background: #ffffff34;
         margin-right: 1.25rem; // Updated margin for spacing
       }
-      span{
+      span {
         cursor: pointer;
       }
 
@@ -115,57 +116,215 @@
     }
   }
 }
-// 
+// 🔕
 .notification-popup {
-    position: absolute;
-    top: 50px;
-    right: 20px;
-    width: 300px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    .img_user_profile{
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  width: 300px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px 0.5px rgba(27, 26, 26, 0.342);
+  // padding: 15px;
+  z-index: 999;
+  h3 {
+    text-align: center;
+    border-bottom: 2px solid #bdb1b18f;
+    padding: 10px;
+    font-size: 1.3rem;
+    color: #222121;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  .all_notifications {
+    text-align: center;
+    padding: 10px;
+
+    border-top: 2px solid #bdb1b18f;
+    p{
+      cursor: pointer;
+      padding: 10px;
+      text-decoration: none;
+      color: #3b0066;
+    }
+    a:hover {
+      color: #4b187a;
+      text-shadow: 0px 0px 30px #3b0066;
+    }
+  }
+  .img_user_profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+  ul {
+    // padding: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      margin: 10px 20px;
+      gap: 10px;
+      padding: 5px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      img{
+      margin-bottom: 10px;
+      img {
         width: 60px;
         height: 60px;
         border-radius: 50%;
         object-fit: cover;
       }
-    }
-    ul{
-      li{
-        div{
-          display: flex;
-          align-items: center;
-          cursor: pointer;
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        cursor: pointer;
+        p {
+          color: #212020;
+        }
+        small {
+          color: rgba(84, 81, 81, 0.69);
         }
       }
     }
+    li:hover {
+      box-shadow: 0px 0px 10px 0.2px rgba(219, 211, 211, 0.541);
+      border-radius: 10px;
+    }
+  }
 }
 
-.notification-popup h3 {
-    margin-bottom: 10px;
-    font-size: 18px;
-}
+// account-popup
+.account-popup {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  // border: 1px solid red;
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  width: 300px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px 0.5px rgba(27, 26, 26, 0.342);
+  // padding: 15px;
+  z-index: 999;
+  .img_user_profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+          margin: 10px 20px;
 
-.notification-popup ul {
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    div{
+      h2{
+        font-size: 1rem;
+
+      }
+      p{
+        font-size: 0.9rem;
+        color: #938d8da3;
+        margin-top: 5px;
+      }
+    }
+  }
+  ul {
+    // padding: 10px;
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
-.notification-popup ul li {
+    li {
+      margin: 5px 20px;
+      gap: 10px;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 10px 20px;
+      div {
+        display: flex;
+        align-items: start;
+        cursor: pointer;
+        gap: 10px;
+        a {
+          text-decoration: none;
+          color: #212020;
+        }
+        small {
+          color: rgba(84, 81, 81, 0.69);
+        }
+      }
+      div:active {
+        animation: ping-animation 0.6s infinite;
+      }
+    }
+    li:hover {
+      box-shadow: 0px 0px 10px 0.2px rgba(219, 211, 211, 0.541);
+      border-radius: 10px;
+      cursor: pointer;
+      background: #e9d6fb;
+    }
+  }
+  .out {
+    margin: 10px 20px;
+    gap: 10px;
+    padding: 5px;
     display: flex;
     align-items: center;
+    justify-content: start;
     margin-bottom: 10px;
+    color: red;
+    padding: 10px 20px;
+    // border: 1px solid red;
+
+    span {
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+    h2 {
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+  .out:active span {
+    // color: #212020;
+    animation: ping-animation 0.6s infinite;
+  }
 }
 
-
-// 
+@keyframes ping-animation {
+  0% {
+    transform: ma(0.5);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+//
 // Media Queries for Responsive Design
 @media screen and (max-width: 768px) {
   .navbar {
@@ -187,23 +346,23 @@
 
     .navbar-right .leftIcon {
       cursor: pointer !important;
-      font-size: 1.2rem; 
+      font-size: 1.2rem;
     }
 
     .navbar-right .search-bar {
-      padding: 0.0625rem 0.75rem; 
+      padding: 0.0625rem 0.75rem;
 
       span {
-        font-size: 1.25rem; 
+        font-size: 1.25rem;
       }
 
       input {
-        font-size: 1rem; 
+        font-size: 1rem;
       }
     }
 
     .navbar-right .icon {
-      font-size: 1.25rem; 
+      font-size: 1.25rem;
       margin-left: 0.5rem; // Adjusted margin for smaller screens
     }
   }
