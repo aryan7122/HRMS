@@ -31,6 +31,9 @@ const Login = ({ setIsLoggedIn }) => {
   const navigateSignUP = () => {
     navigate('/sign-up');
   }
+  const navigatePass = () => {
+    navigate('/forgot-password');
+  }
 
   return (
     <div className="login-container">
@@ -84,7 +87,7 @@ const Login = ({ setIsLoggedIn }) => {
               <label className="rememberMe1">Remember Me</label>
             </div>
             <div className="forgot-password">
-              <a href="/forgot-password" style={{ fontSize: '13px' }}>
+              <a style={{ fontSize: '13px', cursor: 'pointer' }}  onClick={navigatePass}>
               Forget Password? 
               </a>
             </div>
