@@ -380,9 +380,10 @@
               div {
                 text-align: start;
                 h3 {
-                  font-size: 18px !important;
-                  line-height: 24px;
-                  color: #2A2A2A;
+                   font-size: 16px;
+                    font-weight: 500;
+                    color: #2A2A2A;
+
                 }
                 p {
                   font-size: 14px !important;
@@ -873,6 +874,7 @@
               margin: 0;
               font-size: 16px;
               color: #2A2A2A;
+              font-weight: 500;
             }
 
             p {
@@ -902,9 +904,11 @@
         display: block;
         margin-top: 15px;
         text-align: center;
-        color: #7e57c2;
+        color: #400F6F;
         font-weight: bold;
         text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
       }
     }
     .quick-links{
@@ -929,17 +933,20 @@
             display: block;
         margin-top: 15px;
         text-align: center;
-        color: #7e57c2;
+        color: #400F6F;
         font-weight: bold;
         text-decoration: none;
           border: 2px solid #0000004d;
           padding: 10px 15px;
           border-radius: 8px;
           cursor: pointer;
+          font-size: 14px;
+          font-weight: 500;
         }
         h3{
-          font-size: 18px;
-          font-weight: 6000;
+          font-size: 18px !important;
+          font-weight: 600 !important;
+          color: #2A2A2A !important;
         }
       }
       ul{
@@ -961,11 +968,12 @@
           a{
              display: block;
         text-align: center;
-        color: #313131;
+        color: #272727;
         font-weight: bold;
         text-decoration: none;
-        font-size: 16px;
+        font-size: 15px !important;
         padding: 20px 15px;
+        font-weight: 500 !important;
           }
           button{
             border: none;
