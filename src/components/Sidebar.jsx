@@ -93,7 +93,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             ]
         },
         {
-            label: 'Live Tracker',
+            label: 'Leave Tracker',
             icon: <FiClock />,
             submenu: [
                 { label: 'All Leave', path: '/all-leave' },

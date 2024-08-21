@@ -248,7 +248,7 @@ const AdminDashboard = () => {
                             <div className="newEmployee">
                                 <div className="header_newEmp">
                                     <div className='number_new_hire'>
-                                        <h3>New Employee </h3>
+                                        <h3> Employees On Leave </h3>
                                         <div>
                                             <p>Monday,15th April</p>
                                         </div>
@@ -300,7 +300,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="box_">
                     <div className="head">
-                        <p>All Employees</p>
+                        <p>New Employees</p>
                         <span> <CiMenuKebab /></span>
                     </div>
                     <div className="centerData">
@@ -310,7 +310,7 @@ const AdminDashboard = () => {
                         </div>
                         <div className='up'>
                             <span> <IoMdTrendingUp /></span>
-                            <p>2%</p>
+                            <p>4%</p>
                         </div>
                     </div>
                     <div className="bottom">
@@ -319,7 +319,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="box_">
                     <div className="head">
-                        <p>All Employees</p>
+                        <p>Resigned</p>
                         <span> <CiMenuKebab /></span>
                     </div>
                     <div className="centerData">
@@ -329,7 +329,7 @@ const AdminDashboard = () => {
                         </div>
                         <div className='down'>
                             <span> <IoMdTrendingDown /></span>
-                            <p>2%</p>
+                            <p>4%</p>
                         </div>
                     </div>
                     <div className="bottom">
@@ -338,7 +338,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="box_">
                     <div className="head">
-                        <p>All Employees</p>
+                        <p>On Leave</p>
                         <span> <CiMenuKebab /></span>
                     </div>
                     <div className="centerData">
@@ -348,7 +348,7 @@ const AdminDashboard = () => {
                         </div>
                         <div className='down'>
                             <span> <IoMdTrendingDown /></span>
-                            <p>2%</p>
+                            <p>4%</p>
                         </div>
                     </div>
                     <div className="bottom">
