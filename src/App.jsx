@@ -41,11 +41,11 @@ const App = () => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-  
+
   return (
     <Router>
       {!isLoggedIn ? (
-    // {/* <Login setIsLoggedIn={setIsLoggedIn} /> */ }
+        // {/* <Login setIsLoggedIn={setIsLoggedIn} /> */ }
         <Routes>
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/sign-up" element={<SignUp />} />
@@ -57,38 +57,38 @@ const App = () => {
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/*" element={<_404 />} />
         </Routes>
-  ) : (
-    <>
-      {/* nav bar */}
-      <div id="app_">
-        <Navbar setIsLoggedIn={setIsLoggedIn} />
-        <div className="app">
-                {/* side bar */}
-                <div className="sideBar_app">
-                  <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-                </div>
-          <div className="content">
-            <Routes>
-              {/* 404 page */}
-              {/* dashboard & Profile Page */}
-              <Route path="/admin-dashboard" element={<AdminDashboard />}></Route>
-              <Route path="/" element={<AdminDashboard />}></Route>
+      ) : (
+        <>
+          {/* nav bar */}
+          <div id="app_">
+            <Navbar setIsLoggedIn={setIsLoggedIn} />
+            <div className="app">
+              {/* side bar */}
+              <div className="sideBar_app">
+                <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+              </div>
+              <div className="content">
+                <Routes>
+                  {/* 404 page */}
+                  {/* dashboard & Profile Page */}
+                  <Route path="/admin-dashboard" element={<AdminDashboard />}></Route>
+                  <Route path="/" element={<AdminDashboard />}></Route>
 
-              <Route path='/*' element={<_404 />} />
-              <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
-              {/* {Employee onboarding } */}
-              <Route path="/admin-profile" element={<AdminProfile />} />
-              <Route path="/all-employee-list" element={<AllEmployeeList />} />
-              <Route path="/add-employee" element={<AddEmloyee />} />
-              <Route path="/employee-details" element={<EmployeeDetails />} />
+                  <Route path='/*' element={<_404 />} />
+                  <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
+                  {/* {Employee onboarding } */}
+                  <Route path="/admin-profile" element={<AdminProfile />} />
+                  <Route path="/all-employee-list" element={<AllEmployeeList />} />
+                  <Route path="/add-employee" element={<AddEmloyee />} />
+                  <Route path="/employee-details" element={<EmployeeDetails />} />
 
-            </Routes>
+                </Routes>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </>
-  )
-}
+        </>
+      )
+      }
     </Router >
   );
 };

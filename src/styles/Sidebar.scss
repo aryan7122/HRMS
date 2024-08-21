@@ -15,14 +15,15 @@
   // z-index: 9;
   width: 105px;
   height: 93.5vh;
-  position: fixed; /* Ensure parent has relative positioning */
-   z-index: 1;
+  z-index: 1;
   background-color: $primary-color;
   transition: height $animation-duration ease-in-out;
-  // overflow-y: auto; /* Add this to enable scrolling in the sidebar */
-  // position: fixed;
+  overflow-y: visible; /* Add this to enable scrolling in the sidebar */
+  position: relative;
+  // position: relative;
   .ul{
-      background-color: $primary-color;
+    background-color: $primary-color;
+    // position: fixed; /* Ensure parent has relative positioning */
 
   }
   @media (max-width: 1024px) {
