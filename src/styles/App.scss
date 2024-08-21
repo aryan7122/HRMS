@@ -3,7 +3,14 @@
 
 .app {
   display: flex;
-  
+  .sideBar_app{
+    // border: 1px solid red;
+    width: 275px;
+    height:100% !important;
+    overflow-y: auto !important;
+    position: relative;
+    z-index: 1;
+  }
 }
 #app_{
   max-width: 2400px;
@@ -19,6 +26,8 @@
 }
 
 .content {
+  margin-left: -171px;
+  // border: 1px solid red;
   overflow-y: auto;
   // margin-left: 100px;
   // overflow-x: 9;

@@ -36,7 +36,7 @@ import SetNewPassword from './components/SetNewPassword'; // Import the SetNewPa
 
 const App = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -63,8 +63,10 @@ const App = () => {
       <div id="app_">
         <Navbar setIsLoggedIn={setIsLoggedIn} />
         <div className="app">
-          {/* side bar */}
-          <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+                {/* side bar */}
+                <div className="sideBar_app">
+                  <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+                </div>
           <div className="content">
             <Routes>
               {/* 404 page */}
