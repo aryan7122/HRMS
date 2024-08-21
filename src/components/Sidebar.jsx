@@ -138,7 +138,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                                     onClick={() => combinedClickHandler(index, item.path)} 
                                     className={`${activeItem === index ? ' color_li' : '' }`}
                                 >
+                                    {/* {item.icon} */}
                                     {item.icon}
+                                    
+
+                                        { activeItem2 && <p className={` ${isOpen ? 'openP' : 'closeP'}`}></p>} {isOpen ? '' : <div className='hover_P'><p>{item.label}</p> <div></div></div>}
                                 </span>
                                 {isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>{item.label}</p>}
                                 <div className={`hover_menu ${activeItem === index ? 'show' : ''} ${activeItem2 == true ? 'active_span_li ' :'active_span_li_2' }`}>
