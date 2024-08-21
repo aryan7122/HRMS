@@ -1,0 +1,346 @@
+/* Container for the sign-up page */
+.signup-container {
+  display: flex;
+  height: 94vh;
+  /* height: 1108px; */
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /* Space between image and form */
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 21px;
+  padding: 20px; /* Optional: Adds padding around the container */
+}
+
+/* Styling for the image section with overlay text */
+.signup-image {
+  /* position: relative;  */
+  flex: 1;
+  max-width: 33%;
+  background-color: #6767c9;
+  border-radius: 20px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-right: 338px;
+  position: relative;
+    top: -7px;
+}
+
+.signup-image img {
+  width: 78%;
+  height: 172px;
+  height: 387px;
+  object-fit: cover;
+  border-radius: 12px 10px 217px 20px;
+  background: #6f74d0;
+  position: relative;
+  top: -98px;
+  left: -19px;
+}
+
+/* Styling for mandatory field marker */
+.mandatory {
+  color: red; /* Red color for the asterisk */
+  font-weight: bold; /* Optional: Make the asterisk bold */
+}
+
+/* Overlay text styling */
+.text-overlay {
+  position: absolute;
+  top: 7%;
+  left: 27%;
+  transform: translateX(-50%);
+  color: #f9f3f3;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  border-radius: 5px;
+}
+
+
+/* Container for the form */
+.signup-form {
+  flex: 1;
+  max-width: 35%; /* Further reduced width of the form container */
+  padding: 30px;
+  background-color: white;
+  /* border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  height: 100%; /* Ensure the form section takes up full height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center the form content vertically */
+  position: relative;
+    right: 342px;
+    top: -6px;
+}
+
+/* Form title */
+.signup-form h3 {
+  font-size: 18px;
+  color: #545353;
+  /* text-align: center; */
+  margin-bottom: 9px;
+  margin-top: 14px;
+}
+
+
+.wholeF {
+  margin-top: -21px;
+}
+
+
+/* Styling for the text element that contains "30 days free trial" */
+.signup-trial {
+  font-size: 14px; /* General font size for the paragraph */
+  color: #333; /* Default color for the text */
+  margin-bottom: 37px;
+
+}
+
+/* Styling for the specific "30 days free trial" text */
+.signup-trial .highlight {
+  color: #5959ff; /* Blue color for the "30 days free trial" text */
+  font-weight: bold; /* Bold font for emphasis */
+  font-size: 14px; /* Slightly larger font size */
+}
+
+/* Label styling */
+.signup-form label {
+  font-size: 13px;
+  color: #555;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Apply consistent styling to all input fields */
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"],
+.signup-form input[type="number"],
+.signup-form input[name="name"],
+.signup-form input[name="companyName"] {
+  width: 73%;             /* Ensures all input fields are the same width */
+  padding: 8px;           /* Same padding for all input fields */
+  margin-bottom: 15px;     /* Consistent spacing below each input */
+  border: 1px solid #e9e9e9;  /* Same border for all input fields */
+  border-radius: 4px;      /* Same border radius for all input fields */
+  box-sizing: border-box;  /* Includes padding and border in element's total width and height */
+  font-size: 13px;         /* Uniform font size for all input fields */
+  color: #333;             /* Same text color for all input fields */
+  background: #fcfcfc;
+}
+
+/* Optional: If there's a specific issue with alignment, reset margins and padding */
+.signup-form input[name="name"],
+.signup-form input[name="companyName"] {
+  margin: 0;             /* Reset margin */
+  padding: 10px;         /* Ensure padding is consistent */
+  width: 100%;           /* Ensure width is consistent */
+}
+
+/* Button hover effect */
+.signup-form button[type="submit"]:hover {
+  background-color: #483D8B; /* Darker shade of violet */
+}
+
+/* Align the text inside the button */
+.signup-form button[type="submit"] {
+  text-align: center;
+  width: 72%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #5a3083;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+/* Container for the terms and checkbox */
+.terms-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px; /* Space between the terms section and the signup button */
+  position: relative;
+  top: 10px;
+}
+
+/* Styling for the checkbox */
+.terms-checkbox {
+  margin-right: 10px; /* Space between the checkbox and the label */
+  width: 16px; /* Standard checkbox size */
+  height: 16px; /* Standard checkbox size */
+}
+
+/* Styling for the terms and conditions text */
+.terms-label {
+  font-size: 12px; /* Small font size specifically for this label */
+  color: #555; /* Light black color for the text */
+}
+
+/* Highlight the "Terms of Service" and "Privacy Policy" links */
+.terms-label .highlight {
+  color: #5151f5;
+  font-weight: bold;
+  font-size: 12px;
+  text-decoration: underline; 
+}
+
+
+.Underline {
+  display: flex;
+  align-items: center;
+  margin-top: 26px;
+  width: 72%; 
+}
+
+.Underline .line1 {
+  flex: 1;
+  border: none;
+  border-top: 1px solid #c3c3c3;
+}
+
+.Underline span {
+  margin: 0 10px;
+  color: #c3c3c3;
+  font-size: 14px;
+}
+.with1 {
+  text-align: center;
+  margin-left: -154px;
+  /* margin-bottom: 20px; */
+  margin-top: 11px;
+  font-size: 13px;
+  color: #5a5757;
+}
+/* Container for the social media icons */
+.social-media-container1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 47px;
+  margin-right: 173px;
+  margin-top: 14px;
+}
+
+/* Styling for the social media icons */
+.social-icon1 {
+  font-size: 30px;
+  color: #8080e7;
+  transition: color 1.3s ease;
+  border: 3px solid #efefef;
+  border-radius: 21%;
+  padding: 10px;
+  background-color: #f2f2f2;
+}
+
+/* Hover effect for the social media icons */
+.social-icon1:hover {
+  color: #ffffff; /* Change icon color on hover */
+  border-color: #ffffff; /* Change border color on hover */
+}
+.account11 {
+  text-align: center;
+    color: #797979;
+    font-size: 12px;
+    margin-top: 20px;
+    margin-right: 170px;
+}
+
+.account11 a {
+  color: #6a0dad; /* Violet color for the link */
+  font-weight: bold; /* Bold text */
+  text-decoration: none; /* Remove underline from the link */
+}
+
+.account11 a {
+  text-decoration: underline; /* Add underline on hover */
+}
+.wholeF div {
+  margin-bottom: -3px !important;
+}
+
+/* Small screen adjustments */
+@media (max-width: 768px) {
+  .signup-container {
+    flex-direction: column; /* Stack the image and form vertically */
+    height: auto; /* Allow height to adjust based on content */
+  }
+
+  .signup-image, .signup-form {
+    max-width: 100%; /* Allow both sections to take full width */
+    height: auto; /* Adjust height to content */
+  }
+
+  .signup-form {
+    padding: 20px;
+  }
+}
+
+.password-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* Adjust to make space for the eye icon */
+  box-sizing: border-box;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 149px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #ccc;
+  top: 8px;
+}
+
+.eye-icon:hover {
+  color: #666;
+}
+/* 
+
+select {
+  padding: 8px;
+  border: 1px solid #edecec;
+  border-radius: 4px;
+  font-size: 13px;
+  background-color: #fbfbfb;
+  color: #6e6e6e;
+  position: relative;
+  /* transition: border-color 0.3s ease; */
+  width: 380px;
+  height: 34px;
+  top: -3px;
+} */
+
+/* select:focus {
+  border-color: #66afe9;
+  outline: none;
+} */
+
+option {
+  padding: 8px;
+  font-size: 14px;
+}
+
+.accountimage1 {
+  position: relative;
+  top: 0px;
+  left: 0px;
+ 
+}
