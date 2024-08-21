@@ -28,6 +28,9 @@ const Login = ({ setIsLoggedIn }) => {
       alert('Please enter both email and password.');
     }
   };
+  const navigateSignUP = () => {
+    navigate('/sign-up');
+  }
 
   return (
     <div className="login-container">
@@ -115,7 +118,7 @@ const Login = ({ setIsLoggedIn }) => {
             </a>
           </div>
           <div>
-            <h6 className='account'>Do you have an account yet? <a href="/sign-up">Sign Up</a></h6>
+            <h6 className='account'>Do you have an account yet? <a style={{cursor:'pointer'}} onClick={navigateSignUP}>Sign Up</a></h6>
           </div>
         </form>
       </div>
