@@ -21,12 +21,27 @@ const Login = ({ setIsLoggedIn }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (email && password) {
+
+    const passwordIsValid = validatePassword(password);
+
+    if (email && passwordIsValid) {
       setIsLoggedIn(true);
       navigate('/admin-dashboard');
     } else {
-      alert('Please enter both email and password.');
+      if (!passwordIsValid) {
+        alert('Password must be at least 8 characters long, contain at least one number, and one special character.');
+      } else {
+        alert('Please enter both email and password.');
+      }
     }
+  };
+
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasNumber = /\d/;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+
+    return password.length >= minLength && hasNumber.test(password) && hasSpecialChar.test(password);
   };
 
   const navigateSignUP = () => {

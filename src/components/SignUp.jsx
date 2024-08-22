@@ -32,6 +32,9 @@ const SignUp = () => {
       alert('Please make sure all fields are filled correctly and passwords match.');
     }
   };
+  const navigateSign = () => {
+    navigate('/');
+  }
 
 
   return (
@@ -180,7 +183,7 @@ const SignUp = () => {
             </a>
           </div>
           <div className='already11'>
-            <h6 className='account11'>Already have an account? <a href="/">Sign in</a></h6>
+            <h6 className='account11'>Already have an account? <a style={{ cursor: 'pointer' }} onClick={navigateSign}>Sign In</a></h6>
           </div>
         </form>
       </div>

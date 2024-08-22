@@ -21,6 +21,9 @@ const ForgotPassword = () => {
       alert('Please enter your email.');
     }
   };
+  const navigateSignUP = () => {
+    navigate('/sign-up');
+  }
 
   return (
     <div className="forgot-password-container" id="forgotten">
@@ -51,7 +54,7 @@ const ForgotPassword = () => {
         </div>
         <button type="submit">Send OTP</button>
         <div>
-          <h6 className='account'>Do you have an account yet? <a href="/sign-up">Sign Up</a></h6>
+          <h6 className='account'>Do you have an account yet? <a style={{ cursor: 'pointer' }} onClick={navigateSignUP}>Sign Up</a></h6>
         </div>
       </form>
     </div>
