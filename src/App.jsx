@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
@@ -35,8 +35,14 @@ import SetNewPassword from './components/SetNewPassword'; // Import the SetNewPa
 // 
 
 const App = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    () => JSON.parse(localStorage.getItem('isLoggedIn')) || false
+  );
+
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -53,9 +59,8 @@ const App = () => {
           <Route path='/track-performance' element={<TrackPerformance setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/otp-verification" element={<SendOTP />} />
-          <Route path="/set-new-password" element={<SetNewPassword />} /> {/* Add route for Set New Password page */}
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/*" element={<_404 />} />
+          <Route path="/set-new-password" element={<SetNewPassword />} /> 
+          <Route path="/*" element={<Navigate to="/login" />} />
         </Routes>
       ) : (
         <>
@@ -89,7 +94,7 @@ const App = () => {
         </>
       )
       }
-    </Router >
+    </Router>
   );
 };
 

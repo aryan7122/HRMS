@@ -295,7 +295,7 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                     <div className="bottom">
-                        <p>Last Month: 173</p>
+                        <p>Last Month: <span>173</span></p>
                     </div>
                 </div>
                 <div className="box_">
@@ -314,7 +314,7 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                     <div className="bottom">
-                        <p>Last Month: 7</p>
+                        <p>Last Month: <span>7</span></p>
                     </div>
                 </div>
                 <div className="box_">
@@ -333,7 +333,7 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                     <div className="bottom">
-                        <p>Last Month: 6</p>
+                        <p>Last Month: <span>6</span></p>
                     </div>
                 </div>
                 <div className="box_">
@@ -352,7 +352,7 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                     <div className="bottom">
-                        <p>Last Month: 6</p>
+                        <p>Last Month: <span>6</span></p>
                     </div>
                 </div>
 

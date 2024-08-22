@@ -28,23 +28,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     const navigate = useNavigate();
     const handleShowActivespan = () => {
         setActiveItem2(!activeItem2)
-        console.log(activeItem2)
     }
-
-    // const handleClick = (index, path) => {
-    //     setActiveItem(activeItem === index ? null : index);
-    //     // setActiveItem2(activeItem2 === index ? false : index)
-    //     // handleShowActivespan()
-    //     if (path) {
-    //         navigate(path);
-    //     }
-    // };
+    console.log('activeItem2', activeItem2)
+ 
     const handleClick = (index, path, isSubmenu = false) => {
         handleShowActivespan()
         if (!isSubmenu) {
-            // setActiveItem2(!activeItem2)
-            // alert()
-            // Only update activeItem if the click is not on a submenu item
+            
             setActiveItem(activeItem === index ? null : index);
         }
         if (path) {
@@ -52,13 +42,20 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         }
     };
     const combinedClickHandler = (index, path) => {
+        handleClick()
         handleClick(index, path);
         setActiveItem2(false)
+        console.log('index', index)
+        // console.log('path', path)
 
     };
+
+    
+
     const handleClickShortCut = () => {
         setShowAddShorts(!showAddShorts)
     }
+
 
 
     const menuItems = [

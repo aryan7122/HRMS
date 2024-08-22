@@ -86,6 +86,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        
         h3 {
           font-size: 14px !important;
           font-weight: 600;
@@ -93,13 +94,15 @@
         button {
           outline: none;
           border: none;
-          font-size: 18px;
+          font-size: 14px;
+          font-weight: 500;
           padding: 7px 25px;
           border-radius: 10px;
           color: #400f6f;
           font-weight: 500;
           margin-left: 10px;
           cursor: pointer;
+          
         }
       }
     }
@@ -108,7 +111,7 @@
   .content_emp_three {
     // display: flex;
     // justify-content: space-between;
-    // gap: 10px;
+    gap: 15px !important;
     // margin: 20px;
     // border: 1px solid red;
   
@@ -128,11 +131,11 @@
     .Left_cart {
       display: flex;
       align-items: center;
+      // border: 1px solid red;
       flex-direction: column;
-      gap: 10px;
+      gap: 15px !important;
       .Attendance_Overview {
         width: 100%;
-        // border: 1px solid red;
         height: fit-content;
         background: linear-gradient(313.96deg, #27014a 55.43%, #7a19d3 132.82%);
         border-radius: 10px;
@@ -204,9 +207,9 @@
           align-items: center;
           justify-content: space-between;
           padding: 10px 20px;
-          // border: 1px solid red;
           .left {
             margin-bottom: -40px;
+            // border: 1px solid red;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -314,7 +317,7 @@
 
         // margin: 10px;
 
-        border: 1px solid rgb(187, 187, 187);
+        border: 1px solid #EBE7EE !important;
         border-radius: 10px;
         .header_Birthday {
           display: flex;
@@ -328,7 +331,7 @@
             // border: 1px solid red;
           }
           div {
-            border: 3.3px solid #27014a;
+            border: 2.3px solid #27014a !important;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -360,8 +363,8 @@
             // border: 1px solid red;
             justify-content: space-between !important;
             p {
-              color: rgb(89, 89, 89);
-              font-size: 18px;
+              color: #595959;
+              font-size: 14px !important;
             }
             .img_dob_name {
               display: flex;
@@ -387,7 +390,7 @@
                 }
                 p {
                   font-size: 14px !important;
-                  line-height: 20px;
+                  line-height: 21px;
                   color: #00000064;
                 }
               }
@@ -400,11 +403,11 @@
     .flex_right{
       display: flex;
       width: 70vw;
-      gap: 10px;
-      .center_Cart {
-      border: 1px solid rgb(187, 187, 187);
-      border-radius: 10px;
       // border: 1px solid red;
+      gap: 15px !important;
+      .center_Cart {
+      border: 1px solid #EBE7EE;
+      border-radius: 10px;
       .newEmployee {
         .header_newEmp {
           display: flex;
@@ -496,6 +499,7 @@
               align-items: center;
               justify-content: center;
               gap: 10px;
+              // border: 1px solid red;
               img {
                 width: 46px;
                 height: 46px;
@@ -511,6 +515,7 @@
                    font-size: 16px;
                     font-weight: 500;
                     color: #2A2A2A;
+                    margin-bottom: 3px;
                 }
                 p {
                    font-size: 14px;
@@ -518,6 +523,7 @@
                     color: #2A2A2A;
                     opacity: 0.7;
                     display: flex;
+                    margin-top: 3px;
                 }
               }
             }
@@ -527,7 +533,7 @@
     }
 
     .Right_cart {
-      border: 1px solid rgba(145, 145, 145, 0.345);
+      border: 1px solid #EBE7EE;
       border-radius: 10px;
       .employeesOnLeave {
         .newEmployee {
@@ -606,6 +612,7 @@
                 align-items: center;
                 justify-content: center;
                 gap: 10px;
+                // border: 1px solid red;
                 img {
                   width: 46px;
                   height: 46px;
@@ -621,6 +628,7 @@
                     font-size: 16px;
                     font-weight: 500;
                     color: #2A2A2A;
+                    margin-bottom: 1px;
                   }
                   p {
                     font-size: 14px;
@@ -628,6 +636,7 @@
                     color: #2A2A2A;
                     opacity: 0.7;
                     display: flex;
+                    margin-bottom: 1px;
                   }
                   div {
                     display: flex;
@@ -684,7 +693,7 @@
       border-radius: 10px;
       // width: 100%;
       flex: 1;
-      border: 1px solid rgba(174, 169, 169, 0.542);
+      border: 1px solid #EBE7EE !important;
       box-shadow: 0px 0px 10px 0.1px rgba(116, 115, 115, 0.097) !important;
     }
     .box_ {
@@ -763,10 +772,18 @@
       }
       .bottom {
         margin-left: 50px;
-        color: #636363cb;
         margin-bottom: 30px;
+        // border: 1px solid red;
+        margin-top: 5px;
         p{
+          color: #2a2a2a5d ;
+          // opacity: 0.4 ;
           font-size: 14px !important;
+          span{
+            color: #2A2A2A ;
+            opacity: 0.6 ;
+            font-size: 15px;
+          }
         }
       }
     }
@@ -802,16 +819,16 @@
       background: #fff;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px #0000001a;
       width: 30%; /* Each section takes 30% of the container width */
-      border: 1px solid rgb(222, 219, 219);
+      border: 1px solid #EBE7EE !important;
 
       .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding-bottom: 20px;
-        border-bottom: 1px solid rgba(195, 195, 195, 0.511);
+        border-bottom: 1px solid #EBE7EE;
 
         h3 {
           margin: 0;
@@ -936,7 +953,7 @@
         color: #400F6F;
         font-weight: bold;
         text-decoration: none;
-          border: 2px solid #0000004d;
+          border: 2px solid #827C7C ;
           padding: 10px 15px;
           border-radius: 8px;
           cursor: pointer;
@@ -960,7 +977,7 @@
           justify-content: space-between;
           align-items: center;
           // padding: 10px;
-          border: 1px solid rgba(70, 69, 69, 0.455);
+          border: 1px solid #EBE7EE !important;
           margin: 10px 0 20px 0;
           border-radius: 10px;
           box-shadow: 0px 0px 10px 0.1px rgba(165, 157, 157, 0.16);
