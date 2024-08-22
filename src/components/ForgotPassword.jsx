@@ -10,9 +10,7 @@ import { FaTimes } from 'react-icons/fa';
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
-  const navigateSignUP = () => {
-    navigate('/sign-up');
-  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (email) {
@@ -25,25 +23,25 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="forgot-password-container">
+    <div className="forgot-password-container" id="forgotten">
       <div className="crossBtn">
-      
-  <FaTimes />
+
+        <FaTimes />
 
       </div>
-     
 
-          <div className='accountimage2'>   
-           <img src={imageaccount2} alt="Sign Up" />
-           </div>
+
+      <div className='accountimage2'>
+        <img src={imageaccount2} alt="Sign Up" />
+      </div>
       <h3>Forget Password ?</h3>
       <p className="recovery-message">
-      Don’t worry! Enter your registration email, We will send OTP for password recovery
+        Don’t worry! Enter your registration email, We will send OTP for password recovery
       </p>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email*</label>
-          <input
+          <input className='entermail'
             type="email"
             placeholder="Enter Email"
             value={email}
@@ -53,8 +51,8 @@ const ForgotPassword = () => {
         </div>
         <button type="submit">Send OTP</button>
         <div>
-          <h6 className='account'>Do you have an account yet? <a style={{ cursor: 'pointer' }} onClick={navigateSignUP}>Sign Up</a></h6>
-          </div>
+          <h6 className='account'>Do you have an account yet? <a href="/sign-up">Sign Up</a></h6>
+        </div>
       </form>
     </div>
   );

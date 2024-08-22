@@ -13,11 +13,11 @@ const SetNewPassword = () => {
   const [showPassword1, setShowPassword1] = useState(false);
 
   const togglePasswordVisibility = () => {
-    setShowPassword1(!showPassword1);
+    setShowPassword(!showPassword);
   };
 
   const togglePasswordVisibility1 = () => {
-    setShowPassword(!showPassword);
+    setShowPassword1(!showPassword1);
   };
 
   const handleSubmit = (event) => {
@@ -36,34 +36,35 @@ const SetNewPassword = () => {
   };
 
   return (
-    <div className="set-new-password-container">
-        <div className="crossBtn3">
-      
-      <FaTimes />
-    
-          </div>
-          <div className='accountimage2'>   
-           <img src={imageaccount4} alt="Sign Up" />
-           </div>
+    <div className="set-new-password-container" id="Contents">
+      <div className="crossBtn3" id="Circlebtn">
+
+        <FaTimes />
+
+      </div>
+      <div className='accountimage2'>
+        <img src={imageaccount4} alt="Sign Up" />
+      </div>
       <h3>Set New Password</h3>
       <div className='char'>
         <p>
-        Must be at least 8 characters
+          Must be at least 8 characters
         </p>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <div>
           <label>New Password*</label>
           <input
-           type={showPassword1 ? 'text' : 'password'}
-           placeholder="Enter New Password"
-           value={newPassword}
-           onChange={(e) => setNewPassword(e.target.value)}
-           required
-         />
-         <span className="eye-icon1" onClick={togglePasswordVisibility1}>
-           {showPassword1 ? <FaEyeSlash /> : <FaEye />}
-         </span>
+            type={showPassword1 ? 'text' : 'password'}
+            placeholder="Enter New Password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+            className='Textt'
+          />
+          <span className="eye-icon1" id='eyeeee11' onClick={togglePasswordVisibility1}>
+            {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+          </span>
         </div>
         <div>
           <label>Re-enter Password*</label>
@@ -73,12 +74,13 @@ const SetNewPassword = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            className='textt2'
           />
-           <span className="eye-icon2" onClick={togglePasswordVisibility}>
-           {showPassword ? <FaEyeSlash /> : <FaEye />}
-         </span>
+          <span className="eye-icon2" id='eyeeee22' onClick={togglePasswordVisibility}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
         </div>
-        <button type="submit">Reset Password</button>
+        <button className='BTNNNN' id="bt22" type="submit">Reset Password</button>
       </form>
     </div>
   );

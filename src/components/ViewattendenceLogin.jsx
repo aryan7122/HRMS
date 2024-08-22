@@ -32,7 +32,7 @@ const ViewattendenceLogin = ({ setIsLoggedIn }) => {
           <p className="access-info1">View Attendance Records</p>
           <p className="details-info">Check employee daily, monthly, and annual  </p>
           <p className='details-info1'>
-          attendance records and download reports
+            attendance records and download reports
           </p>
         </div>
 

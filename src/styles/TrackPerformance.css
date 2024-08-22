@@ -4,12 +4,12 @@
     height: 100vh;
   }
    */
-   .page-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0; 
+.page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
 }
 
 .login-container {
@@ -24,175 +24,191 @@
   height: 690px;
   /* margin-right: 20px; */
   margin-left: 20px;
-  box-shadow:  rgba(0, 0, 0, 0.2);
+  box-shadow: rgba(0, 0, 0, 0.2);
 }
-  .login-image {
-    flex: 1;
-    background-color: #6565eb;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    padding: 132px;
-    margin-right: -234px;
-  }
-  
-  .login-image img {
-    max-width: 527px;
-    height: 580px;
-    border-radius: 11px;
-    margin-right: -382px;
-    background: rgb(113 124 221);
-    margin-top: -86px;
-    margin-left: -117px;
-  }
-  
-  /* Container for text overlay */
+
+.login-image {
+  flex: 1;
+  background-color: #6565eb;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 132px;
+  margin-right: -234px;
+}
+
+.login-image img {
+  max-width: 527px;
+  height: 580px;
+  border-radius: 11px;
+  margin-right: -382px;
+  background: rgb(113 124 221);
+  margin-top: -86px;
+  margin-left: -117px;
+}
+
+/* Container for text overlay */
 .overlay-text {
   position: absolute;
   top: 64px;
   left: 20%;
 
-  transform: translateX(-50%); /* Centers the text horizontally */
+  transform: translateX(-50%);
+  /* Centers the text horizontally */
   text-align: center;
-  color: #fff; /* White text color for contrast */
-  
+  color: #fff;
+  /* White text color for contrast */
+
   padding: 10px;
-  border-radius: 5px; /* Optional: Adds rounded corners to the background */
-  width: 90%; /* Adjust width as needed */
+  border-radius: 5px;
+  /* Optional: Adds rounded corners to the background */
+  width: 90%;
+  /* Adjust width as needed */
 }
 
 /* Styling for the main text */
 .overlay-text .access-info {
-  font-size: 45px; /* Adjust font size as needed */
+  font-size: 45px;
+  /* Adjust font size as needed */
   font-weight: bold;
-  margin-bottom: 5px; /* Space below the text */
+  margin-bottom: 5px;
+  /* Space below the text */
   color: #b1e6bc;
 }
 
 /* Styling for the additional details text */
 .overlay-text .details-info {
-  font-size: 15px; /* Slightly smaller font size */
-  color: #e0e0e0; /* Light gray color for secondary text */
-  margin-top: 0; /* No margin above the text */
+  font-size: 15px;
+  /* Slightly smaller font size */
+  color: #e0e0e0;
+  /* Light gray color for secondary text */
+  margin-top: 0;
+  /* No margin above the text */
 }
-.overlay-text .details-info1{
-  font-size: 15px; /* Slightly smaller font size */
-  color: #e0e0e0; /* Light gray color for secondary text */
-  margin-top: 0; /* No margin above the text */
+
+.overlay-text .details-info1 {
+  font-size: 15px;
+  /* Slightly smaller font size */
+  color: #e0e0e0;
+  /* Light gray color for secondary text */
+  margin-top: 0;
+  /* No margin above the text */
 }
-  
-  .login-form {
-    /* flex: 1; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0px 302px;
-    margin-right: 134px;
-    margin-top: -81px;
+
+.login-form {
+  /* flex: 1; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 302px;
+  margin-right: 134px;
+  margin-top: -81px;
 }
-  
-  
-  .login-form h3 {
-    margin-bottom: 20px;
-    color: #7B33BD;
-    margin-right: 246px;
-    font-size: 20px;
-  }
-  
-  .login-form form {
-    width: 95%;
-    margin-top: 20px;
-  }
-  
-  .login-form form div {
-    margin-bottom: 15px;
-  }
-  
-  .login-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: normal;
-    font-size: 12px;
-    margin-right: -82px;
-  }
-  
-  .login-form input {
-    width: 89%;
-    padding: 12px;
-    border: 1px solid #e7e7e7;
-    border-radius: 5px;
-    font-size: 13px;
-    background: #fcfcfc;
-  }
-  
-  .remember-forgot-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    width: 89%; /* Match input width */
-  }
-  
-  .remember-me {
-    display: flex;
-    align-items: center;
-  }
-  
-  .remember-me input {
-    margin-right: 3px;
-  }
-  
-  .forgot-password a {
-    color: #400F6F;
-    text-decoration: none;
-    font-size: 13px;
-  }
-  
-  .forgot-password a:hover {
-    text-decoration: underline;
-  }
-  
-  .login-form button {
-    width: 95%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #400f6f;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .login-form button {
-    background-color: #330d56;
-  }
-  
-  .address {
-    margin-bottom: 12px;
-  }
-  .name {
-    margin-left: -324px;
-    margin-top: -12px;
-    color: #b0acac;
-    font-size: 14px;
+
+
+.login-form h3 {
+  margin-bottom: 20px;
+  color: #7B33BD;
+  margin-right: 246px;
+  font-size: 20px;
+}
+
+.login-form form {
+  width: 95%;
+  margin-top: 20px;
+}
+
+.login-form form div {
+  margin-bottom: 15px;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: normal;
+  font-size: 12px;
+  margin-right: -82px;
+}
+
+.login-form input {
+  width: 89%;
+  padding: 12px;
+  border: 1px solid #e7e7e7;
+  border-radius: 5px;
+  font-size: 13px;
+  background: #fcfcfc;
+}
+
+.remember-forgot-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 89%;
+  /* Match input width */
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+}
+
+.remember-me input {
+  margin-right: 3px;
+}
+
+.forgot-password a {
+  color: #400F6F;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.login-form button {
+  width: 95%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #400f6f;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-form button {
+  background-color: #330d56;
+}
+
+.address {
+  margin-bottom: 12px;
+}
+
+.name {
+  margin-left: -324px;
+  margin-top: -12px;
+  color: #b0acac;
+  font-size: 14px;
 }
 
 .button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .button-container button {
-    width: 94%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #400f6f;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    margin-right: 20px;
+  width: 94%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #400f6f;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 20px;
 }
 
 /* .button-container button {
@@ -214,21 +230,23 @@
 }
 
 .or-divider span {
-    margin: 0 10px;
-    color: #400f6f;
-    font-size: 14px;
+  margin: 0 10px;
+  color: #400f6f;
+  font-size: 14px;
 }
- .login1 {
-    text-align: center;
-    font-weight: 700;
-    font-size: 11px;
-    color: #5a5353;
+
+.login1 {
+  text-align: center;
+  font-weight: 700;
+  font-size: 11px;
+  color: #5a5353;
 }
 
 .social-media-container {
   display: flex;
   justify-content: center;
-  gap: 42px; /* Add space between icons */
+  gap: 42px;
+  /* Add space between icons */
 }
 
 .social-icon {
@@ -243,23 +261,30 @@
 }
 
 .social-icon {
-  color: #0073b1; /* Change color on hover, customize as needed */
+  color: #0073b1;
+  /* Change color on hover, customize as needed */
 }
+
 .account {
   text-align: center;
-  color: #666666; /* Default text color */
-  font-size: 12px;; /* Adjust font size as needed */
+  color: #666666;
+  /* Default text color */
+  font-size: 12px;
+  ;
+  /* Adjust font size as needed */
   margin-top: 25px;
 }
 
 .account a {
-  color: #6a0dad; /* Violet color for the link */
-  font-weight: bold; /* Bold text */
-  text-decoration: none; /* Remove underline from the link */
+  color: #6a0dad;
+  /* Violet color for the link */
+  font-weight: bold;
+  /* Bold text */
+  text-decoration: none;
+  /* Remove underline from the link */
 }
 
 .account a {
-  text-decoration: underline; /* Add underline on hover */
+  text-decoration: underline;
+  /* Add underline on hover */
 }
-
-

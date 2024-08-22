@@ -28,6 +28,7 @@ const Login = ({ setIsLoggedIn }) => {
       alert('Please enter both email and password.');
     }
   };
+
   const navigateSignUP = () => {
     navigate('/sign-up');
   }
@@ -50,13 +51,13 @@ const Login = ({ setIsLoggedIn }) => {
 
       </div>
       <div className="login-form">
-      <div className='accountimage'>   
-           <img src={imageaccount1} alt="Sign Up" />
-           </div>
-  
-        <h3>Welcome Back!👋</h3>
+        <div className='accountimage'>
+          <img src={imageaccount1} alt="Sign Up" />
+        </div>
+
+        <h3 className='welcome'>Welcome Back!👋</h3>
         <label className="name">Log In to Manage Your HR Task</label>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='loginAlignmentform'>
           <div>
             <label className="address">Email*</label>
             <input
@@ -68,18 +69,18 @@ const Login = ({ setIsLoggedIn }) => {
               required
             />
           </div>
-          <div>
-            <label>Password*</label>
+          <div >
+            <label className='passwordform'>Password*</label>
             <input
-                   type={showPassword ? 'text' : 'password'}
-                   placeholder="Enter Password"
-                   value={password}
-                   onChange={(e) => setPassword(e.target.value)}
-                   required
-                 />
-                 <span className="eye-icon" onClick={togglePasswordVisibility}>
-                   {showPassword ? <FaEyeSlash /> : <FaEye />}
-                 </span>
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Enter Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <span className="eyeicon0" id="icon100" onClick={togglePasswordVisibility}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
           <div className="remember-forgot-container">
             <div className="remember-me">
@@ -87,8 +88,8 @@ const Login = ({ setIsLoggedIn }) => {
               <label className="rememberMe1">Remember Me</label>
             </div>
             <div className="forgot-password">
-              <a style={{ fontSize: '13px', cursor: 'pointer' }}  onClick={navigatePass}>
-              Forget Password? 
+              <a style={{ fontSize: '13px', cursor: 'pointer' }} onClick={navigatePass}>
+                Forget Password?
               </a>
             </div>
           </div>
@@ -100,7 +101,7 @@ const Login = ({ setIsLoggedIn }) => {
               <hr className="line" />
             </div>
           </div>
-          <div>
+          <div className='distancelogin'>
             <h6 className="login1">Login With</h6>
           </div>
           <div className="social-media-container">
@@ -120,8 +121,8 @@ const Login = ({ setIsLoggedIn }) => {
               <BsLinkedin />
             </a>
           </div>
-          <div>
-            <h6 className='account'>Do you have an account yet? <a style={{cursor:'pointer'}} onClick={navigateSignUP}>Sign Up</a></h6>
+          <div className='wholeaccount'>
+            <h6 className='account'>Do you have an account yet? <a style={{ cursor: 'pointer' }} onClick={navigateSignUP}>Sign Up</a></h6>
           </div>
         </form>
       </div>

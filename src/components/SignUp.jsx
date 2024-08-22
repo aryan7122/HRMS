@@ -44,15 +44,15 @@ const SignUp = () => {
         </div>
       </div>
       <div className="signup-form">
-        <div className='accountimage1'>   
-           <img src={imageaccount} alt="Sign Up" />
-           </div>
-  
+        <div className='accountimage1'>
+          <img src={imageaccount} alt="Sign Up" />
+        </div>
+
         <h3>Create An Account!</h3>
         <p className="signup-trial">Let's get started with your <span className="highlight">30 Days Free Trial</span> </p>
 
 
-        <form className="wholeF" onSubmit={handleSubmit}>
+        <form className="wholeF" onSubmit={handleSubmit} id="signupwholedesign">
 
           <div>
             <label>Name<span className="mandatory">*</span></label>
@@ -124,20 +124,20 @@ const SignUp = () => {
           </div>
           <div>
             <label>Number Of Employees</label>
-            <select
-    value={numberofEmployee}
-    onChange={(e) => setnumberofEmployee(e.target.value)}
-    required
-  >
-    <option value="" disabled>
-      Choose or Enter Number Of Employees
-    </option>
-    <option value="1-10">1-10</option>
-    <option value="11-50">11-50</option>
-    <option value="51-100">51-100</option>
-    <option value="101-500">101-500</option>
-    <option value="500+">500+</option>
-  </select>
+            <select className='consider'
+              value={numberofEmployee}
+              onChange={(e) => setnumberofEmployee(e.target.value)}
+              required
+            >
+              <option value="" disabled>
+                Choose or Enter Number Of Employees
+              </option>
+              <option value="1-10">1-10</option>
+              <option value="11-50">11-50</option>
+              <option value="51-100">51-100</option>
+              <option value="101-500">101-500</option>
+              <option value="500+">500+</option>
+            </select>
           </div>
 
           <div className="terms-container">
@@ -163,11 +163,11 @@ const SignUp = () => {
             <span>Or</span>
             <hr className="line1" />
           </div>
-          <div className='Options '>
+          <div className='Options' id='options22'>
             <h6 className="with1">Login with</h6>
           </div>
 
-          <div className="social-media-container1">
+          <div className="social-media-container1" id="social22">
             <a href="https://www.google.com" className="social-icon1">
               <BsGoogle />
             </a>
@@ -179,7 +179,7 @@ const SignUp = () => {
               <BsLinkedin />
             </a>
           </div>
-          <div>
+          <div className='already11'>
             <h6 className='account11'>Already have an account? <a href="/">Sign in</a></h6>
           </div>
         </form>

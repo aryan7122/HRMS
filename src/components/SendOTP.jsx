@@ -29,7 +29,7 @@ const SendOTP = () => {
     }
   };
 
-  
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -43,23 +43,23 @@ const SendOTP = () => {
   };
 
   return (
-    <div className="otp-verification-container">
-        <div className="crossBtn1">
-      
-      <FaTimes />
-    
-          </div>
-          <div className='accountimage2'>   
-           <img src={imageaccount3} alt="Sign Up" />
-           </div>
+    <div className="otp-verification-container" id="verify">
+      <div className="crossBtn1">
+
+        <FaTimes />
+
+      </div>
+      <div className='accountimage2'>
+        <img src={imageaccount3} alt="Sign Up" />
+      </div>
       <h3>Enter Your Code</h3>
       <p className="otp-message-container">
         <span className="otp-message">Please Enter the OTP send to</span>
         <span className="email-address">Akshshbs@gmail.com</span>
       </p>
-     
-      <form onSubmit={handleSubmit}>
-      <div className="otp-inputs">
+
+      <form onSubmit={handleSubmit} id="Indexx">
+        <div className="otp-inputs" id='INputsss'>
           {otp.map((value, index) => (
             <input
               key={index}
@@ -83,9 +83,9 @@ const SendOTP = () => {
           />
         </div> */}
         <p className="resend-container">
-        Didn't receive the email? <a href="#">Click to Resend</a>
-      </p>
-        <button type="submit">Continue</button>
+          Didn't receive the email? <a href="#">Click to Resend</a>
+        </p>
+        <button className="codeOTP" id="btn11" type="submit">Continue</button>
       </form>
     </div>
   );
