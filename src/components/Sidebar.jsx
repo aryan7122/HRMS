@@ -22,35 +22,37 @@ import '../styles/Sidebar.scss';
 const Sidebar = ({ isOpen, toggleSidebar }) => {
     const [activeItem, setActiveItem] = useState(null);
     const [activeItem2, setActiveItem2] = useState(true);
+    const [isSubmenu, setIsSubmenu] = useState(false);
 
     const [showAddShorts, setShowAddShorts] = useState(false);
 
     const navigate = useNavigate();
+    
     const handleShowActivespan = () => {
         setActiveItem2(!activeItem2)
     }
-    console.log('activeItem2', activeItem2)
+    // console.log('activeItem2', activeItem2)
  
-    const handleClick = (index, path, isSubmenu = false) => {
+    const handleClick = (index, path, ) => {//isSubmenu = false
         handleShowActivespan()
+        // console.log('li index', index)
+        // console.log('li isSubmenu', isSubmenu)
+        setActiveItem(index)
         if (!isSubmenu) {
-            
-            setActiveItem(activeItem === index ? null : index);
+            setActiveItem(activeItem == index ? null : index);
         }
         if (path) {
             navigate(path);
         }
     };
     const combinedClickHandler = (index, path) => {
-        handleClick()
-        handleClick(index, path);
+        setIsSubmenu(true)
+        handleClick(index);
         setActiveItem2(false)
         console.log('index', index)
-        // console.log('path', path)
-
+        handleShowActivespan()
     };
-
-    
+   
 
     const handleClickShortCut = () => {
         setShowAddShorts(!showAddShorts)
@@ -125,17 +127,15 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                                 {/* <span onClick={() => handleClick(index)}
                                     // className={`${activeItem2 == false ? 'active_span_li' : ''}`}
                                     // className={`${activeItem === index ? 'active_span_li' : ''}`}
-                                    className={`${activeItem === index ? ' color_li' : ''}`}
+                                    // className={`${activeItem === index ? ' color_li' : ''}`}
 
                                 >
                                     {item.icon}
                                 </span> */}
                                 <span
-                                    // onClick={() => handleClick(index, item.path)}
                                     onClick={() => combinedClickHandler(index, item.path)}
                                     className={`${activeItem === index ? ' color_li' : ''}`}
                                 >
-                                    {/* {item.icon} */}
                                     {item.icon}
 
 
