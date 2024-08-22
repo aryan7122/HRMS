@@ -5,8 +5,9 @@
   // padding:0px 20px;
   width: 100%;
   // border: 1px solid red;
+  overflow-y: auto;
   height: 87vh;
- 
+
   @media (max-width: 1024px) {
     // padding-left: 110px;
   }
@@ -20,7 +21,7 @@
     box-shadow: 0px 2px 10px 0.1px rgba(0, 0, 0, 0.171);
     width: 100%;
     overflow: hidden;
-    
+
     h2 {
       padding: 22px;
       // margin: 0;
@@ -29,12 +30,12 @@
       text-align: start;
       margin-left: 20px;
       display: flex;
-        margin-top: -5px;
-      .span{
+      margin-top: -5px;
+      .span {
         // margin-top: 20px !important;
         // border: 1px solid  red;
         margin-left: -5px;
-        width:fit-content;
+        width: fit-content;
       }
     }
     .close_nav {
@@ -264,9 +265,9 @@
     @media (max-width: 800px) {
       // display: none;
       span {
-      font-size: 0.9rem;
-      padding: 10px;
-    }
+        font-size: 0.9rem;
+        padding: 10px;
+      }
     }
     span:nth-child(1) {
       border-right: 1px solid rgba(128, 128, 128, 0.281);
@@ -289,39 +290,43 @@
     overflow-y: auto;
     width: 95%;
     // border :1px solid red;
-
+    // height: fit-content;
   }
 
-      @media (max-width: 1215px) {
-     form{
+  @media (max-width: 1215px) {
+    form {
       width: 90% !important;
-     }
-  }  
+    }
+  }
   @media (max-width: 1024px) {
-    form{
+    form {
       padding-bottom: 100px !important;
     }
   }
-     @media (max-width: 1105px) {
-     form{
+  @media (max-width: 1105px) {
+    form {
       width: 95% !important;
-     }
+    }
   }
-    @media (max-width: 905px) {
-     form{
-      width:100% !important;
-     }
+  @media (max-width: 905px) {
+    form {
+      width: 100% !important;
+    }
   }
   form .from1 {
-
-    overflow: auto;
+    // border: 1px solid red !important;
+    // z-index: 1;
+    // height: fit-content !important;
+    // min-height: 210px;
+    // max-height: 600px;
+    // min-height: 220px;
     padding: 15px;
-    border-radius: 20px;
+    border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.053);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     // gap: 5px;
-    margin: 20px  ;
+    margin: 20px;
     // padding-right: 270px;
     @media (max-width: 1250px) {
       padding-right: 0px;
@@ -338,7 +343,8 @@
 
     .form-group {
       margin-bottom: 10px;
-
+      // border: 1px solid red;
+      height: fit-content;
       label {
         display: block;
         margin-bottom: 3px;
@@ -359,39 +365,38 @@
         box-sizing: border-box;
         background-color: #ffffff0b;
         border: 1px solid rgba(128, 128, 128, 0.291);
-        border-radius: 5px;
+        border-radius: 3px;
         color: #1d0534;
         font-size: 14px;
-        
-      //  
-      
-       
-      }
-      input:hover{
-        outline: none;
-          border: 1px solid $border-color;
-        box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);
-         
-      }
-       select:hover{
-        outline: none;
-       border: 1px solid $border-color;
-        box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);      }
-      input:focus{
-        outline: none;
-         border: 1px solid #650f6f;
-      }
-        @media (max-width: 1205px) {
-      input,
-      select ,label{
-      font-size: 0.9rem !important;
-     }
-  }
 
-  // input[type="file"]:hover {
-  //      opacity: 1;
-        
-  //     }
+        //
+      }
+      input:hover {
+        outline: none;
+        border: 1px solid $border-color;
+        box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);
+      }
+      select:hover {
+        outline: none;
+        border: 1px solid $border-color;
+        box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);
+      }
+      input:focus {
+        outline: none;
+        border: 1px solid #650f6f;
+      }
+      @media (max-width: 1205px) {
+        input,
+        select,
+        label {
+          font-size: 0.9rem !important;
+        }
+      }
+
+      // input[type="file"]:hover {
+      //      opacity: 1;
+
+      //     }
 
       .custom-file-upload {
         // border: 1px solid red;
@@ -405,9 +410,9 @@
         margin-top: 0px;
         color: #00000072;
       }
-      .custom-file-upload:hover{
+      .custom-file-upload:hover {
         border: 1px solid $border-color;
-          box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);
+        box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);
       }
 
       .upload-icon {
@@ -422,7 +427,83 @@
         display: none;
       }
     }
+    // 
+    .dropdown {
+      width: 25%;
+      height: 33px;
+      // position: relative;
+      border: 1px solid #e4e3e4;
+      border-radius: 3px;
+      position: absolute;
+      // z-index: 1;
+      background: #fff;
+                margin-bottom: 50px !important;
 
+      .dropdown-button {
+        font-size: 14px;
+        background-color: #fff;
+        // z-index: 9999 !important;
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 2px !important;
+        display: flex;
+        align-items: center;
+        width: 94%;
+        justify-content: space-between;
+        height: 23px;
+        div:nth-child(2) {
+          padding-top: 3px;
+        }
+        
+      }
+      .dropdown-menu {
+        border: 1px solid rgb(226, 223, 223) !important;
+        border-radius: 5px;
+        display: flex;
+        // background: #27014a;
+        // z-index: 999;
+        margin-top: 5px;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100px;
+        border: 1px solid #fff;
+        // border-radius: 4px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        width: 100%;
+          z-index: 99999;
+          background-color: #fff;
+          padding-bottom:10px !important;
+        .dropdown-item {
+          overflow: visible;
+          // padding: 10px;
+          padding: 5px 10px;
+          width: 91%;
+          cursor: pointer;
+          margin: 3px 6px;
+          &:hover {
+            background-color: rgba(219, 111, 233, 0.1);
+            border-radius: 5px;
+          }
+        }
+        .dropdown-item:hover{
+        color: #400f6f;
+        }
+      }
+    }
+      .dropdown:hover {
+        outline: none;
+        border: 1px solid $border-color;
+        box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);
+      }
+       .dropdown:hover {
+        outline: none;
+        border: 1px solid $border-color;
+        box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);
+      }
+    // 
     button {
       grid-column: span 3;
 
@@ -441,9 +522,14 @@
       // cursor: pointer;
     }
   }
+  form  .form2{
+  // border: 1px solid red !important;
+  // height: 210px;
+  padding-bottom: 50px;
+  }
 }
-#submitBtn_next_main{
-   width: 92%;
+#submitBtn_next_main {
+  width: 92%;
   color: #fff;
   position: absolute;
   bottom: 10px;
@@ -456,7 +542,7 @@
   height: 63px;
   margin-bottom: -10px;
   background: #fff;
-  .form{
+  .form {
     right: 10px;
     color: black;
     display: flex;
@@ -467,20 +553,19 @@
     position: absolute;
     gap: 5px;
     margin-bottom: -20px;
-    p{
+    p {
       color: #938a8a;
       margin-right: 2px;
       font-size: 13px;
-      
     }
-    span{
+    span {
       font-size: 22px !important;
       cursor: not-allowed;
     }
-    .not_active{
+    .not_active {
       color: rgb(178, 170, 170) !important;
     }
-    button{
+    button {
       background: #fff;
       outline: none;
       border: none;
@@ -507,10 +592,9 @@
     cursor: pointer;
     box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.212);
   }
-  .div:hover{
-        background-color: #410f6fee;
-            box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.864);
-
+  .div:hover {
+    background-color: #410f6fee;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.864);
   }
 
   .div button {
@@ -546,8 +630,7 @@
   }
 }
 
-
-#showAlert{
+#showAlert {
   position: absolute;
   display: flex;
   align-items: center;
@@ -566,4 +649,4 @@
   box-shadow: 0px 0px 10px 1px rgba(2, 116, 29, 0.706);
 }
 
-// 
+//

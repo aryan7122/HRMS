@@ -4,8 +4,7 @@ import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
-import {  IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
-
+import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 const BasicDetailsForm = ({ onSubmit }) => {
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
@@ -31,6 +30,17 @@ const BasicDetailsForm = ({ onSubmit }) => {
         sourceOfHire: ''
     });
 
+    const [dropdowns, setDropdowns] = useState({
+        gender: false,
+        reportingManager: false,
+        department: false,
+        designation: false,
+        maritalStatus: false,
+        employmentType: false,
+        employeeStatus: false,
+        sourceOfHire: false
+    });
+
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -50,18 +60,10 @@ const BasicDetailsForm = ({ onSubmit }) => {
             [name]: value
         }));
     };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-
-
-        event.preventDefault();
         console.log(formData);
-        setShowAlert(true);
-
-        setTimeout(() => {
-            setShowAlert(false);
-        }, 4300);
-
         setFormData({
             employeeId: '',
             firstName: '',
@@ -84,12 +86,27 @@ const BasicDetailsForm = ({ onSubmit }) => {
         });
     };
 
+    const toggleDropdown = (dropdown) => {
+        setDropdowns(prevState => ({
+            ...prevState,
+            [dropdown]: !prevState[dropdown]
+        }));
+    };
+
+    const selectOption = (dropdown, value) => {
+        setFormData(prevState => ({
+            ...prevState,
+            [dropdown]: value
+        }));
+        setDropdowns(prevState => ({
+            ...prevState,
+            [dropdown]: false
+        }));
+    };
+
     return (
         <>
             <div className="" onSubmit={onSubmit}>
-                {/* <form >
-                    <button type="submit">next </button>
-                </form> */}
                 <form onSubmit={handleSubmit}>
                     <div className="from1">
                         <div className="form-group">
@@ -146,19 +163,21 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                 required
                             />
                         </div>
+                        {/* Gender Dropdown */}
                         <div className="form-group">
                             <label>Gender</label>
-                            <select
-                                name="gender"
-                                value={formData.gender}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Select gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </select>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('gender')}>
+                                    <div>{formData.gender || "Select gender"}</div>
+                                </div>
+                                {dropdowns.gender && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('gender', 'Male')}>Male</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('gender', 'Female')}>Female</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('gender', 'Other')}>Other</div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>Email ID</label>
@@ -182,51 +201,57 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                 required
                             />
                         </div>
+                        {/* Reporting Manager Dropdown */}
                         <div className="form-group">
                             <label>Reporting Manager</label>
-                            <select
-                                name="reportingManager"
-                                value={formData.reportingManager}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Select manager</option>
-                                <option value="Johan Smith">Johan Smith</option>
-                                <option value="Ram Jain">Ram Jain</option>
-                                <option value="Yas Pall">Yas Pall</option>
-                                <option value="Deepak Ji">Deepak Ji</option>
-                            </select>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('reportingManager')}>
+                                    <div>{formData.reportingManager || "Select manager"}</div>
+                                </div>
+                                {dropdowns.reportingManager && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('reportingManager', 'Johan Smith')}>Johan Smith</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('reportingManager', 'Ram Jain')}>Ram Jain</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('reportingManager', 'Yas Pall')}>Yas Pall</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('reportingManager', 'Deepak Ji')}>Deepak Ji</div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
 
-                    <div className="from1">
+                    <div className="from1 form2">
+                        {/* Department Dropdown */}
                         <div className="form-group">
                             <label>Department</label>
-                            <select
-                                name="department"
-                                value={formData.department}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Select department</option>
-                                <option value="Management">Management</option>
-                                <option value="Development">Development</option>
-                                <option value="HR">HR</option>
-                            </select>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                                    <div>{formData.department || "Select department"}</div>
+                                </div>
+                                {dropdowns.department && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('department', 'Management')}>Management</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('department', 'Development')}>Development</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('department', 'HR')}>HR</div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
+                        {/* Designation Dropdown */}
                         <div className="form-group">
                             <label>Designation</label>
-                            <select
-                                name="designation"
-                                value={formData.designation}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Select designation</option>
-                                <option value="Administration">Administration</option>
-                                <option value="Developer">Developer</option>
-                                <option value="Manager">Manager</option>
-                            </select>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('designation')}>
+                                    <div>{formData.designation || "Select designation"}</div>
+                                </div>
+                                {dropdowns.designation && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('designation', 'Administration')}>Administration</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('designation', 'Developer')}>Developer</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('designation', 'Manager')}>Manager</div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>Date of Joining</label>
@@ -250,24 +275,25 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                     required
                                 />
                                 <label htmlFor="file" className="custom-file-upload">
-                                    {!isUploaded && <GrCloudUpload className="upload-icon" />}
-                                    {isUploaded ? fileName : 'Upload Photo'}
+                                    {!isUploaded && <GrCloudUpload size={20} />}
+                                    <span>{isUploaded ? fileName : 'Upload photo'}</span>
                                 </label>
                             </div>
                         </div>
+                        {/* Marital Status Dropdown */}
                         <div className="form-group">
                             <label>Marital Status</label>
-                            <select
-                                name="maritalStatus"
-                                value={formData.maritalStatus}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Select status</option>
-                                <option value="Single">Single</option>
-                                <option value="Married">Married</option>
-                                <option value="Divorced">Divorced</option>
-                            </select>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('maritalStatus')}>
+                                    <div>{formData.maritalStatus || "Select status"}</div>
+                                </div>
+                                {dropdowns.maritalStatus && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('maritalStatus', 'Single')}>Single</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('maritalStatus', 'Married')}>Married</div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>Date of Exit</label>
@@ -278,50 +304,55 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                 onChange={handleChange}
                             />
                         </div>
+                        {/* Employment Type Dropdown */}
                         <div className="form-group">
                             <label>Employment Type</label>
-                            <select
-                                name="employmentType"
-                                value={formData.employmentType}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Select employment type</option>
-                                <option value="Permanent">Permanent</option>
-                                <option value="Contractual">Contractual</option>
-                                <option value="Internship">Internship</option>
-                            </select>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('employmentType')}>
+                                    <div>{formData.employmentType || "Select employment type"}</div>
+                                </div>
+                                {dropdowns.employmentType && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Part-time')}>Part-time</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Full-time')}>Full-time</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Consultant')}>Consultant</div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
+                        {/* Employee Status Dropdown */}
                         <div className="form-group">
                             <label>Employee Status</label>
-                            <select
-                                name="employeeStatus"
-                                value={formData.employeeStatus}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Select status</option>
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
-                                <option value="On Leave">On Leave</option>
-                            </select>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('employeeStatus')}>
+                                    <div>{formData.employeeStatus || "Select status"}</div>
+                                </div>
+                                {dropdowns.employeeStatus && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Permanent')}>Permanent</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Probation')}>Probation</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Intern')}>Intern</div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
+                        {/* Source of Hire Dropdown */}
                         <div className="form-group">
                             <label>Source of Hire</label>
-                            <select
-                                name="sourceOfHire"
-                                value={formData.sourceOfHire}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Select source</option>
-                                <option value="Naukri.com">Naukri.com</option>
-                                <option value="LinkedIn">LinkedIn</option>
-                                <option value="Indeed">Indeed</option>
-                            </select>
+                            <div className="dropdown">
+                                <div className="dropdown-button" onClick={() => toggleDropdown('sourceOfHire')}>
+                                    <div>{formData.sourceOfHire || "Select source"}</div>
+                                </div>
+                                {dropdowns.sourceOfHire && (
+                                    <div className="dropdown-menu">
+                                        <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', 'Referral')}>Referral</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', 'Direct')}>Direct</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', 'Campus')}>Campus</div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
-
                     <div id='submitBtn_next_main'>
                         <div id='submitBtn' >
                             <div className='div'>
@@ -335,8 +366,8 @@ const BasicDetailsForm = ({ onSubmit }) => {
                         </div>
                         <div className="form">
                             <p>Next Page</p>
-                            <span className='not_active'><IoIosArrowDropleft/></span>
-                            <button type='submit'><IoIosArrowDropright/></button>
+                            <span className='not_active'><IoIosArrowDropleft /></span>
+                            <button type='submit'><IoIosArrowDropright /></button>
                         </div>
                     </div>
                 </form>
