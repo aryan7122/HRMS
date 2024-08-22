@@ -36,7 +36,7 @@ import SetNewPassword from './components/SetNewPassword'; // Import the SetNewPa
 
 const App = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
