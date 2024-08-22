@@ -42,11 +42,17 @@
     color: #2a2a2adb;
 
   }
+ 
   .div_heading {
     display: flex;
     gap: 10px;
-    // border: 1px solid red;
     align-items: center;
+// border: 1px solid red;  
+input{
+  width: 2%;
+  // align-items: end;
+  margin-left: 70%;
+}  
     p {
       color: gray;
       margin-left: -8px;
@@ -171,14 +177,22 @@ li:hover #hover_P {
 
 #form_group_Duration {
   // display: flex;
-
+  width: 100%;
+  .divDate{
+    display: flex;
+    // border: 1px solid red;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    // flex-direction: column;
+  }
   #div_Duration {
     display: flex;
     justify-content: space-between;
     width: 57%;
   }
   input {
-    width: 40%;
+    width: 100%;
     margin: 0 33px;
     margin-left: 0px;
   }

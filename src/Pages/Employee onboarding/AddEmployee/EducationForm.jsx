@@ -170,7 +170,7 @@ const EducationForm = ({ onSubmit }) => {
                                     <label> From</label>
                                     <label>To</label>
                                 </div>
-                                <div>
+                                <div className='divDate'>
                                     <input
                                         type="date"
                                         name="fromDate"

@@ -92,7 +92,7 @@
       margin-left: -5px;
       // opacity: 0.5;
       gap: 12px;
-    margin: 5px 0px;
+    margin: 8px 0px;
       transition: 0.4s ease-in;
       span{
         // margin-top: 5px;
@@ -146,14 +146,14 @@
       // }
 
       h5 {
-        
+        // border: 1px solid red;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 300;
         cursor: pointer;
-        margin-top: 13px;
+        margin-top: 23px;
         color: #fff;
       }
 
@@ -506,7 +506,7 @@
       border-radius: 30px;
       right: -3px;
       width: 4px;
-      height: 100%;
+      height: 90%;
       background-color: #c500fb83;
 
       // li {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './AddEmloyee.scss';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
@@ -19,7 +19,8 @@ const ExperienceForm = ({ onSubmit }) => {
             startDate: '',
             endDate: '',
             description: '',
-            photo: ''
+            photo: '',
+            duration: ''  // Add duration field
         }
     ]);
 
@@ -34,11 +35,41 @@ const ExperienceForm = ({ onSubmit }) => {
         }
     };
 
+    const calculateDuration = (startDate, endDate) => {
+        if (!startDate || !endDate) return '';
+
+        const from = new Date(startDate);
+        const to = new Date(endDate);
+
+        if (to < from) return 'Invalid date range';
+
+        const diffTime = Math.abs(to - from);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const years = Math.floor(diffDays / 365);
+        const months = Math.floor((diffDays % 365) / 30);
+        const days = diffDays % 30;
+
+        let durationStr = '';
+        if (years > 0) durationStr += `${years} year${years > 1 ? 's' : ''} `;
+        if (months > 0) durationStr += `${months} month${months > 1 ? 's' : ''} `;
+        if (days > 0) durationStr += `${days} day${days > 1 ? 's' : ''}`;
+
+        return durationStr.trim();
+    };
+
     const handleChange = (index, event) => {
         const { name, value } = event.target;
         const newForms = [...experienceForms];
         newForms[index][name] = value;
+
+        // Update duration whenever startDate or endDate changes
+        if (name === 'startDate' || name === 'endDate') {
+            const duration = calculateDuration(newForms[index].startDate, newForms[index].endDate);
+            newForms[index].duration = duration;
+        }
+
         setExperienceForms(newForms);
+        console.log('experienceForms', newForms);  // Print the updated forms with duration
     };
 
     const handleAddExperience = () => {
@@ -52,7 +83,8 @@ const ExperienceForm = ({ onSubmit }) => {
                 startDate: '',
                 endDate: '',
                 description: '',
-                photo: ''
+                photo: '',
+                duration: ''  // Add duration field for new form
             }
         ]);
     };
@@ -64,47 +96,41 @@ const ExperienceForm = ({ onSubmit }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(experienceForms);
+        console.log('experienceForms', experienceForms);  // Print the final forms with duration
         // handle form submission logic here
         // Reset forms or show a success message
     };
 
     return (
-        <div onSubmit={onSubmit} id="Experience_form">
-
+        <div onSubmit={onSubmit}  id="Experience_form">
             <form onSubmit={handleSubmit}>
                 {experienceForms.map((form, index) => (
-                    <div key={index} id='form' >
+                    <div key={index} id='form'>
                         <div className='div_heading add_exp'>
                             <h2>Experience {index + 1}</h2>
-                            {!index > 0 ?
+                            {index > 0 &&
+                                <div
+                                    id='removeBtn'
+                                    style={{ color: 'red', cursor: 'pointer' }}
+                                    onClick={() => handleRemoveExperience(index)}
+                                >
+                                    <li className='li_add_emp '>
+                                        <IoMdCloseCircleOutline />
+                                        <div id='hover_P'>
+                                            <p id='remove_p'>Remove</p>
+                                        </div>
+                                    </li>
+                                </div>
+                            }
+                            {index === 0 &&
                                 <div
                                     type="button"
-                                    // id="add-experience-button"
                                     onClick={handleAddExperience}
                                 >
                                     <li className='li_add_emp'>
                                         <IoMdAddCircleOutline />
                                         <div id='hover_P'>
                                             <p id='remove_p'>Add More</p>
-                                            <div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </div>
-                                :
-                                <div
-                                    id='removeBtn'
-                                    style={{ color: 'red', cursor: 'pointer' }}
-                                    onClick={() => handleRemoveExperience(index)}
-                                >
-                                    {/* {index + 1} */}
-                                    <li className='li_add_emp '>
-                                        <IoMdCloseCircleOutline />
-                                        <div id='hover_P'>
-                                            <p id='remove_p'>Remove</p>
-                                            <div>
-                                            </div>
                                         </div>
                                     </li>
                                 </div>
@@ -147,20 +173,18 @@ const ExperienceForm = ({ onSubmit }) => {
                                 <label>Duration</label>
                                 <input
                                     type="text"
-                                    name="jobTitle"
-                                    value={form.description}
-                                    onChange={(e) => handleChange(index, e)}
-                                    required
-                                    disabled
-                                    // placeholder={form.d}
+                                    name="duration"
+                                    value={form.duration}  // Display calculated duration
+                                    readOnly
+                                    placeholder="Duration"
                                 />
                             </div>
-                            <div className="form-group " id='form_group_Duration'>
+                            <div className="form-group" id='form_group_Duration'>
                                 <div id='div_Duration'>
-                                    <label> From</label>
+                                    <label>From</label>
                                     <label>To</label>
                                 </div>
-                                <div>
+                                <div className='divDate'>
                                     <input
                                         type="date"
                                         name="startDate"
@@ -183,7 +207,6 @@ const ExperienceForm = ({ onSubmit }) => {
                                     <input
                                         type="file"
                                         name='photo'
-                                        // accept="image/*"
                                         id="file"
                                         onChange={(e) => handleFileChange(index, e)}
                                         required
@@ -196,8 +219,8 @@ const ExperienceForm = ({ onSubmit }) => {
                             </div>
                         </div>
                         <div id='Description'>
-                            <div className="form-group" >
-                                <label>Description</label> <br />
+                            <div className="form-group">
+                                <label>Description</label>
                                 <textarea
                                     name="description"
                                     value={form.description}
@@ -207,7 +230,6 @@ const ExperienceForm = ({ onSubmit }) => {
                             </div>
                         </div>
                     </div>
-
                 ))}
                 <div id='submitBtn_next_main'>
                     <div id='submitBtn' >
@@ -232,4 +254,3 @@ const ExperienceForm = ({ onSubmit }) => {
 };
 
 export default ExperienceForm;
-

@@ -21,24 +21,25 @@ import '../styles/Sidebar.scss';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
     const [activeItem, setActiveItem] = useState(null);
-    const [activeItem2, setActiveItem2] = useState(true);
+    const [activeItem2, setActiveItem2] = useState(true)
+    const [activeItem3, setActiveItem3] = useState(null);
+;
     const [isSubmenu, setIsSubmenu] = useState(false);
-
     const [showAddShorts, setShowAddShorts] = useState(false);
 
     const navigate = useNavigate();
-    
+
     const handleShowActivespan = () => {
         setActiveItem2(!activeItem2)
     }
-    // console.log('activeItem2', activeItem2)
- 
-    const handleClick = (index, path, ) => {//isSubmenu = false
+  
+    const handleClick = (index, path,) => {//isSubmenu = false
         handleShowActivespan()
-        // console.log('li index', index)
-        // console.log('li isSubmenu', isSubmenu)
+     
         setActiveItem(index)
+ 
         if (!isSubmenu) {
+
             setActiveItem(activeItem == index ? null : index);
         }
         if (path) {
@@ -49,10 +50,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         setIsSubmenu(true)
         handleClick(index);
         setActiveItem2(false)
-        console.log('index', index)
-        handleShowActivespan()
+        // console.log('span index ', index)
+        // handleShowActivespan()  ise tab call karo jab li index and span index same ho
+        if (activeItem == index) {
+            handleShowActivespan() 
+        }
     };
-   
+
 
     const handleClickShortCut = () => {
         setShowAddShorts(!showAddShorts)
@@ -133,7 +137,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                                     {item.icon}
                                 </span> */}
                                 <span
-                                    onClick={() => combinedClickHandler(index, item.path)}
+                                    onClick={() => combinedClickHandler(index, item.submenu)}
                                     className={`${activeItem === index ? ' color_li' : ''}`}
                                 >
                                     {item.icon}
@@ -155,7 +159,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                                         ))} */}
                                         {item.submenu.map((submenuItem, subIndex) => (
                                             <li
-                                                onClick={() => handleClick(index, submenuItem.path, true,)}
+                                                onClick={() => {
+                                                    handleClick(index, submenuItem.path, true);
+                                                    setActiveItem3(submenuItem.path); 
+                                                }}
                                                 key={subIndex}
                                             >
                                                 {submenuItem.label}
