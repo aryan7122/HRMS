@@ -10,6 +10,11 @@ import loginImage from '../assets/loginImage1.png';
 import loginImage2 from '../assets/loginImage2.png'; // Add your second image here
 import loginImage3 from '../assets/loginImage3.png'; // Add your third image here
 
+import ImgG from '../assets/google.png'
+import ImgM from '../assets/microsoft.png'
+import ImgL from '../assets/LinkedIn.png'
+import ImgT from '../assets/tiwtter.png'
+import ImgF from '../assets/facebook.png'
 const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -173,19 +178,23 @@ const Login = ({ setIsLoggedIn }) => {
           </div>
           <div className="social-media-container">
             <a href="https://www.google.com" className="social-icon">
-              <BsGoogle />
+              <img src={ImgG} alt="" />
+
             </a>
             <a href="https://www.facebook.com" className="social-icon">
-              <BsFacebook />
+              <img src="" alt="" />
             </a>
             <a href="https://twitter.com" className="social-icon">
-              <BsTwitter />
+              <img src={ImgF} alt="" />
             </a>
             <a href="https://www.microsoft.com" className="social-icon">
-              <BsMicrosoft />
+              <img src={ImgT} alt="" />
             </a>
             <a href="https://www.linkedin.com" className="social-icon">
-              <BsLinkedin />
+              <img src={ImgM} alt="" />
+            </a>
+            <a href="https://www.linkedin.com" className="social-icon">
+              <img src={ImgL} alt="" />
             </a>
           </div>
           <div className='wholeaccount'>

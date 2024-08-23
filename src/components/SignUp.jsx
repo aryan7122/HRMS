@@ -7,7 +7,12 @@ import signupimage from '../assets/signupimage.png';
 import { BsGoogle, BsMicrosoft, BsLinkedin } from 'react-icons/bs';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // You'll need to install react-icons if you haven't already
 import imageaccount from '../assets/logo.png';
+import ImgG from '../assets/google.png'
+import ImgM from '../assets/microsoft.png'
+import ImgL from '../assets/LinkedIn.png'
 
+
+facebook
 const SignUp = () => {
 
   const navigate = useNavigate();
@@ -58,11 +63,12 @@ const SignUp = () => {
   return (
     <div className="signup-container">
       <div className="signup-image">
-        <img src={signupimage} alt="Sign Up" />
+        <div id='img'></div>
+        {/* <img src={signupimage} alt="Sign Up" />
         <div className="text-overlay">
           <p className="line1">Let's get</p>
           <p className="line2">started!</p>
-        </div>
+        </div> */}
       </div>
       <div className="signupform">
         <div className='accountimage1'>
@@ -211,14 +217,15 @@ const SignUp = () => {
 
           <div className="social-media-container1" id="social22">
             <a href="https://www.google.com" className="social-icon1">
-              <BsGoogle />
+              {/* <BsGoogle /> */}
+              <img src={ImgG} alt="" />
             </a>
 
             <a href="https://www.microsoft.com" className="social-icon1">
-              <BsMicrosoft />
+              <img src={ImgM} alt="" />
             </a>
             <a href="https://www.linkedin.com" className="social-icon1">
-              <BsLinkedin />
+              <img src={ImgL} alt="" />
             </a>
           </div>
           <div className='already11'>

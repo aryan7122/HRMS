@@ -7,9 +7,9 @@
   justify-content: center;
   gap: 20px;
   /* Space between image and form */
-  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
   border-radius: 21px;
   padding: 20px;
+  /* border: 1px solid red !important; */
   /* Optional: Adds padding around the container */
 }
 
@@ -17,21 +17,32 @@
 .signup-image {
   /* position: relative;  */
   flex: 1;
-  max-width: 33%;
-  background-color: #6767c9;
+  /* max-width: 33%; */
+  /* background-color: #6767c9; */
   border-radius: 20px;
-  height: 100%;
+  /* width: 100%;
+  height: 90vh; */
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   margin-right: 338px;
-  position: relative;
+  /* position: relative; */
+  /* scale: 1.05; */
   top: -7px;
 }
 
+#img{
+  background-image: url('../assets//bgSignUP.png');
+ width: 464px;
+ height: 743px;
+ border-radius: 11px;
+  background-size: cover;
+  /* position: relative; */
+
+}
 .signup-image img {
-  width: 78%;
+  width: 68% ;
   height: 172px;
   height: 387px;
   object-fit: cover;
@@ -68,22 +79,21 @@
 
 /* Container for the form */
 .signupform {
+  /* border: 1px solid red; */
   flex: 1;
   max-width: 35%;
   /* Further reduced width of the form container */
-  padding: 30px;
+  /* padding: 30px; */
   background-color: white;
   /* border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-  height: 100%;
+  /* height: 100%; */
   /* Ensure the form section takes up full height */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+ 
   /* Center the form content vertically */
   position: relative;
   right: 342px;
-  top: -6px;
+  /* top: -6px; */
 }
 
 /* Form title */
@@ -262,16 +272,20 @@
   margin-right: 173px;
   margin-top: 14px;
 }
+.social-media-container1 img{
+  width: 54px;
+  /* height: 44px; */
+}
 
 /* Styling for the social media icons */
 .social-icon1 {
-  font-size: 30px;
+  /* font-size: 30px;
   color: #8080e7;
   transition: color 1.3s ease;
   border: 3px solid #efefef;
   border-radius: 21%;
   padding: 10px;
-  background-color: #f2f2f2;
+  background-color: #f2f2f2; */
 }
 
 /* Hover effect for the social media icons */
