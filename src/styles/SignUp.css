@@ -72,7 +72,7 @@
   scale: 0.95;
   margin-left: 60px;
   flex: 1;
-  max-width: 35%;
+  /* max-width: 35%; */
   /* Further reduced width of the form container */
   /* padding: 30px; */
   background-color: white;
@@ -169,7 +169,16 @@
   width: 100%;
   /* Ensure width is consistent */
 }
+.signUP_input{
+  width: 424px !important;
+}
+  input:hover {
+   box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);
+ }
 
+ input:focus {
+   border: 1px solid #ea00ffe7 !important;
+ }
 /* Button hover effect */
 .signupform button[type="submit"]:hover {
   background-color: #483D8B;
@@ -195,11 +204,13 @@
 /* Container for the terms and checkbox */
 .terms-container {
   display: flex;
+  width: 424px;
   align-items: center;
   margin-bottom: 4px;
   /* Space between the terms section and the signup button */
   position: relative;
   top: 10px;
+  /* border: 1px solid red; */
 }
 
 /* Styling for the checkbox */
@@ -250,11 +261,17 @@
 
 .with1 {
   text-align: center;
-  margin-left: -154px;
+  /* margin-left: -454px; */
+  /* width: 300px; */
+  text-align: center !important;
   /* margin-bottom: 20px; */
   margin-top: 11px;
   font-size: 13px;
   color: #5a5757;
+  position: relative;
+  margin-right: 100px;
+  /* border: 1px solid red; */
+  width: 424px;
 }
 
 /* Container for the social media icons */
@@ -286,7 +303,11 @@
   color: #797979;
   font-size: 12px;
   margin-top: 20px;
-  margin-right: 170px;
+  /* margin-right: 170px; */
+  position: relative;
+  margin-right: 100px;
+  /* border: 1px solid red; */
+  width: 424px;
 }
 
 .account11 a {
@@ -348,12 +369,14 @@
 }
 
 .eye-icon {
-  position: absolute;
-  right: 149px;
+  position: relative;
+  /* right: 149px; */
   cursor: pointer;
   font-size: 20px;
   color: #ccc;
-  top: 8px;
+  margin-left: -30px !important;
+  margin-bottom: 10px;
+  
 }
 
 .eye-icon:hover {
@@ -363,16 +386,21 @@
 
 .consider {
   padding: 8px;
-  border: 1px solid #edecec;
+  border: 1px solid #e8e5e5;
   border-radius: 4px;
   font-size: 13px;
   background-color: #fbfbfb;
   color: #6e6e6e;
   position: relative;
   /* transition: border-color 0.3s ease; */
-  width: 380px;
+  width: 424px;
   height: 34px;
   top: -3px;
+  outline: none;
+}
+select:hover{
+     box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);
+
 }
 
 /* select:focus {
@@ -479,7 +507,7 @@ padding: 1px;
 .phone-number-wrapper {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 100% !important;
 }
 
 .country-code-select {
@@ -489,7 +517,8 @@ padding: 1px;
   background: #fdfdfd;
   font-size: 13px;
   margin-right: 10px;
-  width: 71% !important;
+  width: 424px !important;
+  /* border: 1px solid red; */
 }
 
 .PhoneInputCountry {
@@ -499,6 +528,7 @@ padding: 1px;
   border: 1px solid #E0DEEF !important;
   margin-left: -5px;
 }
+
 .CompanyName label {
   margin-top: 15px;
 }

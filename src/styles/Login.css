@@ -210,6 +210,8 @@ label{
 }
 /*  */
   input[type="checkbox"] {
+    width: 10px !important;
+    height: 10px !important;
     z-index: 1 !important;
     appearance: none;
     -webkit-appearance: none;

@@ -90,7 +90,9 @@ const SignUp = () => {
               value={name}
               onChange={(e) => setname(e.target.value)}
               required
+              className='signUP_input'
             />
+            
           </div>
           <div>
             <label>Email<span className="mandatory">*</span></label>
@@ -100,6 +102,7 @@ const SignUp = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className='signUP_input'
             />
           </div>
           {/* <div>
@@ -124,6 +127,7 @@ const SignUp = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className='signUP_input'
               />
               <span className="eye-icon" onClick={togglePasswordVisibility}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -158,6 +162,7 @@ const SignUp = () => {
           <div className='CompanyName'>
             <label>Company Name</label>
             <input
+              className='signUP_input'
               type="text"
               placeholder="Enter Company Name"
               value={companyName}
@@ -184,7 +189,7 @@ const SignUp = () => {
           </div>
 
           <div className="terms-container">
-            <input type="checkbox" id="agree" name="agree" className="terms-checkbox"></input>
+            <input type="checkbox" id="agree" name="agree" className="terms-checkbox signUP_input"></input>
             <label htmlFor="agree" className="terms-label">
               I agree to the <span className="highlight">Terms of Service</span> and <span className="highlight">Privacy Policy</span>
             </label>
@@ -200,17 +205,17 @@ const SignUp = () => {
               required
             />
           </div> */}
-          <button type="submit">Start Free Trial</button>
-          <div className="Underline">
+          <button type="submit" className='signUP_input'>Start Free Trial</button>
+          <div className="Underline signUP_input">
             <hr className="line1" />
             <span>Or</span>
             <hr className="line1" />
           </div>
           <div className='Options' id='options22'>
-            <h6 className="with1">Login with</h6>
+            <h6 className="with1 ">Login with</h6>
           </div>
 
-          <div className="social-media-container1" id="social22">
+          <div className="social-media-container1 signUP_input" id="social22">
             <a href="https://www.google.com" className="social-icon1">
               {/* <BsGoogle /> */}
               <img src={ImgG} alt="" />
