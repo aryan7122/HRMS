@@ -19,22 +19,40 @@ const SignUp = () => {
   const [numberofEmployee, setnumberofEmployee] = useState('');
   const [name, setname] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [countryCode, setCountryCode] = useState('+1'); // Default to US code
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (email && password && password) {
+    const passwordIsValid = validatePassword(password);
+    const fullPhoneNumber = `${countryCode} ${phonenumber}`;
+    if (email && password && phonenumber && passwordIsValid) {
       // Handle sign up logic here
       navigate('/login'); // Redirect to login page after sign up
     } else {
       alert('Please make sure all fields are filled correctly and passwords match.');
     }
+    if (!passwordIsValid) {
+      alert('Password must be at least 8 characters long, contain at least one number, and one special character.');
+    } else {
+      alert('Please enter both email and password.');
+    }
   };
+
   const navigateSign = () => {
     navigate('/');
   }
+
+
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasNumber = /\d/;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+
+    return password.length >= minLength && hasNumber.test(password) && hasSpecialChar.test(password);
+  };
 
 
   return (
@@ -46,7 +64,7 @@ const SignUp = () => {
           <p className="line2">started!</p>
         </div>
       </div>
-      <div className="signup-form">
+      <div className="signupform">
         <div className='accountimage1'>
           <img src={imageaccount} alt="Sign Up" />
         </div>
@@ -105,7 +123,28 @@ const SignUp = () => {
               </span>
             </div>
           </div>
-          <div>
+
+          <div className="phone-number-container">
+            <label>Phone Number<span className="mandatory">*</span></label>
+            <div className="phone-number-wrapper">
+              <select className="country-code-select" value={countryCode} onChange={(e) => setCountryCode(e.target.value)} required>
+                <option value="+1">+1 (US)</option>
+                <option value="+91">+91 (IN)</option>
+                <option value="+44">+44 (UK)</option>
+
+              </select>
+              <input
+                type="tel"
+                placeholder="+91"
+                value={phonenumber}
+                onChange={(e) => setphonenumber(e.target.value)}
+                required
+                className="phone-number-input"
+              />
+            </div>
+          </div>
+
+          {/* <div>
             <label>Phone Number<span className="mandatory">*</span></label>
             <input
               type="number"
@@ -114,7 +153,7 @@ const SignUp = () => {
               onChange={(e) => setphonenumber(e.target.value)}
               required
             />
-          </div>
+          </div> */}
           <div>
             <label>Company Name</label>
             <input

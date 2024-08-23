@@ -10,7 +10,9 @@ import { FaTimes } from 'react-icons/fa';
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
-
+  const navigateClose = () => {
+    navigate('/login');
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     if (email) {
@@ -27,8 +29,8 @@ const ForgotPassword = () => {
 
   return (
     <div className="forgot-password-container" id="forgotten">
-      <div className="crossBtn">
-
+      <div className="crossBtn" onClick={navigateClose} >
+        {/* <a style={{ cursor: 'pointer' }} onClick={navigateSignUP} >Sign Up</a> */}
         <FaTimes />
 
       </div>
@@ -53,7 +55,7 @@ const ForgotPassword = () => {
           />
         </div>
         <button type="submit">Send OTP</button>
-        <div>
+        <div className='acct'>
           <h6 className='account'>Do you have an account yet? <a style={{ cursor: 'pointer' }} onClick={navigateSignUP}>Sign Up</a></h6>
         </div>
       </form>

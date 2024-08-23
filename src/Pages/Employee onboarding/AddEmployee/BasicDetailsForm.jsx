@@ -375,5 +375,4 @@ const BasicDetailsForm = ({ onSubmit }) => {
         </>
     );
 };
-
 export default BasicDetailsForm;

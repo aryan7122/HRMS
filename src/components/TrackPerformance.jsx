@@ -2,7 +2,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/SignUp.css'; // Make sure this path is correct
+// import '../styles/SignUp.css'; // Make sure this path is correct
 import signupimage from '../assets/signupimage.png';
 import { BsGoogle, BsMicrosoft, BsLinkedin } from 'react-icons/bs';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // You'll need to install react-icons if you haven't already

@@ -13,17 +13,7 @@ import EmployeeDashboard from './Pages/Dashboard and Profile/EmployeeDashboard/E
 import AllEmployeeList from './Pages/Employee onboarding/AllEmployeeList/AllEmployeeList.jsx';
 import AddEmloyee from './Pages/Employee onboarding/AddEmployee/AddEmloyee.jsx';
 import EmployeeDetails from './Pages/Employee onboarding/EmployeeDetail /EmployeeDetails.jsx';
-// import AddEmployee from './Pages/Employee onboarding/AddEmployee/NavbarForm.jsx';
-// 
-// import React, { useState } from 'react';
-// import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-// import Navbar from './components/Navbar';
-// import Sidebar from './components/Sidebar';
-// import EmployeeForm from './components/EmployeeForm';
-// import EmployeeOnboarding from './components/EmployeeOnboarding';
-// import _404 from './components/_404';
-// import AdminDashboard from './Pages/AdminDashboard/AdminDashboard';
-// import Login from './components/Login';
+
 import SignUp from './components/SignUp';
 import ViewattendenceLogin from './components/ViewattendenceLogin'; // Import the new ViewattendenceLogin component
 import TrackPerformance from './components/TrackPerformance'; // Import the new TrackPerformance component

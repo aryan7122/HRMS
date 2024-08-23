@@ -55,7 +55,9 @@ const Login = ({ setIsLoggedIn }) => {
     <div className="login-container">
 
       <div className="login-image">
-        <img src={loginImage} alt="Login" />
+        <div className="Img_main">
+          <img src={loginImage} alt="Login" />
+        </div>
         <div className="overlay-text">
           <p className="access-infoo">Access Personal Information</p>
           <p className="details-info">View and update your personal and employment </p>
@@ -66,16 +68,18 @@ const Login = ({ setIsLoggedIn }) => {
 
       </div>
       <div className="login-form">
+
         <div className='accountimage'>
           <img src={imageaccount1} alt="Sign Up" />
         </div>
 
         <h3 className='welcome'>Welcome Back!👋</h3>
         <label className="name">Log In to Manage Your HR Task</label>
-        <form onSubmit={handleSubmit} className='loginAlignmentform'>
-          <div>
+        <form onSubmit={handleSubmit} className='loginAlignmentform' id="Formmm">
+          <div id='emailform'>
             <label className="address">Email*</label>
             <input
+              className='valueform'
               type="email"
               placeholder="Enter Email"
               value={email}
@@ -109,7 +113,7 @@ const Login = ({ setIsLoggedIn }) => {
             </div>
           </div>
           <div className="button-container">
-            <button type="submit">Login</button>
+            <button type="submit" className='btnnn'>Login</button>
             <div className="or-divider">
               <hr className="line" />
               <span>Or</span>
@@ -137,7 +141,7 @@ const Login = ({ setIsLoggedIn }) => {
             </a>
           </div>
           <div className='wholeaccount'>
-            <h6 className='account'>Do you have an account yet? <a style={{ cursor: 'pointer' }} onClick={navigateSignUP}>Sign Up</a></h6>
+            <h6 className='accountant'>Do you have an account yet? <a style={{ cursor: 'pointer' }} onClick={navigateSignUP}>Sign Up</a></h6>
           </div>
         </form>
       </div>

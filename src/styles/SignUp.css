@@ -67,7 +67,7 @@
 
 
 /* Container for the form */
-.signup-form {
+.signupform {
   flex: 1;
   max-width: 35%;
   /* Further reduced width of the form container */
@@ -87,7 +87,7 @@
 }
 
 /* Form title */
-.signup-form h3 {
+.signupform h3 {
   font-size: 18px;
   color: #545353;
   /* text-align: center; */
@@ -122,7 +122,7 @@
 }
 
 /* Label styling */
-.signup-form label {
+.signupform label {
   font-size: 13px;
   color: #555;
   display: block;
@@ -130,12 +130,12 @@
 }
 
 /* Apply consistent styling to all input fields */
-.signup-form input[type="text"],
-.signup-form input[type="email"],
-.signup-form input[type="password"],
-.signup-form input[type="number"],
-.signup-form input[name="name"],
-.signup-form input[name="companyName"] {
+.signupform input[type="text"],
+.signupform input[type="email"],
+.signupform input[type="password"],
+.signupform input[type="number"],
+.signupform input[name="name"],
+.signupform input[name="companyName"] {
   width: 73%;
   /* Ensures all input fields are the same width */
   padding: 8px;
@@ -156,8 +156,8 @@
 }
 
 /* Optional: If there's a specific issue with alignment, reset margins and padding */
-.signup-form input[name="name"],
-.signup-form input[name="companyName"] {
+.signupform input[name="name"],
+.signupform input[name="companyName"] {
   margin: 0;
   /* Reset margin */
   padding: 10px;
@@ -167,13 +167,13 @@
 }
 
 /* Button hover effect */
-.signup-form button[type="submit"]:hover {
+.signupform button[type="submit"]:hover {
   background-color: #483D8B;
   /* Darker shade of violet */
 }
 
 /* Align the text inside the button */
-.signup-form button[type="submit"] {
+.signupform button[type="submit"] {
   text-align: center;
   width: 72%;
   padding: 10px;
@@ -318,14 +318,14 @@
   }
 
   .signup-image,
-  .signup-form {
+  .signupform {
     max-width: 100%;
     /* Allow both sections to take full width */
     height: auto;
     /* Adjust height to content */
   }
 
-  .signup-form {
+  .signupform {
     padding: 20px;
   }
 }
@@ -406,7 +406,7 @@ option {
 
 
   .signup-image,
-  .signup-form {
+  .signupform {
     max-width: 100%;
     margin-right: 0;
     /* Remove margin-right on small screens */
@@ -419,7 +419,7 @@ option {
     left: 2px !important;
   }
 
-  .signup-form {
+  .signupform {
     padding: 20px;
     margin: 0;
     position: relative;
@@ -468,4 +468,35 @@ option {
     width: 73%;
     /* Full width on small screens */
   }
+}
+
+
+.phone-number-container {
+  margin-bottom: 20px;
+}
+
+.phone-number-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.country-code-select {
+  border: 1px solid #ececec;
+  border-radius: 5px;
+  padding: 8px;
+  background: #fdfdfd;
+  font-size: 13px;
+  margin-right: 10px;
+  width: 18%;
+}
+
+
+.phone-number-input {
+  border: 1px solid #ececec;
+  border-radius: 5px;
+  padding: 8px;
+  background: #fdfdfd;
+  font-size: 14px;
+  width: 49%;
 }
