@@ -12,7 +12,6 @@ import ImgM from '../assets/microsoft.png'
 import ImgL from '../assets/LinkedIn.png'
 
 
-facebook
 const SignUp = () => {
 
   const navigate = useNavigate();
