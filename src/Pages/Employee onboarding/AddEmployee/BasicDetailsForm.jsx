@@ -5,9 +5,12 @@ import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+
 const BasicDetailsForm = ({ onSubmit }) => {
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
+    const [inconSelect, setInconSelect] = useState(false)
 
     const [formData, setFormData] = useState({
         employeeId: '',
@@ -104,6 +107,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
         }));
     };
 
+
     return (
         <>
             <div className="" onSubmit={onSubmit}>
@@ -168,8 +172,10 @@ const BasicDetailsForm = ({ onSubmit }) => {
                             <label>Gender</label>
                             <div className="dropdown">
                                 <div className="dropdown-button" onClick={() => toggleDropdown('gender')}>
-                                    <div>{formData.gender || "Select gender"}</div>
+                                    <div>{formData.gender || "Select gender"}  </div> 
+                                    <span id='toggle_selectIcon'> {!dropdowns.gender ? <IoIosArrowDown /> : <IoIosArrowUp /> } </span>
                                 </div>
+                                
                                 {dropdowns.gender && (
                                     <div className="dropdown-menu">
                                         <div className="dropdown-item" onClick={() => selectOption('gender', 'Male')}>Male</div>
@@ -206,7 +212,8 @@ const BasicDetailsForm = ({ onSubmit }) => {
                             <label>Reporting Manager</label>
                             <div className="dropdown">
                                 <div className="dropdown-button" onClick={() => toggleDropdown('reportingManager')}>
-                                    <div>{formData.reportingManager || "Select manager"}</div>
+                                    <div>{formData.reportingManager || "Select manager"} </div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.reportingManager ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                 </div>
                                 {dropdowns.reportingManager && (
                                     <div className="dropdown-menu">
@@ -227,6 +234,8 @@ const BasicDetailsForm = ({ onSubmit }) => {
                             <div className="dropdown">
                                 <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
                                     <div>{formData.department || "Select department"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
                                 </div>
                                 {dropdowns.department && (
                                     <div className="dropdown-menu">
@@ -243,6 +252,8 @@ const BasicDetailsForm = ({ onSubmit }) => {
                             <div className="dropdown">
                                 <div className="dropdown-button" onClick={() => toggleDropdown('designation')}>
                                     <div>{formData.designation || "Select designation"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.designation ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
                                 </div>
                                 {dropdowns.designation && (
                                     <div className="dropdown-menu">
@@ -286,6 +297,8 @@ const BasicDetailsForm = ({ onSubmit }) => {
                             <div className="dropdown">
                                 <div className="dropdown-button" onClick={() => toggleDropdown('maritalStatus')}>
                                     <div>{formData.maritalStatus || "Select status"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.maritalStatus ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
                                 </div>
                                 {dropdowns.maritalStatus && (
                                     <div className="dropdown-menu">
@@ -310,6 +323,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                             <div className="dropdown">
                                 <div className="dropdown-button" onClick={() => toggleDropdown('employmentType')}>
                                     <div>{formData.employmentType || "Select employment type"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.employmentType ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                 </div>
                                 {dropdowns.employmentType && (
                                     <div className="dropdown-menu">
@@ -326,6 +340,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                             <div className="dropdown">
                                 <div className="dropdown-button" onClick={() => toggleDropdown('employeeStatus')}>
                                     <div>{formData.employeeStatus || "Select status"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.employeeStatus ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                 </div>
                                 {dropdowns.employeeStatus && (
                                     <div className="dropdown-menu">
@@ -342,6 +357,8 @@ const BasicDetailsForm = ({ onSubmit }) => {
                             <div className="dropdown">
                                 <div className="dropdown-button" onClick={() => toggleDropdown('sourceOfHire')}>
                                     <div>{formData.sourceOfHire || "Select source"}</div>
+                                    <span id='toggle_selectIcon'> {!dropdowns.sourceOfHire ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+
                                 </div>
                                 {dropdowns.sourceOfHire && (
                                     <div className="dropdown-menu">

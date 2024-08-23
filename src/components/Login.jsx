@@ -1,14 +1,15 @@
-
-
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
-import loginImage from '../assets/login.png';
 import { BsGoogle, BsFacebook, BsTwitter, BsMicrosoft, BsLinkedin } from 'react-icons/bs';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; // You'll need to install react-icons if you haven't already
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import imageaccount1 from '../assets/logo.png';
-// eslint-disable-next-line react/prop-types
+import Slider from "react-slick";
+
+import loginImage from '../assets/loginImage1.png';
+import loginImage2 from '../assets/loginImage2.png'; // Add your second image here
+import loginImage3 from '../assets/loginImage3.png'; // Add your third image here
+
 const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -47,28 +48,75 @@ const Login = ({ setIsLoggedIn }) => {
   const navigateSignUP = () => {
     navigate('/sign-up');
   }
+
   const navigatePass = () => {
     navigate('/forgot-password');
   }
 
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    {
+      image: loginImage,
+      text1: "Access Personal Information",
+      text2: "View and update your personal and employment details easily"
+    },
+    {
+      image: loginImage2,
+      text1: "View Attendance Records",
+      text2: "Check employee daily, monthly, and annual attendance records and download reports"
+    },
+    {
+      image: loginImage3,
+      text1: "Track Performance",
+      text2: "Access employee performance reviews, set goals, and monitor employee progress."
+    }
+  ];
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows: false,
+    beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex),
+    customPaging: (i) => (
+      <div
+        style={{
+          width: i === currentSlide ? "25px" : "10px",
+          height: "3px",
+          background: i === currentSlide ? "purple" : "white",
+          borderRadius: "10px",
+          transition: "all 0.3s ease",
+          marginTop:'20px'
+        }}
+      />
+    ),
+    dotsClass: "slick-dots slick-thumb custom-dots",
+  };
+
   return (
     <div className="login-container">
-
       <div className="login-image">
-        <div className="Img_main">
-          <img src={loginImage} alt="Login" />
-        </div>
-        <div className="overlay-text">
-          <p className="access-infoo">Access Personal Information</p>
-          <p className="details-info">View and update your personal and employment </p>
-          <p className='details-info1'>
-            details easily
-          </p>
-        </div>
-
+        <Slider {...settings}>
+          {slides.map((slide, index) => (
+            <div key={index} className="Img_main">
+              <div className='roundBg'>
+                <img src={slide.image} alt={`Slide ${index + 1}`} />
+                <div className="overlay-text">
+                  <p className="access-infoo">{slide.text1}</p>
+                  <p className="details-info">{slide.text2}</p>
+                </div>
+             </div>
+            </div>
+          ))}
+        </Slider>
       </div>
-      <div className="login-form">
 
+      <div className="login-form">
         <div className='accountimage'>
           <img src={imageaccount1} alt="Sign Up" />
         </div>
@@ -88,7 +136,7 @@ const Login = ({ setIsLoggedIn }) => {
               required
             />
           </div>
-          <div >
+          <div>
             <label className='passwordform'>Password*</label>
             <input
               type={showPassword ? 'text' : 'password'}
