@@ -3,32 +3,25 @@
   display: flex;
   height: 94vh;
   /* height: 1108px; */
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
+  align-items: start;
+  justify-content: start;
+  /* gap: 20px; */
   /* Space between image and form */
-  border-radius: 21px;
+  border-radius: 11px;
   padding: 20px;
-  /* border: 1px solid red !important; */
   /* Optional: Adds padding around the container */
 }
 
 /* Styling for the image section with overlay text */
 .signup-image {
-  /* position: relative;  */
-  flex: 1;
-  /* max-width: 33%; */
-  /* background-color: #6767c9; */
+  /* border: 1px solid red !important; */
   border-radius: 20px;
-  /* width: 100%;
-  height: 90vh; */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start !important;
   overflow: hidden;
-  margin-right: 338px;
-  /* position: relative; */
-  /* scale: 1.05; */
+  /* margin-right: 338px; */
+ 
   top: -7px;
 }
 
@@ -38,7 +31,6 @@
  height: 743px;
  border-radius: 11px;
   background-size: cover;
-  /* position: relative; */
 
 }
 .signup-image img {
@@ -53,12 +45,9 @@
   left: -19px;
 }
 
-/* Styling for mandatory field marker */
 .mandatory {
   color: red;
-  /* Red color for the asterisk */
   font-weight: bold;
-  /* Optional: Make the asterisk bold */
 }
 
 /* Overlay text styling */
@@ -80,6 +69,8 @@
 /* Container for the form */
 .signupform {
   /* border: 1px solid red; */
+  scale: 0.95;
+  margin-left: 60px;
   flex: 1;
   max-width: 35%;
   /* Further reduced width of the form container */
@@ -92,7 +83,7 @@
  
   /* Center the form content vertically */
   position: relative;
-  right: 342px;
+  /* right: 342px; */
   /* top: -6px; */
 }
 
@@ -134,10 +125,13 @@
 /* Label styling */
 .signupform label {
   font-size: 13px;
-  color: #555;
+  color: #2A2A2A;
+  font-weight: 500;
   display: block;
   margin-bottom: 5px;
 }
+
+
 
 /* Apply consistent styling to all input fields */
 .signupform input[type="text"],
@@ -277,16 +271,7 @@
   /* height: 44px; */
 }
 
-/* Styling for the social media icons */
-.social-icon1 {
-  /* font-size: 30px;
-  color: #8080e7;
-  transition: color 1.3s ease;
-  border: 3px solid #efefef;
-  border-radius: 21%;
-  padding: 10px;
-  background-color: #f2f2f2; */
-}
+
 
 /* Hover effect for the social media icons */
 .social-icon1:hover {
@@ -400,13 +385,15 @@ option {
   font-size: 14px;
 }
 
-.accountimage1 {
-  position: relative;
-  top: 0px;
-  left: 0px;
-
+.accountimage1 img{
+  width: 34px !important;
+padding: 1px;
 }
-
+.signupform h3 {
+  color: #5a3083;
+  font-size: 20px;
+  font-weight: 500;
+}
 
 
 
@@ -496,15 +483,25 @@ option {
 }
 
 .country-code-select {
-  border: 1px solid #ececec;
+  /* border: 1px solid #ececec; */
   border-radius: 5px;
   padding: 8px;
   background: #fdfdfd;
   font-size: 13px;
   margin-right: 10px;
-  width: 18%;
+  width: 71% !important;
 }
 
+.PhoneInputCountry {
+  padding: 0px 20px;
+  font-size: 25px;
+  border-radius: 5px;
+  border: 1px solid #E0DEEF !important;
+  margin-left: -5px;
+}
+.CompanyName label {
+  margin-top: 15px;
+}
 
 .phone-number-input {
   border: 1px solid #ececec;
@@ -514,3 +511,11 @@ option {
   font-size: 14px;
   width: 49%;
 }
+
+.wholeF div input{
+  border: 1px solid #efe5de !important;
+}
+.input1 input {
+  border: 1px solid #efe5de !important;
+}
+

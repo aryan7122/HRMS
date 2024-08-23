@@ -129,7 +129,7 @@ const Login = ({ setIsLoggedIn }) => {
         <h3 className='welcome'>Welcome Back!👋</h3>
         <label className="name">Log In to Manage Your HR Task</label>
         <form onSubmit={handleSubmit} className='loginAlignmentform' id="Formmm">
-          <div id='emailform'>
+          <div id='emailform' className='input1'>
             <label className="address">Email*</label>
             <input
               className='valueform'
@@ -141,7 +141,7 @@ const Login = ({ setIsLoggedIn }) => {
               required
             />
           </div>
-          <div>
+          <div className='input1'>
             <label className='passwordform'>Password*</label>
             <input
               type={showPassword ? 'text' : 'password'}
@@ -167,10 +167,10 @@ const Login = ({ setIsLoggedIn }) => {
           </div>
           <div className="button-container">
             <button type="submit" className='btnnn'>Login</button>
-            <div className="or-divider">
-              <hr className="line" />
+            <div className="Underline2">
+              <hr className="line1" />
               <span>Or</span>
-              <hr className="line" />
+              <hr className="line1" />
             </div>
           </div>
           <div className='distancelogin'>

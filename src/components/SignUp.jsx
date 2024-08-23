@@ -4,13 +4,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/SignUp.css'; // Make sure this path is correct
 import signupimage from '../assets/signupimage.png';
-import { BsGoogle, BsMicrosoft, BsLinkedin } from 'react-icons/bs';
+// import { BsGoogle, BsMicrosoft, BsLinkedin } from 'react-icons/bs';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // You'll need to install react-icons if you haven't already
-import imageaccount from '../assets/logo.png';
+import imageaccount from '../assets/onlylogo.png';
 import ImgG from '../assets/google.png'
 import ImgM from '../assets/microsoft.png'
 import ImgL from '../assets/LinkedIn.png'
-
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 const SignUp = () => {
 
@@ -58,6 +59,7 @@ const SignUp = () => {
     return password.length >= minLength && hasNumber.test(password) && hasSpecialChar.test(password);
   };
 
+  const [value, setValue] = useState()
 
   return (
     <div className="signup-container">
@@ -132,20 +134,14 @@ const SignUp = () => {
           <div className="phone-number-container">
             <label>Phone Number<span className="mandatory">*</span></label>
             <div className="phone-number-wrapper">
-              <select className="country-code-select" value={countryCode} onChange={(e) => setCountryCode(e.target.value)} required>
-                <option value="+1">+1 (US)</option>
-                <option value="+91">+91 (IN)</option>
-                <option value="+44">+44 (UK)</option>
+              <div className="country-code-select" value={countryCode} onChange={(e) => setCountryCode(e.target.value)} required>
+                <PhoneInput
+                  international
+                  value={value}
+                  onChange={setValue} />
+              </div>
+              
 
-              </select>
-              <input
-                type="tel"
-                placeholder="+91"
-                value={phonenumber}
-                onChange={(e) => setphonenumber(e.target.value)}
-                required
-                className="phone-number-input"
-              />
             </div>
           </div>
 
@@ -159,7 +155,7 @@ const SignUp = () => {
               required
             />
           </div> */}
-          <div>
+          <div className='CompanyName'>
             <label>Company Name</label>
             <input
               type="text"
