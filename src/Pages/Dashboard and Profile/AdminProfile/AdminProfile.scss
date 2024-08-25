@@ -633,3 +633,40 @@
     }
   }
 }
+
+
+
+@media (max-width: 1251px) {
+  .AdminProfile_main .mainContainers .containers .info{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .div_details:nth-child(3){
+      margin-left: 49% !important;
+  }
+}
+@media (max-width: 921px) {
+  .AdminProfile_main .mainContainers .containers .info{
+    display: grid;
+    grid-template-columns: 1fr ;
+  }
+     .div_details:nth-child(3){
+      margin-left: 0% !important;
+  }
+  .AdminProfile_main .mainContainers .containers .experience .experience-grid{
+    flex-direction: column;
+  }
+  
+}
+@media (max-width: 811px) {
+  .AdminProfile_main .mainContainers .containers .education table{
+    width: 800px !important;
+  }
+  .AdminProfile_main .mainContainers .containers .education{
+    overflow: scroll;
+  }
+  .AdminProfile_main .mainContainers .containers .education .section-header{
+    width: 800px;
+  }
+
+}

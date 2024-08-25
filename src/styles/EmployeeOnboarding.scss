@@ -1,4 +1,4 @@
-@import "../../../styles/variables.scss";
+@import "./variables";
 
 .EmpOn_main_container {
   .top-bar {
@@ -624,16 +624,15 @@
           }
 
           .status-display {
-              padding: 8px 12px;
-            border-radius: 44px;
-            display: flex;
-            cursor: pointer;
-            align-items: center;
             div {
               display: flex;
               gap: 5px;
             }
-          
+            padding: 8px 12px;
+            border-radius: 44px;
+            display: flex;
+            cursor: pointer;
+            align-items: center;
             &.active {
               background-color: #d3e8fd;
               color: #0070f3;
@@ -730,7 +729,7 @@
       }
 
       input[type="checkbox"] {
-        z-index: 0 !important;
+        z-index: 0;
         appearance: none;
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -745,7 +744,6 @@
 
       input[type="checkbox"]:not(:checked) {
         background-color: white;
-       
       }
 
       input[type="checkbox"]:checked {
@@ -850,54 +848,5 @@
         }
       }
     }
-  }
-}
-
-@media (max-width: 1505px){
-  .EmpOn_Second_Head{
-    flex-direction: column;
-  }
-  .EmpOn_Second_Head .right{
-    margin-top: 10px;
-  }
-
-}
-@media (max-width: 1355px) {
-  .allEmployeeList .employee-table {
-    overflow-x: auto;
-  }
-
-  .allEmployeeList .employee-table table {
-    min-width: 1340px !important; /* Ensure minimum width for the table */
-    margin: 0 auto; /* Center align the table */
-  }
-
-  .EmpOn_main_container .top-bar ._div {
-    display: none !important; 
-  }
-
-  #allEmp {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-@media (max-width: 1035px) {
-  .EmpOn_Second_Head .left {
-    display: grid !important;
-    height: fit-content !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    width: 82vw !important;
-    gap: 10px;
-  }
-
-  .allEmployeeList .employee-table {
-    margin-top: 65px !important;
-    overflow-x: auto; /* Ensure table remains scrollable */
-  }
-
-  .allEmployeeList .employee-table table {
-    min-width: 100%; /* Adjust table width to fit container */
-    margin: 0 auto; /* Center align the table */
   }
 }

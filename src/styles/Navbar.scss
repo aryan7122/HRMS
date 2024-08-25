@@ -96,11 +96,16 @@
         outline: none;
         margin-right: 0.3125rem; // Updated margin using rem units
         width: 100%;
+        position: relative;
         font-size: 1rem; // Font size using rem units
 
         &::placeholder {
           color: #b0a8c680;
         }
+      }
+      input:hover{
+        // border: none !important;
+        // box-shadow: none !important;
       }
 
       svg {

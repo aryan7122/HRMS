@@ -182,7 +182,7 @@ const EmployeeDashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="left_Bottom_cart">
+                    <div className="left_Bottom_cart" id='left_Bottom_cart'>
                         <div className="header_Birthday">
                             <h3>Employee Birthday Today</h3>
                             <div>
@@ -190,7 +190,7 @@ const EmployeeDashboard = () => {
                             </div>
                         </div>
                         <div className="top_border"></div>
-                        <div className="Emp">
+                        <div className="Emp" id='Emp'>
                             <Slider {...settings}>
                                 {employees.map((emp, i) => (
                                     emp.DOB === today && (

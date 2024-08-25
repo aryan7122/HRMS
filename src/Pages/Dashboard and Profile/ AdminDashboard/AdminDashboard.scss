@@ -1051,3 +1051,140 @@
 
 
 // EmployeeDashboard
+
+
+
+// 
+@media (max-width: 1323px) {
+  .number_new_hire div h3{
+    font-size: 16px !important;
+  }
+  .number_new_hire div h2{
+    font-size: 17px !important;
+  }
+}
+
+@media (max-width: 1250px) {
+  .ADMIN_EMP .Top_Head_Admin_Dashboard .Left_admin_hello div p{
+    font-size: 13px !important;
+  }
+}
+
+
+@media (max-width: 1180px) {
+  .ADMIN_EMP .Top_Head_Admin_Dashboard .Left_admin_hello div p{
+    font-size: 18px !important;
+  }
+  .ADMIN_EMP .Top_Head_Admin_Dashboard .Right_Time{
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 1100px) {
+  .ADMIN_EMP .content_emp_four{
+    gap: 15px !important;
+  }
+  .ADMIN_EMP .dashboard-container{
+    gap: 15px !important;
+    width: 86vw;
+  }
+  .ADMIN_EMP .dashboard-container .section{
+    width: 90% !important;
+  }
+  
+}
+@media (max-width: 970px) {
+   .ADMIN_EMP .Top_Head_Admin_Dashboard .Left_admin_hello div p{
+    font-size: 14px !important;
+  }
+    .ADMIN_EMP .dashboard-container {
+      //  margin-left: 10px;
+      // border: 1px solid red;
+      width: 93%;
+      gap: 25px !important;
+      .section{
+        width: 92% !important;
+      
+      }
+    }
+}
+
+@media (max-width: 900px) {
+   .ADMIN_EMP .Top_Head_Admin_Dashboard .Left_admin_hello div p{
+    font-size: 17px !important;
+  }
+  .ADMIN_EMP .Top_Head_Admin_Dashboard{
+    flex-direction: column;
+  }
+  .ADMIN_EMP .Top_Head_Admin_Dashboard .Right_Time{
+    flex-direction: row;
+    margin-top: 10px;
+  }
+  .ADMIN_EMP .content_emp_three .Left_cart{
+    flex-direction: column !important;
+  }
+  .ADMIN_EMP .content_emp_three .Left_cart .left_Bottom_cart .Emp{
+    width: 79vw !important;
+  }
+      .ADMIN_EMP .dashboard-container {
+      //  margin-left: 10px;
+      // border: 1px solid red;
+      width: 93%;
+       margin: 0;
+        display: grid !important;
+        grid-template-columns: 1fr ;
+    }
+    .ADMIN_EMP .dashboard-container .section{
+      width: 95% !important;
+    }
+    .ADMIN_EMP .dashboard-container .quick-links{
+      width: 97% !important;
+    }
+
+}
+
+
+
+@media (max-width: 821px) {
+  .ADMIN_EMP .Top_Head_Admin_Dashboard .Right_Time{
+    flex-direction: column;
+  }
+  .ADMIN_EMP .Top_Head_Admin_Dashboard .Left_admin_hello{
+    flex-direction: column;
+  }
+  .ADMIN_EMP .Top_Head_Admin_Dashboard .Left_admin_hello div{
+    text-align: center;
+  }
+  .ADMIN_EMP .content_emp_three .flex_right{
+    flex-direction: column;
+  }
+  .ADMIN_EMP .content_emp_three .Left_cart .left_Bottom_cart .Emp .div_dob{
+    width: 95% !important;
+  }
+}
+
+@media (max-width: 781px) {
+  .ADMIN_EMP{
+    overflow-x: hidden;
+  }
+  .ADMIN_EMP .content_emp_four {
+   grid-template-columns: 1fr !important;
+  }
+  .ADMIN_EMP .dashboard-container{
+    width: 90%;
+    // border: 1px solid red;
+  }
+  .ADMIN_EMP .dashboard-container .section{
+    width: 93% !important;
+  }
+  .ADMIN_EMP .dashboard-container .quick-links{
+    width: 94% !important;
+  }
+}
+
+@media (max-width: 781px) 
+{
+  .ADMIN_EMP .content_emp_three .Left_cart .left_Bottom_cart .Emp .div_dob{
+    width: 90% !important;
+  }
+}

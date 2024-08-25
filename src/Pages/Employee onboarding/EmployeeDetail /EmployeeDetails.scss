@@ -421,3 +421,55 @@
     transform: rotate(360deg);
   }
 }
+
+
+@media (max-width: 1111px) {
+  .profile-page .details .info-cards{
+    flex-direction: column;
+  }
+  .experience-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  
+}
+@media (max-width: 800px) {
+  .education .section-header{
+    width: 800px;
+  }
+  .education table{
+    width: 800px ;
+    }
+    .education{
+      overflow-x: scroll;
+
+    }
+}
+
+@media (max-width: 750px) 
+{
+  .experience-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 670px) 
+{
+  .profile-page .details .profile_card{
+    flex-direction: column !important;
+    text-align: center;
+    justify-content: center;
+  }
+  .profile-page .details .profile_card .img_card{
+    flex-direction: column;
+  }
+  .profile-page .details .profile_card .action_card{
+    margin-top: 10px;
+  }
+  .profile-page .details .profile_card .img_card .about_user div{
+    position: fixed;
+    margin-top: -80px;
+    margin-left: 127px;
+  }
+}

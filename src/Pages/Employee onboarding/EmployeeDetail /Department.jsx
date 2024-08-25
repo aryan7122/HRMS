@@ -13,23 +13,24 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
-import './AllEmployeeList.scss';
+import './Department.scss';
 
-const AllEmployeeList = () => {
+const Department = () => {
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
-        { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "ananya.singh@example.com", phone: "+918555031082", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "vijay.shah@example.com", phone: "+917555232340", department: "Maintenance", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "arjun.reddy@example.com", phone: "+918555079422", department: "Manning", dateOfJoining: "16-May-2024", status: "Resigned", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "aarti.pandey@example.com", phone: "+919955565042", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Terminated", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "priya.sharma@example.com", phone: "+918553613128", department: "Operations", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "kavita.agarwal@example.com", phone: "+918555234569", department: "Engineering", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "raj.malhotra@example.com", phone: "+918555205575", department: "Manning", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "rahul.mishra@example.com", phone: "+919255544527", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "meera.verma@example.com", phone: "+919555566270", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "manish.jain@example.com", phone: "+917555639758", department: "HSEQ", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "neha.patel@example.com", phone: "+919655516575", department: "IT", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false }
-    ]);
+        { deptName: "Manning", deptHead: "Sunil Bhadouriya", parentDept: "HSEQ" },
+        { deptName: "IT", deptHead: "Nandan Raikwar", parentDept: "Operations"},
+        { deptName: "HSEQ", deptHead: "Vikas Tiwari", parentDept: "IT"},
+        { deptName: "Operations", deptHead: "Paartho Ghosh", parentDept: "Manning"},
+        { deptName: "Engineering", deptHead: "Rahul Choudary", parentDept: "Engineering"},
+        { deptName: "Maintenance", deptHead: "Jayshri Tiwari", parentDept: "Operations"},
+        { deptName: "Operations", deptHead: "Shalini Jain", parentDept: "Maintenance"},
+        { deptName: "Human Resources", deptHead: "Viswas Patel", parentDept: "IT"},
+        { deptName: "IT", deptHead: "Kailash Chaurasia", parentDept: "Maintenance"},
+        { deptName: "Manning", deptHead: "Mamta Lodhi", parentDept: "Human Resources"},
+        { deptName: "IT", deptHead: "Kailash Chaurasia", parentDept: "Maintenance"},
+
+        ]);
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -73,17 +74,6 @@ const AllEmployeeList = () => {
         setCurrentPage(1);
     };
 
-    const statuses = ['Active', 'Inactive', 'Resigned', 'Terminated', 'Notice Period'];
-    const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
-    const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
-
-    const handleStatusChange = (index, newStatus) => {
-        const updatedEmployees = [...filteredEmployees];
-        updatedEmployees[index].status = newStatus;
-        setFilteredEmployees(updatedEmployees);
-        setIsOpen(null);
-    };
-
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
@@ -95,7 +85,7 @@ const AllEmployeeList = () => {
 
         if (searchQuery) {
             updatedEmployees = updatedEmployees.filter(emp =>
-                emp.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                emp.deptHead.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 emp.phone.toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
@@ -149,17 +139,17 @@ const AllEmployeeList = () => {
     };
 
     return (
-        <div id='allEmp'>
+        <div>
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            Add Employee <p>102 total</p>
+                            All Departments list <p>08 total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp">
-                                <p><span><IoMdAdd /></span> Add New Employee</p>
+                                <p><span><IoMdAdd /></span> Add New Department</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport}>
                                 <div className="div_top"><CiMenuKebab /></div>
@@ -186,36 +176,7 @@ const AllEmployeeList = () => {
             </div>
             <div className="EmpOn_Second_Head">
                 <div className="left">
-                    <div className="all">
-                        <div className='listActive'>
-                            <span> <FaList /></span>All
-                        </div>
-                    </div>
-                    <div className="active">
-                        <div>
-                            <span><PiCheckSquare /></span>Active
-                        </div>
-                    </div>
-                    <div className="inactive">
-                        <div>
-                            <span> <IoIosCloseCircleOutline /> </span>Inactive
-                        </div>
-                    </div>
-                    <div className="resigned">
-                        <div>
-                            <span> <GiBackstab /> </span>Resigned
-                        </div>
-                    </div>
-                    <div className="terminated">
-                        <div>
-                            <span><FaPersonWalkingArrowLoopLeft /></span>Terminated
-                        </div>
-                    </div>
-                    <div className="notice_period">
-                        <div>
-                            <span><GiNotebook /></span>Notice Period
-                        </div>
-                    </div>
+                    
                 </div>
                 <div className="right">
                     <div className="refresh divRight" onClick={handleRefresh}>
@@ -229,7 +190,7 @@ const AllEmployeeList = () => {
                             <input
                                 type="search"
                                 name="search"
-                                placeholder='Search Employee name, phone number...'
+                                placeholder='Search Department name...'
                                 value={searchQuery}
                                 onChange={handleSearchChange}
                                 onKeyUp={handleFilterChange}
@@ -328,74 +289,20 @@ const AllEmployeeList = () => {
                         <thead>
                             <tr>
                                 <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
-                                <th> <div>Employee ID<span><TiArrowUnsorted /></span></div></th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email ID</th>
-                                <th>Phone Number</th>
-                                <th><div>Department <span><TiArrowUnsorted /></span></div></th>
-                                <th>Date of Joining</th>
-                                <th>Status</th>
+                                <th> <div>Department Name<span><TiArrowUnsorted /></span></div></th>
+                                <th>Department Head</th>
+                                <th>Parent Department</th>
+                            
                             </tr>
                         </thead>
                         <tbody>
                             {currentEmployees.map((emp, index) => (
                                 <tr key={index}>
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
-                                    <td>{emp.id}</td>
-                                    <td>{emp.firstName}</td>
-                                    <td>{emp.lastName}</td>
-                                    <td>{emp.email}</td>
-                                    <td>{emp.phone}</td>
-                                    <td>{emp.department}</td>
-                                    <td>{emp.dateOfJoining}</td>
-                                    {/* <td>
-                                        <select value={emp.status} onChange={(e) => {
-                                            const updatedEmployees = [...employees];
-                                            updatedEmployees[index].status = e.target.value;
-                                            setEmployees(updatedEmployees);
-                                        }}>
-                                            <option value="Active">Active</option>
-                                            <option value="Inactive">Inactive</option>
-                                            <option value="Resigned">Resigned</option>
-                                            <option value="Terminated">Terminated</option>
-                                            <option value="Notice Period">Notice Period</option>
-                                        </select>
-                                    </td> */}
-                                    <td>
-                                        <div className="status-dropdown">
-                                            <div key={index} className="status-container">
-                                                <div
-                                                    className={`status-display ${emp.status.toLowerCase().replace(' ', '-')}`}
-                                                    onClick={() => setIsOpen(isOpen === index ? null : index)}
-                                                >
-                                                    <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}
-                                                    ></span>
-                                                    <div>
-                                                        <div className="">
-                                                            {emp.status}
-                                                        </div>
-                                                        <div className="^wdown">
-                                                            <MdOutlineKeyboardArrowDown/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {isOpen === index && (
-                                                    <div className="status-options">
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </td>
+                                    <td>{emp.deptName}</td>
+                                    <td>{emp.deptHead}</td>
+                                    <td>{emp.parentDept}</td>
+                                    
 
 
                                 </tr>
@@ -405,12 +312,12 @@ const AllEmployeeList = () => {
                     <div className="pagination">
                         <div className="rows-per-page">
                             <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
-                                <option value={5}>5 par page</option>
-                                <option value={10}>10 par page</option>
-                                <option value={30}>30 par page</option>
-                                <option value={50}>50 par page</option>
-                                <option value={70}>70 par page</option>
-                                <option value={100}>100 par page</option>
+                                <option value={5}>5 per page</option>
+                                <option value={10}>10 per page</option>
+                                <option value={30}>30 per page</option>
+                                <option value={50}>50 per page</option>
+                                <option value={70}>70 per page</option>
+                                <option value={100}>100 per page</option>
                             </select>
                         </div>
                         <div className="page-navigation">
@@ -436,5 +343,4 @@ const AllEmployeeList = () => {
     );
 };
 
-export default AllEmployeeList;
-// 
+export default Department;

@@ -14,6 +14,7 @@ import AllEmployeeList from './Pages/Employee onboarding/AllEmployeeList/AllEmpl
 import AddEmloyee from './Pages/Employee onboarding/AddEmployee/AddEmloyee.jsx';
 import EmployeeDetails from './Pages/Employee onboarding/EmployeeDetail /EmployeeDetails.jsx';
 
+
 import SignUp from './components/SignUp';
 import ViewattendenceLogin from './components/ViewattendenceLogin'; // Import the new ViewattendenceLogin component
 import TrackPerformance from './components/TrackPerformance'; // Import the new TrackPerformance component
@@ -23,6 +24,7 @@ import ForgotPassword from './components/ForgotPassword'; // Import the ForgotPa
 import SetNewPassword from './components/SetNewPassword'; // Import the SetNewPassword component
 
 // 
+import Department from './Pages/Employee onboarding/EmployeeDetail /Department.jsx'
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -76,7 +78,7 @@ const App = () => {
                   <Route path="/all-employee-list" element={<AllEmployeeList />} />
                   <Route path="/add-employee" element={<AddEmloyee />} />
                   <Route path="/employee-details" element={<EmployeeDetails />} />
-
+                  <Route path="/department" element={<Department/>}/>
                 </Routes>
               </div>
             </div>
