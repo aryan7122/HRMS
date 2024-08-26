@@ -49,6 +49,8 @@
       align-items: center;
       justify-content: center;
       margin-top: 15px;
+      cursor: pointer !important;
+      z-index: 1;
       // overflow: hidden;
 
       // border: 1px solid red;
@@ -665,7 +667,36 @@
         display: none !important;
       }
 }
+input[type="checkbox"]:checked {
+    background-color: #400F6F !important;
+}
 
-.starred{
-  color:  red !important;
+.DescriptionJob{
+  width: 100%;
+  .form-group{
+    textarea{
+      height: 100px !important;
+    }
+  }
+}
+
+
+#checkbox{
+  // border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    input{
+      margin-right: 5px;
+    }
+    label{
+      margin-top: 5px;
+    }
+  }
+  
 }

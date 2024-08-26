@@ -82,6 +82,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 { label: 'Employee Profile', path: '/Employee-profile' },
                 { label: 'Add Employee', path: '/add-employee' },
                 { label: 'Employee Details', path: '/employee-details' },
+                { label: 'All Job List', path: '/all-job-list' }//
             ]
         },
         {
@@ -93,7 +94,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 { label: 'Designation', path: '/designation' },
                 { label: 'Employee Health', path: '/health' },
                 { label: 'Birthday', path: '/birthday' },
-                { label: 'All Job List', path: '/all-job-list' }//
             ]
         },
         {

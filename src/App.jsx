@@ -28,6 +28,8 @@ import Department from './Pages/Employee onboarding/EmployeeDetail /Department.j
 
 // 
 import AllJobList from './Pages/Recruitment/List view all job/AllJobList.jsx'
+import AddNewJob from './Pages/Recruitment/Add Job/AddNewJob.jsx';
+import JobDetails from './Pages/Recruitment/Job details page/JobDetails.jsx';
 
 
 const App = () => {
@@ -85,6 +87,8 @@ const App = () => {
                   <Route path="/department" element={<Department />} />
                   {/* recruitment */}
                     <Route path="/all-job-list" element={<AllJobList />} />
+                    <Route path="/add-job" element={<AddNewJob />} />
+                    <Route path="/job-details" element={<JobDetails />} />
                 </Routes>
               </div>
             </div>

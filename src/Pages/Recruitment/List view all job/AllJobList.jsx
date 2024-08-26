@@ -151,8 +151,11 @@ const AllJobList = () => {
         setShowEmploymentType(false);
     };
 
-    const JobDetailsPage = (index) => {
-        navigate(`/job-details/${+index}`)
+    const JobDetailsPage = () => {
+        navigate('/job-details')
+    }
+    const NewJobPage = () => {
+        navigate('/add-job')
     }
 
     return (
@@ -165,8 +168,8 @@ const AllJobList = () => {
                             All Jobs list <p>204 total</p>
                         </h2>
                         <div className="Emp_Head_Right">
-                            <div className="addEmp">
-                                <p><span><IoMdAdd /></span> Add New Employee</p>
+                            <div className="addEmp" onClick={NewJobPage}>
+                                <p><span><IoMdAdd /></span> Add New Job</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport}>
                                 <div className="div_top"><CiMenuKebab /></div>
@@ -343,7 +346,7 @@ const AllJobList = () => {
                         </thead>
                         <tbody>
                             {currentEmployees.map((emp, index) => (
-                                <tr key={index} onClick={JobDetailsPage(index)} >
+                                <tr key={index} onClick={JobDetailsPage} >
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
                                     <td>{emp.JobTitle}</td>
                                     <td>{emp.Department}</td>
