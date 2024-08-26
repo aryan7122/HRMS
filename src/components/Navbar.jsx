@@ -11,12 +11,26 @@ import { GrAnnounce } from "react-icons/gr";
 import { LuSettings } from "react-icons/lu";
 import imgN from '../assets/user.png';
 import { TbLogout } from "react-icons/tb";
+import { useEffect } from 'react';
 
 const Navbar = ({ setIsLoggedIn }) => {
     const navigate = useNavigate();
     const [showNotifications, setShowNotifications] = useState(false);
     const [showAccount, setShowAccount] = useState(false);
     const [logOut, setLogOut] = useState(false);
+    const [canGoBack, setCanGoBack] = useState(false);
+    const [canGoForward, setCanGoForward] = useState(false);
+
+    console.log('canGoForward >', canGoForward)
+    console.log('canGoBack <', canGoBack)
+
+    useEffect(() => {
+        // Back button check
+        setCanGoBack(window.history.state && window.history.state.idx);
+
+        // Forward button check
+        setCanGoForward(window.history.state && window.history.state.idx < window.history.length);
+    }, [location]);
 
     const clickOut = () => {
         setShowAccount(false);
@@ -30,11 +44,15 @@ const Navbar = ({ setIsLoggedIn }) => {
     };
 
     const handleNext = () => {
-        navigate(1); // Move forward in history
+        // if (canGoForward) {
+            navigate(1); // Move forward in history
+        // } // Move forward in history
     };
 
     const handlePrevious = () => {
-        navigate(-1); // Move back in history
+        // if (canGoBack) {
+            navigate(-1); // Move back in history
+        // }// Move back in history
     };
 
     const toggleNotifications = () => {
@@ -69,6 +87,11 @@ const Navbar = ({ setIsLoggedIn }) => {
         navigate('/notifications');
     };
 
+
+ 
+
+
+
     return (
         <div className="navbar">
             <div className="navbar-left">
@@ -78,8 +101,8 @@ const Navbar = ({ setIsLoggedIn }) => {
             </div>
             <div className="navbar-right">
                 <div className="leftIcon">
-                    <span><IoIosArrowDropleft onClick={handlePrevious} /></span>
-                    <span><IoIosArrowDropright className='icon2' onClick={handleNext} /></span>
+                    <span><IoIosArrowDropleft onClick={handlePrevious} className={canGoBack ? 'icon2' : ''}  /></span>
+                    <span><IoIosArrowDropright className={canGoForward ? 'icon2' : ''} onClick={handleNext} /></span>
                 </div>
                 <div className="search-bar">
                     <input type="text" placeholder="Search employee" />

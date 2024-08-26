@@ -47,7 +47,8 @@
     }
 
     .leftIcon {
-      color: greenyellow;
+      
+       color: #ffffff67;
       font-size: 1.4rem; // Font size using rem units
       width: 4.375rem; // Updated width using rem units
       display: flex;
@@ -72,7 +73,7 @@
       }
 
       .icon2 {
-        color: #ffffff67;
+        color: greenyellow;
       }
     }
 
@@ -83,14 +84,15 @@
       padding: 0.225rem 1rem; // Updated padding for consistency
       border-radius: 0.3125rem; // Updated border radius using rem units
       width: 25%;
-
+      
       span {
         font-size: 1.2rem; // Updated font size using rem units
         padding-top: 0.1875rem; // Updated padding using rem units
       }
-
+      
       input {
-        border: none;
+        // border: 1px solid red !important;
+        border: none !important;
         background: transparent;
         color: rgba(255, 255, 255, 0.676);
         outline: none;
@@ -104,8 +106,19 @@
         }
       }
       input:hover{
+        border: none !important;
+        outline: none !important;
+        box-shadow: none;
         // border: none !important;
         // box-shadow: none !important;
+      }
+      input:focus{
+          border: none !important;
+        outline: none !important;
+      }
+       input:active{
+          border: none !important;
+        outline: none !important;
       }
 
       svg {
