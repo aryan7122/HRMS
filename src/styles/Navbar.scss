@@ -385,3 +385,13 @@
     }
   }
 }
+
+.icon-active {
+    color: chartreuse; // Active color
+    // cursor: pointer;
+}
+
+.icon-inactive {
+    color: #ccc; // Inactive color
+    // cursor: not-allowed;
+}

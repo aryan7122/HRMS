@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
@@ -26,6 +26,10 @@ import SetNewPassword from './components/SetNewPassword'; // Import the SetNewPa
 // 
 import Department from './Pages/Employee onboarding/EmployeeDetail /Department.jsx'
 
+// 
+import AllJobList from './Pages/Recruitment/List view all job/AllJobList.jsx'
+
+
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -51,7 +55,7 @@ const App = () => {
           <Route path='/track-performance' element={<TrackPerformance setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/otp-verification" element={<SendOTP />} />
-          <Route path="/set-new-password" element={<SetNewPassword />} /> 
+          <Route path="/set-new-password" element={<SetNewPassword />} />
           <Route path="/*" element={<Navigate to="/login" />} />
         </Routes>
       ) : (
@@ -78,7 +82,9 @@ const App = () => {
                   <Route path="/all-employee-list" element={<AllEmployeeList />} />
                   <Route path="/add-employee" element={<AddEmloyee />} />
                   <Route path="/employee-details" element={<EmployeeDetails />} />
-                  <Route path="/department" element={<Department/>}/>
+                  <Route path="/department" element={<Department />} />
+                  {/* recruitment */}
+                    <Route path="/all-job-list" element={<AllJobList />} />
                 </Routes>
               </div>
             </div>

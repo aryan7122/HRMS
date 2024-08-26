@@ -22,15 +22,36 @@ const Navbar = ({ setIsLoggedIn }) => {
     const [canGoForward, setCanGoForward] = useState(false);
 
     console.log('canGoForward >', canGoForward)
-    console.log('canGoBack <', canGoBack)
-
     useEffect(() => {
-        // Back button check
-        setCanGoBack(window.history.state && window.history.state.idx);
+        const updateNavigationState = () => {
+            setCanGoBack(window.history.state && window.history.state.idx > 0);
+            setCanGoForward(window.history.state && window.history.state.idx < window.history.length - 1);
+        };
 
-        // Forward button check
-        setCanGoForward(window.history.state && window.history.state.idx < window.history.length);
+        // Initial check on mount
+        updateNavigationState();
+
+        // Listen to popstate event for manual back/forward navigation
+        window.addEventListener('popstate', updateNavigationState);
+
+        return () => {
+            window.removeEventListener('popstate', updateNavigationState);
+        };
     }, [location]);
+
+    const handleNext = () => {
+        if (canGoForward) {
+            navigate(1); // Move forward in history
+        }
+    };
+
+    const handlePrevious = () => {
+        if (canGoBack) {
+            navigate(-1); // Move back in history
+        }
+    };
+
+   
 
     const clickOut = () => {
         setShowAccount(false);
@@ -43,17 +64,8 @@ const Navbar = ({ setIsLoggedIn }) => {
         navigate('/');
     };
 
-    const handleNext = () => {
-        // if (canGoForward) {
-            navigate(1); // Move forward in history
-        // } // Move forward in history
-    };
+   
 
-    const handlePrevious = () => {
-        // if (canGoBack) {
-            navigate(-1); // Move back in history
-        // }// Move back in history
-    };
 
     const toggleNotifications = () => {
         setShowNotifications(!showNotifications);
@@ -101,8 +113,18 @@ const Navbar = ({ setIsLoggedIn }) => {
             </div>
             <div className="navbar-right">
                 <div className="leftIcon">
-                    <span><IoIosArrowDropleft onClick={handlePrevious} className={canGoBack ? 'icon2' : ''}  /></span>
-                    <span><IoIosArrowDropright className={canGoForward ? 'icon2' : ''} onClick={handleNext} /></span>
+                    <span>
+                        <IoIosArrowDropleft
+                            onClick={handlePrevious}
+                            className={canGoBack ? 'icon-active' : 'icon-inactive'}
+                        />
+                    </span>
+                    <span>
+                        <IoIosArrowDropright
+                            onClick={handleNext}
+                            className={canGoForward ? 'icon-active' : 'icon-inactive'}
+                        />
+                    </span>
                 </div>
                 <div className="search-bar">
                     <input type="text" placeholder="Search employee" />
