@@ -346,13 +346,13 @@ const AllJobList = () => {
                         </thead>
                         <tbody>
                             {currentEmployees.map((emp, index) => (
-                                <tr key={index} onClick={JobDetailsPage} >
+                                <tr key={index}  >
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
-                                    <td>{emp.JobTitle}</td>
-                                    <td>{emp.Department}</td>
-                                    <td>{emp.Positions}</td>
-                                    <td>{emp.ExperienceRequired}</td>
-                                    <td>{emp.SkillsRequired}</td>
+                                    <td onClick={JobDetailsPage}>{emp.JobTitle}</td>
+                                    <td onClick={JobDetailsPage}>{emp.Department}</td>
+                                    <td onClick={JobDetailsPage}>{emp.Positions}</td>
+                                    <td onClick={JobDetailsPage}>{emp.ExperienceRequired}</td>
+                                    <td onClick={JobDetailsPage}>{emp.SkillsRequired}</td>
                                    
                                     <td>
                                         <div className="status-dropdown">

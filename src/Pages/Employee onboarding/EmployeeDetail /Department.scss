@@ -617,6 +617,8 @@
         border: 1px solid #dddddd5d;
 
         .status-dropdown {
+          z-index: 1;
+          // border: 1px solid red;
           width: fit-content;
           .status-container {
             position: relative;
