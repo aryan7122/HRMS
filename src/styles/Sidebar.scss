@@ -390,6 +390,8 @@
 
             height: 2px;
             // border: 1px solid pink;
+                      animation: slideIn 0.5s ease-in-out;
+
             margin-top: 0px;
             // border-left: 1px solid #c500fb93;
             border-bottom: 1px solid #c500fb96;
@@ -414,6 +416,8 @@
         background-color: #c500fb99;
         margin-left: -20px;
         // animation: slideIn 0.3s forwards;
+                  animation: slideIn 0.5s ease-in-out;
+
       }
 
       ul {
@@ -436,6 +440,7 @@
         // animation: slideIn 0.3s forwards;
         // transition: height 0.5s ease-in;
         height: fit-content;
+          animation: slideIn 0.5s ease-in-out;
 
         // padding-top: 4px;
         // padding-bottom: 5px;
@@ -461,7 +466,8 @@
           font-size: 1rem;
           z-index: 0;
           // border: 1px solid red;
-          // transition: ease-in-out 0.3s;
+          transition: ease-in-out 0.3s;
+          animation: slideIn 0.3s forwards;
         }
 
         li:hover {
@@ -476,6 +482,13 @@
           color: #fff;
           // animation: fadeIn 0.5s forwards;
           // transition: linear 0.3s;
+
+        }
+        li:active{
+                    border: 1px solid #c500fb48 !important;
+
+                    box-shadow: 0px 10px 10px 0.1px rgba(0, 0, 0, 0.051) !important;
+
         }
       }
     }
