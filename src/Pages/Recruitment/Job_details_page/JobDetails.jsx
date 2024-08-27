@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import '../../Employee onboarding/EmployeeDetail /EmployeeDetails.scss';
+// import { useState } from 'react';
+import '../../Employee_onboarding/EmployeeDetail /EmployeeDetails.scss';
 
 import { IoMdCloseCircleOutline } from "react-icons/io";
 // import Img_user from '../../../assets/user.png'

@@ -1,8 +1,35 @@
 // App.scss
 @import './variables';
-
+*{
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  // font-weight: <weight>;
+  font-style: normal;
+}
 .app {
   display: flex;
+  // <uniquifier>: Use a unique and descriptive class name
+// <weight>: Use a value from 100 to 900
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #eeeeee;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #410f6f9d;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #400F6F;
+}
+
   .sideBar_app{
     // border: 1px solid red;
     // width: 300px;
@@ -11,6 +38,7 @@
     // position: relative;
     z-index: 9;
   }
+
 }
 #app_{
   max-width: 2400px;

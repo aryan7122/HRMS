@@ -154,36 +154,37 @@
               left: 0;
               width: 100px;
               border: 1px solid #fff;
-              border-radius: 4px;
+              border-radius: 5px;
               box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-
               .dropdown-item {
+                padding: 3px 0;
+                // margin: 2px 2px;
                 // padding: 10px;
                 cursor: pointer;
-
+                
                 &:hover {
                   background-color: rgba(255, 255, 255, 0.1);
-                  border-radius: 10px;
+                  border-radius: 5px;
                 }
               }
             }
           }
         }
-
+        
         .TotalWorkingHRS {
           display: flex;
           align-items: center;
           flex-direction: column;
           justify-content: space-between;
           padding: 10px 20px;
-                    gap: 20px;
-
+          gap: 10px;
+          
           .checkOut{
-            margin-top: 10px;
+           
             margin-bottom: 10px;
             width: 100%;
             border-bottom: 1px solid rgb(143, 33, 174);
-            padding-bottom: 20px;
+            padding-bottom: 10px;
             div{
               display: flex;
               align-items: center;
@@ -233,18 +234,40 @@
       .left_Bottom_cart {
         width: 100%;
         height: fit-content;
+                  box-shadow: 0px 0px 10px 0.1px rgba(165, 157, 157, 0.177) !important;
 
         // margin: 10px;
 
-        border: 1px solid rgb(187, 187, 187);
+        border: 1px solid #EBE7EE !important;
         border-radius: 10px;
+        .Emp{
+          .div_dob{
+            img{
+              width: 50px;
+             
+            
+            }
+            .img_dob_name{
+              div{
+                h3{
+                  // border: 1px solid red;
+                  font-size: 18px !important;
+                }
+              }
+            }
+          }
+        }
         .header_Birthday {
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding: 15px 20px;
+          h3{
+            font-size: 18px;
+            color: #2A2A2A;
+            font-weight: 500;
+          }
           div {
-            border: 3.3px solid #27014a;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -252,6 +275,9 @@
             font-size: 18px;
             width: 30px;
             height: 30px;
+            h3{
+
+            }
           }
         }
 
@@ -259,24 +285,25 @@
           border: 1px solid #e3dddd;
           margin: 5px 15px;
         }
-        .Emp {
-          padding: 15px 20px;
+        #Emp {
+          padding: 10px 20px;
           // display: flex;
           // // overflow: hidden;
           // width: 600px;
           // overflow-x: auto;
-          width: 600px;
+          width: 32vw !important;
+          // border: 1px solid red;
 
           // border: 1px solid;
           .div_dob {
             // margin: 10px;
             display: flex !important;
             align-items: center !important;
-            // border: 1px solid red;
+            
             justify-content: space-between !important;
             p {
-              color: rgb(89, 89, 89);
-              font-size: 18px;
+              color: #595959;
+              font-size: 14px !important;
             }
             .img_dob_name {
               display: flex;
@@ -284,22 +311,30 @@
               justify-content: center;
               gap: 10px;
               img {
-
-                width: 56px;
-                height: 56px;
-                border: 3px solid rgba(95, 95, 95, 0.364);
+                width: 46px !important;
+                height: 46px !important;
+                border: 3px solid #E3E3E3 !important;
                 border-radius: 50%;
                 padding: 1px;
                 object-fit: cover;
+              }
+              .img2{
+                margin-right: -20px;
+                // border: 1px solid red;
               }
 
               div {
                 text-align: start;
                 h3 {
-                  font-size: 20px;
-                }
-                p {
-                  font-size: 18px;
+                   font-size: 16px !important;
+                    font-weight: 500;
+                    color: #2A2A2A;
+
+                  }
+                  p {
+                  // border: 1px solid red;
+                  font-size: 14px !important;
+                  line-height: 21px;
                   color: #00000064;
                 }
               }
@@ -309,249 +344,14 @@
         
       }
     }
-    // .center_Cart {
-    //   border: 1px solid rgb(187, 187, 187);
-    //   border-radius: 10px;
-    //   .newEmployee {
-    //     .header_newEmp {
-    //       display: flex;
-    //       align-items: center;
-    //       justify-content: space-between;
-    //       padding: 10px 20px;
-    //       .number_new_hire {
-    //         h3 {
-    //           text-align: start;
-    //           color: rgb(52, 52, 52);
-    //           font-size: 22px;
-    //           font-weight: 500;
-    //         }
-    //         div {
-    //           display: flex;
-    //           align-items: center;
-    //           gap: 5px;
-    //           h2 {
-    //             color: #27014a;
-    //             font-size: 28px;
-    //           }
-    //           h3 {
-    //             color: grey;
-    //             font-size: 28px;
-    //             font-weight: 500;
-    //           }
-    //         }
-    //       }
-    //       .newEmp_img {
-    //         display: flex;
-    //         .img_add {
-    //           background: #ffffff;
-    //           z-index: 9;
-    //           width: 50px;
-    //           height: 50px;
-    //           border-radius: 50%;
-    //           margin-left: -20px;
-    //           border: 1px solid red;
-    //           display: flex;
-    //           align-items: center;
-    //           justify-content: center;
-    //           font-size: 36px;
-    //           cursor: pointer;
-    //           color: #27014a;
-    //         }
-    //         .div_newEmp_img {
-    //           img {
-    //             width: 50px;
-    //             height: 50px;
-    //             margin-left: -10px;
-    //           }
-    //         }
-    //       }
-
-    //       // div {
-    //       //   border: 3.3px solid #27014a;
-    //       //   border-radius: 50%;
-    //       //   display: flex;
-    //       //   align-items: center;
-    //       //   justify-content: center;
-    //       //   font-size: 18px;
-    //       //   width: 30px;
-    //       //   height: 30px;
-    //       // }
-    //     }
-
-    //     .top_border {
-    //       border: 1px solid #e3dddd;
-    //       margin: 5px 15px;
-    //     }
-    //     .Emp {
-    //       padding: 15px 20px;
-    //       .div_dob {
-    //         // gap: 10px;
-    //         margin-top: 20px;
-    //         display: flex;
-    //         align-items: center;
-    //         justify-content: space-between;
-
-    //         p {
-    //           color: rgb(89, 89, 89);
-    //           font-size: 18px;
-    //         }
-
-    //         .img_dob_name {
-    //           display: flex;
-    //           align-items: center;
-    //           justify-content: center;
-    //           gap: 10px;
-    //           img {
-    //             width: 56px;
-    //             height: 56px;
-    //             border: 3px solid rgba(95, 95, 95, 0.364);
-    //             border-radius: 50%;
-    //             padding: 1px;
-    //             object-fit: cover;
-    //           }
-
-    //           div {
-    //             text-align: start;
-    //             h3 {
-    //               font-size: 20px;
-    //             }
-    //             p {
-    //               font-size: 18px;
-    //               font-weight: 500;
-    //               margin-bottom: 10px;
-    //               color: #00000064;
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-
-    // .Right_cart {
-    //   .employeesOnLeave {
-    //     border: 1px solid rgba(145, 145, 145, 0.345);
-    //     border-radius: 10px;
-    //     .newEmployee {
-    //       .header_newEmp {
-    //         display: flex;
-    //         align-items: center;
-    //         justify-content: space-between;
-    //         padding: 15px 20px;
-    //         .number_new_hire {
-    //           h3 {
-    //             text-align: start;
-    //             color: rgb(52, 52, 52);
-    //             font-size: 22px;
-    //             font-weight: 500;
-    //           }
-    //           p {
-    //             color: grey;
-    //             padding-top: 5px;
-    //           }
-    //           div {
-    //             display: flex;
-    //             align-items: center;
-    //             gap: 5px;
-    //             h2 {
-    //               color: #27014a;
-    //               font-size: 28px;
-    //             }
-    //             h3 {
-    //               color: grey;
-    //               font-size: 28px;
-    //               font-weight: 500;
-    //             }
-    //           }
-    //         }
-    //         button {
-    //           outline: none;
-    //           border: none;
-    //           width: 100px;
-    //           height: 34px;
-    //           border-radius: 20px;
-    //           background-color: #fff;
-    //           border: 1px solid rgba(0, 0, 0, 0.72);
-    //           cursor: pointer;
-    //         }
-    //         button:hover {
-    //           background-color: #f6f6f6;
-
-    //           box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.157);
-    //         }
-    //       }
-
-    //       .top_border {
-    //         border: 1px solid #e3dddd;
-    //         margin: 5px 15px;
-    //       }
-    //       .Emp {
-    //         padding: 15px 20px;
-    //         .div_dob {
-    //           // gap: 10px;
-    //           margin-top: 20px;
-    //           display: flex;
-    //           align-items: center;
-    //           justify-content: space-between;
-
-    //           p {
-    //             color: rgb(89, 89, 89);
-    //             font-size: 18px;
-    //           }
-
-    //           .img_dob_name {
-    //             display: flex;
-    //             align-items: center;
-    //             justify-content: center;
-    //             gap: 10px;
-    //             img {
-    //               width: 56px;
-    //               height: 56px;
-    //               border: 3px solid rgba(95, 95, 95, 0.364);
-    //               border-radius: 50%;
-    //               padding: 1px;
-    //               object-fit: cover;
-    //             }
-
-    //             div {
-    //               text-align: start;
-    //               h3 {
-    //                 font-size: 20px;
-    //               }
-    //               p {
-    //                 font-size: 18px;
-    //                 font-weight: 500;
-    //                 color: #00000064;
-    //                 display: flex;
-    //               }
-    //               div {
-    //                 display: flex;
-    //                 .content_dot_red::before {
-    //                   content: "";
-    //                   position: relative;
-    //                   width: 7px;
-    //                   height: 7px;
-    //                   margin-top: 5px;
-    //                   background: red;
-    //                   border: 2px solid red;
-    //                   border-radius: 50%;
-    //                   margin-right: 4px;
-    //                   gap: 10px;
-    //                 }
-    //               }
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+    // 
 
     .chart_Performance_Stats{
       width: 60%;
       // border: 1px solid;
       border-radius: 10px;
-      box-shadow: 0px 0px 10px 1px rgba(109, 108, 108, 0.255);
+                        box-shadow: 0px 0px 10px 0.1px rgba(165, 157, 157, 0.199) !important;
+                        border:  1px solid #dddada9c;
       .BarChart{
         width: 100%;
         height: 100%;
@@ -669,7 +469,7 @@
       background: #fff;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px 0.1px rgba(116, 116, 116, 0.1) !important;
       width: 30%; /* Each section takes 30% of the container width */
       border: 1px solid rgb(222, 219, 219);
 

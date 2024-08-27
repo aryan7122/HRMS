@@ -105,6 +105,7 @@ const AdminDashboard = () => {
         dotsClass: "slick-dots slick-thumb custom-dots", // Custom class for dots
     };
     // 
+    
 
     return (
         <div className='ADMIN_EMP'>
@@ -196,7 +197,8 @@ const AdminDashboard = () => {
                                                     <p>{formatDate(emp.DOB)}</p>
                                                 </div>
                                             </div>
-                                            <p>{emp.email}</p>
+                                            {/* <p>{emp.email}</p> */}
+                                            <img src="https://i.pinimg.com/originals/85/82/1b/85821bd4bbd0fedade2553543bb79ac7.gif" alt=""  />
                                         </div>
                                     )
                                 ))}

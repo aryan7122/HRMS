@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import '../../Employee onboarding/AddEmployee/AddEmloyee.scss';
-import '../../Employee onboarding/AddEmployee/NavbarForm.scss';
+import '../../Employee_onboarding/AddEmployee/AddEmloyee.scss';
+import '../../Employee_onboarding/AddEmployee/NavbarForm.scss';
 // import { CiCircleChevRight } from "react-icons/ci";
 // import { TfiClose } from "react-icons/tfi";
 // import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";

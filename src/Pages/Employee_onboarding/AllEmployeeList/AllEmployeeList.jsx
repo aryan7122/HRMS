@@ -402,6 +402,7 @@ const AllEmployeeList = () => {
                             ))}
                         </tbody>
                     </table>
+                </div>
                     <div className="pagination">
                         <div className="rows-per-page">
                             <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
@@ -429,7 +430,6 @@ const AllEmployeeList = () => {
                             <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
                         </div>
                     </div>
-                </div>
 
             </div>
         </div >

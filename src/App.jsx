@@ -6,13 +6,13 @@ import './styles/App.scss';
 import _404 from './components/_404.jsx';
 import Login from './components/Login';
 {/* dashboard & Profile Page */ }
-import AdminDashboard from './Pages/Dashboard and Profile/ AdminDashboard/AdminDashboard.jsx';
-import AdminProfile from './Pages/Dashboard and Profile/AdminProfile/AdminProfile.jsx';
-import EmployeeDashboard from './Pages/Dashboard and Profile/EmployeeDashboard/EmployeeDashboard.jsx';
+import AdminDashboard from './Pages/Dashboard_and_Profile/ AdminDashboard/AdminDashboard.jsx';
+import AdminProfile from './Pages/Dashboard_and_Profile/AdminProfile/AdminProfile.jsx';
+import EmployeeDashboard from './Pages/Dashboard_and_Profile/EmployeeDashboard/EmployeeDashboard.jsx';
 {/* {Employee onboarding } */ }
-import AllEmployeeList from './Pages/Employee onboarding/AllEmployeeList/AllEmployeeList.jsx';
-import AddEmloyee from './Pages/Employee onboarding/AddEmployee/AddEmloyee.jsx';
-import EmployeeDetails from './Pages/Employee onboarding/EmployeeDetail /EmployeeDetails.jsx';
+import AllEmployeeList from './Pages/Employee_onboarding/AllEmployeeList/AllEmployeeList.jsx';
+import AddEmloyee from './Pages/Employee_onboarding/AddEmployee/AddEmloyee.jsx';
+import EmployeeDetails from './Pages/Employee_onboarding/EmployeeDetail /EmployeeDetails.jsx';
 
 
 import SignUp from './components/SignUp';
@@ -24,12 +24,13 @@ import ForgotPassword from './components/ForgotPassword'; // Import the ForgotPa
 import SetNewPassword from './components/SetNewPassword'; // Import the SetNewPassword component
 
 // 
-import Department from './Pages/Employee onboarding/EmployeeDetail /Department.jsx'
+import Department from './Pages/Employee_onboarding/EmployeeDetail /Department.jsx'
 
 // 
-import AllJobList from './Pages/Recruitment/List view all job/AllJobList.jsx'
+import AllJobList from './Pages/Recruitment/List_view_all_job/AllJobList.jsx'
 import AddNewJob from './Pages/Recruitment/Add Job/AddNewJob.jsx';
-import JobDetails from './Pages/Recruitment/Job details page/JobDetails.jsx';
+import JobDetails from './Pages/Recruitment/Job_details_page/JobDetails.jsx';
+import EmployeeProfile from './Pages/Dashboard_and_Profile/EmployeeProfile/EmployeeProfile.jsx';
 
 
 const App = () => {
@@ -80,7 +81,8 @@ const App = () => {
                   <Route path='/*' element={<_404 />} />
                   <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
                   {/* {Employee onboarding } */}
-                  <Route path="/admin-profile" element={<AdminProfile />} />
+                    <Route path="/admin-profile" element={<AdminProfile />} />
+                    <Route path="/Employee-profile" element={<EmployeeProfile />} />
                   <Route path="/all-employee-list" element={<AllEmployeeList />} />
                   <Route path="/add-employee" element={<AddEmloyee />} />
                   <Route path="/employee-details" element={<EmployeeDetails />} />
