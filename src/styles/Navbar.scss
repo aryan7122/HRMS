@@ -6,7 +6,10 @@
   background-color: #4b187a;
   padding: 0px 1rem;
   height: 56px;
-
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
   .navbar-left {
     display: flex;
     align-items: center;

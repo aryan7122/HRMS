@@ -607,11 +607,17 @@
       justify-content: space-between;
       margin-bottom: 10px;
     }
+table {
+    border-radius: 10px !important;
+    overflow: hidden !important; /* Important for border-radius to work */
+}
+
 
     table {
       width: 97%;
       border-collapse: collapse;
-
+      // border: 2px solid red !important;
+      border-radius: 10px !important;
       th,
       td {
         padding: 12px;
@@ -713,6 +719,7 @@
       }
 
       th {
+
         color: $primary-color;
         background-color: $lightprimary;
         div {
@@ -862,6 +869,21 @@
     }
   }
 }
+
+#deleteAll{
+  cursor: pointer;
+  // border: 1px solid red;
+  // width: ;
+  // margin-top: -2px;
+}
+#deleteThis{
+  // position: absolute;
+  cursor: pointer;
+  z-index: 11;
+  // margin-top: -2px;
+
+}
+
 
 @media (max-width: 1505px){
     .allEmployeeList .employee-table{

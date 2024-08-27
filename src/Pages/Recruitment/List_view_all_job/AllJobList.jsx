@@ -5,7 +5,7 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 import { IoMdAdd } from "react-icons/io";
 import { FaList } from "react-icons/fa6";
 import { PiCheckSquare } from "react-icons/pi";
-import {  FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { BiRevision } from "react-icons/bi";
 import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 import { TiArrowUnsorted } from "react-icons/ti";
@@ -19,6 +19,14 @@ import { useNavigate } from 'react-router-dom';
 import './AllJobList.scss';
 
 const AllJobList = () => {
+    const [allDel, setAllDel] = useState(true);
+    const [thisDel, setThisDel] = useState(false)
+
+    const DelThis = () => {
+        setThisDel(!thisDel);
+        
+    }
+
     const [hidImport, setHidImport] = useState(true);
     const navigate = useNavigate()
     const [employees, setEmployees] = useState([
@@ -31,7 +39,7 @@ const AllJobList = () => {
         { JobTitle: "Database Administrator", Department: "UX", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Filled", isChecked: false },
         { JobTitle: "Network Administrator", Department: "Finance", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
         { JobTitle: "QA Engineer", Department: "Sales", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
-       
+
     ]);
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
@@ -41,6 +49,8 @@ const AllJobList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isOpen, setIsOpen] = useState(null);
+
+
     console.log(selectedDepartment)
 
     const handleHidImport = () => {
@@ -48,6 +58,7 @@ const AllJobList = () => {
     };
 
     const handleSelectAll = () => {
+        setAllDel(!allDel)
         const updatedEmployees = filteredEmployees.map(emp => ({
             ...emp,
             isChecked: !selectAll
@@ -157,6 +168,7 @@ const AllJobList = () => {
     const NewJobPage = () => {
         navigate('/add-job')
     }
+
 
     return (
         <div id='allEmp'>
@@ -280,7 +292,7 @@ const AllJobList = () => {
                                                         <input type="radio" id="intern" name="employmentType" className="custom-radio" />
                                                         <label htmlFor="intern">Senior</label>
                                                     </li>
-                                                    
+
                                                 </ul>
                                             </div>
                                         )}
@@ -334,26 +346,50 @@ const AllJobList = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
+                                <th>
+                                    <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
+                                    {!allDel &&
+                                        <span id='deleteAll'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ff0000" fill="none">
+                                                <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                <path d="M9 11.7349H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                <path d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                            </svg>
+                                        </span>
+                                    }
+                                </th>
                                 <th> <div>Job Title<span><TiArrowUnsorted /></span></div></th>
                                 <th>Department</th>
                                 <th>Positions</th>
                                 <th>Experience Required</th>
                                 <th>Skills Required</th>
-                               
+
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             {currentEmployees.map((emp, index) => (
                                 <tr key={index}  >
-                                    <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
+                                    <td>
+                                        <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} onClick={DelThis} />
+                                        {emp.isChecked &&
+                                            <span id='deleteThis'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ff0000" fill="none">
+                                                    <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                    <path d="M9 11.7349H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                    <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                    <path d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                </svg>
+                                            </span>
+                                        }
+                                    </td>
                                     <td onClick={JobDetailsPage}>{emp.JobTitle}</td>
                                     <td onClick={JobDetailsPage}>{emp.Department}</td>
                                     <td onClick={JobDetailsPage}>{emp.Positions}</td>
                                     <td onClick={JobDetailsPage}>{emp.ExperienceRequired}</td>
                                     <td onClick={JobDetailsPage}>{emp.SkillsRequired}</td>
-                                   
+
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
@@ -396,33 +432,33 @@ const AllJobList = () => {
                         </tbody>
                     </table>
                 </div>
-                    <div className="pagination">
-                        <div className="rows-per-page">
-                            <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
-                                <option value={5}>5 par page</option>
-                                <option value={10}>10 par page</option>
-                                <option value={30}>30 par page</option>
-                                <option value={50}>50 par page</option>
-                                <option value={70}>70 par page</option>
-                                <option value={100}>100 par page</option>
-                            </select>
-                        </div>
-                        <div className="page-navigation">
-                            <div className="page-numbers">
-                                {[...Array(totalPages)].map((_, pageIndex) => (
-                                    <button
-                                        key={pageIndex + 1}
-                                        className={currentPage === pageIndex + 1 ? 'active' : ''}
-                                        onClick={() => handlePageChange(pageIndex + 1)}
-                                    >
-                                        {pageIndex + 1}
-                                    </button>
-                                ))}
-                            </div>
-                            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
-                            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
-                        </div>
+                <div className="pagination">
+                    <div className="rows-per-page">
+                        <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
+                            <option value={5}>5 par page</option>
+                            <option value={10}>10 par page</option>
+                            <option value={30}>30 par page</option>
+                            <option value={50}>50 par page</option>
+                            <option value={70}>70 par page</option>
+                            <option value={100}>100 par page</option>
+                        </select>
                     </div>
+                    <div className="page-navigation">
+                        <div className="page-numbers">
+                            {[...Array(totalPages)].map((_, pageIndex) => (
+                                <button
+                                    key={pageIndex + 1}
+                                    className={currentPage === pageIndex + 1 ? 'active' : ''}
+                                    onClick={() => handlePageChange(pageIndex + 1)}
+                                >
+                                    {pageIndex + 1}
+                                </button>
+                            ))}
+                        </div>
+                        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
+                        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
+                    </div>
+                </div>
 
             </div>
         </div>

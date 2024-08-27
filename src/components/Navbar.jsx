@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import '../styles/Navbar.scss';
 import logo from "../assets/logo.png";
 import { CiSearch } from "react-icons/ci";
@@ -11,27 +11,59 @@ import { GrAnnounce } from "react-icons/gr";
 import { LuSettings } from "react-icons/lu";
 import imgN from '../assets/user.png';
 import { TbLogout } from "react-icons/tb";
-import { useEffect } from 'react';
 
 const Navbar = ({ setIsLoggedIn }) => {
     const navigate = useNavigate();
     const [showNotifications, setShowNotifications] = useState(false);
     const [showAccount, setShowAccount] = useState(false);
-    const [logOut, setLogOut] = useState(false);
     const [canGoBack, setCanGoBack] = useState(false);
     const [canGoForward, setCanGoForward] = useState(false);
+    const notificationRef = useRef(null);
+    const accountRef = useRef(null);
 
-    console.log('canGoForward >', canGoForward)
+    // Close pop-up if clicked outside
+    const handleClickOutside = (event) => {
+        
+        if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+            // setShowNotifications(false);
+        }
+        if (accountRef.current && !accountRef.current.contains(event.target)) {
+            setShowAccount(false);
+        }
+    };
+    
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        // document.addEventListener('click', handleClickOutside, true);
+        return () => {
+            // document.removeEventListener('click', handleClickOutside, true);
+            document.addEventListener("mousedown", handleClickOutside);
+
+        };
+    }, []);
+    
+    console.log('showNotifications', showNotifications)
+    const toggleNotifications = () => {
+            setShowNotifications(!showNotifications);
+        setShowAccount(false);
+    };
+
+    const toggleAccount = () => {
+        
+        setShowAccount(!showAccount);
+        setShowNotifications(false);
+    };
+    // 
+
+    // Update navigation state
     useEffect(() => {
         const updateNavigationState = () => {
             setCanGoBack(window.history.state && window.history.state.idx > 0);
             setCanGoForward(window.history.state && window.history.state.idx < window.history.length - 1);
         };
 
-        // Initial check on mount
         updateNavigationState();
 
-        // Listen to popstate event for manual back/forward navigation
         window.addEventListener('popstate', updateNavigationState);
 
         return () => {
@@ -41,23 +73,20 @@ const Navbar = ({ setIsLoggedIn }) => {
 
     const handleNext = () => {
         if (canGoForward) {
-            navigate(1); // Move forward in history
+            navigate(1);
         }
     };
 
     const handlePrevious = () => {
         if (canGoBack) {
-            navigate(-1); // Move back in history
+            navigate(-1);
         }
     };
 
-   
-
     const clickOut = () => {
         setShowAccount(false);
-        setIsLoggedIn(false); // Logout the user
-        navigate('/'); 
-        setLogOut(!logOut)
+        setIsLoggedIn(false);
+        navigate('/');
     };
 
     const handleClick = () => {
@@ -65,19 +94,6 @@ const Navbar = ({ setIsLoggedIn }) => {
     };
 
    
-
-
-    const toggleNotifications = () => {
-        setShowNotifications(!showNotifications);
-        setShowAccount(false);
-
-    };
-
-    const toggleAccount = () => {
-        setShowAccount(!showAccount);
-        setShowNotifications(false)
-
-    };
 
     const handleMyAccountClick = () => {
         setShowAccount(false);
@@ -98,11 +114,6 @@ const Navbar = ({ setIsLoggedIn }) => {
         setShowNotifications(false);
         navigate('/notifications');
     };
-
-
- 
-
-
 
     return (
         <div className="navbar">
@@ -138,7 +149,7 @@ const Navbar = ({ setIsLoggedIn }) => {
             </div>
 
             {showNotifications && (
-                <div className="notification-popup">
+                <div className="notification-popup" ref={notificationRef}>
                     <h3>Notification</h3>
                     <ul>
                         <li>
@@ -177,7 +188,7 @@ const Navbar = ({ setIsLoggedIn }) => {
             )}
 
             {showAccount && (
-                <div className="account-popup">
+                <div className="account-popup" ref={accountRef}>
                     <div className='img_user_profile'>
                         <img src={user} alt="" />
                         <div>
