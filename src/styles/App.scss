@@ -5,9 +5,10 @@
   font-optical-sizing: auto;
   // font-weight: <weight>;
   font-style: normal;
+ 
 }
 .app {
-  display: flex;
+
   // <uniquifier>: Use a unique and descriptive class name
 // <weight>: Use a value from 100 to 900
 /* width */
@@ -47,18 +48,10 @@
   max-width: 2400px;
   margin: 0 auto;
 }
-.main-content {
-  flex: 1;
-  transition: margin-left $animation-duration;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow-y: auto;
-}
+
 
 .content {
-  // border: 1px solid red;
-  // height: 92.8vh;
+  // height: 92.6vh;
   // margin-left: -171px;
   overflow-y: auto;
   // margin-left: 100px;

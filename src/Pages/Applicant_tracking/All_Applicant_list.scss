@@ -895,18 +895,20 @@ table {
 
 }
 
-
+ #filter_left{
+    display: none;
+  }
 @media (max-width: 1505px){
     .allEmployeeList .employee-table{
         margin: 20px auto;
         overflow-x:  auto !important;
     }
-  .EmpOn_Second_Head{
-    flex-direction: column;
-  }
-  .EmpOn_Second_Head .right{
-    margin-top: 10px;
-  }
+  // .EmpOn_Second_Head{
+  //   flex-direction: column;
+  // }
+  // .EmpOn_Second_Head .right{
+  //   margin-top: 10px;
+  // }
 
 }
 @media (max-width: 1355px) {
@@ -930,16 +932,17 @@ table {
 }
 
 @media (max-width: 1035px) {
-  .EmpOn_Second_Head .left {
-    display: grid !important;
-    height: fit-content !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    width: 82vw !important;
-    gap: 10px;
-  }
+  
+  // .EmpOn_Second_Head .left {
+  //   display: grid !important;
+  //   height: fit-content !important;
+  //   grid-template-columns: repeat(3, 1fr) !important;
+  //   width: 82vw !important;
+  //   gap: 10px;
+  // }
 
   .allEmployeeList .employee-table {
-    margin-top: 65px !important;
+    // margin-top: 65px !important;
     overflow-x: auto; /* Ensure table remains scrollable */
   }
 
