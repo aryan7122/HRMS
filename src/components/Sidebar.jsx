@@ -80,16 +80,15 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             submenu: [
                 { label: 'Admin Profile', path: '/admin-profile' },
                 { label: 'Employee Profile', path: '/Employee-profile' },
-                { label: 'Add Employee', path: '/add-employee' },
-                { label: 'Employee Details', path: '/employee-details' },
-                { label: 'All Job List', path: '/all-job-list' }//
+                { label: 'All Job List', path: '/all-job-list' },
+                { label: 'All Employee List', path: '/all-employee-list' },
+                { label: 'All Applicant List', path: '/all-applicant-list' },
             ]
         },
         {
             label: 'Organization',
             icon: <MdOutlineWorkOutline />,
             submenu: [
-                { label: 'All Employee List', path: '/all-employee-list' },
                 { label: 'Department', path: '/department' },
                 { label: 'Designation', path: '/designation' },
                 { label: 'Employee Health', path: '/health' },

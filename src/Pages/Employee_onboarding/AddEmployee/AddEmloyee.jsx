@@ -8,8 +8,10 @@ import ContactsForm from './ContactsForm.jsx';
 import ExperienceForm from './ExperienceForm.jsx';
 import EducationForm from './EducationForm.jsx';
 import DocumentsForm from './DocumentsForm.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const AddEmloyee = () => {
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         employeeId: '',
@@ -65,7 +67,9 @@ const AddEmloyee = () => {
             setShowAlert(false);
         }, 4300);
     };
-
+    const AllEmp = () => {
+        navigate('/all-employee-list')
+    }
 
     return (
         <>
@@ -73,7 +77,7 @@ const AddEmloyee = () => {
             <div className="employee-form">
                 <div className="top-bar">
                     <h2><div className='span'><HiUserPlus /></div>Add Employee</h2>
-                    <span className="close_nav"><TfiClose /></span>
+                    <span className="close_nav" onClick={AllEmp}><TfiClose /></span>
                     <div className="">
                         <span className="1"></span>
                         <span className="2"></span>

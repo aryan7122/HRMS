@@ -32,6 +32,12 @@ import AddNewJob from './Pages/Recruitment/Add Job/AddNewJob.jsx';
 import JobDetails from './Pages/Recruitment/Job_details_page/JobDetails.jsx';
 import EmployeeProfile from './Pages/Dashboard_and_Profile/EmployeeProfile/EmployeeProfile.jsx';
 
+// All_Applicant
+import All_Applicant_list from './Pages/Applicant_tracking/All_Applicant_list.jsx';
+import Applicant_detail from './Pages/Applicant_tracking/Applicant_detail/Applicant_detail.jsx';
+import Add_applicant from './Pages/Applicant_tracking/Add-applicant/Add_applicant.jsx';
+
+
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +52,7 @@ const App = () => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-
+  
   return (
     <Router>
       {!isLoggedIn ? (
@@ -81,17 +87,22 @@ const App = () => {
                   <Route path='/*' element={<_404 />} />
                   <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
                   {/* {Employee onboarding } */}
-                    <Route path="/admin-profile" element={<AdminProfile />} />
-                    <Route path="/Employee-profile" element={<EmployeeProfile />} />
+                  <Route path="/admin-profile" element={<AdminProfile />} />
+                  <Route path="/Employee-profile" element={<EmployeeProfile />} />
                   <Route path="/all-employee-list" element={<AllEmployeeList />} />
                   <Route path="/add-employee" element={<AddEmloyee />} />
                   <Route path="/employee-details" element={<EmployeeDetails />} />
                   <Route path="/department" element={<Department />} />
                   {/* recruitment */}
-                    <Route path="/all-job-list" element={<AllJobList />} />
-                    <Route path="/add-job" element={<AddNewJob />} />
-                    <Route path="/job-details" element={<JobDetails />} />
+                  <Route path="/all-job-list" element={<AllJobList />} />
+                  <Route path="/add-job" element={<AddNewJob />} />
+                  <Route path="/job-details" element={<JobDetails />} />
+                    {/* { } */}
+                    <Route path="/all-applicant-list" element={<All_Applicant_list />} />
+                    <Route path="/add-applicant" element={<Add_applicant />} />
+                    <Route path="/applicant-details" element={<Applicant_detail />} />
                 </Routes>
+
               </div>
             </div>
           </div>

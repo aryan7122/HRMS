@@ -1,4 +1,4 @@
-@import "../../../styles/variables.scss";
+@import "../../styles/variables";
 
 .EmpOn_main_container {
   .top-bar {
@@ -635,9 +635,8 @@ table {
           }
 
           .status-display {
-            //  border: 11px solid red !important;
-          // z-index: 9;
-              padding: 8px 12px;
+            // z-index: 9;
+            padding: 8px 12px;
             border-radius: 44px;
             display: flex;
             cursor: pointer;
@@ -647,70 +646,80 @@ table {
               gap: 5px;
             }
           
-            &.filled {
-              background-color: #0877e63a;
-              color: #0070f3;
+            &.new {
+              background-color: #08e6c83a;
+              color: #05938a;
             }
-            &.on-hold {
+            &.schedule {
+              background-color: #0746e731;
+              color: #1d6daf;
+            }
+             &.on-hold{
               background-color: #dce70731;
               color: #afac1d;
             }
-            &.open {
+            &.interviewed {
               background-color: #0cad542f;
               color: #0cad55;
             }
-            &.cancelled {
+            &.rejected {
               background-color: #f0d4d4;
               color: #c70000;
             }
-            &.draft {
+            &.hired {
               background-color: #fee7e7;
               color: #ff00c3;
             }
-
+            
             .left_dot {
               width: 10px;
               margin-right: 5px;
               height: 10px;
               border-radius: 50%;
               // background: #000;
-              &.filled {
-                background-color:#0070f3;
+              &.new {
+                background-color:#047e91;
               }
               &.on-hold{
                 background-color: #afac1d;
               }
-              &.open {
+              &.interviewed {
                 background-color: #54d92b;
               }
-              &.cancelled {
+              &.rejected {
                 background-color: #c70000;
               }
-              &.draft {
+              &.hired {
                 background-color: #ff00c3;
+              }
+               &.schedule {
+                background-color: #1100ff;
               }
             }
           }
-
+          
           .status-options {
             position: absolute;
             min-width: 130px !important;
             padding: 2px;
             border-radius: 5px !important;
             top: 100%;
+            // z-index: 999 !important;
             left: 0;
-            background: white;
+            background: rgb(255, 255, 255) !important;
             border: 1px solid #ccc;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-            z-index: 10;
-
+            
             .status-option {
               padding: 8px 12px;
+              // border: 11px solid red !important;
               cursor: pointer;
               display: flex;
               border-radius: 5px;
+              z-index: 99 !important;
               &:hover {
                 background: #de4abc57;
+                z-index: 9;
               }
             }
           }
@@ -739,7 +748,7 @@ table {
       }
 
       tr:hover {
-        background-color: #e6d1d1b2;
+        background-color: $lightprimary;
       }
 
       select {
