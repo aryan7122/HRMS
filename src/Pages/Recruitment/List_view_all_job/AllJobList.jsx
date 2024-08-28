@@ -235,27 +235,27 @@ const AllJobList = () => {
                     </div>
                     <div className="active" onClick={filter_leftClose}>
                         <div>
-                            <span><PiCheckSquare /></span>Active
+                            <span><PiCheckSquare /></span>Draft
                         </div>
                     </div>
                     <div className="inactive" onClick={filter_leftClose}>
                         <div>
-                            <span> <IoIosCloseCircleOutline /> </span>Inactive
+                            <span> <MdWork /> </span>Open
                         </div>
                     </div>
                     <div className="resigned" onClick={filter_leftClose}>
                         <div>
-                            <span> <GiBackstab /> </span>Resigned
+                            <span> <FaRegClock /> </span>On hold
                         </div>
                     </div>
                     <div className="terminated" onClick={filter_leftClose}>
                         <div>
-                            <span><FaPersonWalkingArrowLoopLeft /></span>Terminated
+                            <span><PiCheckSquare /></span>Filled
                         </div>
                     </div>
                     <div className="notice_period" onClick={filter_leftClose}>
                         <div>
-                            <span><GiNotebook /></span>Notice Period
+                            <span><IoIosCloseCircleOutline /></span>Cancelled
                         </div>
                     </div>
                 </div>

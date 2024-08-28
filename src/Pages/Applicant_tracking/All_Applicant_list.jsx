@@ -245,27 +245,32 @@ const All_Applicant_list = () => {
                     </div>
                     <div className="active" onClick={filter_leftClose}>
                         <div>
-                            <span><PiCheckSquare /></span>Active
+                            <span><PiCheckSquare /></span>New
                         </div>
                     </div>
                     <div className="inactive" onClick={filter_leftClose}>
                         <div>
-                            <span> <IoIosCloseCircleOutline /> </span>Inactive
+                            <span> <MdDateRange /> </span>Schedule
                         </div>
                     </div>
                     <div className="resigned" onClick={filter_leftClose}>
                         <div>
-                            <span> <GiBackstab /> </span>Resigned
+                            <span> <MdWork /> </span>Interviewed
                         </div>
                     </div>
                     <div className="terminated" onClick={filter_leftClose}>
                         <div>
-                            <span><FaPersonWalkingArrowLoopLeft /></span>Terminated
+                            <span><FaRegClock /></span>On hold
                         </div>
                     </div>
                     <div className="notice_period" onClick={filter_leftClose}>
                         <div>
-                            <span><GiNotebook /></span>Notice Period
+                            <span><GiNotebook /></span>Hired
+                        </div>
+                    </div>
+                    <div className="notice_period" onClick={filter_leftClose}>
+                        <div>
+                            <span><IoMdCloseCircleOutline /></span>Rejected
                         </div>
                     </div>
                 </div>
