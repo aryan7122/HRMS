@@ -23,7 +23,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     const [activeItem, setActiveItem] = useState(null);
     const [activeItem2, setActiveItem2] = useState(true)
     const [activeItem3, setActiveItem3] = useState(null);
-;
+    ;
     const [isSubmenu, setIsSubmenu] = useState(false);
     const [showAddShorts, setShowAddShorts] = useState(false);
 
@@ -32,12 +32,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     const handleShowActivespan = () => {
         setActiveItem2(!activeItem2)
     }
-  
+
     const handleClick = (index, path,) => {//isSubmenu = false
         handleShowActivespan()
-     
+
         setActiveItem(index)
- 
+
         if (!isSubmenu) {
 
             setActiveItem(activeItem == index ? null : index);
@@ -53,7 +53,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         // console.log('span index ', index)
         // handleShowActivespan()  ise tab call karo jab li index and span index same ho
         if (activeItem == index) {
-            handleShowActivespan() 
+            handleShowActivespan()
         }
     };
 
@@ -71,6 +71,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             submenu: [
                 { label: 'Admin Dashboard', path: '/admin-dashboard' },
                 { label: 'Employee Dashboard', path: '/employee-dashboard' },
+                { label: 'Admin Profile', path: '/admin-profile' },
+                { label: 'Employee Profile', path: '/Employee-profile' },
                 // { label: 'Setting', path: '/setting' }
             ]
         },
@@ -78,11 +80,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             label: 'Profile',
             icon: <HiOutlineUser />,
             submenu: [
-                { label: 'Admin Profile', path: '/admin-profile' },
-                { label: 'Employee Profile', path: '/Employee-profile' },
+               
                 { label: 'All Job List', path: '/all-job-list' },
                 { label: 'All Employee List', path: '/all-employee-list' },
                 { label: 'All Applicant List', path: '/all-applicant-list' },
+                { label: 'All Attendance List', path: '/all-attendance-list' },
+
             ]
         },
         {
@@ -161,7 +164,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                                             <li
                                                 onClick={() => {
                                                     handleClick(index, submenuItem.path, true);
-                                                    setActiveItem3(submenuItem.path); 
+                                                    setActiveItem3(submenuItem.path);
                                                 }}
                                                 key={subIndex}
                                             >
