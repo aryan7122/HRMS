@@ -26,10 +26,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
-const AllAttendanceList = () => {
+import NewAttendance from './addNewAttendance/NewAttendance.jsx';
+
+const AllAttendanceList = (ClosePop) => {
     const [allDel, setAllDel] = useState(true);
     const [thisDel, setThisDel] = useState(false)
     const [toggleLeft, setToggleLeft] = useState(false)
+    const [togglNewAdd, setTogglNewAdd] = useState(false)
 
     const DelThis = () => {
         setThisDel(!thisDel);
@@ -172,12 +175,14 @@ const AllAttendanceList = () => {
     };
 
     const JobDetailsPage = () => {
-        navigate('/job-details')
+        navigate('/attendance-details')
     }
-    const NewJobPage = () => {
-        navigate('/add-job')
+    const NewAttendanceClick = () => {
+        setTogglNewAdd(true)
     }
-
+    const NewAttendanceClosePop = () => {
+        setTogglNewAdd(false);
+    };
     const filter_left = () => {
         setToggleLeft(!toggleLeft)
     }
@@ -189,6 +194,8 @@ const AllAttendanceList = () => {
     }
     return (
         <div id='allEmp'>
+            {togglNewAdd && <NewAttendance ClosePop={NewAttendanceClosePop}  />}
+           
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
@@ -197,8 +204,8 @@ const AllAttendanceList = () => {
                             All Attendance list <p>345 total</p>
                         </h2>
                         <div className="Emp_Head_Right">
-                            <div className="addEmp" onClick={NewJobPage}>
-                                <p><span><IoMdAdd /></span> Add New Job</p>
+                            <div className="addEmp" onClick={NewAttendanceClick}>
+                                <p><span><IoMdAdd /></span> Add New Attendance</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport}>
                                 <div className="div_top"><CiMenuKebab /></div>

@@ -38,6 +38,7 @@ import Applicant_detail from './Pages/Applicant_tracking/Applicant_detail/Applic
 import Add_applicant from './Pages/Applicant_tracking/Add-applicant/Add_applicant.jsx';
 
 import AllAttendanceList from './Pages/Attedance_tracking/AllAttendanceList.jsx'
+import AttendanceDetails from './Pages/Attedance_tracking/AttendanceDetails/AttendanceDetails.jsx';
 
 
 const App = () => {
@@ -104,7 +105,10 @@ const App = () => {
                     <Route path="/applicant-details" element={<Applicant_detail />} />
                     {/* {AllAttendanceList } */}
                     <Route path="/all-attendance-list" element={<AllAttendanceList />} />
+                    <Route path="/attendance-details" element={<AttendanceDetails />} />
+
                 </Routes>
+
 
               </div>
             </div>

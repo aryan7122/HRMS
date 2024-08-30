@@ -32,12 +32,15 @@
       .close_btn:hover{
         svg{
           color: red !important;
-
+          
         }
       }
     }
     .profile_card {
-      margin: 20px 30px;
+      margin: 20px 20px;
+      padding-bottom: 10px;
+      // border: 1px solid red;
+      border-bottom: 1px solid rgba(221, 216, 216, 0.541);
       // border: 1px solid red;
       display: flex;
       align-items: center;
@@ -123,7 +126,6 @@
       position: relative;
       width: 90px;
       height: 90px;
-
       img {
         // padding: 2px;
         width: 70px;
@@ -169,8 +171,8 @@
     .info-cards {
       display: flex;
       justify-content: space-between;
-      
-      margin: 10px 30px;
+      // border: 1px solid red;
+      margin: 10px 20px !important;
       gap: 20px;
       .card {
         width: 100%;
@@ -230,7 +232,9 @@
         }
       }
     }
+// 
 
+// 
     .nav-bar {
       margin-top: 40px !important;
       display: flex;
