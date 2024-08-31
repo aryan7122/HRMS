@@ -16,14 +16,15 @@ import FilledSalesIco from '../assets/FilledSalesIco.svg';
 import FilledPurchasesIco from '../assets/FilledPurchasesIco.svg';
 import FilledEwaybillsIco from '../assets/FilledEwaybillsIco.svg';
 import FilledAccountantIco from '../assets/FilledAccountantIco.svg';
-
+// import { OutsideClick } from './OutSideClick';
 import '../styles/Sidebar.scss';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
+    // const { isOpen: isSideOpen, ref: sideRef, buttonRef:sideButtonRef, handleToggle: toggleSide } = OutsideClick();
     const [activeItem, setActiveItem] = useState(null);
-    const [activeItem2, setActiveItem2] = useState(true)
+    const [activeItem2, setActiveItem2] = useState(true);
     const [activeItem3, setActiveItem3] = useState(null);
-    ;
+    
     const [isSubmenu, setIsSubmenu] = useState(false);
     const [showAddShorts, setShowAddShorts] = useState(false);
 
@@ -142,6 +143,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                                 <span
                                     onClick={() => combinedClickHandler(index, item.submenu)}
                                     className={`${activeItem === index ? ' color_li' : ''}`}
+                                    
                                 >
                                     {item.icon}
 
