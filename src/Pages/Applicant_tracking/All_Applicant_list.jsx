@@ -18,7 +18,7 @@ import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
 import './All_Applicant_list.scss';
 // 
-import {  IoIosCloseCircleOutline } from "react-icons/io";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 import { GiBackstab, GiNotebook } from "react-icons/gi";
 import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
 import { OutsideClick } from '../../components/OutSideClick';
@@ -26,6 +26,7 @@ import { OutsideClick } from '../../components/OutSideClick';
 const All_Applicant_list = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+    const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
 
     const [allDel, setAllDel] = useState(true);
     const [thisDel, setThisDel] = useState(false)
@@ -76,6 +77,7 @@ const All_Applicant_list = () => {
 
     const handleHidImport = () => {
         setHidImport(!hidImport);
+        toggleFilter3()
     };
 
     const handleSelectAll = () => {
@@ -196,7 +198,14 @@ const All_Applicant_list = () => {
         setToggleLeft(false)
         toggleFilter2()
     }
+    const [fileName, setFileName] = useState('');
 
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.name); // Set the file name in the state
+        }
+    };
     return (
         <div id='allEmp'>
             <div className="EmpOn_main_container">
@@ -210,11 +219,12 @@ const All_Applicant_list = () => {
                             <div className="addEmp" onClick={NewJobPage}>
                                 <p><span><IoMdAdd /></span> Add New Applicant</p>
                             </div>
-                            <div className="menu_head" onClick={handleHidImport}>
+                            <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
                                 <div className="div_top"><CiMenuKebab /></div>
-                                <div className={`bottom_import  ${hidImport ? 'bottom_import_hide' : ''}`}>
-                                    <AiOutlineCloudUpload /> Import
-                                    <input type="file" accept='image/*' />
+                                <div className={`bottom_import ${!isFilterOpen3 ? 'bottom_import_hide' : ''}`} ref={filterRef3}>
+                                    {fileName ? '' : <AiOutlineCloudUpload />}
+                                    <input type="file" accept="image/*" onChange={handleFileChange} />
+                                    {fileName ? fileName : 'Uploaded File'}
                                 </div>
                             </div>
                         </div>

@@ -16,15 +16,15 @@ import FilledSalesIco from '../assets/FilledSalesIco.svg';
 import FilledPurchasesIco from '../assets/FilledPurchasesIco.svg';
 import FilledEwaybillsIco from '../assets/FilledEwaybillsIco.svg';
 import FilledAccountantIco from '../assets/FilledAccountantIco.svg';
-// import { OutsideClick } from './OutSideClick';
+import { OutsideClick } from './OutSideClick';
 import '../styles/Sidebar.scss';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
-    // const { isOpen: isSideOpen, ref: sideRef, buttonRef:sideButtonRef, handleToggle: toggleSide } = OutsideClick();
+    const { isOpen: isSideOpen, ref: sideRef, buttonRef: sideButtonRef, handleToggle: toggleSide } = OutsideClick();
     const [activeItem, setActiveItem] = useState(null);
     const [activeItem2, setActiveItem2] = useState(true);
     const [activeItem3, setActiveItem3] = useState(null);
-    
+
     const [isSubmenu, setIsSubmenu] = useState(false);
     const [showAddShorts, setShowAddShorts] = useState(false);
 
@@ -54,6 +54,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         // console.log('span index ', index)
         // handleShowActivespan()  ise tab call karo jab li index and span index same ho
         if (activeItem == index) {
+        
             handleShowActivespan()
         }
     };
@@ -81,7 +82,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             label: 'Profile',
             icon: <HiOutlineUser />,
             submenu: [
-               
+
                 { label: 'All Job List', path: '/all-job-list' },
                 { label: 'All Employee List', path: '/all-employee-list' },
                 { label: 'All Applicant List', path: '/all-applicant-list' },
@@ -132,49 +133,44 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     <ul id='top-ul-hide'>
                         {menuItems.map((item, index) => (
                             <li key={index} className={`${activeItem === index ? 'li' : ''}`}>
-                                {/* <span onClick={() => handleClick(index)}
-                                    // className={`${activeItem2 == false ? 'active_span_li' : ''}`}
-                                    // className={`${activeItem === index ? 'active_span_li' : ''}`}
-                                    // className={`${activeItem === index ? ' color_li' : ''}`}
+                                <span onClick={toggleSide}>
 
-                                >
-                                    {item.icon}
-                                </span> */}
-                                <span
-                                    onClick={() => combinedClickHandler(index, item.submenu)}
-                                    className={`${activeItem === index ? ' color_li' : ''}`}
-                                    
-                                >
-                                    {item.icon}
+                                    <span
+                                        onClick={() => combinedClickHandler(index, item.submenu)}
+                                        className={`${activeItem === index ? ' color_li' : ''}`}
+                                        ref={sideButtonRef}
+                                    >
+                                        {item.icon}
 
 
-                                    {activeItem2 && <p className={` ${isOpen ? 'openP' : 'closeP'}`}></p>} {isOpen ? '' : <div className='hover_P'><p>{item.label}</p> <div></div></div>}
+                                        {activeItem2 && <p className={` ${isOpen ? 'openP' : 'closeP'}`}></p>} {isOpen ? '' : <div className='hover_P'><p>{item.label}</p> <div></div></div>}
+                                    </span>
                                 </span>
                                 {isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>{item.label}</p>}
-                                <div className={`hover_menu ${activeItem === index ? 'show' : ''} ${activeItem2 == true ? 'active_span_li ' : 'active_span_li_2'}`}>
-                                    <div className='side_arrow'>
-                                        {item.submenu.map((_, subIndex) => (
-                                            <div className='leftArrow' key={subIndex}><div className='divL'></div></div>
-                                        ))}
+                                {/* {isSideOpen && ( */}
+                                    <div  className={`hover_menu ${activeItem === index ? 'show' : ''} ${activeItem2 == true ? 'active_span_li ' : 'active_span_li_2'}`}>
+                                        <div className='side_arrow'>
+                                            {item.submenu.map((_, subIndex) => (
+                                                <div className='leftArrow' key={subIndex}><div className='divL'></div></div>
+                                            ))}
+                                        </div>
+                                        <div className="lineS"></div>
+                                        <ul>
+
+                                            {item.submenu.map((submenuItem, subIndex) => (
+                                                <li
+                                                    onClick={() => {
+                                                        handleClick(index, submenuItem.path, true);
+                                                        setActiveItem3(submenuItem.path);
+                                                    }}
+                                                    key={subIndex}
+                                                >
+                                                    {submenuItem.label}
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
-                                    <div className="lineS"></div>
-                                    <ul>
-                                        {/* {item.submenu.map((submenuItem, subIndex) => (
-                                            <li onClick={() => handleClick(index, submenuItem.path)} key={subIndex}>{submenuItem.label}</li>
-                                        ))} */}
-                                        {item.submenu.map((submenuItem, subIndex) => (
-                                            <li
-                                                onClick={() => {
-                                                    handleClick(index, submenuItem.path, true);
-                                                    setActiveItem3(submenuItem.path);
-                                                }}
-                                                key={subIndex}
-                                            >
-                                                {submenuItem.label}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
+                                {/* )} */}
                             </li>
                         ))}
                         <li><h5>MORE</h5></li>
