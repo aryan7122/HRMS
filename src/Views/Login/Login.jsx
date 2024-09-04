@@ -108,19 +108,21 @@ const Login = ({ setIsLoggedIn }) => {
   return (
     <div className="login-container">
       <div className="login-image">
-        <Slider {...settings}>
-          {slides.map((slide, index) => (
-            <div key={index} className="Img_main">
-              <div className='roundBg'>
-                <img src={slide.image} alt={`Slide ${index + 1}`} />
-                <div className="overlay-text">
-                  <p className="access-infoo">{slide.text1}</p>
-                  <p className="details-info">{slide.text2}</p>
+        <div>
+          <Slider {...settings}>
+            {slides.map((slide, index) => (
+              <div key={index} className="Img_main">
+                <div className='roundBg'>
+                  <img src={slide.image} alt={`Slide ${index + 1}`} />
+                  <div className="overlay-text">
+                    <p className="access-infoo">{slide.text1}</p>
+                    <p className="details-info">{slide.text2}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </Slider>
+            ))}
+          </Slider>
+        </div>
       </div>
 
       <div className="login-form">
@@ -155,7 +157,7 @@ const Login = ({ setIsLoggedIn }) => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <span className="eyeicon"  onClick={togglePasswordVisibility}>
+              <span className="eyeicon" onClick={togglePasswordVisibility}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
@@ -172,39 +174,39 @@ const Login = ({ setIsLoggedIn }) => {
             </div>
             <div className="button-container">
               <button type="submit" className='btnnn'>Login</button>
-              <div className="Underline2">
-              <hr className="line1" />
-              <span>Or</span>
-              <hr className="line1" />
-            </div>
+              {/* <div className="Underline2">
+                <hr className="line1" />
+                <span>Or</span>
+                <hr className="line1" />
+              </div> */}
             </div>
             <div className='distancelogin'>
-              <h6 className="login1">Login With</h6>
+              {/* <h6 className="login1">Login With</h6> */}
             </div>
-            <div className="social-media-container">
-            <a href="/" className="social-icon">
-              <img src={ImgG} alt="" />
+            {/* <div className="social-media-container">
+              <a href="/" className="social-icon">
+                <img src={ImgG} alt="" />
 
-            </a>
-            <a href="/" className="social-icon">
-              <img src="" alt="" />
-            </a>
-            <a href="/" className="social-icon">
-              <img src={ImgF} alt="" />
-            </a>
-            <a href="/" className="social-icon">
-              <img src={ImgT} alt="" />
-            </a>
-            <a href="/" className="social-icon">
-              <img src={ImgM} alt="" />
-            </a>
-            <a href="/" className="social-icon">
-              <img src={ImgL} alt="" />
-            </a>
-          </div>
-          <div className='wholeaccount'>
-            {/* <h6 className='accountant'>Do you have an account yet? <a style={{ cursor: 'pointer' }} onClick={navigateSignUP}>Sign Up</a></h6> */}
-          </div>
+              </a>
+              <a href="/" className="social-icon">
+                <img src="" alt="" />
+              </a>
+              <a href="/" className="social-icon">
+                <img src={ImgF} alt="" />
+              </a>
+              <a href="/" className="social-icon">
+                <img src={ImgT} alt="" />
+              </a>
+              <a href="/" className="social-icon">
+                <img src={ImgM} alt="" />
+              </a>
+              <a href="/" className="social-icon">
+                <img src={ImgL} alt="" />
+              </a>
+            </div> */}
+            <div className='wholeaccount'>
+              {/* <h6 className='accountant'>Do you have an account yet? <a style={{ cursor: 'pointer' }} onClick={navigateSignUP}>Sign Up</a></h6> */}
+            </div>
           </form>
         </div>
       </div>

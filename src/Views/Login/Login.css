@@ -10,12 +10,13 @@
 }
 
 .login-container {
-  /* border: 4px solid red !important; */
   width: 100vw;
   height: 100vh;
   display: flex;
   /* align-items: center; */
+  justify-content: center;
   background-color: #fff;
+  margin: 0 auto;
 }
 /*  */
 .form-image-wrapper {
@@ -51,13 +52,14 @@
   display: block;
 }
 .login-image {
+  /* border: 1px solid red !important; */
   background-image: url('../../assets/LoginBg1.png');
   /* background-repeat: no-repeat; */
   /* background-repeat: repeat-x; */
   border-radius: 11px;
   max-width: 35vw ;
   /* max-height:800px  ; */
-  margin-left: 10px;
+  margin-left: -10px;
   margin-top: 10px;
   border-radius: 11px;
   object-fit: cover;
@@ -81,7 +83,7 @@
   width: 31vw !important;
   /* border: none; */
   border-radius: 10px;
-  border-left: 4px solid #d9c5eb79;
+  border-left: 2px solid #d9c5eb79;
   height: 70vh !important;
   margin-left: 2vw;
   margin-top: 35px;
@@ -510,3 +512,119 @@ label{
     font-size: 14px;
 }
 
+@media (max-width: 814px) {
+  .login-image {
+    border: 1px solid red;
+    display: none;
+    opacity: 0 !important;
+
+  }
+
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    padding: 10px;
+  }
+
+  .login-container {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+  }
+
+  .form-image-wrapper {
+    flex-direction: column;
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .form-wrapper {
+    padding: 20px;
+  }
+
+  .image-wrapper {
+    display: none;
+    /* Hide image on smaller screens for simplicity */
+  }
+
+  .login-image {
+    display: none;
+    /* Hide image on mobile */
+  }
+
+  .login-form {
+    width: 90%;
+    /* Adjust width for mobile */
+    margin: 0 auto;
+  }
+
+  .welcome {
+    font-size: 1.4rem;
+    /* Adjust text size */
+  }
+
+  .name {
+    font-size: 1rem;
+    /* Adjust text size */
+  }
+
+  .valueform[type="email"],
+  .valueform[type="password"],
+  .valueform[type="text"] {
+    width: 100%;
+    /* Full width for input fields */
+    height: 3rem;
+    font-size: 1rem;
+    /* Adjust font size */
+  }
+
+  .eyeicon {
+    margin-left: -2rem;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .button-container {
+    width: 100%;
+  }
+
+  .btnnn {
+    font-size: 1.2rem;
+    padding: 12px;
+  }
+
+  .or-divider {
+    margin: 10px 0;
+  }
+
+  .Underline2 {
+    width: 100%;
+  }
+
+  .Underline2 span {
+    padding-left: 10px;
+  }
+
+  .social-media-container {
+    width: 100%;
+    gap: 10px;
+  }
+.input1 .labelL{
+  font-size: 1rem;
+}
+.accountimage img{
+  width: 80px;
+  margin-top: 20px;
+}
+  .social-icon img {
+    width: 4rem;
+    /* Adjust icon size */
+  }
+
+  .wholeaccount h6 {
+    font-size: 1rem;
+  }
+}
