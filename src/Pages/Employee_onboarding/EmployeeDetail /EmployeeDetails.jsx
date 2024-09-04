@@ -159,7 +159,7 @@ const EmployeeDetails = () => {
                     </button>
                 </div>
 
-                <div className="content">
+                <div className="contents">
                     {renderContent()}
                 </div>
             </div>

@@ -18,8 +18,19 @@ import FilledEwaybillsIco from '../assets/FilledEwaybillsIco.svg';
 import FilledAccountantIco from '../assets/FilledAccountantIco.svg';
 import { OutsideClick } from './OutSideClick';
 import '../styles/Sidebar.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSidebarW } from '../slices/userSlice';
+import { setLiHover } from '../slices/userSlice';
+
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
+    
+    // redux
+    const dispatch = useDispatch();
+    const sidebarW = useSelector((state) => state.user.sidebarW);
+    const liHover = useSelector((state) => state.user.liHover); // Redux से liHover state को select करें
+
+    // 
     const { isOpen: isSideOpen, ref: sideRef, buttonRef: sideButtonRef, handleToggle: toggleSide } = OutsideClick();
     const [activeItem, setActiveItem] = useState(null);
     const [activeItem2, setActiveItem2] = useState(true);
@@ -36,7 +47,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
     const handleClick = (index, path,) => {//isSubmenu = false
         handleShowActivespan()
-
+        dispatch(setSidebarW(!sidebarW));
         setActiveItem(index)
 
         if (!isSubmenu) {
@@ -47,14 +58,17 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             navigate(path);
         }
     };
+    const [sideW, setSideW] = useState(false)
     const combinedClickHandler = (index, path) => {
+        dispatch(setSidebarW(!sidebarW));
+        setSideW(!sideW)
         setIsSubmenu(true)
         handleClick(index);
         setActiveItem2(false)
         // console.log('span index ', index)
         // handleShowActivespan()  ise tab call karo jab li index and span index same ho
         if (activeItem == index) {
-        
+
             handleShowActivespan()
         }
     };
@@ -121,10 +135,22 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         }
     ];
 
+    const handleMouseEnter = () => {
+        dispatch(setLiHover(true));  // Redux में liHover state को true करें
+    };
+
+    // Mouse leave पर liHover state को false करें
+    const handleMouseLeave = () => {
+        dispatch(setLiHover(false));  // Redux में liHover state को false करें
+    };
     return (
         <>
-            <div className={`sidebar ${isOpen ? 'open' : 'close'}`}>
-                <div className="ul">
+          
+            <div className={`sidebar ${isOpen ? 'open' : 'close'} ${sideW ? 'sideW' : ''}  `}>
+                <div className="ul"
+                    onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+
+                >
                     <div id='top_bar' className="slide-btn">
                         <button className="toggle-button" onClick={toggleSidebar}>
                             {isOpen ? <FaAngleLeft /> : <FaChevronRight />}
@@ -132,7 +158,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     </div>
                     <ul id='top-ul-hide'>
                         {menuItems.map((item, index) => (
-                            <li key={index} className={`${activeItem === index ? 'li' : ''}`}>
+                            <li key={index} className={`${activeItem === index ? 'li' : ''}`}
+                            >
                                 <span onClick={toggleSide}>
 
                                     <span
@@ -143,33 +170,48 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                                         {item.icon}
 
 
-                                        {activeItem2 && <p className={` ${isOpen ? 'openP' : 'closeP'}`}></p>} {isOpen ? '' : <div className='hover_P'><p>{item.label}</p> <div></div></div>}
+                                        {activeItem2 &&
+                                            <p className={` ${isOpen ? 'openP' : 'closeP'}`}>
+
+                                            </p>}
+                                        {isOpen ? '' :
+                                            <div className='hover_P'>
+                                                <p>
+                                                    {item.label}
+                                                </p>
+                                                <div>
+
+                                                </div>
+                                            </div>
+
+                                        }
+                                       
                                     </span>
                                 </span>
                                 {isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>{item.label}</p>}
                                 {/* {isSideOpen && ( */}
-                                    <div  className={`hover_menu ${activeItem === index ? 'show' : ''} ${activeItem2 == true ? 'active_span_li ' : 'active_span_li_2'}`}>
-                                        <div className='side_arrow'>
-                                            {item.submenu.map((_, subIndex) => (
-                                                <div className='leftArrow' key={subIndex}><div className='divL'></div></div>
-                                            ))}
-                                        </div>
-                                        <div className="lineS"></div>
-                                        <ul>
-
-                                            {item.submenu.map((submenuItem, subIndex) => (
-                                                <li
-                                                    onClick={() => {
-                                                        handleClick(index, submenuItem.path, true);
-                                                        setActiveItem3(submenuItem.path);
-                                                    }}
-                                                    key={subIndex}
-                                                >
-                                                    {submenuItem.label}
-                                                </li>
-                                            ))}
-                                        </ul>
+                                <div className={`hover_menu ${activeItem === index ? 'show' : ''} ${activeItem2 == true || !liHover == true ? 'active_span_li ' : 'active_span_li_2'}`}>
+                                    <div className='side_arrow'>
+                                        {item.submenu.map((_, subIndex) => (
+                                            <div className='leftArrow' key={subIndex}><div className='divL'></div></div>
+                                        ))}
                                     </div>
+                                    <div className="lineS"></div>
+                                    <ul>
+
+                                        {item.submenu.map((submenuItem, subIndex) => (
+                                            <li
+                                                onClick={() => {
+                                                    handleClick(index, submenuItem.path, true);
+                                                    setActiveItem3(submenuItem.path);
+                                                }}
+                                                key={subIndex}
+                                            >
+                                                {submenuItem.label}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
                                 {/* )} */}
                             </li>
                         ))}
@@ -179,7 +221,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     <div className={` ${isOpen ? '' : 'side'} `}>
                         <div className={` ${isOpen ? '' : 'sideLine'} `}>
                             <div className='dot'><div></div></div>
-                            <ul className='ul2'>
+                            <ul className='ul2'
+                                onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+
+                            >
                                 <li><span><TbFileMinus /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Files</p>} {isOpen ? '' : <div className='hover_P'><p>Files</p> <div></div></div>}</li>
                                 <li><span><TbGraph /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Performance</p>}  {isOpen ? '' : <div className='hover_P'><p>Performance</p> <div></div></div>}</li>
                                 <li><span><TbFolderSymlink /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Onboarding</p>}  {isOpen ? '' : <div className='hover_P'><p>Onboarding</p> <div></div></div>}</li>

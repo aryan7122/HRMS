@@ -295,7 +295,12 @@
     // border :1px solid red;
     // height: fit-content;
   }
-
+.titleForm_h3{
+      font-size: 17px ;
+      color: #2A2A2A;
+      margin-bottom: 10px;
+      // border: 1px solid red ;
+    }
   @media (max-width: 1215px) {
     form {
       width: 90% !important;
@@ -316,8 +321,8 @@
       width: 100% !important;
     }
   }
-  form .from1 {
-    // border: 1px solid red !important;
+  form .FormDiv .from1 {
+    border: 1px solid red !important;
     // z-index: 1;
     // height: fit-content !important;
     // min-height: 210px;
@@ -331,6 +336,7 @@
     // gap: 5px;
     margin: 20px;
     // padding-right: 270px;
+    
     @media (max-width: 1250px) {
       padding-right: 0px;
     }
@@ -529,58 +535,58 @@
       // cursor: pointer;
     }
   }
-  form  .form2{
+  form .FormDiv  .form2{
   // border: 1px solid red !important;
   // height: 210px;
   // padding-bottom: 50px;
   }
 }
-#submitBtn_next_main {
-  width: 90%;
-  color: #fff;
-  position: absolute;
-  bottom: 10px;
-  // left: 110px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: center;
-  // border: 1px solid red;
-  height: 63px;
-  margin-bottom: -10px;
-  background: #fff;
-  .form {
-    right: 10px;
-    color: black;
-    display: flex;
-    width: 120px;
-    text-align: center;
-    align-items: center;
-    // border: 1px solid red;
-    position: absolute;
-    gap: 5px;
-    margin-bottom: -20px;
-    p {
-      color: #938a8a;
-      margin-right: 2px;
-      font-size: 13px;
-    }
-    span {
-      font-size: 22px !important;
-      cursor: not-allowed;
-    }
-    .not_active {
-      color: rgb(178, 170, 170) !important;
-    }
-    button {
-      background: #fff;
-      outline: none;
-      border: none;
-      font-size: 22px;
-      cursor: pointer;
-    }
-  }
-}
+// #submitBtn_next_main {
+//   width: 92%;
+//   color: #fff;
+//   position: absolute;
+//   bottom: 10px;
+//   left: 110px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   text-align: center;
+//   // border: 1px solid red;
+//   height: 63px;
+//   margin-bottom: -10px;
+//   background: #fff;
+//   .form {
+//     right: 10px;
+//     color: black;
+//     display: flex;
+//     width: 120px;
+//     text-align: center;
+//     align-items: center;
+//     // border: 1px solid red;
+//     position: absolute;
+//     gap: 5px;
+//     margin-bottom: -20px;
+//     p {
+//       color: #938a8a;
+//       margin-right: 2px;
+//       font-size: 13px;
+//     }
+//     span {
+//       font-size: 22px !important;
+//       cursor: not-allowed;
+//     }
+//     .not_active {
+//       color: rgb(178, 170, 170) !important;
+//     }
+//     button {
+//       background: #fff;
+//       outline: none;
+//       border: none;
+//       font-size: 22px;
+//       cursor: pointer;
+//     }
+//   }
+// }
 #submitBtn {
   // border: 1px solid red;
   // z-index: 1;

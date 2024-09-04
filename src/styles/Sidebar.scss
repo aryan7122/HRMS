@@ -5,7 +5,6 @@
 }
 
 
-
 .sidebar {
     // font-family: inherit;
   -webkit-user-select: none; /* Safari */
@@ -14,14 +13,14 @@
   user-select: none;
   // z-index: 9;
   width: 105px;
-  height: 92.8vh;
+  height: calc(100vh - 56px);
   // border: 1px solid red;
   z-index: 1;
   background-color: $primary-color;
   transition: height $animation-duration ease-in-out;
-  overflow-y: visible; /* Add this to enable scrolling in the sidebar */
+  // overflow-y: visible; /* Add this to enable scrolling in the sidebar */
   position: relative;
-  // position: relative;
+  // position: fixed;
   .ul{
     background-color: $primary-color;
     // position: fixed; /* Ensure parent has relative positioning */
@@ -106,6 +105,10 @@
         .hover_P{
           display: none !important;
         }
+      }
+      .color_li:active{
+        color: rgb(216, 172, 228);
+        
       }
       .active_span_li_2{
         display: block;
@@ -828,4 +831,10 @@
       }
     }
   }
+}
+
+
+
+.sidebar.expanded {
+  width: 300px;
 }
