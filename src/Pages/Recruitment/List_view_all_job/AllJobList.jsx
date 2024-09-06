@@ -454,8 +454,6 @@ const AllJobList = () => {
                                             </div>
                                         </div>
                                     </td>
-
-
                                 </tr>
                             ))}
                         </tbody>

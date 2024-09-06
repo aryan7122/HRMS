@@ -570,8 +570,9 @@
       cursor: not-allowed;
     }
     .not_active {
-      color: rgb(178, 170, 170) !important;
+      color: rgb(255, 255, 255) !important;
     }
+    
     button {
       background: #fff;
       outline: none;
@@ -673,3 +674,18 @@
 .starred{
   color:  red !important;
 }
+.active{
+      color: #fff !important;
+    }
+
+    .not_active {
+      color: rgb(255, 255, 255) !important;
+    }
+
+
+    .filled{
+      color: #dcecd4 !important;
+    }
+    .navbar-items span.filled{
+      background: #310b54 !important;
+    }

@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import '../../Employee_onboarding/AddEmployee/AddEmloyee.scss';
 import '../../Employee_onboarding/AddEmployee/NavbarForm.scss';
-// import { CiCircleChevRight } from "react-icons/ci";
-// import { TfiClose } from "react-icons/tfi";
-// import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
@@ -42,12 +39,10 @@ const JobForm = ({ onSubmit }) => {
     };
 
     const handleCheckboxChange = (event) => {
-        const { value, checked } = event.target;
+        const { value } = event.target;
         setFormData(prevState => ({
             ...prevState,
-            jobLocation: checked
-                ? [...prevState.jobLocation, value]
-                : prevState.jobLocation.filter(location => location !== value)
+            jobLocation: [value]
         }));
     };
 
@@ -69,10 +64,16 @@ const JobForm = ({ onSubmit }) => {
     };
 
     const toggleDropdown = (dropdown) => {
-        setDropdowns(prevState => ({
-            ...prevState,
-            [dropdown]: !prevState[dropdown]
-        }));
+        // Reset all dropdowns to false, then toggle the selected one
+        setDropdowns({
+            designation: false,
+            department: false,
+            jobStatus: false,
+            employmentType: false,
+            experience: false,
+            requiredSkills: false,
+            [dropdown]: !dropdowns[dropdown]
+        });
     };
 
     const selectOption = (dropdown, value) => {
@@ -150,9 +151,9 @@ const JobForm = ({ onSubmit }) => {
                                 <div id='checkbox'>
                                     <div>
                                         <input
-
                                             type="checkbox"
                                             value="In Office"
+                                            name="JobLocation"
                                             checked={formData.jobLocation.includes("In Office")}
                                             onChange={handleCheckboxChange}
                                         />
@@ -162,6 +163,7 @@ const JobForm = ({ onSubmit }) => {
                                         <input
                                             type="checkbox"
                                             value="Hybrid"
+                                            name='JobLocation'
                                             checked={formData.jobLocation.includes("Hybrid")}
                                             onChange={handleCheckboxChange}
                                         />
@@ -171,6 +173,7 @@ const JobForm = ({ onSubmit }) => {
                                         <input
                                             type="checkbox"
                                             value="Remote"
+                                            name="JobLocation"
                                             checked={formData.jobLocation.includes("Remote")}
                                             onChange={handleCheckboxChange}
                                         />
@@ -233,58 +236,71 @@ const JobForm = ({ onSubmit }) => {
 
                             <div className="form-group">
                                 <label>Experience*</label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter Experience"
-                                    name="experience"
-                                    value={formData.experience}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <div className="dropdown">
+                                    <div className="dropdown-button" onClick={() => toggleDropdown('experience')}>
+                                        <div>{formData.experience || "Select Experience"}</div>
+                                        <span id='toggle_selectIcon'> {!dropdowns.experience ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    </div>
+
+                                    {dropdowns.experience && (
+                                        <div className="dropdown-menu">
+                                            <div className="dropdown-item" onClick={() => selectOption('experience', 'Fresher')}>Fresher</div>
+                                            <div className="dropdown-item" onClick={() => selectOption('experience', 'Experienced')}>Experienced</div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
 
                             <div className="form-group">
                                 <label>Required Skills*</label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter Required Skills"
-                                    name="requiredSkills"
-                                    value={formData.requiredSkills}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <div className="dropdown">
+                                    <div className="dropdown-button" onClick={() => toggleDropdown('requiredSkills')}>
+                                        <div>{formData.requiredSkills || "Select Required Skills"}</div>
+                                        <span id='toggle_selectIcon'> {!dropdowns.requiredSkills ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    </div>
+
+                                    {dropdowns.requiredSkills && (
+                                        <div className="dropdown-menu">
+                                            <div className="dropdown-item" onClick={() => selectOption('requiredSkills', 'Communication Skills')}>Communication Skills</div>
+                                            <div className="dropdown-item" onClick={() => selectOption('requiredSkills', 'Software Development')}>Software Development</div>
+                                            <div className="dropdown-item" onClick={() => selectOption('requiredSkills', 'Leadership Skills')}>Leadership Skills</div>
+                                            <div className="dropdown-item" onClick={() => selectOption('requiredSkills', 'Team Collaboration')}>Team Collaboration</div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
+
                         </div>
-                        <div id='Description' className='DescriptionJob'>
-                            <div className="form-group">
-                                <label>Description*</label>
-                                <textarea
-                                    placeholder="Enter Description"
-                                    name="description"
-                                    value={formData.description}
-                                    onChange={handleChange}
-                                    required
-                                />
+                            <div id='Description' className='DescriptionJob'>
+                                <div className="form-group">
+                                    <label>Description*</label>
+                                    <textarea
+                                        placeholder="Enter Description"
+                                        name="description"
+                                        value={formData.description}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
                             </div>
-                        </div>
                     </div>
-                    <div id='submitBtn_next_main'>
-                        <div id='submitBtn' >
-                            <div className='div'>
-                                <button type="submit" >Submit </button>
-                                <span><CiCircleChevRight /></span>
+                        <div id='submitBtn_next_main'>
+                            <div id='submitBtn' >
+                                <div className='div'>
+                                    <button type="submit" >Submit </button>
+                                    <span><CiCircleChevRight /></span>
+                                </div>
+                                <div className="lineBar"></div>
+                                <div className='x'>
+                                    <span> <TfiClose /></span>
+                                </div>
                             </div>
-                            <div className="lineBar"></div>
-                            <div className='x'>
-                                <span> <TfiClose /></span>
+                            <div className="form">
+                                <p>Next Page</p>
+                                <span className='not_active'><IoIosArrowDropleft /></span>
+                                <button type='submit'><IoIosArrowDropright /></button>
                             </div>
                         </div>
-                        <div className="form">
-                            <p>Next Page</p>
-                            <span className='not_active'><IoIosArrowDropleft /></span>
-                            <button type='submit'><IoIosArrowDropright /></button>
-                        </div>
-                    </div>
                 </form>
             </div>
         </>

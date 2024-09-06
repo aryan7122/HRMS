@@ -17,6 +17,17 @@ import EmployeeDetails from './Pages/Employee_onboarding/EmployeeDetail /Employe
 
 import './styles/App.scss';
 
+
+// 
+// import SignUp from './Views/SignUp/SignUp.jsx';
+import ForgotPassword from './Views/ForgotPassword/ForgotPassword.jsx';
+import SetNewPassword from './Views/ForgotPassword/SetNewPassword.jsx';
+import SendOTP from './Views/ForgotPassword/SendOTP.jsx';
+
+import ViewattendenceLogin from './Views/Login/ViewattendenceLogin.jsx'; // Import the new ViewattendenceLogin component
+import TrackPerformance from './Views/Login/TrackPerformance.jsx'; // Import the new TrackPerformance component
+
+
 // 
 // import Department from './Pages/Employee_onboarding/EmployeeDetail /Department.jsx'
 
@@ -74,12 +85,12 @@ const App = () => {
         // {/* <Login setIsLoggedIn={setIsLoggedIn} /> */ }
         <Routes>
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-          {/* <Route path="/sign-up" element={<SignUp />} />
+          {/* <Route path="/sign-up" element={<SignUp />} /> */}
           <Route path="/login-attendance" element={<ViewattendenceLogin setIsLoggedIn={setIsLoggedIn} />} />
           <Route path='/track-performance' element={<TrackPerformance setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/otp-verification" element={<SendOTP />} />
-          <Route path="/set-new-password" element={<SetNewPassword />} /> */}
+          <Route path="/set-new-password" element={<SetNewPassword />} />
           <Route path="/*" element={<Navigate to="/login" />} />
         </Routes>
       ) : (

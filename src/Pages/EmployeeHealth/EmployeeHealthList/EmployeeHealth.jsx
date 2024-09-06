@@ -14,8 +14,11 @@ import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 // import './EmployeeHealth.scss';
+import { OutsideClick } from '../../../components/OutSideClick';
 
 const EmployeeHealth = () => {
+    const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
         { deptName: "Hillery Moses", deptHead: "HSEQ", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Soy", chorninc: "Lorem ipsum dolor sit amet c..." },
@@ -210,12 +213,12 @@ const EmployeeHealth = () => {
                         </div>
                     </div>
                     <div className="filter divRight">
-                        <div className='div_box' onClick={showFilterHandle}>
+                        <div className='div_box' onClick={toggleFilter2} ref={filterButtonRef2}>
                             <span><IoFilterSharp /></span>
                         </div>
 
-                        {showFilter && (
-                            <div className="filter-container">
+                        {isFilterOpen2 && (
+                            <div className="filter-container" ref={filterRef2}>
                                 <div className="filter-options">
                                     <div className="filter-option" onClick={handleCustomDateClick}>
                                         <p>Custom Date </p>

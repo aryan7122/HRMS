@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import Select from 'react-select';
 import './AddEmloyee.scss';
@@ -6,13 +6,6 @@ import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
-
-// const cityOptions = [
-//     { value: 'Delhi', label: 'Delhi' },
-//     { value: 'Mumbai', label: 'Mumbai' },
-//     { value: 'Bangalore', label: 'Bangalore' },
-//     // Add more cities as needed
-// ];
 
 const ContactsForm = ({ onSubmit }) => {
     const [formData, setFormData] = useState({
@@ -24,8 +17,36 @@ const ContactsForm = ({ onSubmit }) => {
         zipCode: '',
         personalContactNumber: '',
         emergencyContactNumber: '',
-        personalEmail: ''
+        personalEmail: '',
+        permanentCountry: '',
+        permanentState: '',
+        permanentCity: '',
+        permanentStreet1: '',
+        permanentStreet2: '',
+        permanentZipCode: '',
+        permanentPersonalContactNumber: '',
+        permanentEmergencyContactNumber: '',
+        permanentPersonalEmail: ''
     });
+
+    const [sameAsPresent, setSameAsPresent] = useState(false);
+
+    useEffect(() => {
+        if (sameAsPresent) {
+            setFormData(prevState => ({
+                ...prevState,
+                permanentCountry: prevState.country,
+                permanentState: prevState.state,
+                permanentCity: prevState.city,
+                permanentStreet1: prevState.street1,
+                permanentStreet2: prevState.street2,
+                permanentZipCode: prevState.zipCode,
+                permanentPersonalContactNumber: prevState.personalContactNumber,
+                permanentEmergencyContactNumber: prevState.emergencyContactNumber,
+                permanentPersonalEmail: prevState.personalEmail
+            }));
+        }
+    }, [sameAsPresent, formData]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -35,10 +56,10 @@ const ContactsForm = ({ onSubmit }) => {
         }));
     };
 
-    const handleCityChange = (selectedOption) => {
+    const handleCityChange = (selectedOption, field) => {
         setFormData(prevState => ({
             ...prevState,
-            city: selectedOption.value
+            [field]: selectedOption.value
         }));
     };
 
@@ -47,6 +68,7 @@ const ContactsForm = ({ onSubmit }) => {
         console.log(formData);
 
         // Handle form submission
+        // Show success message or alert if needed
         setShowAlert(true);
         setTimeout(() => {
             setShowAlert(false);
@@ -62,16 +84,23 @@ const ContactsForm = ({ onSubmit }) => {
             zipCode: '',
             personalContactNumber: '',
             emergencyContactNumber: '',
-            personalEmail: ''
+            personalEmail: '',
+            permanentCountry: '',
+            permanentState: '',
+            permanentCity: '',
+            permanentStreet1: '',
+            permanentStreet2: '',
+            permanentZipCode: '',
+            permanentPersonalContactNumber: '',
+            permanentEmergencyContactNumber: '',
+            permanentPersonalEmail: ''
         });
+        setSameAsPresent(false);
     };
 
     return (
         <>
             <div className="" onSubmit={onSubmit}>
-                {/* <form>
-                    <button type="submit">Next</button>
-                </form> */}
                 <form onSubmit={handleSubmit}>
                     <div id='form'>
                         <div className='div_heading'>
@@ -97,19 +126,12 @@ const ContactsForm = ({ onSubmit }) => {
                             </div>
                             <div className="form-group">
                                 <label>City</label>
-                                {/* <Select
-                                    options={cityOptions}
-                                    value={cityOptions.find(option => option.value === formData.city)}
-                                    onChange={handleCityChange}
-                                    placeholder="Select City"
-                                    required
-                                /> */}
                                 <input
                                     type="text"
                                     placeholder="Enter City"
-                                    name="street1"
+                                    name="city"
                                     value={formData.city}
-                                    onChange={handleCityChange}
+                                    onChange={handleChange}
                                     required
                                 />
                             </div>
@@ -184,42 +206,43 @@ const ContactsForm = ({ onSubmit }) => {
                     <div id='form'>
                         <div className='div_heading'>
                             <h2>Permanent Address</h2>
-                            <input type="checkbox" name="" id="" /> <p>Same as present address</p>
+                            <input
+                                type="checkbox"
+                                checked={sameAsPresent}
+                                onChange={() => setSameAsPresent(prev => !prev)}
+                            /> 
+                            <p>Same as present address</p>
                         </div>
                         <div className="from1">
                             <div className="form-group">
                                 <label>Country/Region</label>
                                 <CountryDropdown
-                                    value={formData.country}
-                                    onChange={(val) => setFormData(prevState => ({ ...prevState, country: val }))}
-                                    required
+                                    value={formData.permanentCountry}
+                                    onChange={(val) => setFormData(prevState => ({ ...prevState, permanentCountry: val }))}
+                                    required={!sameAsPresent}
+                                    disabled={sameAsPresent}
                                 />
                             </div>
                             <div className="form-group">
                                 <label>State</label>
                                 <RegionDropdown
-                                    country={formData.country}
-                                    value={formData.state}
-                                    onChange={(val) => setFormData(prevState => ({ ...prevState, state: val }))}
-                                    required
+                                    country={formData.permanentCountry}
+                                    value={formData.permanentState}
+                                    onChange={(val) => setFormData(prevState => ({ ...prevState, permanentState: val }))}
+                                    required={!sameAsPresent}
+                                    disabled={sameAsPresent}
                                 />
                             </div>
                             <div className="form-group">
                                 <label>City</label>
-                                {/* <Select
-                                    options={cityOptions}
-                                    value={cityOptions.find(option => option.value === formData.city)}
-                                    onChange={handleCityChange}
-                                    placeholder="Select City"
-                                    required
-                                /> */}
                                 <input
                                     type="text"
                                     placeholder="Enter City"
-                                    name="street1"
-                                    value={formData.city}
-                                    onChange={handleCityChange}
-                                    required
+                                    name="permanentCity"
+                                    value={formData.permanentCity}
+                                    onChange={handleChange}
+                                    required={!sameAsPresent}
+                                    disabled={sameAsPresent}
                                 />
                             </div>
                             <div className="form-group">
@@ -227,10 +250,11 @@ const ContactsForm = ({ onSubmit }) => {
                                 <input
                                     type="text"
                                     placeholder="Enter street 1"
-                                    name="street1"
-                                    value={formData.street1}
+                                    name="permanentStreet1"
+                                    value={formData.permanentStreet1}
                                     onChange={handleChange}
-                                    required
+                                    required={!sameAsPresent}
+                                    disabled={sameAsPresent}
                                 />
                             </div>
                             <div className="form-group">
@@ -238,9 +262,10 @@ const ContactsForm = ({ onSubmit }) => {
                                 <input
                                     type="text"
                                     placeholder="Enter street 2"
-                                    name="street2"
-                                    value={formData.street2}
+                                    name="permanentStreet2"
+                                    value={formData.permanentStreet2}
                                     onChange={handleChange}
+                                    disabled={sameAsPresent}
                                 />
                             </div>
                             <div className="form-group">
@@ -248,10 +273,11 @@ const ContactsForm = ({ onSubmit }) => {
                                 <input
                                     type="text"
                                     placeholder="Enter zip code"
-                                    name="zipCode"
-                                    value={formData.zipCode}
+                                    name="permanentZipCode"
+                                    value={formData.permanentZipCode}
                                     onChange={handleChange}
-                                    required
+                                    required={!sameAsPresent}
+                                    disabled={sameAsPresent}
                                 />
                             </div>
                             <div className="form-group">
@@ -259,10 +285,11 @@ const ContactsForm = ({ onSubmit }) => {
                                 <input
                                     type="text"
                                     placeholder="Enter personal contact number"
-                                    name="personalContactNumber"
-                                    value={formData.personalContactNumber}
+                                    name="permanentPersonalContactNumber"
+                                    value={formData.permanentPersonalContactNumber}
                                     onChange={handleChange}
-                                    required
+                                    required={!sameAsPresent}
+                                    disabled={sameAsPresent}
                                 />
                             </div>
                             <div className="form-group">
@@ -270,10 +297,11 @@ const ContactsForm = ({ onSubmit }) => {
                                 <input
                                     type="text"
                                     placeholder="Enter emergency contact number"
-                                    name="emergencyContactNumber"
-                                    value={formData.emergencyContactNumber}
+                                    name="permanentEmergencyContactNumber"
+                                    value={formData.permanentEmergencyContactNumber}
                                     onChange={handleChange}
-                                    required
+                                    required={!sameAsPresent}
+                                    disabled={sameAsPresent}
                                 />
                             </div>
                             <div className="form-group">
@@ -281,10 +309,11 @@ const ContactsForm = ({ onSubmit }) => {
                                 <input
                                     type="email"
                                     placeholder="Enter personal email ID"
-                                    name="personalEmail"
-                                    value={formData.personalEmail}
+                                    name="permanentPersonalEmail"
+                                    value={formData.permanentPersonalEmail}
                                     onChange={handleChange}
-                                    required
+                                    required={!sameAsPresent}
+                                    disabled={sameAsPresent}
                                 />
                             </div>
                         </div>

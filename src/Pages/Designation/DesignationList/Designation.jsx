@@ -15,8 +15,11 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import './Designation.scss';
+import { OutsideClick } from '../../../components/OutSideClick';
 
 const Designation = () => {
+    const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
         { deptName: "UI Designer", deptHead: "Application Development", parentDept: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
@@ -244,6 +247,54 @@ const Designation = () => {
         }));
     };
 
+
+
+    // popup
+    const initialFormData_3 = {
+        email_3: '',
+        department_3: '',
+        Description_3: '',
+    };
+
+    const [formData_3, setFormData_3] = useState(initialFormData_3);
+    const [dropdowns_3, setDropdowns_3] = useState({
+        departmentOpen_3: false,
+    });
+
+    const handleInputChange_3 = (event) => {
+        const { name, value } = event.target;
+        setFormData_3((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const toggleDropdown_3 = (dropdownKey) => {
+        setDropdowns_3((prevState) => ({
+            ...prevState,
+            [dropdownKey]: !prevState[dropdownKey],
+        }));
+    };
+
+    const selectOption_3 = (field, value) => {
+        setFormData_3((prevState) => ({
+            ...prevState,
+            [field]: value,
+        }));
+        toggleDropdown_3('departmentOpen_3');
+    };
+
+    const handleSubmitForm_3 = (event) => {
+        event.preventDefault();
+        console.log("Form Submitted:", formData_3);
+
+        // Reset form fields and dropdown
+        setFormData_3(initialFormData_3);
+        setDropdowns_3({ departmentOpen_3: false }); // Ensure dropdown closes
+    };
+
+    // popup
+
     return (
         <div>
             <div className="EmpOn_main_container">
@@ -304,12 +355,12 @@ const Designation = () => {
                         </div>
                     </div>
                     <div className="filter divRight">
-                        <div className='div_box' onClick={showFilterHandle}>
+                        <div className='div_box' onClick={toggleFilter2} ref={filterButtonRef2}>
                             <span><IoFilterSharp /></span>
                         </div>
 
-                        {showFilter && (
-                            <div className="filter-container">
+                        {isFilterOpen2 && (
+                            <div className="filter-container" ref={filterRef2}>
                                 <div className="filter-options">
                                     <div className="filter-option" onClick={handleCustomDateClick}>
                                         <p>Custom Date </p>
@@ -381,11 +432,11 @@ const Designation = () => {
                         </thead>
                         <tbody>
                             {currentEmployees.map((emp, index) => (
-                                <tr key={index} onClick={() => handleDesignationclick2(DesignationDetails)}>
+                                <tr key={index} >
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
-                                    <td>{emp.deptName}</td>
-                                    <td>{emp.deptHead}</td>
-                                    <td>{emp.parentDept}</td>
+                                    <td onClick={() => handleDesignationclick2(DesignationDetails)}>{emp.deptName}</td>
+                                    <td onClick={() => handleDesignationclick2(DesignationDetails)}>{emp.deptHead}</td>
+                                    <td onClick={() => handleDesignationclick2(DesignationDetails)}>{emp.parentDept}</td>
 
 
 
@@ -403,21 +454,16 @@ const Designation = () => {
                                     </button>
                                 </div>
                                 <div className="add-designation-body">
-                                    <form>
+                                    <form onSubmit={handleSubmitForm_3}>
                                         <div className="side-by-side">
-                                            {/* <div>
-                                                <label style={{ color: "red" }}>Designation Name *</label>
-                                                <input type="text" id="designname" placeholder="Enter designation name" />
-                                            </div> */}
-
                                             <div className="form-group">
                                                 <label className='starred'>Designation Name*</label>
                                                 <input
                                                     type="text"
-                                                    placeholder="Enter designation name "
-                                                    name="email"
-                                                    value={formData.email}
-                                                    onChange={handleChange}
+                                                    placeholder="Enter designation name"
+                                                    name="email_3"
+                                                    value={formData_3.email_3}
+                                                    onChange={handleInputChange_3}
                                                     required
                                                 />
                                             </div>
@@ -425,38 +471,44 @@ const Designation = () => {
                                             <div className="form-group" id="depart">
                                                 <label>Department</label>
                                                 <div className="dropdown10">
-                                                    <div className="dropdown-button10" onClick={() => toggleDropdown('department')}>
-                                                        <div className='choose1'>{formData.department || "Choose department"}</div>
-                                                        <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                                    <div className="dropdown-button10" onClick={() => toggleDropdown_3('departmentOpen_3')}>
+                                                        <div className='choose1'>{formData_3.department_3 || "Choose department"}</div>
+                                                        <span id='toggle_selectIcon'>
+                                                            {!dropdowns_3.departmentOpen_3 ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                                        </span>
                                                     </div>
 
-                                                    {dropdowns.department && (
+                                                    {dropdowns_3.departmentOpen_3 && (
                                                         <div className="dropdown-menu10">
-                                                            <div className="dropdown-item10" onClick={() => selectOption('department', 'Department1')}>Department1</div>
-                                                            <div className="dropdown-item10" onClick={() => selectOption('department', 'Department2')}>Department2</div>
-                                                            <div className="dropdown-item10" onClick={() => selectOption('department', 'Department3')}>Department3</div>
-                                                            <div className="dropdown-item10" onClick={() => selectOption('department', 'Department4')}>Department4</div>
+                                                            <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department1')}>Department1</div>
+                                                            <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department2')}>Department2</div>
+                                                            <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department3')}>Department3</div>
+                                                            <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department4')}>Department4</div>
                                                         </div>
                                                     )}
                                                 </div>
                                             </div>
-
-                                            {/* <div>
-                                                <label>Department </label>
-                                                <input type="text" id="designname1" placeholder="Enter department" />
-                                            </div> */}
                                         </div>
-                                        <div className='despt'>  <label>Description</label></div>
 
-                                        <textarea placeholder="Enter description"></textarea>
+                                        <div className='despt'>
+                                            <label>Description</label>
+                                        </div>
+
+                                        <textarea
+                                            placeholder="Enter description"
+                                            name="Description_3" // Ensure name matches the form data key
+                                            value={formData_3.Description_3}
+                                            onChange={handleInputChange_3}
+                                        ></textarea>
 
                                         <button type="submit">Submit
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
-                                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" />
-                                                <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+                                                <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
                                         </button>
                                     </form>
+
                                 </div>
                             </div>
                         </div>

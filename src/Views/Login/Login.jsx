@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import '../styles/Login.css';
 import './Login.css'
+
 import { BsGoogle, BsFacebook, BsTwitter, BsMicrosoft, BsLinkedin } from 'react-icons/bs';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import imageaccount1 from '../../assets/logo.png';
@@ -93,12 +94,16 @@ const Login = ({ setIsLoggedIn }) => {
     customPaging: (i) => (
       <div
         style={{
-          width: i === currentSlide ? "25px" : "10px",
+          width: i === currentSlide ? "21px" : "20px",
+          // marginRight: i == currentSlide ? '20px' : '10px',
+          // paddingLeft:"10px",
           height: "3px",
-          background: i === currentSlide ? "purple" : "white",
+          background: i === currentSlide ? "#400F6F" : "white",
           borderRadius: "10px",
-          transition: "all 0.3s ease",
-          marginTop: '20px'
+          transition: "all 2s ease",
+          marginTop: '10px',
+          gap:'20px'
+
         }}
       />
     ),
@@ -131,7 +136,7 @@ const Login = ({ setIsLoggedIn }) => {
             <img src={imageaccount1} alt="Sign Up" />
           </div>
 
-          <h3 className='welcome'>Welcome Back!👋</h3>
+          <h3 className='welcome'>Welcome Back! <span id='HI'>👋</span></h3>
           <label className="name">Log In to Manage Your HR Task</label>
           <br /> <br />
           <form onSubmit={handleSubmit} className='loginAlignmentform' id="Formmm">
@@ -158,12 +163,23 @@ const Login = ({ setIsLoggedIn }) => {
                 required
               />
               <span className="eyeicon" onClick={togglePasswordVisibility}>
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                {showPassword ?
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                    <path d="M19.439 15.439C20.3636 14.5212 21.0775 13.6091 21.544 12.955C21.848 12.5287 22 12.3155 22 12C22 11.6845 21.848 11.4713 21.544 11.045C20.1779 9.12944 16.6892 5 12 5C11.0922 5 10.2294 5.15476 9.41827 5.41827M6.74742 6.74742C4.73118 8.1072 3.24215 9.94266 2.45604 11.045C2.15201 11.4713 2 11.6845 2 12C2 12.3155 2.15201 12.5287 2.45604 12.955C3.8221 14.8706 7.31078 19 12 19C13.9908 19 15.7651 18.2557 17.2526 17.2526" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M9.85786 10C9.32783 10.53 9 11.2623 9 12.0711C9 13.6887 10.3113 15 11.9289 15C12.7377 15 13.47 14.6722 14 14.1421" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    <path d="M3 3L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  :
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                    <path d="M21.544 11.045C21.848 11.4713 22 11.6845 22 12C22 12.3155 21.848 12.5287 21.544 12.955C20.1779 14.8706 16.6892 19 12 19C7.31078 19 3.8221 14.8706 2.45604 12.955C2.15201 12.5287 2 12.3155 2 12C2 11.6845 2.15201 11.4713 2.45604 11.045C3.8221 9.12944 7.31078 5 12 5C16.6892 5 20.1779 9.12944 21.544 11.045Z" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12Z" stroke="currentColor" stroke-width="1.5" />
+                  </svg>
+                }
               </span>
             </div>
             <div className="remember-forgot-container">
               <div className="remember-me">
-                <input type="checkbox" id="rememberMe" />
+                <input type="checkbox" id="rememberMe" className='checkbox' />
                 <label className="rememberMe1">Remember Me</label>
               </div>
               <div className="forgot-password">

@@ -13,6 +13,7 @@ import imgN from '../assets/user.png';
 import { TbLogout } from "react-icons/tb";
 import { OutsideClick } from './OutSideClick';
 
+
 const Navbar = ({ setIsLoggedIn }) => {
     // Hook for Notifications Dropdown
     const { isOpen: isNotificationsOpen, ref: notificationsRef, buttonRef: notificationsButtonRef, handleToggle: toggleNotifications } = OutsideClick();
@@ -191,6 +192,8 @@ const Navbar = ({ setIsLoggedIn }) => {
                     </ul>
                     <div className="out">
                         <span onClick={clickOut}><TbLogout /></span>
+                       
+
                         <h2 onClick={clickOut}>Sign Out</h2>
                     </div>
                 </div>

@@ -16,8 +16,12 @@ import { useNavigate } from 'react-router-dom';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import './Department.scss';
+import { OutsideClick } from '../../../components/OutSideClick';
 
 const Department = () => {
+    const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+
+
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
         { deptName: "Manning", deptHead: "Sunil Bhadouriya", parentDept: "HSEQ" },
@@ -206,6 +210,57 @@ const Department = () => {
         console.log("Button clicked!");
     };
 
+    // popup
+    const initialFormDetails_2 = {
+        departmentName_2: '',
+        departmentHead_2: '',
+        parentDepartment_2: '',
+    };
+
+    const [formDetails_2, setFormDetails_2] = useState(initialFormDetails_2);
+    const [dropdownVisibility_2, setDropdownVisibility_2] = useState({
+        departmentDropdownOpen_2: false,
+    });
+    const [searchQuery_2, setSearchQuery_2] = useState('');
+
+    const handleInputChangeForm_2 = (event) => {
+        const { name, value } = event.target;
+        setFormDetails_2((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const handleSearchQueryChange_2 = (event) => {
+        setSearchQuery_2(event.target.value);
+    };
+
+    const toggleDropdownVisibility_2 = (dropdownKey) => {
+        setDropdownVisibility_2((prevState) => ({
+            ...prevState,
+            [dropdownKey]: !prevState[dropdownKey],
+        }));
+    };
+
+    const handleDepartmentHeadSelection_2 = (head) => {
+        setFormDetails_2((prevState) => ({
+            ...prevState,
+            departmentHead_2: head,
+        }));
+        toggleDropdownVisibility_2('departmentDropdownOpen_2');
+    };
+
+    const handleSubmitForm_2 = (event) => {
+        event.preventDefault();
+        console.log("Form Submitted:", formDetails_2);
+
+        // Reset form fields
+        setFormDetails_2(initialFormDetails_2);
+        setSearchQuery_2(''); // Reset search query
+        toggleDropdownVisibility_2('departmentDropdownOpen_2'); // Close dropdown
+    };
+    // popup
+
     return (
         <div>
             <div className="EmpOn_main_container">
@@ -266,12 +321,12 @@ const Department = () => {
                         </div>
                     </div>
                     <div className="filter divRight">
-                        <div className='div_box' onClick={showFilterHandle}>
+                        <div className='div_box' onClick={toggleFilter2} ref={filterButtonRef2}>
                             <span><IoFilterSharp /></span>
                         </div>
 
-                        {showFilter && (
-                            <div className="filter-container">
+                        {isFilterOpen2 && (
+                            <div className="filter-container" ref={filterRef2}>
                                 <div className="filter-options">
                                     <div className="filter-option" onClick={handleCustomDateClick}>
                                         <p>Custom Date </p>
@@ -365,14 +420,11 @@ const Department = () => {
                         </thead>
                         <tbody>
                             {currentEmployees.map((emp, index) => (
-                                <tr key={index} onClick={() => handleDepartmentClick1(DepartmentDetails)}>
+                                <tr key={index} >
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
-                                    <td>{emp.deptName}</td>
-                                    <td>{emp.deptHead}</td>
-                                    <td>{emp.parentDept}</td>
-
-
-
+                                    <td onClick={() => handleDepartmentClick1(DepartmentDetails)}>{emp.deptName}</td>
+                                    <td onClick={() => handleDepartmentClick1(DepartmentDetails)}>{emp.deptHead}</td>
+                                    <td onClick={() => handleDepartmentClick1(DepartmentDetails)}>{emp.parentDept}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -391,52 +443,63 @@ const Department = () => {
                                     </div>
                                 </div>
                                 <div className="popup-body">
-                                    <form className='upfom'>
+                                    <form className='upfom' onSubmit={handleSubmitForm_2}>
                                         <label className='redcolor'>Department Name*</label>
-                                        <input type="text" placeholder="Enter Department Name" />
-                                        <label className='blackcolor1'> Parent Department</label>
-                                        <input type="text" placeholder="Enter Department Head" />
+                                        <input
+                                            type="text"
+                                            name="departmentName_2"
+                                            placeholder="Enter Department Name"
+                                            value={formDetails_2.departmentName_2}
+                                            onChange={handleInputChangeForm_2}
+                                            required
+                                        />
+                                        <label className='blackcolor1'>Parent Department</label>
+                                        <input
+                                            type="text"
+                                            name="parentDepartment_2"
+                                            placeholder="Enter Parent Department Name"
+                                            value={formDetails_2.parentDepartment_2}
+                                            onChange={handleInputChangeForm_2} // Use handleInputChangeForm_2
+                                        />
 
                                         <div className="form-group">
                                             <label>Department Head</label>
                                             <div className="dropdown1">
-                                                <div className="dropdown-button1" onClick={() => toggleDropdown('department1')}>
-                                                    <div className='downbtn'>{formData.department1 || "Choose or search head"}</div>
-                                                    <span id='toggle_selectIcon'> {!dropdowns.department1 ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                                <div className="dropdown-button1" onClick={() => toggleDropdownVisibility_2('departmentDropdownOpen_2')}>
+                                                    <div className='downbtn'>{formDetails_2.departmentHead_2 || "Choose or search head"}</div>
+                                                    <span id='toggle_selectIcon'>
+                                                        {!dropdownVisibility_2.departmentDropdownOpen_2 ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                                    </span>
                                                 </div>
 
-                                                {dropdowns.department1 && (
-
+                                                {dropdownVisibility_2.departmentDropdownOpen_2 && (
                                                     <div className="dropdown-menu1">
-
                                                         <input
-                                                            type="text"
+                                                            type="search"
                                                             className='search22'
                                                             placeholder="Search head of Department"
-                                                            value={searchTerm}
-                                                            onChange={handleSearch}
-                                                            id="handlesearch"
+                                                            value={searchQuery_2}
+                                                            onChange={handleSearchQueryChange_2}
+                                                            id="searchDepartmentHead_2"
                                                         />
-
-                                                        <div className="dropdown-item1" onClick={() => selectOption('department1', 'Akash shinde ')}>Akash shinde</div>
-                                                        <div className="dropdown-item1" onClick={() => selectOption('department1', 'Rajat Munde')}>Rajat Munde</div>
-                                                        <div className="dropdown-item1" onClick={() => selectOption('department1', 'Arman Signh')}>Arman Signh</div>
-                                                        <div className="dropdown-item1" onClick={() => selectOption('department1', 'Rajat Munde')}>Rajat Munde</div>
-                                                        <div className="dropdown-item1" onClick={() => selectOption('department1', 'Arman Signh')}>Arman Signh</div>
+                                                        <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Akash Shinde')}>Akash Shinde</div>
+                                                        <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Rajat Munde')}>Rajat Munde</div>
+                                                        <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Arman Singh')}>Arman Singh</div>
                                                     </div>
                                                 )}
                                             </div>
                                         </div>
-                                        <div className='popupbtn' id="popupbtnnnnn"  >
-                                            <button type="submit" onClick={handleSubmit222}>Submit
+
+                                        <div className='popupbtn' id="submitDepartmentFormButton_2">
+                                            <button type="submit">Submit
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
-                                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" />
-                                                    <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+                                                    <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                 </svg>
                                             </button>
                                         </div>
-
                                     </form>
+
                                 </div>
                             </div>
                         </div>

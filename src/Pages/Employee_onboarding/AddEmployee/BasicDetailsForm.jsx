@@ -94,6 +94,17 @@ const BasicDetailsForm = ({ onSubmit }) => {
             ...prevState,
             [dropdown]: !prevState[dropdown]
         }));
+        setDropdowns({
+            gender: false,
+            reportingManager: false,
+            department: false,
+            designation: false,
+            maritalStatus: false,
+            employmentType: false,
+            employeeStatus: false,
+            sourceOfHire: false,
+            [dropdown]: !dropdowns[dropdown]
+        });
     };
 
     const selectOption = (dropdown, value) => {
