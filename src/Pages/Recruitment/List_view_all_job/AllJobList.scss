@@ -649,8 +649,8 @@ table {
             }
           
             &.filled {
-              background-color: #0877e63a;
-              color: #0070f3;
+              background-color: #0877e678;
+              color: #0070f3 !important;
             }
             &.on-hold {
               background-color: #dce70731;
@@ -676,7 +676,7 @@ table {
               border-radius: 50%;
               // background: #000;
               &.filled {
-                background-color:#0070f3;
+                background-color:#0077ff;
               }
               &.on-hold{
                 background-color: #afac1d;
@@ -939,4 +939,15 @@ table {
     min-width: 100%; /* Adjust table width to fit container */
     margin: 0 auto; /* Center align the table */
   }
+}
+
+
+#Loading{
+  width: 90vw !important;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  // border: 1px solid;
 }

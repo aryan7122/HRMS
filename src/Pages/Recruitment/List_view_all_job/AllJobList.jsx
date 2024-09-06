@@ -1,4 +1,4 @@
-import { useState, } from 'react';
+import { useEffect, useState, } from 'react';
 import { HiUserPlus } from "react-icons/hi2";
 import { CiMenuKebab } from "react-icons/ci";
 import { AiOutlineCloudUpload } from "react-icons/ai";
@@ -22,8 +22,13 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { GiBackstab, GiNotebook } from "react-icons/gi";
 import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
 import { OutsideClick } from '../../../components/OutSideClick';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const AllJobList = () => {
+
+    const jobs = useSelector((state) => state.job.jobs);
+   console.log('jobs',jobs)
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef:filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
@@ -194,8 +199,39 @@ const AllJobList = () => {
         }
     };
 
+    const [loading, setLoading] = useState(true);
+
+    const BIN_ID = '66dace5dacd3cb34a87f4049';
+    const MASTER_KEY = '$2a$10$/rHkEpcXQ78/XRNvCpPl4ehBkySOH2T6teIVgZEumbX/if6UWLRly';
+    const [jobJsonData, setJobJsonData] = useState([]);
+    const getEmpJson = async () => {
+        try {
+            const response = await axios.get(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                headers: {
+                    'X-Master-Key': MASTER_KEY
+                }
+            });
+            // Response data
+            setJobJsonData(response.data.record || []);
+            setLoading(false); 
+            console.log('object', response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setLoading(false); 
+        }
+    };
+
+    // Call the function to fetch data
+    useEffect(() => {
+        getEmpJson();
+        
+    },[])
+    console.log('getEmpJson✅', jobJsonData)
+
+
     return (
         <div id='allEmp'>
+           
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
@@ -371,7 +407,7 @@ const AllJobList = () => {
                 {/* <div className="head">
                 </div> */}
                 <div className="employee-table">
-
+                   
                     <table>
                         <thead>
                             <tr>
@@ -398,7 +434,8 @@ const AllJobList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentEmployees.map((emp, index) => (
+                           
+                            {jobJsonData.map((emp, index) => (
                                 <tr key={index}  >
                                     <td>
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} onClick={DelThis} />
@@ -418,7 +455,7 @@ const AllJobList = () => {
                                     <td onClick={JobDetailsPage}>{emp.Positions}</td>
                                     <td onClick={JobDetailsPage}>{emp.ExperienceRequired}</td>
                                     <td onClick={JobDetailsPage}>{emp.SkillsRequired}</td>
-
+                                            
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
@@ -432,6 +469,7 @@ const AllJobList = () => {
                                                     <div>
                                                         <div className="">
                                                             {emp.status}
+
                                                         </div>
                                                         <div className="^wdown">
                                                             <MdOutlineKeyboardArrowDown />
@@ -458,6 +496,11 @@ const AllJobList = () => {
                             ))}
                         </tbody>
                     </table>
+                    {loading ? (
+                        <div id='Loading'>
+                            <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
+                        </div> // Show loading text or spinner when data is being fetched
+                    ) : ('')}
                 </div>
                 <div className="pagination">
                     <div className="rows-per-page">

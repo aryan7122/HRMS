@@ -6,8 +6,15 @@ import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { addJobForm } from '../../../slices/jobSlice';
+import { useSelector } from 'react-redux';
 
 const JobForm = ({ onSubmit }) => {
+    const dispatch = useDispatch();
+    const jobs = useSelector((state) => state.job.jobs);
+    console.log('jobRRR', jobs)
     const [formData, setFormData] = useState({
         jobTitle: '',
         designation: '',
@@ -45,10 +52,12 @@ const JobForm = ({ onSubmit }) => {
             jobLocation: [value]
         }));
     };
-
+   
     const handleSubmit = (event) => {
+        dispatch(addJobForm(formData));
+
         event.preventDefault();
-        console.log(formData);
+        console.log('Job_formData', formData);
         setFormData({
             jobTitle: '',
             designation: '',
@@ -61,7 +70,63 @@ const JobForm = ({ onSubmit }) => {
             requiredSkills: '',
             description: ''
         });
+        // 
+        
     };
+
+    const BIN_ID = '66dace5dacd3cb34a87f4049'; // Remove any extra spaces
+    const MASTER_KEY = '$2a$10$/rHkEpcXQ78/XRNvCpPl4ehBkySOH2T6teIVgZEumbX/if6UWLRly'; // Ensure this is the correct master key
+
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+
+    //     axios.get(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+    //         headers: {
+    //             'X-Master-Key': MASTER_KEY
+    //         }
+    //     })
+    //         .then(response => {
+    //             console.log('Response from GET request:', response.data);
+
+    //             // Ensure the response contains the record and check if it's an array
+    //             const existingData = Array.isArray(response.data.record) ? response.data.record : [];
+
+    //             const updatedData = [...existingData, formData];
+
+    //             return axios.put(
+    //                 `https://api.jsonbin.io/v3/b/${BIN_ID}`,
+    //                 { record: updatedData }, // Ensure the data is in the correct format
+    //                 {
+    //                     headers: {
+    //                         'Content-Type': 'application/json',
+    //                         'X-Master-Key': MASTER_KEY
+    //                     }
+    //                 }
+    //             );
+    //         })
+    //         .then(response => {
+    //             console.log('Data successfully updated:', response.data);
+    //             // Reset form data
+    //             setFormData({
+    //                 jobTitle: '',
+    //                 designation: '',
+    //                 department: '',
+    //                 jobLocation: [],
+    //                 jobStatus: '',
+    //                 noOfPositions: '',
+    //                 employmentType: '',
+    //                 experience: '',
+    //                 requiredSkills: '',
+    //                 description: ''
+    //             });
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching or updating data:', error);
+    //             if (error.response) {
+    //                 console.error('Error response data:', error.response.data);
+    //             }
+    //         });
+    // };
 
     const toggleDropdown = (dropdown) => {
         // Reset all dropdowns to false, then toggle the selected one
@@ -271,36 +336,36 @@ const JobForm = ({ onSubmit }) => {
                             </div>
 
                         </div>
-                            <div id='Description' className='DescriptionJob'>
-                                <div className="form-group">
-                                    <label>Description*</label>
-                                    <textarea
-                                        placeholder="Enter Description"
-                                        name="description"
-                                        value={formData.description}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-                            </div>
-                    </div>
-                        <div id='submitBtn_next_main'>
-                            <div id='submitBtn' >
-                                <div className='div'>
-                                    <button type="submit" >Submit </button>
-                                    <span><CiCircleChevRight /></span>
-                                </div>
-                                <div className="lineBar"></div>
-                                <div className='x'>
-                                    <span> <TfiClose /></span>
-                                </div>
-                            </div>
-                            <div className="form">
-                                <p>Next Page</p>
-                                <span className='not_active'><IoIosArrowDropleft /></span>
-                                <button type='submit'><IoIosArrowDropright /></button>
+                        <div id='Description' className='DescriptionJob'>
+                            <div className="form-group">
+                                <label>Description*</label>
+                                <textarea
+                                    placeholder="Enter Description"
+                                    name="description"
+                                    value={formData.description}
+                                    onChange={handleChange}
+                                    required
+                                />
                             </div>
                         </div>
+                    </div>
+                    <div id='submitBtn_next_main'>
+                        <div id='submitBtn' >
+                            <div className='div'>
+                                <button type="submit" >Submit </button>
+                                <span><CiCircleChevRight /></span>
+                            </div>
+                            <div className="lineBar"></div>
+                            <div className='x'>
+                                <span> <TfiClose /></span>
+                            </div>
+                        </div>
+                        <div className="form">
+                            <p>Next Page</p>
+                            <span className='not_active'><IoIosArrowDropleft /></span>
+                            <button type='submit'><IoIosArrowDropright /></button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </>
