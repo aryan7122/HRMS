@@ -64,7 +64,6 @@ const JobForm = ({ onSubmit }) => {
     };
 
     const toggleDropdown = (dropdown) => {
-        // Reset all dropdowns to false, then toggle the selected one
         setDropdowns({
             designation: false,
             department: false,

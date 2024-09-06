@@ -93,12 +93,19 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
         setIsUploaded(false);
     };
 
-    // Toggle dropdown menu visibility
     const toggleDropdown = (dropdown) => {
-        setDropdowns(prevState => ({
-            ...prevState,
-            [dropdown]: !prevState[dropdown]
-        }));
+        // setDropdowns(prevState => ({
+        //     ...prevState,
+        //     [dropdown]: !prevState[dropdown]
+        // }));
+        setDropdowns({
+            bloodGroup: false,
+            healthCheckResults: false,
+            covidAffected: false,
+            covidVaccinationStatus: false,
+            [dropdown]: !dropdowns[dropdown]
+
+        });
     };
 
     // Select option from dropdown
