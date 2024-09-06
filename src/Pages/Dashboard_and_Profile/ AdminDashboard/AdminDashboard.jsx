@@ -115,7 +115,7 @@ const AdminDashboard = () => {
                 <div className="Left_admin_hello">
                     <img src={Admin_IMG} alt="Admin_image" />
                     <div>
-                        <h2>Hello Aryan 👋</h2>
+                        <h2>Hello Aryan <span className='wave'>👋</span> </h2>
                         <p>Welcome back, Track your team progress here</p>
                     </div>
                 </div>

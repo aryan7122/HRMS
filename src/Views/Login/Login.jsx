@@ -136,7 +136,7 @@ const Login = ({ setIsLoggedIn }) => {
             <img src={imageaccount1} alt="Sign Up" />
           </div>
 
-          <h3 className='welcome'>Welcome Back! <span id='HI'>👋</span></h3>
+          <h3 className='welcome'>Welcome Back!  <span className='wave'>👋</span></h3>
           <label className="name">Log In to Manage Your HR Task</label>
           <br /> <br />
           <form onSubmit={handleSubmit} className='loginAlignmentform' id="Formmm">
