@@ -885,7 +885,7 @@
 }
 .popup{
   position: relative;
-    top: -78px !important;
+    // top: -78px !important;
     height: 393px;
 }
 
@@ -903,10 +903,11 @@
   align-items: start;
   z-index: 999;
   backdrop-filter: blur(10px);
+  // border: 1px solid red;
 
   .popup {
     background: #fff;
-    margin-top: -15vw;
+    // margin-top: -10%;
     border-radius: 8px;
     width: 394px;
     height: 416px;
@@ -1068,7 +1069,7 @@
           padding: 10px;
           border: none;
           font-size: 14px;
-          // border: 1px solid red !important;
+          //  border: 1px solid red !important;
           border-radius: 4px;
           cursor: pointer;
           transition: background-color 0.3s ease;

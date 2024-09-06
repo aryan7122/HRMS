@@ -206,12 +206,14 @@ const ContactsForm = ({ onSubmit }) => {
                     <div id='form'>
                         <div className='div_heading'>
                             <h2>Permanent Address</h2>
-                            <input
-                                type="checkbox"
-                                checked={sameAsPresent}
-                                onChange={() => setSameAsPresent(prev => !prev)}
-                            /> 
-                            <p>Same as present address</p>
+                            <div className='SameAddress'>
+                                <input
+                                    type="checkbox"
+                                    checked={sameAsPresent}
+                                    onChange={() => setSameAsPresent(prev => !prev)}
+                                />
+                                <p>Same as present address</p>
+                            </div>
                         </div>
                         <div className="from1">
                             <div className="form-group">

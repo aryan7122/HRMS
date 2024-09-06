@@ -67,8 +67,8 @@
   overflow-y: auto;
   // margin-left: 100px;
   ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
   }
 
   /* Track */
@@ -85,4 +85,10 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #400f6f;
   }
+}
+@media (max-width: 700px) {
+  .content{
+    margin-left: 0;
+  }
+
 }

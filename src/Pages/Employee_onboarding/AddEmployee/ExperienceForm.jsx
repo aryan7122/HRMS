@@ -118,6 +118,7 @@ const ExperienceForm = ({ onSubmit }) => {
                                         <IoMdCloseCircleOutline />
                                         <div id='hover_P'>
                                             <p id='remove_p'>Remove</p>
+                                            <div></div>
                                         </div>
                                     </li>
                                 </div>
@@ -131,6 +132,7 @@ const ExperienceForm = ({ onSubmit }) => {
                                         <IoMdAddCircleOutline />
                                         <div id='hover_P'>
                                             <p id='remove_p'>Add More</p>
+                                            <div></div>
                                         </div>
                                     </li>
                                 </div>
