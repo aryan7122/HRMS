@@ -63,7 +63,7 @@ const ForgotPassword = () => {
             </div>
             <button type="submit" className='Otp'>Send OTP</button>
             <div className='acct'>
-              <h6 className='account'>Do you have an account yet? <a style={{ cursor: 'pointer' }} onClick={navigateSignUP}>Sign Up</a></h6>
+              {/* <h6 className='account'>Do you have an account yet? <a style={{ cursor: 'pointer' }} onClick={navigateSignUP}>Sign Up</a></h6> */}
             </div>
           </form>
         </div>

@@ -64,6 +64,7 @@ const JobForm = ({ onSubmit }) => {
     };
 
     const toggleDropdown = (dropdown) => {
+        // Reset all dropdowns to false, then toggle the selected one
         setDropdowns({
             designation: false,
             department: false,
@@ -147,8 +148,8 @@ const JobForm = ({ onSubmit }) => {
                             {/* Job Location Checkboxes */}
                             <div className="form-group" >
                                 <label>Job Location*</label>
-                                <div id='checkbox'>
-                                    <div>
+                                <div id='checkbox' className='checkbox'>
+                                    <div className='checkboxDivJob'>
                                         <input
                                             type="checkbox"
                                             value="In Office"
@@ -156,9 +157,9 @@ const JobForm = ({ onSubmit }) => {
                                             checked={formData.jobLocation.includes("In Office")}
                                             onChange={handleCheckboxChange}
                                         />
-                                        <label> In Office </label>
+                                        <label className='checkboxLable'> In Office </label>
                                     </div>
-                                    <div>
+                                    <div className='checkboxDivJob'>
                                         <input
                                             type="checkbox"
                                             value="Hybrid"
@@ -166,9 +167,9 @@ const JobForm = ({ onSubmit }) => {
                                             checked={formData.jobLocation.includes("Hybrid")}
                                             onChange={handleCheckboxChange}
                                         />
-                                        <label> Hybrid</label>
+                                        <label className='checkboxLable'> Hybrid</label>
                                     </div>
-                                    <div>
+                                    <div className='checkboxDivJob'>
                                         <input
                                             type="checkbox"
                                             value="Remote"
@@ -176,7 +177,7 @@ const JobForm = ({ onSubmit }) => {
                                             checked={formData.jobLocation.includes("Remote")}
                                             onChange={handleCheckboxChange}
                                         />
-                                        <label > Remote</label>
+                                        <label className='checkboxLable' > Remote</label>
                                     </div>
                                 </div>
                             </div>
