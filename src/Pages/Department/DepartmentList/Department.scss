@@ -900,9 +900,10 @@
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: start;
-  align-items: start;
+  align-items: start !important;
+  padding-top: 60px;
   z-index: 999;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(3px);
   // border: 1px solid red;
 
   .popup {

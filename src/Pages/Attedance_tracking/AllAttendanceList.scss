@@ -708,7 +708,7 @@
     }
 table {
     border-radius: 10px !important;
-    overflow: hidden !important; /* Important for border-radius to work */
+    // overflow: hidden !important; /* Important for border-radius to work */
 }
 
 
@@ -944,8 +944,8 @@ table {
           cursor: pointer;
 
           &.active {
-            background-color: $primary-color;
-            color: white;
+            // background-color: $primary-color;
+            // color: white;
           }
           button:hover {
             border: 1px solid $primary-color;

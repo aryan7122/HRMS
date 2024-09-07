@@ -1,5 +1,6 @@
 import './NewAttendance.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const NewAttendance = ({ ClosePop }) => {
     const [formData, setFormData] = useState({
@@ -8,6 +9,29 @@ const NewAttendance = ({ ClosePop }) => {
         punchIn: '',
         punchOut: ''
     });
+    const [attendanceData, setAttendanceData] = useState([]); // Array to hold attendance data
+
+    // Fetch existing attendance data from JSONBin
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('https://api.jsonbin.io/v3/b/66dad0faad19ca34f8a0c6dd', {
+                    headers: {
+                        'X-Master-Key': '$2a$10$/rHkEpcXQ78/XRNvCpPl4ehBkySOH2T6teIVgZEumbX/if6UWLRly'
+                    }
+                });
+                if (response.status === 200) {
+                    // Check if the response data is an array, if not, initialize an empty array
+                    const existingData = Array.isArray(response.data.record) ? response.data.record : [];
+                    setAttendanceData(existingData);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     // Handle input changes
     const handleChange = (e) => {
@@ -19,9 +43,34 @@ const NewAttendance = ({ ClosePop }) => {
     };
 
     // Handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Form Data:', formData);
+
+        // Add new data to the existing attendance data array
+        const updatedAttendanceData = [...attendanceData, formData];
+
+        try {
+            const response = await axios.put(
+                'https://api.jsonbin.io/v3/b/66dad0faad19ca34f8a0c6dd',
+               updatedAttendanceData , // Send the updated array within an object
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': '$2a$10$/rHkEpcXQ78/XRNvCpPl4ehBkySOH2T6teIVgZEumbX/if6UWLRly'
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                console.log('Data successfully saved to JSONBin!', response.data);
+                setAttendanceData(updatedAttendanceData); // Update local state with new data
+            } else {
+                console.error('Failed to save data:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error occurred while saving data:', error);
+        }
 
         // Reset form data after submission
         setFormData({
@@ -30,6 +79,9 @@ const NewAttendance = ({ ClosePop }) => {
             punchIn: '',
             punchOut: ''
         });
+
+        // Close the popup after submission
+        ClosePop();
     };
 
     return (
@@ -89,15 +141,16 @@ const NewAttendance = ({ ClosePop }) => {
                                     onChange={handleChange}
                                 />
                             </div>
+                            <div className="button">
+                                <button type="submit" className="submit-btn">Submit</button>
+                                {/* <button type="submit">Submit</button> */}
+                            </div>
                         </form>
-                        <div className="button">
-                            <button type="submit">Submit</button>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default NewAttendance;
