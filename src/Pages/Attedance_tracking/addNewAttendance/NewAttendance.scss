@@ -90,12 +90,14 @@
       }
 
       button[type="submit"] {
-        width: 50%;
-        
+        width: 300px;
+        margin-top: 60px;
+        margin-left: 23%;
+        position: absolute;
         padding: 12px;
         border: none;
         border-radius: 30px;
-        background: linear-gradient(to right, #6200ea, #7227b0);
+        background: linear-gradient(to right, #6200ea, #6200eaec);
         color: #fff;
         font-size: 18px;
         cursor: pointer;
@@ -103,7 +105,8 @@
       }
 
       button[type="submit"]:hover {
-        background: linear-gradient(to right, #9c27b0, #6200ea);
+        background: linear-gradient(to right, #6200eaed, #6200ea);
+        box-shadow: 0px 0px 10px 0.1px #c2c0c0;
       }
 
       //
