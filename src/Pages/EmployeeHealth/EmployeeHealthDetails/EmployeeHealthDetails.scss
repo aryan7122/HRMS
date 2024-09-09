@@ -297,12 +297,14 @@
     .nav-bar {
       margin-top: 40px !important;
       display: flex;
+      // border: 1px solid red !important;
       // justify-content: space-around;
       margin-bottom: 20px;
       border-bottom: 1px solid rgba(201, 194, 194, 0.357);
-      margin: 10px 30px;
+      margin: 0px 30px;
+      margin-bottom: 20px !important;
       button {
-        padding: 10px 20px;
+        // padding: 10px px;
         // margin-bottom: 10px;
         border: none;
         cursor: pointer;
@@ -322,9 +324,8 @@
     }
 
     .contents {
-      // border: 1px solid red;
       // width: 93%;
-      margin-top: -20px !important;
+      // margin-top: -20px !important;
       margin: 0 auto;
       // padding: 20px 30px;
       background-color: #ffffff;
@@ -336,10 +337,11 @@
 }
 
 // 
- .experience-grid {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
+.experience-grid {
+  display: flex;
+  align-items: center;
+  // border: 1px solid red;
+  justify-content: space-between;
           gap: 20px;
           .experience-card {
             border-radius: 10px;
@@ -405,6 +407,7 @@
         margin-top: 20px;
         border-radius: 10px;
         padding: 15px 20px;
+        // border: 1px solid red;
         margin-left: -10px;
 
         .section-header {

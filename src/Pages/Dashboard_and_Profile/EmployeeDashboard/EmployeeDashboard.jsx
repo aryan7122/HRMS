@@ -383,7 +383,7 @@ const EmployeeDashboard = () => {
                     <a href="#" className='a'>View All</a>
                 </div>
 
-                <div className=" quick-links">
+                <div className="quick-links">
                     <div className="header">
                         <h3>Quick Links</h3>
                         <a href="#" className='seeAll'>See All</a>

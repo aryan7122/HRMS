@@ -588,7 +588,8 @@
          display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-bottom: 10px;
+        // padding-bottom: 10px;
+
         .seeAll{
           
             display: block;
@@ -611,8 +612,10 @@
         list-style: none;
         padding: 0;
 
-        margin-bottom: -20px;
+        // margin-bottom: -20px;
+        // grid-area: 30px !important;
         li{
+
           display: flex;
           justify-content: space-between;
           align-items: center;

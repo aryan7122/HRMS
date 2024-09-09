@@ -7,11 +7,10 @@ const Documents = () => {
     return (
         <div>
             <div className="education">
-                <div className="section-header">
-                    {/* <FaGraduationCap className="icon" /> */}
+                {/* <div className="section-header">
                     <img src={iconEdu} alt="" className='icon' />
                     <h2>Education</h2>
-                </div>
+                </div> */}
                 <table>
                     <thead>
                         <tr>

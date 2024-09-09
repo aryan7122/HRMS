@@ -24,7 +24,7 @@ import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
 import { OutsideClick } from '../../../components/OutSideClick';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-
+import LodinImg from '../../../assets/loding.gif'
 const AllJobList = () => {
 
     const jobs = useSelector((state) => state.job.jobs);

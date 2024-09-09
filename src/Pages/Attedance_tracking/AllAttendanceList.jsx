@@ -181,7 +181,7 @@ const AllAttendanceList = (ClosePop) => {
         setShowEmploymentType(false);
     };
 
-    const JobDetailsPage = () => {
+    const AttendanceDetailsPage = () => {
         navigate('/attendance-details')
     }
     const NewAttendanceClick = () => {
@@ -503,17 +503,13 @@ const AllAttendanceList = (ClosePop) => {
                                                         <input type="radio" id="second" name="employmentType" className="custom-radio" />
                                                         <label htmlFor="second">Second</label>
                                                     </li>
-
-
                                                 </ul>
                                             </div>
                                         )}
                                     </div>
-
                                 </div>
                             </div>
                         )}
-
                     </div>
                 </div>
             </div>
@@ -625,13 +621,13 @@ const AllAttendanceList = (ClosePop) => {
                                                 <td>
                                                     <input type="checkbox" checked={data.isChecked} onChange={() => handleCheckboxChange(index)} />
                                                 </td>
-                                                <td>{data.employeeName}</td>
-                                                <td>{data.date}</td>
-                                                <td>{data.shift}</td>
-                                                <td>{data.punchIn}</td>
-                                                <td>{data.punchOut}</td>
+                                                <td onClick={AttendanceDetailsPage}>{data.employeeName}</td>
+                                                <td onClick={AttendanceDetailsPage}>{data.date}</td>
+                                                <td onClick={AttendanceDetailsPage}>{data.shift}</td>
+                                                <td onClick={AttendanceDetailsPage}>{data.punchIn}</td>
+                                                <td onClick={AttendanceDetailsPage}>{data.punchOut}</td>
                                                 <td>{totalHours > 0 ? totalTimeWorked : '-'}</td>
-                                                <td>{data.overtime}</td>
+                                                <td onClick={AttendanceDetailsPage}>{data.overtime}</td>
                                                 <td>
                                                     <div className="status-dropdown">
                                                         <div key={index} className="status-container">
