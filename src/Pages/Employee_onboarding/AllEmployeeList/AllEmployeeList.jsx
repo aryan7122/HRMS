@@ -21,7 +21,7 @@ const AllEmployeeList = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
-
+    
     const [hidImport, setHidImport] = useState(true);
     const [allDel, setAllDel] = useState(false);
     const [toggleLeft, setToggleLeft] = useState(false)

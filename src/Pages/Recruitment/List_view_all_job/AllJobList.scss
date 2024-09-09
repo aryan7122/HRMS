@@ -3,6 +3,7 @@
 .EmpOn_main_container {
   .top-bar {
     // border: 1px solid red;
+    
     position: sticky;
     // overflow: hidden;
     width: 100%;
@@ -610,6 +611,7 @@
     }
 table {
     border-radius: 10px !important;
+    
     // overflow: hidden !important; /* Important for border-radius to work */
 }
 
@@ -617,7 +619,6 @@ table {
     table {
       width: 97%;
       border-collapse: collapse;
-      // border: 2px solid red !important;
       border-radius: 10px !important;
       th,
       td {
@@ -626,6 +627,8 @@ table {
         border-bottom: 1px solid #dddddd5d;
         border-left: 1px solid #dddddd5d;
         border: 1px solid #dddddd5d;
+        // border: 2px solid red !important;
+        
         font-weight: 500;
         .status-dropdown {
          
@@ -719,6 +722,9 @@ table {
       }
       td{
         cursor: pointer;
+         animation: ScrollAnimationView linear;
+  animation-timeline: view();
+  animation-range: 0% cover 10%;
       }
 
       th {
@@ -950,4 +956,16 @@ table {
   justify-content: center;
   text-align: center;
   // border: 1px solid;
+}
+
+@keyframes ScrollAnimationView {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+
+  }
 }

@@ -7,7 +7,7 @@
   font-style: normal;
 }
 
-.NavBar{
+.NavBar {
   // position: fixed;
   // width: 100vw;
 }
@@ -17,7 +17,7 @@
   /* width */
 
   .sideBar_app2 {
-        // margin-top: 56px;
+    // margin-top: 56px;
     width: 117px;
 
     //  border: 1px solid red;
@@ -28,7 +28,7 @@
     z-index: 9;
   }
   .sideBar_app {
-        //  border: 1px solid rgb(0, 102, 255);
+    //  border: 1px solid rgb(0, 102, 255);
 
     // margin-top: 56px;
     width: 120px;
@@ -37,31 +37,28 @@
     position: fixed;
     z-index: 9;
   }
-  .expanded{
+  .expanded {
     // border: 1px solid red;
     width: 300px;
   }
-  
 }
 
 .sideBar_app:hover {
   // width: 230px;
   transition: width 0.3s ease, height 0.3s ease;
-
 }
 #app_ {
   max-width: 2400px;
   margin: 0 auto;
   position: relative;
-    // border: 1px solid red;
-
+  // border: 1px solid red;
 }
 
 .content {
   // border: 1px solid red;
-      // margin-top: 56px;
+  // margin-top: 56px;
   width: calc(100vw - 105px);
- height: calc(100vh - 56px);
+  height: calc(100vh - 56px);
   margin-left: 105px;
   // position: fixed;
   overflow-y: auto;
@@ -87,8 +84,7 @@
   }
 }
 @media (max-width: 700px) {
-  .content{
+  .content {
     margin-left: 0;
   }
-
 }

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import '../styles/Login.css';
 import './Login.css'
+import Confetti from 'react-confetti';
 
-import { BsGoogle, BsFacebook, BsTwitter, BsMicrosoft, BsLinkedin } from 'react-icons/bs';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import axios from 'axios';
+// import { BsGoogle, BsFacebook, BsTwitter, BsMicrosoft, BsLinkedin } from 'react-icons/bs';
+// import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import imageaccount1 from '../../assets/logo.png';
 import Slider from "react-slick";
 
@@ -27,22 +29,57 @@ const Login = ({ setIsLoggedIn }) => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (event) => {
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+
+  //   const passwordIsValid = validatePassword(password);
+
+  //   // if (email && passwordIsValid) {
+  //   setIsLoggedIn(true);
+  //   navigate('/admin-dashboard');
+  //   // } else {
+  //   //   if (!passwordIsValid) {
+  //   //     alert('Password must be at least 8 characters long, contain at least one number, and one special character.');
+  //   //   } else {
+  //   //     alert('Please enter both email and password.');
+  //   //   }
+  //   // }
+  // };
+  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertError, setShowAlertError] = useState(false);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const passwordIsValid = validatePassword(password);
+    try {
+      const response = await axios.post('https://devstronauts.com/public/api/login', {
+        email,
+        password,
+      });
 
-    // if (email && passwordIsValid) {
-    setIsLoggedIn(true);
-    navigate('/admin-dashboard');
-    // } else {
-    //   if (!passwordIsValid) {
-    //     alert('Password must be at least 8 characters long, contain at least one number, and one special character.');
-    //   } else {
-    //     alert('Please enter both email and password.');
-    //   }
-    // }
+      if (response.data.message === "Login Successfully" || response.data.error === 'false') {
+        setShowAlert(true)
+        // alert("Login Successfully"); 
+        setTimeout(() => {
+          setIsLoggedIn(true);
+          setShowAlert(false);
+          navigate('/');
+        }, 500);
+      } else {
+        // alert("Invalid login credentials"); 
+        setShowAlertError(true)
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      // alert("An error occurred during login. Please try again."); // Handle any error case
+      setShowAlertError(true)
+    }
   };
+
+  setTimeout(() => {
+    setShowAlert(false);
+    setShowAlertError(false)
+  }, 4300);
 
   const validatePassword = (password) => {
     // const minLength = 8;
@@ -102,7 +139,7 @@ const Login = ({ setIsLoggedIn }) => {
           borderRadius: "10px",
           transition: "all 2s ease",
           marginTop: '10px',
-          gap:'20px'
+          gap: '20px'
 
         }}
       />
@@ -112,6 +149,9 @@ const Login = ({ setIsLoggedIn }) => {
 
   return (
     <div className="login-container">
+      {showAlert ? <div><Confetti /> <div id='showAlert' ><p> Login Successfully</p></div> </div> : ''}
+      {showAlertError ? <div> <div id='showAlertError' ><p>Login Failed Try Again</p></div> </div> : ''}
+
       <div className="login-image">
         <div>
           <Slider {...settings}>

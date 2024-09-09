@@ -765,6 +765,9 @@
         transition: 0.3s ease;
         
       }
+      tr{
+        border: 1px solid red !important;
+      }
       td:last-child{
         // overflow-y: auto;
       }

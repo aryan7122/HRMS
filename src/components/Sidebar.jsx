@@ -175,7 +175,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <div className={`sidebar ${isOpen ? 'open' : 'close'} ${sideW ? 'sideW' : ''} ${!mobileMenu ? 'sidebarMobile' : ''} `}>
                 <div className="ul"
                     onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
-
                 >
                     <div id='top_bar' className="slide-btn">
                         <div id='MobileMenu' onClick={MobileMenuToggle}>
@@ -265,7 +264,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                         <div className={` ${isOpen ? '' : 'sideLine'} `}>
                             <div className='dot'><div></div></div>
                             <ul className='ul2'
-                                onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+                                // onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
 
                             >
                                 <li><span><TbFileMinus /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Files</p>} {isOpen ? '' : <div className='hover_P'><p>Files</p> <div></div></div>}</li>
@@ -371,15 +370,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
 
 
-                                    {/* <li><Link to={"/"}><HiOutlineHome /></Link>Add Organization</li>
-              <li><Link to={"/"}><TfiMore /></Link>Create Items</li>
-              <li><Link to={"/"}><RiNotification3Line /></Link>Add Customer</li>
-              <li><Link to={"/"}><TfiMore /></Link>Invite User</li>
-              <li><Link to={"/"}><HiOutlineHome /></Link>Add Organization</li>
-              <li><Link to={"/"}><TfiMore /></Link>Create Items</li>
-              <li><Link to={"/"}><TfiMore /></Link>Create Items</li>
-              <li><Link to={"/"}><RiNotification3Line /></Link>Add Customer</li>
-              <li><Link to={"/"}><TfiMore /></Link>Invite User</li> */}
+                                   
                                 </ul>
                             </div>
                         </div>

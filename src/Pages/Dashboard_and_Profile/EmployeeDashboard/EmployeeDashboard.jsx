@@ -94,7 +94,7 @@ const EmployeeDashboard = () => {
         customPaging: (i) => (
             <div
                 style={{
-                    width: i === currentSlide ? "25px" : "10px",
+                    width: i === currentSlide ? "20px" : "15px",
 
                     height: "3px",
                     background: i === currentSlide ? "purple" : "gray",
