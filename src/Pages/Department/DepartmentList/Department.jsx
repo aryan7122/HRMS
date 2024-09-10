@@ -95,10 +95,40 @@ const Department = () => {
     const indexOfFirstEmployee = indexOfLastEmployee - rowsPerPage;
     const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
     const totalPages = Math.ceil(filteredEmployees.length / rowsPerPage);
+    // 
+    // page index active
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
+    // Function to generate the pages to display
+    const generatePages = () => {
+        let pages = [];
+
+        // If total pages <= 5, show all pages
+        if (totalPages <= 5) {
+            pages = [...Array(totalPages).keys()].map(pageIndex => pageIndex + 1);
+        }
+        // If total pages > 5
+        else {
+            if (currentPage <= 3) {
+                pages = [1, 2, 3, 4, 5];
+            } else if (currentPage >= totalPages - 2) {
+                pages = [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+            } else {
+                pages = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+            }
+        }
+
+        return pages;
     };
+
+    // Function to handle page change
+    const handlePageChange = (page) => {
+        if (page !== '...') {
+            setCurrentPage(page);
+        }
+    };
+    // page index active
+// 
+    
 
     const handleRowsPerPageChange = (e) => {
         setRowsPerPage(Number(e.target.value));
@@ -548,19 +578,16 @@ const Department = () => {
                             <option value={100}>100 per page</option>
                         </select>
                     </div>
-
-
-
-
                     <div className="page-navigation">
                         <div className="page-numbers">
                             {[...Array(totalPages)].map((_, pageIndex) => (
                                 <button
                                     key={pageIndex + 1}
-                                    className={currentPage === pageIndex + 1 ? 'active' : ''}
+                                    className={currentPage === pageIndex + 1 ? 'activePageIndex' : ''}
                                     onClick={() => handlePageChange(pageIndex + 1)}
                                 >
                                     {pageIndex + 1}
+                                    {console.log('currentPage', pageIndex + 1)}
                                 </button>
                             ))}
                         </div>

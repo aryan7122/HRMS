@@ -100,14 +100,45 @@ const Designation = () => {
     const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
     const totalPages = Math.ceil(filteredEmployees.length / rowsPerPage);
     // console.log('currentEmployees', indexOfLastEmployee)
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+    // const handlePageChange = (pageNumber) => {
+    //     setCurrentPage(pageNumber);
+    // };
 
     const handleRowsPerPageChange = (e) => {
         setRowsPerPage(Number(e.target.value));
         setCurrentPage(1);
     };
+    // page index active
+
+    // Function to generate the pages to display
+    const generatePages = () => {
+        let pages = [];
+
+        // If total pages <= 5, show all pages
+        if (totalPages <= 5) {
+            pages = [...Array(totalPages).keys()].map(pageIndex => pageIndex + 1);
+        }
+        // If total pages > 5
+        else {
+            if (currentPage <= 3) {
+                pages = [1, 2, 3, 4, 5];
+            } else if (currentPage >= totalPages - 2) {
+                pages = [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+            } else {
+                pages = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+            }
+        }
+
+        return pages;
+    };
+
+    // Function to handle page change
+    const handlePageChange = (page) => {
+        if (page !== '...') {
+            setCurrentPage(page);
+        }
+    };
+    // page index active
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -509,18 +540,27 @@ const Designation = () => {
                     </div>
                     <div className="page-navigation">
                         <div className="page-numbers">
-                            {[...Array(totalPages)].map((_, pageIndex) => (
+                            {generatePages().map((page, index) => (
                                 <button
-                                    key={pageIndex + 1}
-                                    className={currentPage === pageIndex + 1 ? 'active' : ''}
-                                    onClick={() => handlePageChange(pageIndex + 1)}
+                                    key={index}
+                                    className={currentPage === page ? 'activePageIndex' : ''}
+                                    onClick={() => handlePageChange(page)}
+                                    disabled={page === '...'}
                                 >
-                                    {pageIndex + 1}
+                                    {page}
                                 </button>
                             ))}
                         </div>
-                        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
-                        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
+
+                        {/* Previous Button */}
+                        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                            <FaAngleLeft />
+                        </button>
+
+                        {/* Next Button */}
+                        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                            <FaAngleRight />
+                        </button>
                     </div>
                 </div>
 
