@@ -17,26 +17,48 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import './Department.scss';
 import { OutsideClick } from '../../../components/OutSideClick';
+import axios from 'axios';
 
 const Department = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
 
+    const [loading, setLoading] = useState(true);
 
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
-        { deptName: "Manning", deptHead: "Sunil Bhadouriya", parentDept: "HSEQ" },
-        { deptName: "IT", deptHead: "Nandan Raikwar", parentDept: "Operations" },
-        { deptName: "HSEQ", deptHead: "Vikas Tiwari", parentDept: "IT" },
-        { deptName: "Operations", deptHead: "Paartho Ghosh", parentDept: "Manning" },
-        { deptName: "Engineering", deptHead: "Rahul Choudary", parentDept: "Engineering" },
-        { deptName: "Maintenance", deptHead: "Jayshri Tiwari", parentDept: "Operations" },
-        { deptName: "Operations", deptHead: "Shalini Jain", parentDept: "Maintenance" },
-        { deptName: "Human Resources", deptHead: "Viswas Patel", parentDept: "IT" },
-        { deptName: "IT", deptHead: "Kailash Chaurasia", parentDept: "Maintenance" },
-        { deptName: "Manning", deptHead: "Mamta Lodhi", parentDept: "Human Resources" },
-        { deptName: "IT", deptHead: "Kailash Chaurasia", parentDept: "Maintenance" },
+        // { deptName: "Manning", deptHead: "Sunil Bhadouriya", parentDept: "HSEQ" },
+        // { deptName: "IT", deptHead: "Nandan Raikwar", parentDept: "Operations" },
+        // { deptName: "HSEQ", deptHead: "Vikas Tiwari", parentDept: "IT" },
+        // { deptName: "Operations", deptHead: "Paartho Ghosh", parentDept: "Manning" },
+        // { deptName: "Engineering", deptHead: "Rahul Choudary", parentDept: "Engineering" },
+        // { deptName: "Maintenance", deptHead: "Jayshri Tiwari", parentDept: "Operations" },
+        // { deptName: "Operations", deptHead: "Shalini Jain", parentDept: "Maintenance" },
+        // { deptName: "Human Resources", deptHead: "Viswas Patel", parentDept: "IT" },
+        // { deptName: "IT", deptHead: "Kailash Chaurasia", parentDept: "Maintenance" },
+        // { deptName: "Manning", deptHead: "Mamta Lodhi", parentDept: "Human Resources" },
+        // { deptName: "IT", deptHead: "Kailash Chaurasia", parentDept: "Maintenance" },
 
     ]);
+    const token = localStorage.getItem('access_token');
+
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/department/list', {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                setEmployees(response.data.department);
+                setFilteredEmployees(response.data.department); // filteredEmployees ko bhi sync karo
+                console.log('response 🥳', response.data.department);
+                setLoading(false);
+
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+            });
+    }, []);
+
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -134,22 +156,6 @@ const Department = () => {
         setSearchTerm(e.target.value);
     };
 
-    const [formData, setFormData] = useState({
-        fullName: '',
-        email: '',
-        contactNumber: '',
-        jobOpening: '',
-        resume: '',
-        coverLetter: '',
-        country: '',
-        state: '',
-        city: '',
-        zipCode: '',
-        source: '',
-        availabilityDate: '',
-        expectedSalary: '',
-        referredPerson: ''
-    });
     const toggleDropdown = (dropdown) => {
         setDropdowns(prevState => ({
             ...prevState,
@@ -252,12 +258,34 @@ const Department = () => {
 
     const handleSubmitForm_2 = (event) => {
         event.preventDefault();
-        console.log("Form Submitted:", formDetails_2);
-
+        
         // Reset form fields
-        setFormDetails_2(initialFormDetails_2);
-        setSearchQuery_2(''); // Reset search query
+        // Reset search query
         toggleDropdownVisibility_2('departmentDropdownOpen_2'); // Close dropdown
+        axios.post('https://devstronauts.com/public/api/department/create/update', {
+            department_name: formDetails_2.departmentName_2,  // Email ko formData se lo
+            department_head: formDetails_2.departmentHead_2, // Department ID ko formData se lo
+            parent_department: formDetails_2.parentDepartment_2   // Description ko formData se lo
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+                console.log("Form Submitted:", formDetails_2);
+                setFormDetails_2(initialFormDetails_2);
+                setSearchQuery_2('');
+            console.log('response parent_department', initialFormDetails_2);
+                // Data create/update ho gaya, ab loading false karo
+                // setLoading(false);
+                // Employees ko update karo ya response ke according set karo
+                setEmployees(prevEmployees => [...prevEmployees, response.data.designation]);
+                // Optional: Form reset kar sakte ho
+                // setFormData_3(initialFormDetails_2);
+            })
+            .catch(error => {
+                console.error("Error during create/update:", error);
+            });
     };
     // popup
 
@@ -393,12 +421,7 @@ const Department = () => {
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                         )}
-
                     </div>
                 </div>
             </div>
@@ -422,13 +445,18 @@ const Department = () => {
                             {currentEmployees.map((emp, index) => (
                                 <tr key={index} >
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
-                                    <td onClick={() => handleDepartmentClick1(DepartmentDetails)}>{emp.deptName}</td>
-                                    <td onClick={() => handleDepartmentClick1(DepartmentDetails)}>{emp.deptHead}</td>
-                                    <td onClick={() => handleDepartmentClick1(DepartmentDetails)}>{emp.parentDept}</td>
+                                    <td onClick={() => handleDepartmentClick1(DepartmentDetails)}>{emp.deptName || emp.department_name || '-'}</td>
+                                    <td onClick={() => handleDepartmentClick1(DepartmentDetails)}>{emp.deptHead || emp.department_head || '-'}</td>
+                                    <td onClick={() => handleDepartmentClick1(DepartmentDetails)}>{emp.parentDept || emp.parent_department || '-'}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
+                    {loading ? (
+                        <div id='Loading'>
+                            <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
+                        </div> // Show loading text or spinner when data is being fetched
+                    ) : ('')}
 
                     {showPopup && (
                         <div className="popup-overlay">
@@ -509,37 +537,37 @@ const Department = () => {
                     )}
 
                 </div>
-                    <div className="pagination">
-                        <div className="rows-per-page">
-                            <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
-                                <option value={5}>5 per page</option>
-                                <option value={10}>10 per page</option>
-                                <option value={30}>30 per page</option>
-                                <option value={50}>50 per page</option>
-                                <option value={70}>70 per page</option>
-                                <option value={100}>100 per page</option>
-                            </select>
-                        </div>
-
-
-
-
-                        <div className="page-navigation">
-                            <div className="page-numbers">
-                                {[...Array(totalPages)].map((_, pageIndex) => (
-                                    <button
-                                        key={pageIndex + 1}
-                                        className={currentPage === pageIndex + 1 ? 'active' : ''}
-                                        onClick={() => handlePageChange(pageIndex + 1)}
-                                    >
-                                        {pageIndex + 1}
-                                    </button>
-                                ))}
-                            </div>
-                            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
-                            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
-                        </div>
+                <div className="pagination">
+                    <div className="rows-per-page">
+                        <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
+                            <option value={5}>5 per page</option>
+                            <option value={10}>10 per page</option>
+                            <option value={30}>30 per page</option>
+                            <option value={50}>50 per page</option>
+                            <option value={70}>70 per page</option>
+                            <option value={100}>100 per page</option>
+                        </select>
                     </div>
+
+
+
+
+                    <div className="page-navigation">
+                        <div className="page-numbers">
+                            {[...Array(totalPages)].map((_, pageIndex) => (
+                                <button
+                                    key={pageIndex + 1}
+                                    className={currentPage === pageIndex + 1 ? 'active' : ''}
+                                    onClick={() => handlePageChange(pageIndex + 1)}
+                                >
+                                    {pageIndex + 1}
+                                </button>
+                            ))}
+                        </div>
+                        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
+                        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
+                    </div>
+                </div>
 
             </div>
         </div >

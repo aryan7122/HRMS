@@ -1,12 +1,14 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import imageaccount2 from '../../assets/logo.png';
-import { FaTimes } from 'react-icons/fa';
 
 const SendOTP = () => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState(new Array(4).fill("")); // 4-digit OTP
+  const [email, setEmail] = useState("Akashshinde@gmail.com"); // Pre-filled email, change accordingly
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   // Handle input change and auto-focus
   const handleChange = (e, index) => {
@@ -45,6 +47,22 @@ const SendOTP = () => {
     }
   };
 
+  // Send OTP request
+  const sendOTPRequest = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post('https://devstronauts.com/public/api/email-get-otp', { email });
+      if (response.data.success) {
+        alert('OTP sent successfully');
+      } else {
+        setError('Failed to send OTP. Please try again.');
+      }
+    } catch (err) {
+      setError('An error occurred while sending OTP. Please try again.');
+    }
+    setLoading(false);
+  };
+
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,9 +70,19 @@ const SendOTP = () => {
     navigate('/set-new-password');
   };
 
+  // Handle Resend OTP
+  const handleResendOTP = () => {
+    sendOTPRequest();
+  };
+
   const navigateClose = () => {
     navigate('/forgot-password');
   };
+
+  // Trigger the OTP send when component mounts (or based on conditions)
+  React.useEffect(() => {
+    sendOTPRequest();
+  }, []);
 
   return (
     <div className='PasswordNew'>
@@ -74,8 +102,10 @@ const SendOTP = () => {
         </div>
         <h3>Enter Your Code</h3>
         <p className="recovery-message">
-          Please enter the OTP sent to <span>Akashshinde@gmail.com</span>
+          Please enter the OTP sent to <span>{email}</span>
         </p>
+
+        {error && <p className="error-message">{error}</p>}
 
         <form onSubmit={handleSubmit} id="Indexx">
           <div className="otp-inputs" id="INputsss">
@@ -89,15 +119,18 @@ const SendOTP = () => {
                 onKeyDown={(e) => handleBackspace(e, index)}
                 maxLength="1"
                 className="otp-box"
+                disabled={loading}
               />
             ))}
           </div>
         </form>
 
-        <p className="resend-container ">
-          Didn't receive the email? <a href="#">Click to Resend</a>
+        <p className="resend-container">
+          Didn't receive the email? <a href="#" onClick={handleResendOTP}>Click to Resend</a>
         </p>
-        <button className="codeOTP Otp" id="btn11" type="submit" onClick={handleSubmit}>Continue</button>
+        <button className="codeOTP Otp" id="btn11" type="submit" onClick={handleSubmit} disabled={loading}>
+          {loading ? 'Sending...' : 'Continue'}
+        </button>
       </div>
     </div>
   );

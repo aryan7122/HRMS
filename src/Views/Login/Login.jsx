@@ -59,10 +59,12 @@ const Login = ({ setIsLoggedIn }) => {
 
       if (response.data.message === "Login Successfully" || response.data.error === 'false') {
         setShowAlert(true)
+        localStorage.setItem('access_token', response.data.access_token);
         // alert("Login Successfully"); 
+        // console.log(response.data.access_token)
         setTimeout(() => {
           setIsLoggedIn(true);
-          setShowAlert(false);
+          // setShowAlert(false);
           navigate('/');
         }, 500);
       } else {
