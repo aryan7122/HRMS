@@ -127,8 +127,8 @@ const Department = () => {
         }
     };
     // page index active
-// 
-    
+    // 
+
 
     const handleRowsPerPageChange = (e) => {
         setRowsPerPage(Number(e.target.value));
@@ -288,7 +288,7 @@ const Department = () => {
 
     const handleSubmitForm_2 = (event) => {
         event.preventDefault();
-        
+
         // Reset form fields
         // Reset search query
         toggleDropdownVisibility_2('departmentDropdownOpen_2'); // Close dropdown
@@ -301,11 +301,11 @@ const Department = () => {
                 'Authorization': `Bearer ${token}`
             }
         })
-        .then(response => {
+            .then(response => {
                 console.log("Form Submitted:", formDetails_2);
                 setFormDetails_2(initialFormDetails_2);
                 setSearchQuery_2('');
-            console.log('response parent_department', initialFormDetails_2);
+                console.log('response parent_department', initialFormDetails_2);
                 // Data create/update ho gaya, ab loading false karo
                 // setLoading(false);
                 // Employees ko update karo ya response ke according set karo
@@ -459,9 +459,9 @@ const Department = () => {
             <div className="allEmployeeList" id="departmentlist">
                 {/* <div className="head">
                 </div> */}
-                <div className="employee-table">
+                <div className="employee-table" id='Small_employee_table'>
 
-                    <table>
+                    <table id='Small_table'>
                         <thead>
                             <tr>
                                 <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>

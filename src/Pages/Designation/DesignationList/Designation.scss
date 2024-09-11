@@ -238,3 +238,28 @@
   border: 1px solid #30005A !important;
 
 }
+
+@media (max-width: 1355px) {
+#Small_employee_table{
+   min-width: 97% !important;
+  //  overflow: visible;
+}
+  .allEmployeeList .employee-table #Small_table {
+    min-width: 100% !important; /* Ensure minimum width for the table */
+    margin: 0 auto; /* Center align the table */
+    // overflow-x: visible !important;
+    // table-layout: fixed;
+  }
+}
+@media (max-width: 1000px) {
+#Small_employee_table{
+   min-width: 97% !important;
+   overflow: auto;
+}
+  .allEmployeeList .employee-table #Small_table {
+    min-width: 900px !important; /* Ensure minimum width for the table */
+    margin: 0 auto; /* Center align the table */
+    overflow-x: auto !important;
+    table-layout: auto;
+  }
+}

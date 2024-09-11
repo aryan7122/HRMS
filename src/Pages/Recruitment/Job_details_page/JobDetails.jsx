@@ -16,7 +16,6 @@ const JobDetails = () => {
         navigate('/all-job-list')
     }
 
-
     return (
         <div className="profile-page">
             <div className="details">
@@ -104,11 +103,10 @@ const JobDetails = () => {
                         {/* Personal information content */}
                     </div>
                 </div>
-
-                
             </div>
         </div>
     );
 };
 
 export default JobDetails;
+//

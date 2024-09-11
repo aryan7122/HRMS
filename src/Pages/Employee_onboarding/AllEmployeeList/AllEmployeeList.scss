@@ -917,10 +917,10 @@
   }
   
   .allEmployeeList .employee-table table {
-    border: 1px solid red !important;
-    min-width: 1340px !important; /* Ensure minimum width for the table */
+    // border: 1px solid red !important;
+    min-width: 1340px ; /* Ensure minimum width for the table */
     margin: 0 auto; /* Center align the table */
-    overflow-x: auto !important;
+    overflow-x: auto ;
   }
 
   .EmpOn_main_container .top-bar ._div {

@@ -70,8 +70,10 @@ const Login = ({ setIsLoggedIn }) => {
       } else {
         // alert("Invalid login credentials"); 
         setShowAlertError(true)
+        
       }
     } catch (error) {
+      setIsLoggedIn(true);
       console.error('Error during login:', error);
       // alert("An error occurred during login. Please try again."); // Handle any error case
       setShowAlertError(true)

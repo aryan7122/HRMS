@@ -54,6 +54,8 @@ const Navbar = ({ setIsLoggedIn }) => {
     };
 
     const clickOut = () => {
+        localStorage.setItem('access_token', '');
+
         setIsLoggedIn(false);
         navigate('/');
     };

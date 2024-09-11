@@ -28,8 +28,8 @@ import LodinImg from '../../../assets/loding.gif'
 const AllJobList = () => {
 
     const jobs = useSelector((state) => state.job.jobs);
-   console.log('jobs',jobs)
-    const { isOpen: isFilterOpen, ref: filterRef, buttonRef:filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
+    console.log('jobs', jobs)
+    const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
 
@@ -39,21 +39,21 @@ const AllJobList = () => {
 
     const DelThis = () => {
         setThisDel(!thisDel);
-        
+
     }
 
     const [hidImport, setHidImport] = useState(true);
     const navigate = useNavigate()
     const [employees, setEmployees] = useState([
-        { JobTitle: "IT Consultant", Department: "Marketing", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
-        { JobTitle: "Cloud Architect", Department: "Customer Success", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Draft", isChecked: false },
-        { JobTitle: "Software Engineer", Department: "Office Administration", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "On hold", isChecked: false },
-        { JobTitle: "IT Auditor", Department: "Operations", Positions: "10", ExperienceRequired: "07 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Cancelled", isChecked: false },
-        { JobTitle: "Technical Writer", Department: "Executive Management", Positions: "10", ExperienceRequired: "02 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "On hold", isChecked: false },
-        { JobTitle: "UI/UX Designer", Department: "Product", Positions: "10", ExperienceRequired: "2.6 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Filled", isChecked: false },
-        { JobTitle: "Database Administrator", Department: "UX", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Filled", isChecked: false },
-        { JobTitle: "Network Administrator", Department: "Finance", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
-        { JobTitle: "QA Engineer", Department: "Sales", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
+        // { JobTitle: "IT Consultant", Department: "Marketing", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
+        // { JobTitle: "Cloud Architect", Department: "Customer Success", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Draft", isChecked: false },
+        // { JobTitle: "Software Engineer", Department: "Office Administration", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "On hold", isChecked: false },
+        // { JobTitle: "IT Auditor", Department: "Operations", Positions: "10", ExperienceRequired: "07 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Cancelled", isChecked: false },
+        // { JobTitle: "Technical Writer", Department: "Executive Management", Positions: "10", ExperienceRequired: "02 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "On hold", isChecked: false },
+        // { JobTitle: "UI/UX Designer", Department: "Product", Positions: "10", ExperienceRequired: "2.6 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Filled", isChecked: false },
+        // { JobTitle: "Database Administrator", Department: "UX", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Filled", isChecked: false },
+        // { JobTitle: "Network Administrator", Department: "Finance", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
+        // { JobTitle: "QA Engineer", Department: "Sales", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
 
     ]);
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
@@ -93,10 +93,39 @@ const AllJobList = () => {
     const indexOfFirstEmployee = indexOfLastEmployee - rowsPerPage;
     const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
     const totalPages = Math.ceil(filteredEmployees.length / rowsPerPage);
+    // 
+    // page index active
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
+    // Function to generate the pages to display
+    const generatePages = () => {
+        let pages = [];
+
+        // If total pages <= 5, show all pages
+        if (totalPages <= 5) {
+            pages = [...Array(totalPages).keys()].map(pageIndex => pageIndex + 1);
+        }
+        // If total pages > 5
+        else {
+            if (currentPage <= 3) {
+                pages = [1, 2, 3, 4, 5];
+            } else if (currentPage >= totalPages - 2) {
+                pages = [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+            } else {
+                pages = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+            }
+        }
+
+        return pages;
     };
+
+    // Function to handle page change
+    const handlePageChange = (page) => {
+        if (page !== '...') {
+            setCurrentPage(page);
+        }
+    };
+    // page index active
+    // 
 
     const handleRowsPerPageChange = (e) => {
         setRowsPerPage(Number(e.target.value));
@@ -201,37 +230,33 @@ const AllJobList = () => {
 
     const [loading, setLoading] = useState(true);
 
-    const BIN_ID = '66dace5dacd3cb34a87f4049';
-    const MASTER_KEY = '$2a$10$/rHkEpcXQ78/XRNvCpPl4ehBkySOH2T6teIVgZEumbX/if6UWLRly';
-    const [jobJsonData, setJobJsonData] = useState([]);
-    const getEmpJson = async () => {
-        try {
-            const response = await axios.get(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                headers: {
-                    'X-Master-Key': MASTER_KEY
-                }
-            });
-            // Response data
-            setJobJsonData(response.data.record || []);
-            setLoading(false); 
-            console.log('object', response.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            setLoading(false); 
-        }
-    };
+    // api get6 list
+    const token = localStorage.getItem('access_token');
 
-    // Call the function to fetch data
     useEffect(() => {
-        getEmpJson();
-        
-    },[])
-    console.log('getEmpJson✅', jobJsonData)
+        axios.post('https://devstronauts.com/public/api/jobopening/list', {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                setEmployees(response.data.job_opening);
+                setFilteredEmployees(response.data.job_opening); // filteredEmployees ko bhi sync karo
+                console.log('response 🥳', response.data.job_opening);
+                setLoading(false);
+
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+            });
+    }, []);
+    // 
+
 
 
     return (
         <div id='allEmp'>
-           
+
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
@@ -276,7 +301,7 @@ const AllJobList = () => {
                         <path d="M16 15L15.7 15.4C15.1111 16.1851 14.8167 16.5777 14.3944 16.7889C13.9721 17 13.4814 17 12.5 17H11.5C10.5186 17 10.0279 17 9.60557 16.7889C9.18328 16.5777 8.88885 16.1851 8.3 15.4L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                
+
                 <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2} >
                     <div className="all">
                         <div className='listActive' onClick={filter_leftClose}>
@@ -407,7 +432,7 @@ const AllJobList = () => {
                 {/* <div className="head">
                 </div> */}
                 <div className="employee-table">
-                   
+
                     <table>
                         <thead>
                             <tr>
@@ -434,8 +459,8 @@ const AllJobList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                           
-                            {jobJsonData.map((emp, index) => (
+
+                            {currentEmployees.map((emp, index) => (
                                 <tr key={index}  >
                                     <td>
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} onClick={DelThis} />
@@ -450,25 +475,24 @@ const AllJobList = () => {
                                             </span>
                                         } */}
                                     </td>
-                                    <td onClick={JobDetailsPage}>{emp.JobTitle}</td>
-                                    <td onClick={JobDetailsPage}>{emp.Department}</td>
-                                    <td onClick={JobDetailsPage}>{emp.Positions}</td>
-                                    <td onClick={JobDetailsPage}>{emp.ExperienceRequired}</td>
-                                    <td onClick={JobDetailsPage}>{emp.SkillsRequired}</td>
-                                            
+                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.job_title}</td>
+                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.department}</td>
+                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.designation}</td>
+                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.experience}</td>
+                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.skills}</td>
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
                                                 <div
-                                                    className={`status-display ${emp.status.toLowerCase().replace(' ', '-')}`}
+                                                    className={`status-display ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
                                                     onClick={() => setIsOpen(isOpen === index ? null : index)}
                                                 >
-                                                    {console.log(emp.status.toLowerCase().replace(' ', '-'))}
-                                                    <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}
+                                                    {/* {console.log(emp.job_status.toLowerCase().replace(' ', '-'))} */}
+                                                    <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
                                                     ></span>
                                                     <div>
                                                         <div className="">
-                                                            {emp.status}
+                                                            {emp.job_status}
 
                                                         </div>
                                                         <div className="^wdown">
@@ -518,10 +542,11 @@ const AllJobList = () => {
                             {[...Array(totalPages)].map((_, pageIndex) => (
                                 <button
                                     key={pageIndex + 1}
-                                    className={currentPage === pageIndex + 1 ? 'active' : ''}
+                                    className={currentPage === pageIndex + 1 ? 'activePageIndex' : ''}
                                     onClick={() => handlePageChange(pageIndex + 1)}
                                 >
                                     {pageIndex + 1}
+                                    {console.log('currentPage', pageIndex + 1)}
                                 </button>
                             ))}
                         </div>

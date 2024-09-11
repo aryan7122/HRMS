@@ -9,7 +9,7 @@ h4,
 h5,
 span,
 button,
-input,
+
 img{
   //  border: 1px solid red !important;
   animation: ScrollAnimationView linear;
@@ -855,6 +855,12 @@ img{
           }
         }
       }
+    }
+  }
+  .content_emp_four{
+    .box_:hover{
+            box-shadow: 0px 0px 5px 0.1px rgba(100, 100, 100, 0.238) !important;
+
     }
   }
   @media (max-width: 1100px) {

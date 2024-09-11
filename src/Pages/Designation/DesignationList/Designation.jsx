@@ -418,9 +418,9 @@ const Designation = () => {
             <div className="allEmployeeList" id="allemployeetable">
                 {/* <div className="head">
                 </div> */}
-                <div className="employee-table">
+                <div className="employee-table" id='Small_employee_table'>
 
-                    <table>
+                    <table id='Small_table'>
                         <thead>
                             <tr>
                                 <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>

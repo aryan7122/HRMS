@@ -901,7 +901,7 @@ table {
 @media (max-width: 1505px){
     .allEmployeeList .employee-table{
         margin: 20px auto;
-        overflow-x:  auto !important;
+        overflow-x:  auto ;
     }
   // .EmpOn_Second_Head{
   //   flex-direction: column;
@@ -918,9 +918,9 @@ table {
   margin-top: 350px !important;
 }
   .allEmployeeList .employee-table table {
-    min-width: 1340px !important; /* Ensure minimum width for the table */
+    min-width: 1340px ; /* Ensure minimum width for the table */
     margin: 0 auto; /* Center align the table */
-    overflow-x: auto !important;
+    overflow-x: auto ;
   }
 
   .EmpOn_main_container .top-bar ._div {
