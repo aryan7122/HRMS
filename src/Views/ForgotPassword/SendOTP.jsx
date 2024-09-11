@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import imageaccount2 from '../../assets/logo.png';
+import Confetti from 'react-confetti';
 
 const SendOTP = () => {
   const navigate = useNavigate();
-  const [otp, setOtp] = useState(new Array(4).fill("")); // 4-digit OTP
-  const [email, setEmail] = useState("Akashshinde@gmail.com"); // Pre-filled email, change accordingly
+  const [otp, setOtp] = useState(new Array(4).fill(""));
+  const [email, setEmail] = useState("");
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [sms, setSms] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertError, setShowAlertError] = useState(false);
 
-  // Handle input change and auto-focus
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('OTPsent_email');
+    if (storedEmail) {
+      setEmail(storedEmail);
+    }
+  }, []);
+
+  // OTP input handling
   const handleChange = (e, index) => {
     const value = e.target.value;
 
@@ -24,18 +35,11 @@ const SendOTP = () => {
         document.getElementById(`otp-input-${index + 1}`).focus();
       }
     }
-
-    // Auto submit when all fields are filled
-    if (newOtp.every((v) => v !== "")) {
-      document.getElementById("Indexx").submit();
-    }
   };
 
-  // Handle backspace navigation and clearing input
   const handleBackspace = (e, index) => {
     if (e.key === "Backspace") {
       const newOtp = [...otp];
-
       if (otp[index] === "") {
         if (index > 0) {
           document.getElementById(`otp-input-${index - 1}`).focus();
@@ -47,51 +51,99 @@ const SendOTP = () => {
     }
   };
 
-  // Send OTP request
+  // Send OTP request (this function will only be called when the user clicks a button)
   const sendOTPRequest = async () => {
     setLoading(true);
     try {
       const response = await axios.post('https://devstronauts.com/public/api/email-get-otp', { email });
-      if (response.data.success) {
-        alert('OTP sent successfully');
+      console.log('response', response.data)
+      if (response.data.message === 'OTP sent successfully on your registered Email id.') {
+        setSms('OTP sent successfully');
+        setShowAlert(true);
+
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 4000);
       } else {
-        setError('Failed to send OTP. Please try again.');
+        setSms('Failed to send OTP. Please try again.');
+        setShowAlertError(true);
+        setTimeout(() => {
+          setShowAlertError(false);
+        }, 4000);
       }
     } catch (err) {
+      setShowAlertError(true);
+      setTimeout(() => {
+        setShowAlertError(false);
+      }, 4000);
+      setSms('An error occurred while sending OTP. Please try again.');
       setError('An error occurred while sending OTP. Please try again.');
     }
     setLoading(false);
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("OTP Submitted: " + otp.join(""));
-    navigate('/set-new-password');
+  // Handle OTP validation and form submission
+  const handleSubmit = async (e) => {
+    e && e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const otpCode = otp.join("");
+      const response = await axios.post('https://devstronauts.com/public/api/validate-otp', { email, otp: otpCode });
+
+      if (!response.data.error) {
+        const token = response.data.access_token;
+        setSms('OTP matched successfully');
+        setShowAlert(true);
+
+        setTimeout(() => {
+          navigate('/set-new-password');
+          setShowAlert(false);
+        }, 4000);
+
+        localStorage.setItem('access_tokenOTP', token);
+      } else {
+        setError(response.data.message || "Invalid OTP");
+        setSms(response.data.message || 'Invalid OTP');
+        setShowAlertError(true);
+
+        setTimeout(() => {
+          setShowAlertError(false);
+        }, 4000);
+      }
+    } catch (err) {
+      setShowAlertError(true);
+      setError('An error occurred while verifying OTP. Please try again.');
+      setSms('An error occurred while verifying OTP. Please try again.');
+
+      setTimeout(() => {
+        setShowAlertError(false);
+      }, 4000);
+    }
+    setLoading(false);
   };
 
   // Handle Resend OTP
   const handleResendOTP = () => {
-    sendOTPRequest();
+    sendOTPRequest(); // Only sending OTP on button click
   };
 
   const navigateClose = () => {
     navigate('/forgot-password');
   };
 
-  // Trigger the OTP send when component mounts (or based on conditions)
-  React.useEffect(() => {
-    sendOTPRequest();
-  }, []);
-
   return (
     <div className='PasswordNew'>
+      {showAlert ? <div><Confetti /> <div id='showAlert' ><p> {sms}</p></div> </div> : ''}
+      {showAlertError ? <div id='showAlertError'><p>{sms}</p></div> : ''}
+
       <div className="forgot-password-container" id="verify">
         <div className="topHeads">
           <div className='accountimage2'>
             <img src={imageaccount2} alt="Sign Up" />
           </div>
-          <div className="crossBtn" onClick={navigateClose} >
+          <div className="crossBtn" onClick={navigateClose}>
             <span>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
                 <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -105,7 +157,7 @@ const SendOTP = () => {
           Please enter the OTP sent to <span>{email}</span>
         </p>
 
-        {error && <p className="error-message">{error}</p>}
+        {/* {error && <p className="error-message">{error}</p>} */}
 
         <form onSubmit={handleSubmit} id="Indexx">
           <div className="otp-inputs" id="INputsss">
@@ -129,7 +181,7 @@ const SendOTP = () => {
           Didn't receive the email? <a href="#" onClick={handleResendOTP}>Click to Resend</a>
         </p>
         <button className="codeOTP Otp" id="btn11" type="submit" onClick={handleSubmit} disabled={loading}>
-          {loading ? 'Sending...' : 'Continue'}
+          {loading ? 'Verifying...' : 'Continue'}
         </button>
       </div>
     </div>

@@ -39,7 +39,6 @@
     .profile_card {
       margin: 20px 20px;
       padding-bottom: 10px;
-      // border: 1px solid red;
       border-bottom: 1px solid rgba(221, 216, 216, 0.541);
       // border: 1px solid red;
       display: flex;
@@ -61,7 +60,7 @@
             margin-bottom: 5px;
           }
           div {
-            width: 60px;
+            width: 70px !important;
             align-items: center;
             display: flex;
             h4 {
@@ -71,22 +70,25 @@
                 width: 5px;
                 height: 5px;
                 border-radius: 50%;
+                margin-right: 2px;
                 background: rgb(8, 227, 8);
                 // animation: ping-animation 0.9s infinite;
               }
             }
             h5 {
+              // border: 1px solid red;
+
               // border: 1px solid Red;
               font-size: 0.8rem;
-              width: 40px;
-              text-align: end;
+              width: 90px !important;
+              text-align: start !important;
               height: 12px;
               font-weight: 500;
               padding: 4px 12px;
               padding-bottom: 5px;
               border-radius: 20px;
               color: rgb(8, 227, 8);
-              margin-left: -12px;
+              // margin-left: 0px !important;
             }
           }
           .On_Hold{
@@ -548,5 +550,18 @@ li,p,h3,h2,h1,h4,h5,span,button,img{
     scale: 1;
 
 
+  }
+}
+#notFounPageID{
+  margin:  0 auto;
+  width: 98%;
+  height: 98%;
+  // border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img{
+    width: 20%;
+    object-fit: cover;
   }
 }

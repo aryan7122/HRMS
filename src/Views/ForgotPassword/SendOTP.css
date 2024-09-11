@@ -169,3 +169,8 @@ form input {
     left: calc(100% - 343px);
   }
 }
+
+
+canvas{
+  width: 100% !important;
+}

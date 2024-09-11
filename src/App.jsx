@@ -123,7 +123,7 @@ const App = () => {
                   {/* recruitment */}
                   <Route path="/all-job-list" element={<AllJobList />} />
                   <Route path="/add-job" element={<AddNewJob />} />
-                  <Route path="/job-details" element={<JobDetails />} />
+                    <Route path="/job-details/:id" element={<JobDetails />} />
                   {/* { } */}
                   <Route path="/all-applicant-list" element={<All_Applicant_list />} />
                   <Route path="/add-applicant" element={<Add_applicant />} />

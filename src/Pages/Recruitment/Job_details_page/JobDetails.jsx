@@ -1,19 +1,46 @@
-// import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import '../../Employee_onboarding/EmployeeDetail /EmployeeDetails.scss';
-
-import { IoMdCloseCircleOutline } from "react-icons/io";
-// import Img_user from '../../../assets/user.png'
 import { MdWorkHistory } from "react-icons/md";
-import { RxReload } from "react-icons/rx";
 import { BiEditAlt } from "react-icons/bi";
-import { useNavigate } from 'react-router-dom';
-
 import { MdDeleteOutline } from "react-icons/md";
 
 const JobDetails = () => {
-    const navigate = useNavigate()
+    const { id } = useParams(); // Get the job ID from the URL
+    const [jobData, setJobData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const token = localStorage.getItem('access_token');
+    const navigate = useNavigate();
+ console.log('jobid',id)
+    // Fetch job details based on job ID
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/jobopening/list', {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                // Find the specific job based on jobId
+                const job = response.data.job_opening.find(job => job.id == id);
+                setJobData(job);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching job data: ", error);
+            });
+    }, [id, token]);
+
     const JobList = () => {
-        navigate('/all-job-list')
+        navigate('/all-job-list');
+    };
+
+    if (loading) {
+        return <div>Loading...</div>; // Loading state
+    }
+
+    if (!jobData) {
+        return <div id='notFounPageID'><img  src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif?cid=82a1493bn9krc5evd3vjd2zev16nlay9tbow8jarm2nx3rf7&ep=v1_gifs_related&rid=200w.gif&ct=g" alt="" /></div>; // Error handling if job not found
     }
 
     return (
@@ -30,52 +57,54 @@ const JobDetails = () => {
                 </div>
                 <div className="profile_card">
                     <div className="img_card">
-                        <div className="progress-circle" >
+                        <div className="progress-circle">
                             <img src="https://w7.pngwing.com/pngs/564/690/png-transparent-computer-icons-web-browser-new-job-hand-business-silhouette-thumbnail.png" alt="" />
                         </div>
                         <div className="about_user">
-                            <h3>Software Developer</h3>
-                            {/* <p>Web Developer / Full-Time</p> */}
-                            <div><h4></h4> <h5>Open</h5></div>
+                            <h3>{jobData.job_title}</h3>
+                            <p>{jobData.department}</p>
+                            <div><h4></h4> <h5>{jobData.job_status}</h5></div>
+
                         </div>
                     </div>
                     <div className="action_card">
-                        {/* <div><RxReload /></div> */}
                         <div><BiEditAlt /></div>
                         <div><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
-                <div className="info-cards" style={{paddingBottom:'30px'}}>
+                <div className="info-cards" style={{ paddingBottom: '30px' }}>
                     <div className="card">
-                        <div className='top_head'> <h3> <span><MdWorkHistory /></span>Job Information</h3></div>
+                        <div className='top_head'>
+                            <h3><span><MdWorkHistory /></span>Job Information</h3>
+                        </div>
                         <div className='contentInformation'>
                             <div>
                                 <h4>Department</h4>
-                                <p>Research & Development</p>
+                                <p>{jobData.department}</p>
                             </div>
                             <div>
                                 <h4>Designation</h4>
-                                <p>Engineer</p>
+                                <p>{jobData.designation}</p>
                             </div>
                             <div>
                                 <h4>Required Experience</h4>
-                                <p>Mid Level</p>
+                                <p>{jobData.experience}</p>
                             </div>
                             <div>
                                 <h4>Job Location</h4>
-                                <p>Office</p>
+                                <p>{jobData.job_location}</p>
                             </div>
                             <div>
                                 <h4>No. Of Positions</h4>
-                                <p>10</p>
+                                <p>{jobData.no_of_position}</p>
                             </div>
                             <div>
                                 <h4>Employee Type</h4>
-                                <p>Permanent-Full time</p>
+                                <p>{jobData.employee_type}</p>
                             </div>
                             <div>
                                 <h4>Required Skills</h4>
-                                <p>PHP, Laravel, Java</p>
+                                <p>{jobData.skills}</p>
                             </div>
                             <div>
                                 <h4>Created By</h4>
@@ -83,24 +112,20 @@ const JobDetails = () => {
                             </div>
                             <div>
                                 <h4>Creation At</h4>
-                                <p>12-Apr-2024</p>
+                                <p>{new Date(jobData.created_at).toLocaleDateString()}</p>
                             </div>
                         </div>
                     </div>
                     <div className="card">
-                        <div className='top_head'> <h3> <span><MdWorkHistory /></span>Description</h3></div>
+                        <div className='top_head'>
+                            <h3><span><MdWorkHistory /></span>Description</h3>
+                        </div>
                         <div id='DescriptionJOB'>
                             <div>
-                                <h3> Urgent requirement for experienced Software developer</h3>
-                                <p>What You'll Do As Financial Analyst, you'll responsible for financial planning and analysis. You will analyze business performance, create forecasts, and help the executive team make strategic business decisions through your reports</p>
-                                <p>Responsibilities:</p>
-                                    <p>Provide forecasting, reporting, and budgeting support to senior management
-                                        Produce monthly reports with key metrics and financial results
-                                        Drive annual and quarterly budgeting and forecasting processes
-                                    </p>
+                                <h3>{jobData.description}</h3>
+                                <p>{jobData.description}</p>
                             </div>
                         </div>
-                        {/* Personal information content */}
                     </div>
                 </div>
             </div>
@@ -109,4 +134,3 @@ const JobDetails = () => {
 };
 
 export default JobDetails;
-//

@@ -47,9 +47,12 @@ const Login = ({ setIsLoggedIn }) => {
   // };
   const [showAlert, setShowAlert] = useState(false);
   const [showAlertError, setShowAlertError] = useState(false);
+  const [sms,setSms]= useState('')
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setSms('')
 
     try {
       const response = await axios.post('https://devstronauts.com/public/api/login', {
@@ -59,6 +62,10 @@ const Login = ({ setIsLoggedIn }) => {
 
       if (response.data.message === "Login Successfully" || response.data.error === 'false') {
         setShowAlert(true)
+        setTimeout(() => {
+          setShowAlert(false)
+        }, 4000);
+        setSms('Login Successfully')
         localStorage.setItem('access_token', response.data.access_token);
         // alert("Login Successfully"); 
         // console.log(response.data.access_token)
@@ -66,24 +73,27 @@ const Login = ({ setIsLoggedIn }) => {
           setIsLoggedIn(true);
           // setShowAlert(false);
           navigate('/');
-        }, 500);
+        }, 5000);
       } else {
         // alert("Invalid login credentials"); 
         setShowAlertError(true)
-        
+        setSms('Invalid login credentials')
+        setTimeout(() => {
+          setShowAlertError(false)
+        }, 4000);
       }
     } catch (error) {
-      setIsLoggedIn(true);
       console.error('Error during login:', error);
       // alert("An error occurred during login. Please try again."); // Handle any error case
       setShowAlertError(true)
+      setTimeout(() => {
+        setShowAlertError(false)
+      }, 4000);
+      setSms('An error occurred during login. Please try again.')
     }
   };
 
-  setTimeout(() => {
-    setShowAlert(false);
-    setShowAlertError(false)
-  }, 4300);
+
 
   const validatePassword = (password) => {
     // const minLength = 8;
@@ -150,11 +160,12 @@ const Login = ({ setIsLoggedIn }) => {
     ),
     dotsClass: "slick-dots slick-thumb custom-dots",
   };
+ 
 
   return (
     <div className="login-container">
-      {showAlert ? <div><Confetti /> <div id='showAlert' ><p> Login Successfully</p></div> </div> : ''}
-      {showAlertError ? <div> <div id='showAlertError' ><p>Login Failed Try Again</p></div> </div> : ''}
+      {showAlert ? <div><Confetti /> <div id='showAlert' ><p> {sms}</p></div> </div> : ''}
+      {showAlertError ? <div> <div id='showAlertError' ><p>{sms}</p></div> </div> : ''}
 
       <div className="login-image">
         <div>

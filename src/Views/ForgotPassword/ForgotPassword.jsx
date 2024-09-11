@@ -1,43 +1,96 @@
-// components/ForgotPassword.jsx
-
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Add axios for API calls
 import './ForgotPassword.scss';
+import Confetti from 'react-confetti';
 
 import imageaccount2 from '../../assets/logo.png';
 import { FaTimes } from 'react-icons/fa';
 
 const ForgotPassword = () => {
+  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertError, setShowAlertError] = useState(false);
+  const [sms, setSms] = useState('')
+
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const navigateClose = () => {
     navigate('/login');
-  }
-  const handleSubmit = (event) => {
+  };
+
+  const handleSubmit = async (event) => {
+    setSms('')
     event.preventDefault();
     if (email) {
-      // Handle password reset logic here
-      alert('Password reset link has been sent to your email.');
-      navigate('/otp-verification'); // Redirect back to login page after submission
+      try {
+        setLoading(true); // Show loading when the request starts
+        const response = await axios.post('https://devstronauts.com/public/api/email-get-otp', {
+          email: email
+        });
+
+        if (response.data.message === "OTP sent successfully on your registered Email id.") {
+          setTimeout(() => {
+            setShowAlert(false);
+            setTimeout(() => {
+              setShowAlert(false)
+            }, 4300);
+            // setShowAlertError(false)
+            // setSms('')
+            navigate('/otp-verification'); // Redirect to OTP verification page
+
+          }, 4300);
+          setShowAlert(true)
+          setTimeout(() => {
+            setShowAlert(false)
+          }, 4300);
+          setSms('OTP has been sent to your email.')
+          // alert('OTP has been sent to your email.');
+          localStorage.setItem('OTPsent_email', email);
+        } else {
+          // alert('Failed to send OTP. Please try again.');
+          setSms('Failed to send OTP. Please try again.')
+          setShowAlertError(true)
+          setTimeout(() => {
+            setShowAlertError(false)
+          }, 4300);
+        }
+      } catch (error) {
+        setShowAlertError(true)
+        setTimeout(() => {
+          setShowAlertError(false)
+        }, 4300);
+        setSms(`Error sending OTP:${error}`)
+        console.error("Error sending OTP:", error);
+        // alert('An error occurred while sending the OTP. Please try again later.');
+      } finally {
+        setLoading(false); // Hide loading after the request is finished
+        
+      }
     } else {
       alert('Please enter your email.');
     }
   };
+
   const navigateSignUP = () => {
     navigate('/sign-up');
-  }
+  };
 
+ 
   return (
     <section>
 
       <div className="PasswordNew">
+        {showAlert ? <div><Confetti /> <div id='showAlert' ><p> {sms}</p></div> </div> : ''}
+        {showAlertError ? <div> <div id='showAlertError' ><p>{sms}</p></div> </div> : ''}
+
         <div className="forgot-password-container" id="forgotten">
           <div className="topHeads">
             <div className='accountimage2'>
               <img src={imageaccount2} alt="Sign Up" />
             </div>
-            <div className="crossBtn" onClick={navigateClose} >
+            <div className="crossBtn" onClick={navigateClose}>
               <span>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
                   <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -53,7 +106,8 @@ const ForgotPassword = () => {
           <form onSubmit={handleSubmit}>
             <div>
               <label className='Elabel'>Email*</label>
-              <input className='entermail'
+              <input
+                className='entermail'
                 type="email"
                 placeholder="Enter Email"
                 value={email}
@@ -61,7 +115,9 @@ const ForgotPassword = () => {
                 required
               />
             </div>
-            <button type="submit" className='Otp'>Send OTP</button>
+            <button type="submit" className='Otp' disabled={loading}>
+              {loading ? 'Sending OTP...' : 'Send OTP'}
+            </button>
             <div className='acct'>
               {/* <h6 className='account'>Do you have an account yet? <a style={{ cursor: 'pointer' }} onClick={navigateSignUP}>Sign Up</a></h6> */}
             </div>
@@ -69,7 +125,6 @@ const ForgotPassword = () => {
         </div>
       </div>
     </section>
-
   );
 };
 
