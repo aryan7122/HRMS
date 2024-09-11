@@ -17,6 +17,7 @@ import { OutsideClick } from './OutSideClick';
 const Navbar = ({ setIsLoggedIn }) => {
     // Hook for Notifications Dropdown
     const { isOpen: isNotificationsOpen, ref: notificationsRef, buttonRef: notificationsButtonRef, handleToggle: toggleNotifications } = OutsideClick();
+    const [showAlert, setShowAlert] = useState(false);
 
     // Hook for Account Dropdown
     const { isOpen: isAccountOpen, ref: accountRef, buttonRef: accountButtonRef, handleToggle: toggleAccount } = OutsideClick();
@@ -55,9 +56,11 @@ const Navbar = ({ setIsLoggedIn }) => {
 
     const clickOut = () => {
         localStorage.setItem('access_token', '');
-
-        setIsLoggedIn(false);
-        navigate('/');
+        setShowAlert(true)
+        setTimeout(() => {
+            setIsLoggedIn(false);
+            navigate('/');
+        }, 4000);
     };
 
     const handleClick = () => {
@@ -89,6 +92,7 @@ const Navbar = ({ setIsLoggedIn }) => {
 
     return (
         <div className="navbar">
+            {showAlert ? <div> <div id='showAlert' ><p>LogOut Successfully</p></div> </div> : ''}
             <div className="navbar-left">
                 <div className="logo" onClick={handleClick}>
                     <img src={logo} alt="HRMS" />
