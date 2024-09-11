@@ -135,6 +135,8 @@ const AllJobList = () => {
     const statuses = ['Open', 'Draft', 'On hold', 'Filled', 'Cancelled'];
 
     const handleStatusChange = (index, newStatus) => {
+        setStatusNew(newStatus)
+        console.log('status chenge:::', newStatus)
         const updatedEmployees = [...filteredEmployees];
         updatedEmployees[index].status = newStatus;
         setFilteredEmployees(updatedEmployees);
@@ -229,6 +231,11 @@ const AllJobList = () => {
     };
 
     const [loading, setLoading] = useState(true);
+    const [sms, setSms] = useState('')
+    const [statusId, setStatusId] = useState('')
+    const [statusNew, setStatusNew] = useState('')
+    const [showAlert, setShowAlert] = useState(false);
+    const [showAlertError, setShowAlertError] = useState(false);
 
     // api get6 list
     const token = localStorage.getItem('access_token');
@@ -240,22 +247,65 @@ const AllJobList = () => {
             }
         })
             .then(response => {
+                
                 setEmployees(response.data.job_opening);
                 setFilteredEmployees(response.data.job_opening); // filteredEmployees ko bhi sync karo
-                console.log('response 🥳', response.data.job_opening);
+                // console.log('response 🥳', response.data.job_opening);
                 setLoading(false);
 
             })
             .catch(error => {
                 console.error("Error fetching data: ", error);
             });
-    }, []);
-    // 
+    }, [100, statusNew]);
+    // update status
+  
+
+    console.log('updateId', statusId)
+    console.log('status', statusId)
+
+    const UpdateStatusHndle = (id) => {
+        setStatusId(id)
+    }
+    
+
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/jobopening/status-update', {
+            job_id: statusId,
+            job_status: statusNew
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                setSms(`Status update successfully`)
+                if (response.data.success === true) {
+                    // setShowAlert(true)
+                    // setTimeout(() => {
+                    //     setShowAlert(false)
+                    // }, 4000);
+                }
+            })
+            .catch(error => {
+                setSms('Status update Failed')
+                alert(error)
+                // setShowAlertError(true)
+                // setTimeout(() => {
+                //     setShowAlertError(false)
+                // }, 4000);
+
+                console.error("Error fetching data: ", error);
+            });
+    }, [ statusNew]);
+
 
 
 
     return (
         <div id='allEmp'>
+            {showAlert ? <div> <div id='showAlert' ><p> {sms}</p></div> </div> : ''}
+            {showAlertError ? <div> <div id='showAlertError' ><p>{sms}</p></div> </div> : ''}
 
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
@@ -491,7 +541,7 @@ const AllJobList = () => {
                                                     <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
                                                     ></span>
                                                     <div>
-                                                        <div className="">
+                                                        <div className="" onClick={() => UpdateStatusHndle(emp.id)}>
                                                             {emp.job_status}
 
                                                         </div>

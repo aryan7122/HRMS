@@ -36,7 +36,7 @@ const JobDetails = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>; // Loading state
+        return <div id='notFounPageID'><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" /></div>; // Loading state
     }
 
     if (!jobData) {
