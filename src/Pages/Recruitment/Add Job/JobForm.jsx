@@ -78,15 +78,17 @@ const JobForm = ({ onSubmit }) => {
     //         requiredSkills: '',
     //         description: ''
     //     });
-    //     // 
+    //     //
 
     // };
+    const [loading, setLoading] = useState(false);
+
 
     const token = localStorage.getItem('access_token');
 
     const handleSubmit = (event) => {
         event.preventDefault();  // Prevent default form submission
-
+        setLoading(true)
         axios.post(`https://devstronauts.com/public/api/jobopening/create/update`,
             {
                 id: 4,  // Replace this with dynamic if needed
@@ -111,6 +113,7 @@ const JobForm = ({ onSubmit }) => {
                 setSms('New Job Data Create successfully')
                 // alert(error)
                 if (response.status === 200) {
+                    setLoading(false)
                     setShowAlert(true)
                     setTimeout(() => {
                         setShowAlert(false)
@@ -131,6 +134,7 @@ const JobForm = ({ onSubmit }) => {
                 });
             })
             .catch(error => {
+                setLoading(false)
                 console.error('Error:', error);
                 const er = error.message
                 setSms(`${er}`)
@@ -166,6 +170,9 @@ const JobForm = ({ onSubmit }) => {
             [dropdown]: false
         }));
     };
+    if (loading) {
+        return <div id='notFounPageID'><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" /></div>; // Loading state
+    }
 
     return (
         <>
