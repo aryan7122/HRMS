@@ -373,7 +373,7 @@ const JobUpdateForm = ({ onSubmit }) => {
                     <div id='submitBtn_next_main'>
                         <div id='submitBtn' >
                             <div className='div'>
-                                <button type="submit" >Submit </button>
+                                <button type="submit" >Update </button>
                                 <span><CiCircleChevRight /></span>
                             </div>
                             <div className="lineBar"></div>

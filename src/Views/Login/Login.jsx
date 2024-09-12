@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 // import '../styles/Login.css';
 import './Login.css'
 import Confetti from 'react-confetti';
+import Alert from '@mui/material/Alert';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import axios from 'axios';
 // import { BsGoogle, BsFacebook, BsTwitter, BsMicrosoft, BsLinkedin } from 'react-icons/bs';
@@ -63,40 +66,58 @@ const Login = ({ setIsLoggedIn }) => {
       });
 
       if (response.data.message === "Login Successfully" || response.data.error === 'false') {
-        // setShowAlert(true)
+        setSms('Login Successfully')
+        toast(sms || 'Login Successfully', {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: showAlert,
+          theme: "light",
+        });
+        setShowAlert(true)
         setLoading(false)
         setTimeout(() => {
           setShowAlert(false)
         }, 1000);
-        setSms('Login Successfully')
         localStorage.setItem('access_token', response.data.access_token);
         // alert("Login Successfully"); 
         console.log(response.data)
+        setIsLoggedIn(true);
         setTimeout(() => {
-          setIsLoggedIn(true);
-          // setShowAlert(false);
-          navigate('/');
+          setShowAlert(false);
         }, 1000);
+        navigate('/');
       } else {
+        setSms('Invalid login credentials')
         // alert("Invalid login credentials"); 
         setLoading(false)
-        // setShowAlertError(true)
-        setSms('Invalid login credentials')
+        setShowAlertError(true)
         setTimeout(() => {
           setShowAlertError(false)
         }, 3000);
       }
     } catch (error) {
       console.error('Error during login:', error);
-      // alert("An error occurred during login. Please try again."); // Handle any error case
-      // setShowAlertError(true)
-      setLoading(false)
-      setTimeout(() => {
-        setShowAlertError(false)
-
-      }, 3000);
       setSms('An error occurred during login. Please try again.')
+      // alert("An error occurred during login. Please try again."); // Handle any error case
+      setLoading(false)
+     
     }
+
+      toast(sms || 'Failed Login', {
+        position: "top-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: showAlert,
+      theme: "light",
+    });
+
   };
 
 
@@ -170,9 +191,17 @@ const Login = ({ setIsLoggedIn }) => {
 
   return (
     <div className="login-container">
-      {showAlert ? <div> <div id='showAlert' ><p> {sms}</p></div> </div> : ''}
-      {showAlertError ? <div> <div id='showAlertError' ><p>{sms}</p></div> </div> : ''}
-
+      {/* {showAlert ? <Alert className='Alert' severity="success">{sms}</Alert> : ''} */}
+      {/* {showAlertError ? <ToastContainer stacked /> : ''} */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="error"
+      />
       <div className="login-image">
         <div>
           <Slider {...settings}>

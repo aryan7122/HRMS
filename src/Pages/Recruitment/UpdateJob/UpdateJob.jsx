@@ -58,7 +58,7 @@ const UpdateJob = () => {
             {/* {showAlert ? <div><Confetti /> <div id='showAlert'><p>Form Submit Successfully</p></div> </div> : ''} */}
             <div className="employee-form">
                 <div className="top-bar">
-                    <h2><div className='span'><HiUserPlus /></div>Update Job Id: {id} </h2>
+                    <h2><div className='span'><HiUserPlus /></div>Update Job </h2>
                     <span className="close_nav" onClick={JobList}><TfiClose /></span>
                     <div className="">
                         <span className="1"></span>

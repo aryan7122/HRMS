@@ -171,7 +171,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     }
     return (
         <>
-
+    
             <div className={`sidebar ${isOpen ? 'open' : 'close'} ${sideW ? 'sideW' : ''} ${!mobileMenu ? 'sidebarMobile' : ''} `}>
                 <div className="ul"
                     onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}

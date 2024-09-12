@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import imageaccount2 from '../../assets/logo.png';
 import Confetti from 'react-confetti';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SendOTP = () => {
   const navigate = useNavigate();
@@ -59,23 +61,40 @@ const SendOTP = () => {
       console.log('response', response.data)
       if (response.data.message === 'OTP sent successfully on your registered Email id.') {
         setSms('OTP sent successfully');
-        setShowAlert(true);
-
-        setTimeout(() => {
-          setShowAlert(false);
-        }, 4000);
+        toast.success('OTP sent successfully', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       } else {
         setSms('Failed to send OTP. Please try again.');
-        setShowAlertError(true);
-        setTimeout(() => {
-          setShowAlertError(false);
-        }, 4000);
+        toast.error('Failed to send OTP. Please try again.', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } catch (err) {
-      setShowAlertError(true);
-      setTimeout(() => {
-        setShowAlertError(false);
-      }, 4000);
+      toast.error(sms || 'An error occurred while sending OTP. Please try again.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       setSms('An error occurred while sending OTP. Please try again.');
       setError('An error occurred while sending OTP. Please try again.');
     }
@@ -95,31 +114,52 @@ const SendOTP = () => {
       if (!response.data.error) {
         const token = response.data.access_token;
         setSms('OTP matched successfully');
-        setShowAlert(true);
+        toast.success('OTP matched successfully', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
 
         setTimeout(() => {
           navigate('/set-new-password');
           setShowAlert(false);
-        }, 4000);
+        }, 1000);
 
         localStorage.setItem('access_tokenOTP', token);
       } else {
         setError(response.data.message || "Invalid OTP");
         setSms(response.data.message || 'Invalid OTP');
-        setShowAlertError(true);
-
-        setTimeout(() => {
-          setShowAlertError(false);
-        }, 4000);
+        toast.error( 'Invalid OTP', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } catch (err) {
-      setShowAlertError(true);
+      toast.error( 'Please try again', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       setError('An error occurred while verifying OTP. Please try again.');
       setSms('An error occurred while verifying OTP. Please try again.');
 
-      setTimeout(() => {
-        setShowAlertError(false);
-      }, 4000);
+     
     }
     setLoading(false);
   };
@@ -135,9 +175,15 @@ const SendOTP = () => {
 
   return (
     <div className='PasswordNew'>
-      {showAlert ? <div><Confetti /> <div id='showAlert' ><p> {sms}</p></div> </div> : ''}
-      {showAlertError ? <div id='showAlertError'><p>{sms}</p></div> : ''}
-
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="error"
+      />
       <div className="forgot-password-container" id="verify">
         <div className="topHeads">
           <div className='accountimage2'>

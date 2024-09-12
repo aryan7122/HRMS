@@ -6,6 +6,8 @@ import './SetNewPassword.css';
 import './ForgotPassword.scss';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // If needed
 import Confetti from 'react-confetti';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import imageaccount2 from '../../assets/logo.png';
 
@@ -18,6 +20,8 @@ const SetNewPassword = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [showAlertError, setShowAlertError] = useState(false);
   const [sms, setSms] = useState('')
+  const [loading, setLoading] = useState(false);
+
   // Get the token from localStorage
   useEffect(() => {
     const token = localStorage.getItem('access_tokenOTP');
@@ -37,6 +41,7 @@ const SetNewPassword = () => {
   };
 
   const handleSubmit = async (event) => {
+    setLoading(true)
     event.preventDefault();
     setSms('')
     if (newPassword && confirmPassword) {
@@ -45,7 +50,18 @@ const SetNewPassword = () => {
           const token = localStorage.getItem('access_tokenOTP'); // Get token from localStorage
           if (!token) {
             // alert('Token not found. Please verify your OTP again.');
-            setShowAlertError(true)
+            toast.error(sms || 'Token not found. Please verify your OTP again.', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            // setLoading(false)
+
             setSms('Token not found. Please verify your OTP again.')
             return;
           }
@@ -65,58 +81,105 @@ const SetNewPassword = () => {
 
           if (response.status === 200) {
             // alert('Password updated successfully.');
-            setShowAlert(true);
             localStorage.setItem('access_tokenOTP', '');
+            setSms('updated your new password Successfully.')
             setTimeout(() => {
               navigate('/login'); // Redirect to login page after password update
-              setShowAlert(false)
-            }, 4000);
-            setSms('updated your new password')
+            }, 2000);
+            toast.success('updated your new password Successfully.', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            setLoading(false)
+
           } else {
             // alert('Error updating password. Please try again.');
-            setShowAlertError(true)
-            setTimeout(() => {
-              setShowAlertError(false)
-            }, 4000);
+            toast.error(sms || 'Error updating password. Please try again.', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            setLoading(false)
             setSms('Error updating password. Please try again.')
           }
 
         } catch (error) {
           console.error('Error resetting password:', error);
           // alert('An error occurred. Please try again.');
-          setShowAlertError(true)
           setSms('An error occurred. Please try again.')
-          setTimeout(() => {
-            setShowAlertError(false)
-          }, 4000);
+          toast.error(sms || 'An error occurred. Please try again.', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setLoading(false)
+
         }
       } else {
         // alert('Passwords do not match.');
         setSms('Passwords do not match.')
-        setShowAlertError(true)
-        setTimeout(() => {
-          setShowAlertError(false)
-        }, 4000);
+        toast.error(sms || 'Passwords do not match.', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setLoading(false)
+
       }
     } else {
       // alert('Please fill in both password fields.');
       setSms('Please fill in both password fields.')
-      setShowAlertError(true)
-      setTimeout(() => {
-        setShowAlertError(false)
-      }, 4000);
+      toast.error(sms || 'Please fill in both password fields.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setLoading(false)
+
     }
   };
 
   const navigateClose = () => {
     navigate('/otp-verification');
   }
- 
+
   return (
     <div className="PasswordNew">
-      {showAlert ? <div><Confetti /> <div id='showAlert' ><p> {sms}</p></div> </div> : ''}
-      {showAlertError ? <div> <div id='showAlertError' ><p>{sms}</p></div> </div> : ''}
-
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="error"
+      />
       <div className="forgot-password-container" id="Contents">
         <div className="topHeads">
           <div className='accountimage2'>
@@ -165,7 +228,7 @@ const SetNewPassword = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
-          <button className='Otp' id="bt22" type="submit">Reset Password</button>
+          <button className='Otp' id="bt22" type="submit">{loading ? 'Updating... ' : 'Reset Password'}</button>
         </form>
       </div>
     </div>

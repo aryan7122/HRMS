@@ -641,3 +641,18 @@
   max-height: 430px;
   overflow-x: auto;
 }
+
+
+#notFounPageID{
+  margin:  0 auto;
+  width: 98%;
+  height: 98%;
+  // border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img{
+    width: 20%;
+    object-fit: cover;
+  }
+}

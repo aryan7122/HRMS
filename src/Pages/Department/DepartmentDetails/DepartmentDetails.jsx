@@ -19,12 +19,12 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 // popup
 const DepartmentDetails = () => {
-    
+
     // const [activeTab, setActiveTab] = useState('experience');
     const [departmentdetails, setDepartmentdetails] = useState(null);
     const [departmentdetails2, setDepartmentdetails2] = useState('');
     const [departmentdetails3, setDepartmentdetails3] = useState('');
-    
+
     const [employees, setEmployees] = useState([
         { name: "Akash Shinde", Roll: "Lead Design", email: "Akashhrms@gmail.com", phone: "+918555031082", Image: img_emp1, DOB: '2024-08-12' },
         { name: "Ravi Kumar", Roll: "Developer", email: "ravikumar@gmail.com", phone: "+918888888881", Image: img_emp1, DOB: '2023-07-11' },
@@ -125,11 +125,10 @@ const DepartmentDetails = () => {
     // alert(id)
     const navigate = useNavigate();
     const token = localStorage.getItem('access_token');
-   
-   
-   
+
+
+
     console.log('departmentdetails::', departmentdetails)
-    
     useEffect(() => {
         if (id) {
             axios.post('https://devstronauts.com/public/api/department/details', { id }, {
@@ -170,7 +169,7 @@ const DepartmentDetails = () => {
             });
         // }
     }, [id, token, departmentdetails]);
-    
+
     const AllEmp = () => {
         navigate('/department')
     }
@@ -178,12 +177,12 @@ const DepartmentDetails = () => {
     //     navigate('/department')
     // }
     if (loading) {
-        return <div id="notFoundPageID"><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="Loading..." /></div>;
+        return <div id="notFounPageID"><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="Loading..." /></div>;
     }
 
-    // if (error || !departmentdetails) {
-    //     return <div id="notFoundPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
-    // }
+    if (error || !departmentdetails) {
+        return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
+    }
 
 
     // popup 
@@ -225,9 +224,15 @@ const DepartmentDetails = () => {
             });
     };
 
+
     // popup
     const PopUpUpdate = () => {
         setShowPopup(true)
+        setFormDetails_2({
+            departmentName_2: departmentdetails?.department_name || '',
+            departmentHead_2: departmentdetails?.department_head || '',
+            parentDepartment_2: departmentdetails?.parent_department || '',
+        });
     }
     const closePopup = () => {
         setShowPopup(false);
@@ -277,11 +282,6 @@ const DepartmentDetails = () => {
                             </svg>
                         </span>Department Information</h3></div>
                         <div className='contentInformation'>
-                            
-                            <div>
-                                <h4>Department Head</h4>
-                                <p>{departmentdetails.department_head}</p>
-                            </div>
                             <div>
                                 <h4> Department</h4>
                                 <p>{departmentdetails.department_name}</p>
@@ -290,15 +290,23 @@ const DepartmentDetails = () => {
                                 <h4>Parent Department</h4>
                                 <p>{departmentdetails.parent_department}</p>
                             </div>
-                           
+
+                            <div>
+                                <h4>Department Head</h4>
+                                <p>{departmentdetails.department_head}</p>
+                            </div>
+
                             <div>
                                 <h4>Created By</h4>
                                 <p>{departmentdetails3}</p>
                             </div>
-                            
+
                             <div>
                                 <h4>Created Date</h4>
-                                <p>{new Date(departmentdetails.created_at).toLocaleDateString()}</p>
+                                <p>
+                                    {`${new Date(departmentdetails.created_at).getDate()}-${new Date(departmentdetails.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(departmentdetails.created_at).getFullYear()}`}
+                                </p>
+
                             </div>
                         </div>
                         {/* <div id='DescriptionJOB'>
@@ -381,7 +389,7 @@ const DepartmentDetails = () => {
                 <div className="popup-overlay">
                     <div className="popup">
                         <div className="popup-header">
-                            <h3>Add New Department</h3>
+                            <h3>Update Department</h3>
                             <div className="close_btn" onClick={closePopup}>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
                                     <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -441,7 +449,7 @@ const DepartmentDetails = () => {
                                 </div>
 
                                 <div className='popupbtn' id="submitDepartmentFormButton_2">
-                                    <button type="submit">Submit
+                                    <button type="submit">Update
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
                                             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
                                             <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

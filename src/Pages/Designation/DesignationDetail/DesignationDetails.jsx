@@ -123,11 +123,11 @@ const DesignationDetails = () => {
     };
 
     if (loading) {
-        return <div id="notFoundPageID"><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="Loading..." /></div>;
+        return <div id="notFounPageID"><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="Loading..." /></div>;
     }
 
     if (error || !designationDetails) {
-        return <div id="notFoundPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
+        return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
     }
 
 
@@ -140,6 +140,17 @@ const DesignationDetails = () => {
     const UpdatedesignationDetails = () => {
         setShowPopup(true)
         // navigate(`/update-designation/${id}`);
+        // useEffect(() => {
+            // if (designationDetails) {
+                setFormData_3({
+                    email_3: designationDetails?.designation_name || '',
+                    department_3: designationDetails?.department_id || '',
+                    Description_3: designationDetails?.description || '',
+                });
+            // }
+        // }, [designationDetails]);
+
+      
     }
 
 
@@ -198,7 +209,7 @@ const DesignationDetails = () => {
                         </div>
                         <div className="about_user">
                             <h3>{designationDetails.designation_name}</h3>
-                            {/* <p>UI/UX Designer</p> */}
+                            <p>{designationDetails.department_id}</p>
                             {/* <div><h4></h4> <h5>Active</h5></div> */}
                         </div>
                     </div>
@@ -224,20 +235,15 @@ const DesignationDetails = () => {
                                 <h4>Created By</h4>
                                 <p>{designationDetails2}</p>
                             </div>
-                            <div>
-                                <h4>Created Date</h4>
-                                <p>{new Date(designationDetails.created_at).toLocaleDateString()}</p>
-                            </div>
 
                             <div>
                                 <h4>Department</h4>
                                 <p>{designationDetails.department_id} </p>
                             </div>
-
                             <div>
-                                <h4>Required Skills</h4>
-                                <p>Wireframing, Prototyping, Visual Design, UX Writing</p>
-                            </div>
+                                <h4>Created Date</h4>
+                                <p>                                {`${new Date(designationDetails.created_at).getDate()}-${new Date(designationDetails.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(designationDetails.created_at).getFullYear()}`}</p>
+                            </div>                           
                         </div>
                         <div id='DescriptionJOB'>
                             <h4>Description</h4>
@@ -276,7 +282,7 @@ const DesignationDetails = () => {
                 <div className="popup-overlay">
                     <div className="popup-content">
                         <div className="add-designation-header">
-                            <h2>Add New Designation</h2>
+                            <h2>Update Designation</h2>
                             <button className="close_btn" onClick={closePopup}>
                                 <IoIosCloseCircleOutline />
                             </button>
@@ -329,7 +335,7 @@ const DesignationDetails = () => {
                                     onChange={handleInputChange_3}
                                 ></textarea>
 
-                                <button type="submit">Submit
+                                <button type="submit">Update
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
                                         <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
                                         <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
