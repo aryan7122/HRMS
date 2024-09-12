@@ -7,14 +7,12 @@ h2,
 h1,
 h4,
 h5,
-span,
-button,
-
+span
 img{
   //  border: 1px solid red !important;
   animation: ScrollAnimationView linear;
   animation-timeline: view();
-  animation-range: 0% cover 10%;
+  animation-range: 0% cover 1%;
 }
 
 .ADMIN_EMP {
@@ -755,7 +753,7 @@ img{
 
       animation: ScrollAnimationView linear;
       animation-timeline: view();
-      animation-range: 0% cover 10%;
+      animation-range: 0% cover 1%;
       transition: transform 0.3s ease;
 
       .head {
@@ -785,7 +783,7 @@ img{
         div {
           animation: ScrollAnimationView linear;
           animation-timeline: view();
-          animation-range: 0% cover 10%;
+          animation-range: 0% cover 1%;
           transition: transform 0.3s ease;
           // border: 1px solid red !important;
           display: flex;
@@ -897,7 +895,7 @@ img{
 
       animation: ScrollAnimationView linear;
       animation-timeline: view();
-      animation-range: 0% cover 10%;
+      animation-range: 0% cover 1%;
       transition: transform 0.3s ease;
 
       .header {
@@ -937,7 +935,7 @@ img{
         li {
           animation: ScrollAnimationView linear;
           animation-timeline: view();
-          animation-range: 0% cover 10%;
+          animation-range: 0% cover 1%;
           transition: transform 0.3s ease;
           // border: 1px solid red !important;
           display: flex;
@@ -1033,7 +1031,7 @@ img{
         padding-bottom: 10px;
         animation: ScrollAnimationView linear;
         animation-timeline: view();
-        animation-range: 0% cover 10%;
+        animation-range: 0% cover 1%;
         transition: transform 0.3s ease;
         .seeAll {
           margin-top: 0px !important;
@@ -1065,7 +1063,7 @@ img{
         li {
           animation: ScrollAnimationView linear;
           animation-timeline: view();
-          animation-range: 0% cover 10%;
+          animation-range: 0% cover 1%;
           transition: transform 0.3s ease;
           // border: 1px solid red !important;
           display: flex;

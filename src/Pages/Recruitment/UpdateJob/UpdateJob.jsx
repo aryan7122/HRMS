@@ -1,4 +1,5 @@
 import './AddNewJob.scss';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // import '../../Employee onboarding/AddEmployee/NavbarForm.scss';
 import { useState } from 'react';
@@ -6,11 +7,11 @@ import { useState } from 'react';
 import { HiUserPlus } from "react-icons/hi2";
 import { TfiClose } from "react-icons/tfi";
 import Confetti from 'react-confetti';
-import JobForm from './JobForm';
-import { useNavigate } from 'react-router-dom';
-import JobUpdateForm from '../UpdateJob/JobUpdateForm'
+// import JobForm from './JobForm';
+import JobUpdateForm from './JobUpdateForm'
 
-const AddEmloyee = () => {
+const UpdateJob = () => {
+    const { id } = useParams(); // Get the job ID from the URL
 
     const navigate = useNavigate()
 
@@ -57,7 +58,7 @@ const AddEmloyee = () => {
             {/* {showAlert ? <div><Confetti /> <div id='showAlert'><p>Form Submit Successfully</p></div> </div> : ''} */}
             <div className="employee-form">
                 <div className="top-bar">
-                    <h2><div className='span'><HiUserPlus /></div>Add New Job</h2>
+                    <h2><div className='span'><HiUserPlus /></div>Update Job Id: {id} </h2>
                     <span className="close_nav" onClick={JobList}><TfiClose /></span>
                     <div className="">
                         <span className="1"></span>
@@ -73,15 +74,15 @@ const AddEmloyee = () => {
                     </div>
                 </div>
                 <div className="form-content">
-                    <JobForm onSubmit={handleSubmit} />
-                    {/* <JobUpdateForm onSubmit={handleSubmit} /> */}
+                    {/* <JobForm onSubmit={handleSubmit} /> */}
+                    <JobUpdateForm onSubmit={handleSubmit} />
                 </div>
             </div>
         </>
     );
 };
 
-export default AddEmloyee;
+export default UpdateJob;
 
 
 // 

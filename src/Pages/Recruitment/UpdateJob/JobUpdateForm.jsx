@@ -10,8 +10,11 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addJobForm } from '../../../slices/jobSlice';
 import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const JobForm = ({ onSubmit }) => {
+const JobUpdateForm = ({ onSubmit }) => {
+    const { id } = useParams(); // Get the job ID from the URL
+
     const dispatch = useDispatch();
     const jobs = useSelector((state) => state.job.jobs);
 
@@ -89,7 +92,7 @@ const JobForm = ({ onSubmit }) => {
 
         axios.post(`https://devstronauts.com/public/api/jobopening/create/update`,
             {
-                id: 4,  // Replace this with dynamic if needed
+                id: id,  // Replace this with dynamic if needed
                 job_title: formData.jobTitle,
                 department: formData.department,
                 designation: formData.designation,
@@ -107,15 +110,15 @@ const JobForm = ({ onSubmit }) => {
         })
 
             .then(response => {
-                console.log('Job Data Submit successfully **:', response);
-                setSms('New Job Data Create successfully')
+                console.log('Job Data Updated successfully **:', response);
+                setSms('Updated Job successfully')
+
                 // alert(error)
-                if (response.status === 200) {
-                    setShowAlert(true)
-                    setTimeout(() => {
-                        setShowAlert(false)
-                    }, 4000);
-                }
+                setShowAlert(true)
+                setTimeout(() => {
+                    setShowAlert(false)
+                }, 4000);
+
                 // Clear the form after successful submission
                 setFormData({
                     jobTitle: '',
@@ -131,7 +134,7 @@ const JobForm = ({ onSubmit }) => {
                 });
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Error:', error.message);
                 const er = error.message
                 setSms(`${er}`)
                 // alert(error)
@@ -390,4 +393,4 @@ const JobForm = ({ onSubmit }) => {
     );
 };
 
-export default JobForm;
+export default JobUpdateForm;

@@ -35,6 +35,7 @@ import TrackPerformance from './Views/Login/TrackPerformance.jsx'; // Import the
 import AllJobList from './Pages/Recruitment/List_view_all_job/AllJobList.jsx'
 import AddNewJob from './Pages/Recruitment/Add Job/AddNewJob.jsx';
 import JobDetails from './Pages/Recruitment/Job_details_page/JobDetails.jsx';
+import UpdateJob from './Pages/Recruitment/UpdateJob/UpdateJob.jsx';
 import EmployeeProfile from './Pages/Dashboard_and_Profile/EmployeeProfile/EmployeeProfile.jsx';
 
 // All_Applicant
@@ -102,7 +103,7 @@ const App = () => {
             </div>
             <div className="app">
               {/* side bar */}
-                <div className={` ${sidebarW ? 'sideBar_app2' : 'sideBar_app'} ${liHover ? 'expanded' : ''} `}>
+              <div className={` ${sidebarW ? 'sideBar_app2' : 'sideBar_app'} ${liHover ? 'expanded' : ''} `}>
                 <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
               </div>
               <div className="content">
@@ -123,7 +124,10 @@ const App = () => {
                   {/* recruitment */}
                   <Route path="/all-job-list" element={<AllJobList />} />
                   <Route path="/add-job" element={<AddNewJob />} />
-                    <Route path="/job-details/:id" element={<JobDetails />} />
+                  <Route path="/job-details/:id" element={<JobDetails />} />
+
+                    <Route path="/job-update/:id" element={<UpdateJob />} />
+
                   {/* { } */}
                   <Route path="/all-applicant-list" element={<All_Applicant_list />} />
                   <Route path="/add-applicant" element={<Add_applicant />} />

@@ -236,6 +236,14 @@ const AllJobList = () => {
     const [statusNew, setStatusNew] = useState('')
     const [showAlert, setShowAlert] = useState(false);
     const [showAlertError, setShowAlertError] = useState(false);
+    const [updatingEmpId, setUpdatingEmpId] = useState(null);
+
+    console.log('updateId', statusId)
+    console.log('status', statusId)
+
+    const UpdateStatusHndle = (id) => {
+        setStatusId(id)
+    }
 
     // api get6 list
     const token = localStorage.getItem('access_token');
@@ -247,7 +255,7 @@ const AllJobList = () => {
             }
         })
             .then(response => {
-                
+
                 setEmployees(response.data.job_opening);
                 setFilteredEmployees(response.data.job_opening); // filteredEmployees ko bhi sync karo
                 // console.log('response 🥳', response.data.job_opening);
@@ -257,17 +265,9 @@ const AllJobList = () => {
             .catch(error => {
                 console.error("Error fetching data: ", error);
             });
-    }, [100, statusNew]);
+    }, [statusId, statusNew]);
     // update status
-  
 
-    console.log('updateId', statusId)
-    console.log('status', statusId)
-
-    const UpdateStatusHndle = (id) => {
-        setStatusId(id)
-    }
-    
 
     useEffect(() => {
         axios.post('https://devstronauts.com/public/api/jobopening/status-update', {
@@ -279,6 +279,7 @@ const AllJobList = () => {
             }
         })
             .then(response => {
+                // setUpdatingEmpId(statusId);
                 setSms(`Status update successfully`)
                 if (response.data.success === true) {
                     // setShowAlert(true)
@@ -297,7 +298,7 @@ const AllJobList = () => {
 
                 console.error("Error fetching data: ", error);
             });
-    }, [ statusNew]);
+    }, [statusId, statusNew]);
 
 
 
@@ -541,10 +542,16 @@ const AllJobList = () => {
                                                     <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
                                                     ></span>
                                                     <div>
-                                                        <div className="" onClick={() => UpdateStatusHndle(emp.id)}>
-                                                            {emp.job_status}
-
-                                                        </div>
+                                                        {/* <div className="" onClick={() => UpdateStatusHndle(emp.id)}> */}
+                                                        {/* {emp.job_status} */}
+                                                        {/* {updatingEmpId === emp.id ? (
+                                                            <div className="">Updating...</div>
+                                                        ) : ( */}
+                                                            <div className="" onClick={() => UpdateStatusHndle(emp.id)}>
+                                                                {emp.job_status}
+                                                            </div>
+                                                        {/* )} */}
+                                                        {/* </div> */}
                                                         <div className="^wdown">
                                                             <MdOutlineKeyboardArrowDown />
                                                         </div>
