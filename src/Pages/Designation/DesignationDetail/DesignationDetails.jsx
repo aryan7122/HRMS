@@ -8,9 +8,56 @@ import { MdWorkHistory, MdDeleteOutline } from "react-icons/md";
 import { RxReload } from "react-icons/rx";
 import { BiEditAlt } from "react-icons/bi";
 import { useNavigate, useParams } from 'react-router-dom';
+// popup
+import { IoMdAdd, IoIosCloseCircleOutline } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
+// popup
 const DesignationDetails = () => {
-    const [activeTab, setActiveTab] = useState('experience');
+    // popup
+    const initialFormData_3 = {
+        email_3: '',
+        department_3: '',
+        Description_3: '',
+    };
+    const [showPopup, setShowPopup] = useState(false);
+    const [formData_3, setFormData_3] = useState(initialFormData_3);
+    const [dropdowns_3, setDropdowns_3] = useState({
+        departmentOpen_3: false,
+    });
+    const closePopup = () => {
+        setShowPopup(false);
+    };
+
+  
+
+    const handleInputChange_3 = (event) => {
+        const { name, value } = event.target;
+        setFormData_3((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const toggleDropdown_3 = (dropdownKey) => {
+        setDropdowns_3((prevState) => ({
+            ...prevState,
+            [dropdownKey]: !prevState[dropdownKey],
+        }));
+    };
+
+    const selectOption_3 = (field, value) => {
+        setFormData_3((prevState) => ({
+            ...prevState,
+            [field]: value,
+        }));
+        toggleDropdown_3('departmentOpen_3');
+    };
+
+
+    // 
+
+    
     const [designationDetails, setDesignationDetails] = useState(null);
     const [designationDetails2, setDesignationDetails2] = useState('');
 
@@ -30,6 +77,7 @@ const DesignationDetails = () => {
         // { name: "New Employee 4", Roll: "Developer", email: "newemp4@gmail.com", phone: "+918888888887", Image: img_emp1, DOB: '2024-08-13' },
     ]);
     console.log('designationDetails::', designationDetails)
+
     useEffect(() => {
         if (id) {
             axios.post('https://devstronauts.com/public/api/designation/details', { id }, {
@@ -66,20 +114,9 @@ const DesignationDetails = () => {
                     console.error("Error fetching user data: ", error);
                 });
         }
-    }, []);
+    }, [designationDetails2,designationDetails]);
 
-    // const renderContent = () => {
-    //     switch (activeTab) {
-    //         case 'experience':
-    //             return <Experience />;
-    //         case 'education':
-    //             return <Education />;
-    //         case 'documents':
-    //             return <Documents />;
-    //         default:
-    //             return <Experience />;
-    //     }
-    // };
+
 
     const handleBackToDesignations = () => {
         navigate('/designation');
@@ -100,6 +137,47 @@ const DesignationDetails = () => {
     const AllEmpPage = () => {
         navigate('/designation')
     }
+    const UpdatedesignationDetails = () => {
+        setShowPopup(true)
+        // navigate(`/update-designation/${id}`);
+    }
+
+
+    // popup 
+  
+   
+
+
+
+    const handleSubmitForm_3 = (event) => {
+        event.preventDefault();
+
+        // Sab fields bharne ke baad hi API ko call karo
+        axios.post('https://devstronauts.com/public/api/designation/create/update', {
+            id,
+            designation_name: formData_3.email_3,  // Email ko formData se lo
+            department_id: formData_3.department_3, // Department ID ko formData se lo
+            description: formData_3.Description_3   // Description ko formData se lo
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                console.log(response);
+                // Data create/update ho gaya, ab loading false karo
+                setLoading(false);
+                // Employees ko update karo ya response ke according set karo
+                setEmployees(prevEmployees => [...prevEmployees, response.data.designation]);
+                // Optional: Form reset kar sakte ho
+                setFormData_3(initialFormData_3);
+            })
+            .catch(error => {
+                console.error("Error during create/update:", error);
+            });
+    };
+
+    // popup
 
     return (
         <div className="profile-page">
@@ -126,7 +204,7 @@ const DesignationDetails = () => {
                     </div>
                     <div className="action_card">
                         <div><RxReload /></div>
-                        <div><BiEditAlt /></div>
+                        <div onClick={UpdatedesignationDetails}><BiEditAlt /></div>
                         <div><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
@@ -156,10 +234,10 @@ const DesignationDetails = () => {
                                 <p>{designationDetails.department_id} </p>
                             </div>
 
-                        <div>
-                            <h4>Required Skills</h4>
-                            <p>Wireframing, Prototyping, Visual Design, UX Writing</p>
-                        </div>
+                            <div>
+                                <h4>Required Skills</h4>
+                                <p>Wireframing, Prototyping, Visual Design, UX Writing</p>
+                            </div>
                         </div>
                         <div id='DescriptionJOB'>
                             <h4>Description</h4>
@@ -194,9 +272,79 @@ const DesignationDetails = () => {
                 {/* table */}
 
             </div>
+            {showPopup && (
+                <div className="popup-overlay">
+                    <div className="popup-content">
+                        <div className="add-designation-header">
+                            <h2>Add New Designation</h2>
+                            <button className="close_btn" onClick={closePopup}>
+                                <IoIosCloseCircleOutline />
+                            </button>
+                        </div>
+                        <div className="add-designation-body">
+                            <form onSubmit={handleSubmitForm_3}>
+                                <div className="side-by-side">
+                                    <div className="form-group">
+                                        <label className='starred'>Designation Name*</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter designation name"
+                                            name="email_3"
+                                            value={formData_3.email_3}
+                                            onChange={handleInputChange_3}
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="form-group" id="depart">
+                                        <label>Department</label>
+                                        <div className="dropdown10">
+                                            <div className="dropdown-button10" onClick={() => toggleDropdown_3('departmentOpen_3')}>
+                                                <div className='choose1'>{formData_3.department_3 || "Choose department"}</div>
+                                                <span id='toggle_selectIcon'>
+                                                    {!dropdowns_3.departmentOpen_3 ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                                </span>
+                                            </div>
+
+                                            {dropdowns_3.departmentOpen_3 && (
+                                                <div className="dropdown-menu10">
+                                                    <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department1')}>Department1</div>
+                                                    <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department2')}>Department2</div>
+                                                    <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department3')}>Department3</div>
+                                                    <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department4')}>Department4</div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='despt'>
+                                    <label>Description</label>
+                                </div>
+
+                                <textarea
+                                    placeholder="Enter description"
+                                    name="Description_3"
+                                    value={formData_3.Description_3}
+                                    onChange={handleInputChange_3}
+                                ></textarea>
+
+                                <button type="submit">Submit
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+                                        <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
 
     );
 };
 
 export default DesignationDetails;
+//

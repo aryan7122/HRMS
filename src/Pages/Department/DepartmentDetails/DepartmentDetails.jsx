@@ -13,32 +13,29 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { MdDeleteOutline } from "react-icons/md";
 import { deprecatedPropType } from '@mui/material';
+// popup
+import { IoMdAdd, IoIosCloseCircleOutline } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
+// popup
 const DepartmentDetails = () => {
     
     // const [activeTab, setActiveTab] = useState('experience');
     const [departmentdetails, setDepartmentdetails] = useState(null);
     const [departmentdetails2, setDepartmentdetails2] = useState('');
     const [departmentdetails3, setDepartmentdetails3] = useState('');
-    console.log('departmentdetails2::', departmentdetails2)
-
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-    const { id } = useParams();
-    // alert(id)
-    const navigate = useNavigate();
-    const token = localStorage.getItem('access_token');
-   
+    
     const [employees, setEmployees] = useState([
         { name: "Akash Shinde", Roll: "Lead Design", email: "Akashhrms@gmail.com", phone: "+918555031082", Image: img_emp1, DOB: '2024-08-12' },
         { name: "Ravi Kumar", Roll: "Developer", email: "ravikumar@gmail.com", phone: "+918888888881", Image: img_emp1, DOB: '2023-07-11' },
         { name: "Sita Sharma", Roll: "Designer", email: "sitasharma@gmail.com", phone: "+918888888882", Image: img_emp1, DOB: '2024-08-12' },
-        { name: "Mohan Verma", Roll: "Tester", email: "mohanverma@gmail.com", phone: "+918888888883", Image: img_emp1, DOB: '2024-06-15' },
+        // { name: "Mohan Verma", Roll: "Tester", email: "mohanverma@gmail.com", phone: "+918888888883", Image: img_emp1, DOB: '2024-06-15' },
         // { name: "New Employee 1", Roll: "HR", email: "newemp1@gmail.com", phone: "+918888888884", Image: img_emp1, DOB: '2024-08-10' },
         // { name: "New Employee 2", Roll: "Manager", email: "newemp2@gmail.com", phone: "+918888888885", Image: img_emp1, DOB: '2024-08-12' },
         // { name: "New Employee 3", Roll: "Support", email: "newemp3@gmail.com", phone: "+918888888886", Image: img_emp1, DOB: '2024-08-18' },
         // { name: "New Employee 4", Roll: "Developer", email: "newemp4@gmail.com", phone: "+918888888887", Image: img_emp1, DOB: '2024-08-13' },
     ]);
+
     const projects = [
         {
             name: "E-commerce Website Redesign",
@@ -76,6 +73,60 @@ const DepartmentDetails = () => {
             status: "Pending"
         }
     ];
+    // popup
+    // popup
+    const [showPopup, setShowPopup] = useState(false);
+
+    const initialFormDetails_2 = {
+        departmentName_2: '',
+        departmentHead_2: '',
+        parentDepartment_2: '',
+    };
+
+    const [formDetails_2, setFormDetails_2] = useState(initialFormDetails_2);
+    const [dropdownVisibility_2, setDropdownVisibility_2] = useState({
+        departmentDropdownOpen_2: false,
+    });
+    const [searchQuery_2, setSearchQuery_2] = useState('');
+
+    const handleInputChangeForm_2 = (event) => {
+        const { name, value } = event.target;
+        setFormDetails_2((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+    };
+
+    const handleSearchQueryChange_2 = (event) => {
+        setSearchQuery_2(event.target.value);
+    };
+
+    const toggleDropdownVisibility_2 = (dropdownKey) => {
+        setDropdownVisibility_2((prevState) => ({
+            ...prevState,
+            [dropdownKey]: !prevState[dropdownKey],
+        }));
+    };
+
+    const handleDepartmentHeadSelection_2 = (head) => {
+        setFormDetails_2((prevState) => ({
+            ...prevState,
+            departmentHead_2: head,
+        }));
+        toggleDropdownVisibility_2('departmentDropdownOpen_2');
+    };
+    // pop
+
+    console.log('departmentdetails2::', departmentdetails2)
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const { id } = useParams();
+    // alert(id)
+    const navigate = useNavigate();
+    const token = localStorage.getItem('access_token');
+   
+   
    
     console.log('departmentdetails::', departmentdetails)
     
@@ -118,7 +169,7 @@ const DepartmentDetails = () => {
                 console.error("Error fetching user data: ", error);
             });
         // }
-    }, [id, token,departmentdetails]);
+    }, [id, token, departmentdetails]);
     
     const AllEmp = () => {
         navigate('/department')
@@ -133,6 +184,54 @@ const DepartmentDetails = () => {
     // if (error || !departmentdetails) {
     //     return <div id="notFoundPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
     // }
+
+
+    // popup 
+
+
+
+
+
+    const handleSubmitForm_2 = (event) => {
+        event.preventDefault();
+
+        // Reset form fields
+        // Reset search query
+        // toggleDropdownVisibility_2('departmentDropdownOpen_2'); // Close dropdown
+        axios.post('https://devstronauts.com/public/api/department/create/update', {
+            id,
+            department_name: formDetails_2.departmentName_2,  // Email ko formData se lo
+            department_head: formDetails_2.departmentHead_2, // Department ID ko formData se lo
+            parent_department: formDetails_2.parentDepartment_2   // Description ko formData se lo
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                console.log("Form Submitted:", formDetails_2);
+                setFormDetails_2(initialFormDetails_2);
+                setSearchQuery_2('');
+                console.log('response parent_department', initialFormDetails_2);
+                // Data create/update ho gaya, ab loading false karo
+                // setLoading(false);
+                // Employees ko update karo ya response ke according set karo
+                setEmployees(prevEmployees => [...prevEmployees, response.data.designation]);
+                // Optional: Form reset kar sakte ho
+                // setFormData_3(initialFormDetails_2);
+            })
+            .catch(error => {
+                console.error("Error during create/update:", error);
+            });
+    };
+
+    // popup
+    const PopUpUpdate = () => {
+        setShowPopup(true)
+    }
+    const closePopup = () => {
+        setShowPopup(false);
+    };
 
     return (
         <div className="profile-page">
@@ -159,7 +258,7 @@ const DepartmentDetails = () => {
                     </div>
                     <div className="action_card">
                         <div><RxReload /></div>
-                        <div><BiEditAlt /></div>
+                        <div onClick={PopUpUpdate}><BiEditAlt /></div>
                         <div><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
@@ -278,6 +377,83 @@ const DepartmentDetails = () => {
                     </div>
                 </div>
             </div>
+            {showPopup && (
+                <div className="popup-overlay">
+                    <div className="popup">
+                        <div className="popup-header">
+                            <h3>Add New Department</h3>
+                            <div className="close_btn" onClick={closePopup}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                                    <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="currentColor" stroke-width="1.5" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div className="popup-body">
+                            <form className='upfom' onSubmit={handleSubmitForm_2}>
+                                <label className='redcolor'>Department Name*</label>
+                                <input
+                                    type="text"
+                                    name="departmentName_2"
+                                    placeholder="Enter Department Name"
+                                    value={formDetails_2.departmentName_2}
+                                    onChange={handleInputChangeForm_2}
+                                    required
+                                />
+                                <label className='blackcolor1'>Parent Department</label>
+                                <input
+                                    type="text"
+                                    name="parentDepartment_2"
+                                    placeholder="Enter Parent Department Name"
+                                    value={formDetails_2.parentDepartment_2}
+                                    onChange={handleInputChangeForm_2} // Use handleInputChangeForm_2
+                                />
+
+                                <div className="form-group">
+                                    <label>Department Head</label>
+                                    <div className="dropdown1">
+                                        <div className="dropdown-button1" onClick={() => toggleDropdownVisibility_2('departmentDropdownOpen_2')}>
+                                            <div className='downbtn'>{formDetails_2.departmentHead_2 || "Choose or search head"}</div>
+                                            <span id='toggle_selectIcon'>
+                                                {!dropdownVisibility_2.departmentDropdownOpen_2 ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                            </span>
+                                        </div>
+
+                                        {dropdownVisibility_2.departmentDropdownOpen_2 && (
+                                            <div className="dropdown-menu1">
+                                                <input
+                                                    type="search"
+                                                    className='search22'
+                                                    placeholder="Search head of Department"
+                                                    value={searchQuery_2}
+                                                    onChange={handleSearchQueryChange_2}
+                                                    id="searchDepartmentHead_2"
+                                                />
+                                                <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Akash Shinde')}>Akash Shinde</div>
+                                                <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Rajat Munde')}>Rajat Munde</div>
+                                                <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Arman Singh')}>Arman Singh</div>
+                                                <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Arman Singh')}>Arman Singh</div>
+                                                <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Arman Singh')}>Arman Singh</div>
+
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className='popupbtn' id="submitDepartmentFormButton_2">
+                                    <button type="submit">Submit
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
+                                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+                                            <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

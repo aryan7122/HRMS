@@ -138,7 +138,7 @@ const JobDetails = () => {
                                 <p>{jobData2}</p> {/* Updated to display created_by */}
                             </div>
                             <div>
-                                <h4>Creation At</h4>
+                                <h4> Created At</h4>
                                 <p>{new Date(jobData.created_at).toLocaleDateString()}</p>
                             </div>
                         </div>
