@@ -47,11 +47,13 @@ const Login = ({ setIsLoggedIn }) => {
   // };
   const [showAlert, setShowAlert] = useState(false);
   const [showAlertError, setShowAlertError] = useState(false);
-  const [sms,setSms]= useState('')
+  const [sms, setSms] = useState('')
+  const [loading, setLoading] = useState(false);
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true)
     setSms('')
 
     try {
@@ -61,34 +63,38 @@ const Login = ({ setIsLoggedIn }) => {
       });
 
       if (response.data.message === "Login Successfully" || response.data.error === 'false') {
-        setShowAlert(true)
+        // setShowAlert(true)
+        setLoading(false)
         setTimeout(() => {
           setShowAlert(false)
-        }, 4000);
+        }, 1000);
         setSms('Login Successfully')
         localStorage.setItem('access_token', response.data.access_token);
         // alert("Login Successfully"); 
-        // console.log(response.data.access_token)
+        console.log(response.data)
         setTimeout(() => {
           setIsLoggedIn(true);
           // setShowAlert(false);
           navigate('/');
-        }, 5000);
+        }, 1000);
       } else {
         // alert("Invalid login credentials"); 
-        setShowAlertError(true)
+        setLoading(false)
+        // setShowAlertError(true)
         setSms('Invalid login credentials')
         setTimeout(() => {
           setShowAlertError(false)
-        }, 4000);
+        }, 3000);
       }
     } catch (error) {
       console.error('Error during login:', error);
       // alert("An error occurred during login. Please try again."); // Handle any error case
-      setShowAlertError(true)
+      // setShowAlertError(true)
+      setLoading(false)
       setTimeout(() => {
         setShowAlertError(false)
-      }, 4000);
+
+      }, 3000);
       setSms('An error occurred during login. Please try again.')
     }
   };
@@ -160,11 +166,11 @@ const Login = ({ setIsLoggedIn }) => {
     ),
     dotsClass: "slick-dots slick-thumb custom-dots",
   };
- 
+
 
   return (
     <div className="login-container">
-      {showAlert ? <div><Confetti /> <div id='showAlert' ><p> {sms}</p></div> </div> : ''}
+      {showAlert ? <div> <div id='showAlert' ><p> {sms}</p></div> </div> : ''}
       {showAlertError ? <div> <div id='showAlertError' ><p>{sms}</p></div> </div> : ''}
 
       <div className="login-image">
@@ -244,7 +250,7 @@ const Login = ({ setIsLoggedIn }) => {
               </div>
             </div>
             <div className="button-container">
-              <button type="submit" className='btnnn'>Login</button>
+              <button type="submit" className='btnnn'>{loading ? <img style={{ width: '19px' }} src="https://i.pinimg.com/originals/4a/84/2b/4a842bb6a3db17b1a82bf1f14fdc1081.gif" alt="loading..." /> : "Login"}</button>
               {/* <div className="Underline2">
                 <hr className="line1" />
                 <span>Or</span>
