@@ -475,9 +475,9 @@ const Department = () => {
                             {currentEmployees.map((emp, index) => (
                                 <tr key={index} >
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
-                                    <td onClick={() => handleDepartmentClick1(DepartmentDetails)}>{emp.deptName || emp.department_name || '-'}</td>
-                                    <td onClick={() => handleDepartmentClick1(DepartmentDetails)}>{emp.deptHead || emp.department_head || '-'}</td>
-                                    <td onClick={() => handleDepartmentClick1(DepartmentDetails)}>{emp.parentDept || emp.parent_department || '-'}</td>
+                                    <td onClick={() => navigate(`/departmentdetails/${emp.id}`)}>{emp.deptName || emp.department_name || '-'}</td>
+                                    <td onClick={() => navigate(`/departmentdetails/${emp.id}`)}>{emp.deptHead || emp.department_head || '-'}</td>
+                                    <td onClick={() => navigate(`/departmentdetails/${emp.id}`)}>{emp.parentDept || emp.parent_department || '-'}</td>
                                 </tr>
                             ))}
                         </tbody>

@@ -141,8 +141,8 @@ const App = () => {
                   {/* <Route path="/editUidesignation" element={<EditUiDesignation />} /> */}
                   <Route path="/health" element={<EmployeeHealth />} />
                   <Route path="/addemployeehealth" element={<AddEmployeeHealth />} />
-                  <Route path="/departmentdetails" element={<DepartmentDetails />} />
-                  <Route path="/designationdeatils" element={<DesignationDetails />} />
+                  <Route path="/departmentdetails/:id" element={<DepartmentDetails />} />
+                  <Route path="/designationdeatils/:id" element={<DesignationDetails />} />
                   <Route path="/employeehealthdetails" element={<EmployeeHealthDetails />} />
                   <Route path="/birthday" element={<BirthdayList />} />
 
