@@ -139,7 +139,7 @@ const JobDetails = () => {
                             </div>
                             <div>
                                 <h4> Created At</h4>
-                                <p>{new Date(jobData.created_at).toLocaleDateString()}</p>
+                                <p>                                {`${new Date(jobData.created_at).getDate()}-${new Date(jobData.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(jobData.created_at).getFullYear()}`}</p>
                             </div>
                         </div>
                     </div>
