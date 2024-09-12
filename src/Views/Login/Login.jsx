@@ -67,7 +67,7 @@ const Login = ({ setIsLoggedIn }) => {
 
       if (response.data.message === "Login Successfully" || response.data.error === 'false') {
         setSms('Login Successfully')
-        toast(sms || 'Login Successfully', {
+        toast.success(sms || 'Login Successfully', {
           position: "top-right",
           autoClose: 4000,
           hideProgressBar: false,
@@ -200,7 +200,7 @@ const Login = ({ setIsLoggedIn }) => {
         closeOnClick
         pauseOnHover
         draggable
-        theme="error"
+        // theme="error"
       />
       <div className="login-image">
         <div>

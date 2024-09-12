@@ -17,6 +17,8 @@ import { FaRegClock } from "react-icons/fa";
 import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
 import './AllJobList.scss';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { GiBackstab, GiNotebook } from "react-icons/gi";
@@ -134,14 +136,6 @@ const AllJobList = () => {
 
     const statuses = ['Open', 'Draft', 'On hold', 'Filled', 'Cancelled'];
 
-    const handleStatusChange = (index, newStatus) => {
-        setStatusNew(newStatus)
-        console.log('status chenge:::', newStatus)
-        const updatedEmployees = [...filteredEmployees];
-        updatedEmployees[index].status = newStatus;
-        setFilteredEmployees(updatedEmployees);
-        setIsOpen(null);
-    };
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -265,49 +259,98 @@ const AllJobList = () => {
             .catch(error => {
                 console.error("Error fetching data: ", error);
             });
-    }, [statusId, statusNew]);
+    }, [statusId, statusNew, token,sms]);
     // update status
 
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/jobopening/status-update', {
-            job_id: statusId,
-            job_status: statusNew
-        }, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(response => {
-                // setUpdatingEmpId(statusId);
-                setSms(`Status update successfully`)
-                if (response.data.success === true) {
-                    // setShowAlert(true)
-                    // setTimeout(() => {
-                    //     setShowAlert(false)
-                    // }, 4000);
+        
+        if (statusId && statusNew) {
+           
+            axios.post('https://devstronauts.com/public/api/jobopening/status-update', {
+                job_id: statusId,
+                job_status: statusNew
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
             })
-            .catch(error => {
-                setSms('Status update Failed')
-                alert(error)
-                // setShowAlertError(true)
-                // setTimeout(() => {
-                //     setShowAlertError(false)
-                // }, 4000);
+                .then(response => {
+                    // setUpdatingEmpId(statusId);
+                    setSms(`Status update successfully`)
+                    toast.success('Status update successfully.', {
+                        position: "top-right",
+                        autoClose: 4000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    if (response.data.success === true) {
+                        // setShowAlert(true)
+                        // setTimeout(() => {
+                        //     setShowAlert(false)
+                        // }, 4000);
+                    }
+                })
+                .catch(error => {
+                    setSms('Status update Failed')
+                    // alert(error)
+                    toast.error('Status update Failed.', {
+                        position: "top-right",
+                        autoClose: 4000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    // setShowAlertError(true)
+                    // setTimeout(() => {
+                    //     setShowAlertError(false)
+                    // }, 4000);
 
-                console.error("Error fetching data: ", error);
-            });
-    }, [statusId, statusNew]);
+                    console.error("Error fetching data: ", error);
+                });
+        }
+    }, [statusId, statusNew, token]);
 
 
+    const handleStatusChange = (index, newStatus) => {
+        setStatusNew(newStatus)
+        console.log('status chenge:::', newStatus)
+        const updatedEmployees = [...filteredEmployees];
+        updatedEmployees[index].status = newStatus;
+        setFilteredEmployees(updatedEmployees);
+        setIsOpen(null);
+        toast.info('Status Updating...', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+        setSms('')
+    };
 
 
     return (
         <div id='allEmp'>
-            {showAlert ? <div> <div id='showAlert' ><p> {sms}</p></div> </div> : ''}
-            {showAlertError ? <div> <div id='showAlertError' ><p>{sms}</p></div> </div> : ''}
-
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
@@ -547,9 +590,9 @@ const AllJobList = () => {
                                                         {/* {updatingEmpId === emp.id ? (
                                                             <div className="">Updating...</div>
                                                         ) : ( */}
-                                                            <div className="" onClick={() => UpdateStatusHndle(emp.id)}>
-                                                                {emp.job_status}
-                                                            </div>
+                                                        <div className="" onClick={() => UpdateStatusHndle(emp.id)}>
+                                                            {emp.job_status}
+                                                        </div>
                                                         {/* )} */}
                                                         {/* </div> */}
                                                         <div className="^wdown">
@@ -573,6 +616,7 @@ const AllJobList = () => {
                                             </div>
                                         </div>
                                     </td>
+
                                 </tr>
                             ))}
                         </tbody>
