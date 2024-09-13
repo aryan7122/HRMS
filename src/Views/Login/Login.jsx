@@ -172,16 +172,17 @@ const Login = ({ setIsLoggedIn }) => {
     customPaging: (i) => (
       <div
         style={{
-          width: i === currentSlide ? "21px" : "20px",
+          width: i === currentSlide ? "1vw" : "1vw",
           // marginRight: i == currentSlide ? '20px' : '10px',
           // paddingLeft:"10px",
-          height: "3px",
+          height: "0.3vw",
           background: i === currentSlide ? "#400F6F" : "white",
-          borderRadius: "10px",
+          borderRadius: "0.5vw",
           transition: "all 2s ease",
-          marginTop: '10px',
-          gap: '20px'
+          marginTop: i === currentSlide ? "0.9vw" : "1vw",
 
+          gap: '20px',
+          
         }}
       />
     ),
