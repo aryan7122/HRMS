@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../../Employee_onboarding/AddEmployee/AddEmloyee.scss';
 import '../../Employee_onboarding/AddEmployee/NavbarForm.scss';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -64,26 +64,7 @@ const JobUpdateForm = ({ onSubmit }) => {
         }));
     };
 
-    // const handleSubmit = (event) => {
-    //     dispatch(addJobForm(formData));
 
-    //     event.preventDefault();
-    //     console.log('Job_formData', formData);
-    //     setFormData({
-    //         jobTitle: '',
-    //         designation: '',
-    //         department: '',
-    //         jobLocation: '',
-    //         jobStatus: '',
-    //         noOfPositions: '',
-    //         employmentType: '',
-    //         experience: '',
-    //         requiredSkills: '',
-    //         description: ''
-    //     });
-    //     // 
-
-    // };
 
     const token = localStorage.getItem('access_token');
 
@@ -145,6 +126,8 @@ const JobUpdateForm = ({ onSubmit }) => {
             });
     };
 
+   
+
 
     const toggleDropdown = (dropdown) => {
         // Reset all dropdowns to false, then toggle the selected one
@@ -169,6 +152,39 @@ const JobUpdateForm = ({ onSubmit }) => {
             [dropdown]: false
         }));
     };
+
+    // get
+    // Fetch job data on component mount
+    useEffect(() => {
+        axios.post(`https://devstronauts.com/public/api/jobopening/list`, {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                // const jobData = response.data;
+                const jobData = response.data.job_opening.find(job => job.id == id);
+
+                setFormData({
+                    jobTitle: jobData.job_title,
+                    designation: jobData.designation,
+                    department: jobData.department,
+                    jobLocation: jobData.job_location.split(', '),
+                    jobStatus: jobData.job_status,
+                    noOfPositions: jobData.no_of_position,
+                    employmentType: jobData.employee_type,
+                    experience: jobData.experience,
+                    requiredSkills: jobData.skills,
+                    description: jobData.description
+                });
+                console.log('setFormData', formData)
+                console.log('response', response)
+            })
+            .catch(error => {
+                console.error('Error fetching job data:❗', error);
+            });
+    }, [id, token]);
+    // 
 
     return (
         <>
@@ -394,3 +410,4 @@ const JobUpdateForm = ({ onSubmit }) => {
 };
 
 export default JobUpdateForm;
+// 

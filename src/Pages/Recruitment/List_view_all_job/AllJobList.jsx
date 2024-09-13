@@ -30,48 +30,27 @@ import LodinImg from '../../../assets/loding.gif'
 const AllJobList = () => {
 
     const jobs = useSelector((state) => state.job.jobs);
-    console.log('jobs', jobs)
+    // console.log('jobs', jobs)
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
-    // const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
+    const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
 
     const [allDel, setAllDel] = useState(true);
     const [thisDel, setThisDel] = useState(false)
     const [toggleLeft, setToggleLeft] = useState(false)
+    const [isOpen, setIsOpen] = useState(null);
 
     const DelThis = () => {
         setThisDel(!thisDel);
 
     }
-    // 
-    // const [isOpen, setIsOpen] = useState(null);
-    const [isFilterOpen4, setIsFilterOpen4] = useState(false);
-    const filterButtonRef4 = useRef(null);
-    const filterRef4 = useRef(null);
 
     const toggleDropdown = (i) => {
-        setIsOpen(prev => (prev === i ? null : i));
-        setIsFilterOpen4(prev => (prev === i ? false : true)); // Open filter if dropdown is open
+        setIsOpen(prev => (prev == i ? null : i));
     };
+    console.log('isOpen', isOpen)
 
-    const handleClickOutside = (event) => {
-        if (
-            filterButtonRef4.current &&
-            !filterButtonRef4.current.contains(event.target) &&
-            filterRef4.current &&
-            !filterRef4.current.contains(event.target)
-        ) {
-            setIsOpen(null);  // Close dropdown when clicking outside
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
 
     // 
 
@@ -96,10 +75,9 @@ const AllJobList = () => {
     const [selectAll, setSelectAll] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [isOpen, setIsOpen] = useState(null);
 
 
-    console.log(selectedDepartment)
+    // console.log(selectedDepartment)
 
     const handleHidImport = () => {
         setHidImport(!hidImport);
@@ -259,12 +237,10 @@ const AllJobList = () => {
     const [sms, setSms] = useState('')
     const [statusId, setStatusId] = useState('')
     const [statusNew, setStatusNew] = useState('')
-    const [showAlert, setShowAlert] = useState(false);
-    const [showAlertError, setShowAlertError] = useState(false);
-    const [updatingEmpId, setUpdatingEmpId] = useState(null);
 
-    console.log('updateId', statusId)
-    console.log('status', statusId)
+
+    // console.log('updateId', statusId)
+    // console.log('status', statusId)
 
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
@@ -298,7 +274,7 @@ const AllJobList = () => {
 
 
     useEffect(() => {
-        
+
         if (statusId && statusNew) {
 
             axios.post('https://devstronauts.com/public/api/jobopening/status-update', {
@@ -350,12 +326,12 @@ const AllJobList = () => {
                     console.error("Error fetching data: ", error);
                 });
         }
-    }, [ statusNew]);
+    }, [statusNew]);
 
 
     const handleStatusChange = (index, newStatus) => {
         setStatusNew(newStatus)
-        console.log('status chenge:::', newStatus)
+        // console.log('status chenge:::', newStatus)
         const updatedEmployees = [...filteredEmployees];
         updatedEmployees[index].status = newStatus;
         setFilteredEmployees(updatedEmployees);
@@ -608,8 +584,8 @@ const AllJobList = () => {
                                     <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.designation}</td>
                                     <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.experience}</td>
                                     <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.skills}</td>
-                                    <td>
-                                        <div className="status-dropdown">
+                                    <td >
+                                        <div className="status-dropdown" >
 
                                             <div key={index} className="status-container">
                                                 <div
@@ -617,11 +593,12 @@ const AllJobList = () => {
                                                     onClick={() => toggleDropdown(index)}
                                                 >
                                                     <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}></span>
-                                                    <div onClick={toggleDropdown} ref={filterButtonRef4}>
+                                                    <div onClick={() => {
+                                                        UpdateStatusHndle(emp.id);
+                                                    }}>
                                                         <div
-                                                            onClick={() => {
-                                                                UpdateStatusHndle(emp.id);
-                                                            }}
+                                                           
+                                                          
                                                         >
                                                             {emp.job_status}
                                                         </div>
@@ -630,29 +607,30 @@ const AllJobList = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                {isOpen === index && (
+                                                { isOpen === index && (
                                                     <div>
-                                                        {isFilterOpen4 && (
-                                                            <div className="status-options" ref={filterRef4}>
-                                                                {statuses.map(status => (
+                                                        <div className="status-options" >
+                                                            {
+                                                                statuses.map(status => (
                                                                     <div
                                                                         key={status}
                                                                         className="status-option"
-                                                                        onClick={() => handleStatusChange(index, status)}
+                                                                        onClick={() => {
+                                                                            handleStatusChange(index, status)
+                                                                        }
+                                                                        }
                                                                     >
                                                                         {status}
                                                                     </div>
-                                                                ))}
-                                                            </div>
-                                                        )}
+                                                                ))
+                                                            }
+                                                        </div>
+                                                     
                                                     </div>
                                                 )}
                                             </div>
-
                                         </div>
                                     </td>
-
                                 </tr>
                             ))}
                         </tbody>
@@ -683,7 +661,7 @@ const AllJobList = () => {
                                     onClick={() => handlePageChange(pageIndex + 1)}
                                 >
                                     {pageIndex + 1}
-                                    {console.log('currentPage', pageIndex + 1)}
+                                    {/* {console.log('currentPage', pageIndex + 1)} */}
                                 </button>
                             ))}
                         </div>

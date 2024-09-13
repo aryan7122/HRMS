@@ -341,6 +341,11 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                         <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Part-time')}>Part-time</div>
                                         <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Full-time')}>Full-time</div>
                                         <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Consultant')}>Consultant</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Permanent')}>Permanent</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'On-Contract')}>On Contract</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Intern')}>Intern</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Trainee')}>Trainee</div>
+
                                     </div>
                                 )}
                             </div>
@@ -358,7 +363,19 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                         <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Permanent')}>Permanent</div>
                                         <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Probation')}>Probation</div>
                                         <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Intern')}>Intern</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Contract')}>Contract</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Temporary')}>Temporary</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Freelancer')}>Freelancer</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Part-Time')}>Part-Time</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Full-Time')}>Full-Time</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'On Leave')}>On Leave</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Retired')}>Retired</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Resigned')}>Resigned</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Laid Off')}>Laid Off</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Sabbatical')}>Sabbatical</div>
+                                        <div className="dropdown-item" onClick={() => selectOption('employeeStatus', 'Ex-Employee')}>Ex-Employee</div>
                                     </div>
+
                                 )}
                             </div>
                         </div>
