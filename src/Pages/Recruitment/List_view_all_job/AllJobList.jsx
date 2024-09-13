@@ -1,4 +1,4 @@
-import { useEffect, useState, } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { HiUserPlus } from "react-icons/hi2";
 import { CiMenuKebab } from "react-icons/ci";
 import { AiOutlineCloudUpload } from "react-icons/ai";
@@ -34,6 +34,7 @@ const AllJobList = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
+    // const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
 
     const [allDel, setAllDel] = useState(true);
     const [thisDel, setThisDel] = useState(false)
@@ -43,6 +44,36 @@ const AllJobList = () => {
         setThisDel(!thisDel);
 
     }
+    // 
+    // const [isOpen, setIsOpen] = useState(null);
+    const [isFilterOpen4, setIsFilterOpen4] = useState(false);
+    const filterButtonRef4 = useRef(null);
+    const filterRef4 = useRef(null);
+
+    const toggleDropdown = (i) => {
+        setIsOpen(prev => (prev === i ? null : i));
+        setIsFilterOpen4(prev => (prev === i ? false : true)); // Open filter if dropdown is open
+    };
+
+    const handleClickOutside = (event) => {
+        if (
+            filterButtonRef4.current &&
+            !filterButtonRef4.current.contains(event.target) &&
+            filterRef4.current &&
+            !filterRef4.current.contains(event.target)
+        ) {
+            setIsOpen(null);  // Close dropdown when clicking outside
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    // 
 
     const [hidImport, setHidImport] = useState(true);
     const navigate = useNavigate()
@@ -250,23 +281,26 @@ const AllJobList = () => {
         })
             .then(response => {
 
+
                 setEmployees(response.data.job_opening);
                 setFilteredEmployees(response.data.job_opening); // filteredEmployees ko bhi sync karo
                 // console.log('response 🥳', response.data.job_opening);
                 setLoading(false);
-
+                // setSms()
             })
             .catch(error => {
                 console.error("Error fetching data: ", error);
+
+
             });
-    }, [statusId, statusNew, token,sms]);
+    }, [statusId, statusNew, token, sms]);
     // update status
 
 
     useEffect(() => {
         
         if (statusId && statusNew) {
-           
+
             axios.post('https://devstronauts.com/public/api/jobopening/status-update', {
                 job_id: statusId,
                 job_status: statusNew
@@ -280,7 +314,7 @@ const AllJobList = () => {
                     setSms(`Status update successfully`)
                     toast.success('Status update successfully.', {
                         position: "top-right",
-                        autoClose: 4000,
+                        autoClose: 3000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -296,11 +330,11 @@ const AllJobList = () => {
                     }
                 })
                 .catch(error => {
-                    setSms('Status update Failed')
+                    // setSms('Status update Failed')
                     // alert(error)
                     toast.error('Status update Failed.', {
                         position: "top-right",
-                        autoClose: 4000,
+                        autoClose: 3000,
                         hideProgressBar: false,
                         closeOnClick: true,
                         pauseOnHover: true,
@@ -316,7 +350,7 @@ const AllJobList = () => {
                     console.error("Error fetching data: ", error);
                 });
         }
-    }, [statusId, statusNew, token]);
+    }, [ statusNew]);
 
 
     const handleStatusChange = (index, newStatus) => {
@@ -326,16 +360,16 @@ const AllJobList = () => {
         updatedEmployees[index].status = newStatus;
         setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
-        toast.info('Status Updating...', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
+        // toast.info('Please Wait Status Updating...', {
+        //     position: "top-right",
+        //     autoClose: 2000,
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        //     progress: undefined,
+        //     theme: "light",
+        // });
         setSms('')
     };
 
@@ -576,44 +610,46 @@ const AllJobList = () => {
                                     <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.skills}</td>
                                     <td>
                                         <div className="status-dropdown">
+
                                             <div key={index} className="status-container">
                                                 <div
                                                     className={`status-display ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
-                                                    onClick={() => setIsOpen(isOpen === index ? null : index)}
+                                                    onClick={() => toggleDropdown(index)}
                                                 >
-                                                    {/* {console.log(emp.job_status.toLowerCase().replace(' ', '-'))} */}
-                                                    <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
-                                                    ></span>
-                                                    <div>
-                                                        {/* <div className="" onClick={() => UpdateStatusHndle(emp.id)}> */}
-                                                        {/* {emp.job_status} */}
-                                                        {/* {updatingEmpId === emp.id ? (
-                                                            <div className="">Updating...</div>
-                                                        ) : ( */}
-                                                        <div className="" onClick={() => UpdateStatusHndle(emp.id)}>
+                                                    <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                    <div onClick={toggleDropdown} ref={filterButtonRef4}>
+                                                        <div
+                                                            onClick={() => {
+                                                                UpdateStatusHndle(emp.id);
+                                                            }}
+                                                        >
                                                             {emp.job_status}
                                                         </div>
-                                                        {/* )} */}
-                                                        {/* </div> */}
                                                         <div className="^wdown">
                                                             <MdOutlineKeyboardArrowDown />
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 {isOpen === index && (
-                                                    <div className="status-options">
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
+                                                    <div>
+                                                        {isFilterOpen4 && (
+                                                            <div className="status-options" ref={filterRef4}>
+                                                                {statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => handleStatusChange(index, status)}
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))}
                                                             </div>
-                                                        ))}
+                                                        )}
                                                     </div>
                                                 )}
                                             </div>
+
                                         </div>
                                     </td>
 

@@ -50,7 +50,7 @@ const UpdateJob = () => {
     };
 
     const JobList = () => {
-        navigate('/all-job-list')
+        navigate(`/job-details/${id}`)
     }
 
     return (

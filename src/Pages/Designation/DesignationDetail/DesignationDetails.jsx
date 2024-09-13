@@ -11,6 +11,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 // popup
 import { IoMdAdd, IoIosCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // popup
 const DesignationDetails = () => {
@@ -56,6 +59,7 @@ const DesignationDetails = () => {
 
 
     // 
+    const [currentSlide, setCurrentSlide] = useState(0); // State to track current slide
 
     
     const [designationDetails, setDesignationDetails] = useState(null);
@@ -156,7 +160,44 @@ const DesignationDetails = () => {
 
     // popup 
   
-   
+    // Slider settings
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        beforeChange: (oldIndex, newIndex) => {
+            setCurrentSlide(newIndex);
+        },
+        customPaging: (i) => (
+            <div
+                style={{
+                    width: i === currentSlide ? "20px" : "15px",
+                    height: "3px",
+                    background: i === currentSlide ? "purple" : "gray",
+                    borderRadius: "10px",
+                    transition: "all 0.3s ease",
+                }}
+            />
+        ),
+        appendDots: (dots) => (
+            <div style={{ marginBottom: "-10px", position: "absolute", bottom: "-20px", width: "100%", textAlign: "center" }}>
+                {dots}
+            </div>
+        ),
+    };
+    const chunkArray = (arr, size) => {
+        const result = [];
+        for (let i = 0; i < arr.length; i += size) {
+            result.push(arr.slice(i, i + size));
+        }
+        return result;
+    };
+
+    // Chunk the employees array into groups of 4
+    const employeeChunks = chunkArray(employees, 4);
+// slider end
 
 
 
@@ -229,7 +270,10 @@ const DesignationDetails = () => {
                             </svg>
                         </span>Designation Information</h3></div>
                         <div className='contentInformation'>
-
+                            <div>
+                                <h4>description</h4>
+                                <p>{designationDetails.designation_name}</p>
+                            </div>
 
                             <div>
                                 <h4>Created By</h4>
@@ -250,27 +294,39 @@ const DesignationDetails = () => {
                             <p className='paragra'>{designationDetails.description}</p>
                         </div>
                     </div>
-                    <div className="card">
-                        <div className='top_head'> <h3> <span>
+                    <div className="card4" >
+                        <div className='top_head4'> <h3> <span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                <path d="M7 9.00183C4.82497 9.01495 3.64706 9.11944 2.87868 9.95185C2 10.9038 2 12.4358 2 15.4999C2 18.5641 2 20.0961 2.87868 21.048C3.75736 21.9999 5.17157 21.9999 8 21.9999H16C18.8284 21.9999 20.2426 21.9999 21.1213 21.048C22 20.0961 22 18.5641 22 15.4999C22 12.4358 22 10.9038 21.1213 9.95185C20.3529 9.11944 19.175 9.01495 17 9.00183" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M6 12L10.5 14.625M18 19L13.8 16.55M13.8 16.55L18 13.75M13.8 16.55L10.5 14.625M10.5 14.625L6 17.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M12 7C13.3807 7 14.5 5.88071 14.5 4.5C14.5 3.11929 13.3807 2 12 2C10.6193 2 9.5 3.11929 9.5 4.5C9.5 5.88071 10.6193 7 12 7ZM12 7V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M13 2L2 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M12 3V22H7C5.11438 22 4.17157 22 3.58579 21.4142C3 20.8284 3 19.8856 3 18V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M12 7L22 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M10 21.9997H17C18.8856 21.9997 19.8284 21.9997 20.4142 21.4139C21 20.8281 21 19.8853 21 17.9997V11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M18 10L18 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M7 11H8M7 15H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M16 14H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M16.5 22V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                        </span>Employees in Designation</h3></div>
-                        <div className="Emp" id='CartUserFix'>
-                            {employees.map((emp, i) => (
-                                <div key={i} className='div_dob'>
-                                    <div className='img_dob_name'>
-                                        <img src={emp.Image} alt={emp.name} />
-                                        <div>
-                                            <h3>{emp.name}</h3>
-                                            <p> {emp.Roll}</p>
-                                        </div>
+                        </span>Employees in Department</h3></div>
+
+                        <div className="Emp4">
+                            <Slider {...settings}>
+                                {employeeChunks.map((chunk, index) => (
+                                    <div key={index} className="slide-content">
+                                        {chunk.map((emp, i) => (
+                                            <div key={i} className="div_dob-item">
+                                                <div className='img_dob_name'>
+                                                    <img src={emp.Image} alt={emp.name} />
+                                                    <div>
+                                                        <h3>{emp.name}</h3>
+                                                        <p>{emp.Roll}</p>
+                                                    </div>
+                                                </div>
+                                                <p className='p4'>{emp.date}</p>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <p>{emp.date}</p>
-                                </div>
-                            ))}
+                                ))}
+                            </Slider>
                         </div>
                         {/* Personal information content */}
                     </div>

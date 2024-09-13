@@ -420,13 +420,13 @@ const Designation = () => {
                 </div> */}
                 <div className="employee-table" id='Small_employee_table'>
 
-                    <table id='Small_table'>
+                    <table id='Small_table' className='tableD'>
                         <thead>
                             <tr>
-                                <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
+                                <th id='inputD'><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
                                 <th> <div>Designation Name<span><TiArrowUnsorted /></span></div></th>
                                 <th>Department</th>
-                                <th>Description</th>
+                                <th >Description</th>
 
                             </tr>
                         </thead>
@@ -436,7 +436,7 @@ const Designation = () => {
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
                                     <td onClick={() => navigate(`/designationdeatils/${emp.id}`)}>{emp.deptName || emp.designation_name}</td>
                                     <td onClick={() => navigate(`/designationdeatils/${emp.id}`)}>{emp.deptHead || emp.department_id}</td>
-                                    <td onClick={() => navigate(`/designationdeatils/${emp.id}`)}>{emp.parentDept || emp.description}</td>
+                                    <td id='Description' onClick={() => navigate(`/designationdeatils/${emp.id}`)}>{emp.parentDept || emp.description}</td>
                                 </tr>
                             ))}
                             {/* {designations.map((designation, index) => (

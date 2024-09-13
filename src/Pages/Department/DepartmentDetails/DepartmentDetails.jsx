@@ -3,6 +3,9 @@ import './DepartmentDetails.scss';
 import iconEdu from '../../../assets/icons/edu.png'
 import img_emp1 from '../../../assets/emp1.png'
 import axios from 'axios';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import { IoMdCloseCircleOutline } from "react-icons/io";
 // import Img_user from '../../../assets/user.png'
@@ -24,16 +27,22 @@ const DepartmentDetails = () => {
     const [departmentdetails, setDepartmentdetails] = useState(null);
     const [departmentdetails2, setDepartmentdetails2] = useState('');
     const [departmentdetails3, setDepartmentdetails3] = useState('');
+    const [currentSlide, setCurrentSlide] = useState(0); // State to track current slide
 
     const [employees, setEmployees] = useState([
         { name: "Akash Shinde", Roll: "Lead Design", email: "Akashhrms@gmail.com", phone: "+918555031082", Image: img_emp1, DOB: '2024-08-12' },
         { name: "Ravi Kumar", Roll: "Developer", email: "ravikumar@gmail.com", phone: "+918888888881", Image: img_emp1, DOB: '2023-07-11' },
         { name: "Sita Sharma", Roll: "Designer", email: "sitasharma@gmail.com", phone: "+918888888882", Image: img_emp1, DOB: '2024-08-12' },
-        // { name: "Mohan Verma", Roll: "Tester", email: "mohanverma@gmail.com", phone: "+918888888883", Image: img_emp1, DOB: '2024-06-15' },
-        // { name: "New Employee 1", Roll: "HR", email: "newemp1@gmail.com", phone: "+918888888884", Image: img_emp1, DOB: '2024-08-10' },
-        // { name: "New Employee 2", Roll: "Manager", email: "newemp2@gmail.com", phone: "+918888888885", Image: img_emp1, DOB: '2024-08-12' },
-        // { name: "New Employee 3", Roll: "Support", email: "newemp3@gmail.com", phone: "+918888888886", Image: img_emp1, DOB: '2024-08-18' },
-        // { name: "New Employee 4", Roll: "Developer", email: "newemp4@gmail.com", phone: "+918888888887", Image: img_emp1, DOB: '2024-08-13' },
+        { name: "Mohan Verma", Roll: "Tester", email: "mohanverma@gmail.com", phone: "+918888888883", Image: img_emp1, DOB: '2024-06-15' },
+        { name: "New Employee 1", Roll: "HR", email: "newemp1@gmail.com", phone: "+918888888884", Image: img_emp1, DOB: '2024-08-10' },
+        { name: "New Employee 2", Roll: "Manager", email: "newemp2@gmail.com", phone: "+918888888885", Image: img_emp1, DOB: '2024-08-12' },
+        { name: "New Employee 3", Roll: "Support", email: "newemp3@gmail.com", phone: "+918888888886", Image: img_emp1, DOB: '2024-08-18' },
+        { name: "New Employee 4", Roll: "Developer", email: "newemp4@gmail.com", phone: "+918888888887", Image: img_emp1, DOB: '2024-08-13' },
+        { name: "New Employee 5", Roll: "HR", email: "newemp1@gmail.com", phone: "+918888888884", Image: img_emp1, DOB: '2024-08-10' },
+        { name: "New Employee 6", Roll: "Manager", email: "newemp2@gmail.com", phone: "+918888888885", Image: img_emp1, DOB: '2024-08-12' },
+        { name: "New Employee 7", Roll: "Support", email: "newemp3@gmail.com", phone: "+918888888886", Image: img_emp1, DOB: '2024-08-18' },
+        { name: "New Employee 8", Roll: "Developer", email: "newemp4@gmail.com", phone: "+918888888887", Image: img_emp1, DOB: '2024-08-13' },
+
     ]);
 
     const projects = [
@@ -186,9 +195,65 @@ const DepartmentDetails = () => {
 
 
     // popup 
+    // const getTopNewEmployees = employees.slice(0, 4);
 
 
+    // Slider settings
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        beforeChange: (oldIndex, newIndex) => {
+            setCurrentSlide(newIndex);
+        },
+        customPaging: (i) => (
+            <div
+                style={{
+                    width: i === currentSlide ? "20px" : "15px",
+                    height: "3px",
+                    background: i === currentSlide ? "purple" : "gray",
+                    borderRadius: "10px",
+                    transition: "all 0.3s ease",
+                }}
+            />
+        ),
+        appendDots: (dots) => (
+            <div style={{ marginBottom: "-10px", position: "absolute", bottom: "-20px", width: "100%", textAlign: "center" }}>
+                {dots}
+            </div>
+        ),
+    };
 
+
+    // popup
+    const PopUpUpdate = () => {
+        setShowPopup(true)
+        setFormDetails_2({
+            departmentName_2: departmentdetails?.department_name || '',
+            departmentHead_2: departmentdetails?.department_head || '',
+            parentDepartment_2: departmentdetails?.parent_department || '',
+        });
+    }
+    const closePopup = () => {
+        setShowPopup(false);
+    };
+    // const EmployeeSlider = ({ employees }) => {
+        // Helper function to chunk the employees array
+        const chunkArray = (arr, size) => {
+            const result = [];
+            for (let i = 0; i < arr.length; i += size) {
+                result.push(arr.slice(i, i + size));
+            }
+            return result;
+        };
+
+        // Chunk the employees array into groups of 4
+        const employeeChunks = chunkArray(employees, 4);
+
+
+    // Slider Component
 
 
     const handleSubmitForm_2 = (event) => {
@@ -225,18 +290,7 @@ const DepartmentDetails = () => {
     };
 
 
-    // popup
-    const PopUpUpdate = () => {
-        setShowPopup(true)
-        setFormDetails_2({
-            departmentName_2: departmentdetails?.department_name || '',
-            departmentHead_2: departmentdetails?.department_head || '',
-            parentDepartment_2: departmentdetails?.parent_department || '',
-        });
-    }
-    const closePopup = () => {
-        setShowPopup(false);
-    };
+ 
 
     return (
         <div className="profile-page">
@@ -268,7 +322,7 @@ const DepartmentDetails = () => {
                     </div>
                 </div>
                 <div className="info-cards">
-                    <div className="card">
+                    <div className="card  ">
                         <div className='top_head'> <h3> <span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
                                 <path d="M13 2L2 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -316,8 +370,8 @@ const DepartmentDetails = () => {
                             </p>
                         </div> */}
                     </div>
-                    <div className="card" >
-                        <div className='top_head'> <h3> <span>
+                    <div className="card4" >
+                        <div className='top_head4'> <h3> <span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
                                 <path d="M13 2L2 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M12 3V22H7C5.11438 22 4.17157 22 3.58579 21.4142C3 20.8284 3 19.8856 3 18V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -329,19 +383,26 @@ const DepartmentDetails = () => {
                                 <path d="M16.5 22V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </span>Employees in Department</h3></div>
-                        <div className="Emp" id='CartUserFix'>
-                            {employees.map((emp, i) => (
-                                <div key={i} className='div_dob'>
-                                    <div className='img_dob_name'>
-                                        <img src={emp.Image} alt={emp.name} />
-                                        <div>
-                                            <h3>{emp.name}</h3>
-                                            <p> {emp.Roll}</p>
-                                        </div>
+                        
+                        <div className="Emp4">
+                            <Slider {...settings}>
+                                {employeeChunks.map((chunk, index) => (
+                                    <div key={index} className="slide-content">
+                                        {chunk.map((emp, i) => (
+                                            <div key={i} className="div_dob-item">
+                                                <div className='img_dob_name'>
+                                                    <img src={emp.Image} alt={emp.name} />
+                                                    <div>
+                                                        <h3>{emp.name}</h3>
+                                                        <p>{emp.Roll}</p>
+                                                    </div>
+                                                </div>
+                                                <p className='p4'>{emp.phone}</p>
+                                            </div>
+                                        ))}
                                     </div>
-                                    <p>{emp.phone}</p>
-                                </div>
-                            ))}
+                                ))}
+                            </Slider>
                         </div>
                         {/* Personal information content */}
                     </div>
@@ -353,7 +414,7 @@ const DepartmentDetails = () => {
                             <div className="section-header">
                                 {/* <FaGraduationCap className="icon" /> */}
                                 <img src={iconEdu} alt="" className='icon' />
-                                <h2>Education</h2>
+                                <h2>PROJECT</h2>
                             </div>
                             <table>
                                 <thead>

@@ -263,3 +263,19 @@
     table-layout: auto;
   }
 }
+#inputD{
+  width: 70px !important;
+  // border: 1px solid red !important;
+}
+.tableD {
+    table-layout: fixed;  
+    width: 100%;        
+}
+
+#Description {
+    white-space: nowrap;  
+    overflow: hidden;     
+    text-overflow: ellipsis;
+    max-width: 150px;     
+    padding: 10px;
+}

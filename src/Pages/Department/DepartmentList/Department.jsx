@@ -464,7 +464,7 @@ const Department = () => {
                     <table id='Small_table'>
                         <thead>
                             <tr>
-                                <th><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
+                                <th id='inputD'><input type="checkbox" checked={selectAll} onChange={handleSelectAll} /></th>
                                 <th> <div>Department Name<span><TiArrowUnsorted /></span></div></th>
                                 <th>Department Head</th>
                                 <th>Parent Department</th>
@@ -474,7 +474,7 @@ const Department = () => {
                         <tbody>
                             {currentEmployees.map((emp, index) => (
                                 <tr key={index} >
-                                    <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
+                                    <td ><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
                                     <td onClick={() => navigate(`/departmentdetails/${emp.id}`)}>{emp.deptName || emp.department_name || '-'}</td>
                                     <td onClick={() => navigate(`/departmentdetails/${emp.id}`)}>{emp.deptHead || emp.department_head || '-'}</td>
                                     <td onClick={() => navigate(`/departmentdetails/${emp.id}`)}>{emp.parentDept || emp.parent_department || '-'}</td>
