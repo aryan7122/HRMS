@@ -473,8 +473,7 @@
         // top: 100%;
         left: 0;
         width: 100px;
-        max-height: 170px;
-        overflow-y: auto;
+        // max-height: 170px;
         border: 1px solid #fff;
         // border-radius: 4px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -497,6 +496,10 @@
         .dropdown-item:hover {
           color: #400f6f;
         }
+      }
+      .dropdown_I{
+                max-height: 170px;
+                        overflow-y: auto;
       }
     }
     .dropdown:hover {
@@ -717,4 +720,19 @@
 }
 .navbar-items span.filled {
   background: #310b54 !important;
+}
+
+
+#searchDepartmentHead{
+  // border: 1px solid red;
+  border: 1px solid #e9e5e5;
+  background: #fff;
+  outline: none;
+  margin: 0 auto;
+  margin-top: 5px;
+  width: 98%;
+  margin-bottom: 5px;
+}
+#searchDepartmentHead:hover{
+  border: 1px solid #a90490;
 }
