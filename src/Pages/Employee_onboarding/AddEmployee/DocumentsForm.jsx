@@ -6,27 +6,31 @@ import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoMdAddCircleOutline, IoMdCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import { OutsideClick } from './OutsideClick.jsx';
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const DocumentsForm = ({ onSubmit }) => {
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
+    const [selectedDocuments, setSelectedDocuments] = useState([]);
     const [educationForms, setEducationForms] = useState([
         {
-            instituteName: '',
-            degree: '',
-            specialization: '',
-            completionDate: '',
-            fromDate: '',
-            toDate: '',
-            attachment: ''
+            documentType: '',
+            number: '',
+            attachmentFront: '',
+            attachmentBack: '',
         }
     ]);
 
-    const handleFileChange = (index, event) => {
+    const handleFileChange = (index, event, type) => {
         const file = event.target.files[0];
         if (file) {
             const newForms = [...educationForms];
-            newForms[index].attachment = file;
+            if (type === 'front') {
+                newForms[index].attachmentFront = file;
+            } else if (type === 'back') {
+                newForms[index].attachmentBack = file;
+            }
             setEducationForms(newForms);
             setFileName(file.name);
             setIsUploaded(true);
@@ -44,13 +48,10 @@ const DocumentsForm = ({ onSubmit }) => {
         setEducationForms([
             ...educationForms,
             {
-                instituteName: '',
-                degree: '',
-                specialization: '',
-                completionDate: '',
-                fromDate: '',
-                toDate: '',
-                attachment: ''
+                documentType: '',
+                number: '',
+                attachmentFront: '',
+                attachmentBack: '',
             }
         ]);
     };
@@ -58,6 +59,12 @@ const DocumentsForm = ({ onSubmit }) => {
     const handleRemoveEducation = (index) => {
         const newForms = educationForms.filter((_, i) => i !== index);
         setEducationForms(newForms);
+
+        // Re-enable the previously selected document type
+        const removedType = educationForms[index].documentType;
+        if (removedType) {
+            setSelectedDocuments(selectedDocuments.filter(doc => doc !== removedType));
+        }
     };
 
     const handleSubmit = (event) => {
@@ -65,103 +72,31 @@ const DocumentsForm = ({ onSubmit }) => {
         console.log(educationForms);
     };
 
+    const selectOption = (index, option) => {
+        const newForms = [...educationForms];
+        newForms[index].documentType = option;
+        setEducationForms(newForms);
+        setSelectedDocuments([...selectedDocuments, option]);
+    };
+
+    const { isOpen: isEmploymentTypeOpen, ref: employmentTypeRef, buttonRef: employmentTypeButtonRef, handleToggle: toggleEmploymentType, setIsOpen: setEmploymentTypeOpen } = OutsideClick();
+
+    const [searchQueryEmploymentType, setSearchQueryEmploymentType] = useState('');
+
+    const handleSearchQueryChangeEmploymentType = (e) => setSearchQueryEmploymentType(e.target.value);
+
+    const documentOptions = ['Aadhaar', 'PAN', 'UAN', 'Other'];
+    const filteredDocumentOptions = documentOptions.filter(option =>
+        option.toLowerCase().includes(searchQueryEmploymentType.toLowerCase())
+    );
+
     return (
         <div id="Education_form">
             <form onSubmit={handleSubmit}>
-                <div id='form'>
-                    <div className='div_heading'>
-                        <h2>Identity Information</h2>
-                    </div>
-                    <div className="from1">
-                        <div className="form-group">
-                            <label>Aadhaar Number</label>
-                            <input
-                                type="text"
-                                name="aadharNumber"
-                                onChange={(e) => handleChange(0, e)}
-                                required
-                                placeholder='Aadhaar Number'
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>PAN Number</label>
-                            <input
-                                type="text"
-                                name="panNumber"
-                                onChange={(e) => handleChange(0, e)}
-                                required
-                                placeholder='PAN Number'
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>UAN Number</label>
-                            <input
-                                type="text"
-                                name="uanNumber"
-                                onChange={(e) => handleChange(0, e)}
-                                required
-                                placeholder='UAN Number'
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Aadhar Attachment</label>
-                            <div className="file-upload">
-                                <input
-                                    type="file"
-                                    name='aadharAttachment'
-                                    // accept="image/*"
-                                    id="file"
-                                    onChange={(e) => handleFileChange(0, e)}
-                                    required
-                                />
-                                <label htmlFor="file" className="custom-file-upload">
-                                    {!isUploaded && <GrCloudUpload className="upload-icon" />}
-                                    {isUploaded ? fileName : 'Aadhar Attachment'}
-                                </label>
-                            </div>
-                        </div>
-                      
-                        <div className="form-group">
-                            <label>PAN Attachment</label>
-                            <div className="file-upload">
-                                <input
-                                    type="file"
-                                    name='panAttachment'
-                                    // accept="image/*"
-                                    id="file"
-                                    onChange={(e) => handleFileChange(0, e)}
-                                    required
-                                />
-                                <label htmlFor="file" className="custom-file-upload">
-                                    {!isUploaded && <GrCloudUpload className="upload-icon" />}
-                                    {isUploaded ? fileName : 'PAN Attachment'}
-                                </label>
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label>UAN Attachment</label>
-                            <div className="file-upload">
-                                <input
-                                    type="file"
-                                    name='uanAttachment'
-                                    // accept="image/*"
-                                    id="file"
-                                    onChange={(e) => handleFileChange(0, e)}
-                                    required
-                                />
-                                <label htmlFor="file" className="custom-file-upload">
-                                    {!isUploaded && <GrCloudUpload className="upload-icon" />}
-                                    {isUploaded ? fileName : 'UAN Attachment'}
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 {educationForms.map((form, index) => (
                     <div key={index} id='form'>
                         <div className='div_heading add_exp'>
-                            <h2>Relevant Document</h2>
+                            <h2>Identity Information</h2>
                             {index === 0 ?
                                 <div
                                     type="button"
@@ -193,78 +128,133 @@ const DocumentsForm = ({ onSubmit }) => {
                         </div>
 
                         <div className="from1">
-                            <div className="form-group">
-                                <label>Document Name</label>
-                                <input
-                                    type="text"
-                                    placeholder="Document Name"
-                                    name="instituteName"
-                                    value={form.instituteName}
-                                    onChange={(e) => handleChange(index, e)}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Document ID</label>
-                                <input
-                                    type="text"
-                                    name="degree"
-                                    value={form.degree}
-                                    onChange={(e) => handleChange(index, e)}
-                                    required
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label>Attachment</label>
-                               
-                                <div className="file-upload">
-                                    <input
-                                        type="file"
-                                        name='attachment'
-                                        accept="image/*"
-                                        id="file"
-                                        onChange={(e) => handleFileChange(index, e)}
-                                        required
-                                    />
-                                    <label htmlFor="file" className="custom-file-upload">
-                                        {!isUploaded && <GrCloudUpload className="upload-icon" />}
-                                        {isUploaded ? fileName : 'Upload Document'}
-                                    </label>
+                            {form.documentType === '' ? (
+                                <div className="form-group">
+                                    <label>Select Document Type</label>
+                                    <div className="dropdown">
+                                        <div className="dropdown-button" ref={employmentTypeButtonRef} onClick={toggleEmploymentType}>
+                                            <div>{form.documentType || "Select document type"}</div>
+                                            <span id='toggle_selectIcon'>
+                                                {!isEmploymentTypeOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                            </span>
+                                        </div>
+                                        {isEmploymentTypeOpen && (
+                                            <div className="dropdown-menu" ref={employmentTypeRef}>
+                                                <input
+                                                    type="search"
+                                                    className="search22"
+                                                    placeholder="Search document type"
+                                                    value={searchQueryEmploymentType}
+                                                    onChange={handleSearchQueryChangeEmploymentType}
+                                                    id="searchDepartmentHead"
+                                                />
+                                                <div className="dropdown_I">
+                                                    {filteredDocumentOptions.map(option => (
+                                                        <div
+                                                            key={option}
+                                                            className={`dropdown-item ${selectedDocuments.includes(option) ? 'disabled' : ''}`}
+                                                            onClick={() => !selectedDocuments.includes(option) && selectOption(index, option)}
+                                                        >
+                                                            {option}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="form-group">
-                                <label>Expiry Date</label>
-                                <input
-                                    type="date"
-                                    name="specialization"
-                                    value={form.specialization}
-                                    onChange={(e) => handleChange(index, e)}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Issue Date</label>
-                                <input
-                                    type="date"
-                                    name="completionDate"
-                                    value={form.completionDate}
-                                    onChange={(e) => handleChange(index, e)}
-                                    required
-                                />
-                            </div>
+                            ) : (
+                                <>
+                                    {form.documentType === 'Other' ? (
+                                        <div className="form-group">
+                                            <label>Other Document Type</label>
+                                            <input
+                                                type="text"
+                                                name="documentType"
+                                                onChange={(e) => handleChange(index, e)}
+                                                required
+                                                placeholder="Enter document type"
+                                            />
+                                        </div>
+                                    ) : null}
+                                    <div className="form-group">
+                                        <label>{form.documentType} Number</label>
+                                        <input
+                                            type="text"
+                                            name="number"
+                                            onChange={(e) => handleChange(index, e)}
+                                            required
+                                            placeholder={`${form.documentType} Number`}
+                                        />
+                                    </div>
+                                    {form.documentType === 'Aadhaar' && (
+                                        <>
+                                            <div className="form-group">
+                                                <label>Front Image of Aadhaar</label>
+                                                    <div className="file-upload">
+                                                        <input
+                                                            type="file"
+                                                            name='attachment'
+                                                            id="file"
+                                                            onChange={(e) => handleFileChange(index, e)}
+                                                            required
+                                                        />
+                                                        <label htmlFor="file" className="custom-file-upload">
+                                                            {!isUploaded && <GrCloudUpload className="upload-icon" />}
+                                                            {isUploaded ? fileName : `${form.documentType} Attachment`}
+                                                        </label>
+                                                    </div>
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Back Image of Aadhaar</label>
+                                                    <div className="file-upload">
+                                                        <input
+                                                            type="file"
+                                                            name='attachment'
+                                                            id="file"
+                                                            onChange={(e) => handleFileChange(index, e)}
+                                                            required
+                                                        />
+                                                        <label htmlFor="file" className="custom-file-upload">
+                                                            {!isUploaded && <GrCloudUpload className="upload-icon" />}
+                                                            {isUploaded ? fileName : `${form.documentType} Attachment`}
+                                                        </label>
+                                                    </div>
+                                            </div>
+                                        </>
+                                    )}
+                                    {form.documentType !== 'Aadhaar' && (
+                                            <div className="form-group">
+                                                <label>{form.documentType} Attachment</label>
+                                                <div className="file-upload">
+                                                    <input
+                                                        type="file"
+                                                        name='attachment'
+                                                        id="file"
+                                                        onChange={(e) => handleFileChange(index, e)}
+                                                        required
+                                                    />
+                                                    <label htmlFor="file" className="custom-file-upload">
+                                                        {!isUploaded && <GrCloudUpload className="upload-icon" />}
+                                                        {isUploaded ? fileName : `${form.documentType} Attachment`}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                    )}
+                                </>
+                            )}
                         </div>
                     </div>
                 ))}
                 <div id='submitBtn_next_main'>
-                    <div id='submitBtn' >
+                    <div id='submitBtn'>
                         <div className='div'>
-                            <button type="submit" >Submit </button>
+                            <button type="submit">Submit</button>
                             <span><CiCircleChevRight /></span>
                         </div>
                         <div className="lineBar"></div>
                         <div className='x'>
-                            <span> <TfiClose /></span>
+                            <span><TfiClose /></span>
                         </div>
                     </div>
                     <div className="form">

@@ -736,3 +736,8 @@
 #searchDepartmentHead:hover{
   border: 1px solid #a90490;
 }
+
+.dropdown-item.disabled {
+    color: grey;
+    pointer-events: none;
+}

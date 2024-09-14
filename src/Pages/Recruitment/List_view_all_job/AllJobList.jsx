@@ -27,6 +27,8 @@ import { OutsideClick } from '../../../components/OutSideClick';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import LodinImg from '../../../assets/loding.gif'
+import { OutsideClickStatus } from './OutsideClickStatus.jsx'; // Adjust import path if necessary
+
 const AllJobList = () => {
 
     const jobs = useSelector((state) => state.job.jobs);
@@ -34,7 +36,9 @@ const AllJobList = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
-    const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
+    // const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatusDropdown } = OutsideClickStatus();
+
+
     // 
     const [loading, setLoading] = useState(true);
     const [sms, setSms] = useState('')
@@ -91,11 +95,7 @@ const AllJobList = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     // console.log('searchQuery', searchQuery)
-    console.log('employees', employees)
-
-    console.log('employees2', employees2)
-    console.log('filteredEmployees', filteredEmployees)
-
+    
 
     // console.log(selectedDepartment)
 
@@ -379,6 +379,9 @@ const AllJobList = () => {
         setActiveFilter(filterType); // Set the active filter
         toggleFilter2()
     };
+    // 
+  
+    
 
     return (
         <div id='allEmp'>
@@ -667,7 +670,7 @@ const AllJobList = () => {
                                     <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.experience}</td>
                                     <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.skills}</td>
                                     <td >
-                                        <div className="status-dropdown" >
+                                        {/* <div className="status-dropdown" >
 
                                             <div key={index} className="status-container">
                                                 <div
@@ -711,7 +714,54 @@ const AllJobList = () => {
                                                     </div>
                                                 )}
                                             </div>
+                                        </div> */}
+
+
+                                        <div className="status-dropdown" >
+                                            <div key={index} className="status-container" >
+                                                <div
+                                                    className={`status-display ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
+                                                    onClick={() => toggleDropdown(index)}
+                                                >
+                                                    <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                    <div onClick={() => {
+                                                        UpdateStatusHndle(emp.id);
+                                                    }}>
+                                                        <div
+                                                           
+                                                        >
+                                                            {emp.job_status}
+                                                        </div>
+                                                        <div className="^wdown">
+                                                            <MdOutlineKeyboardArrowDown />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {isOpen === index && (
+                                                    <div>
+                                                        <div className="status-options" >
+                                                            {
+                                                                statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => {
+                                                                            handleStatusChange(index, status)
+                                                                        }
+                                                                        }
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))
+                                                            }
+                                                        </div>
+
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
+
+
                                     </td>
                                 </tr>
                             ))}
