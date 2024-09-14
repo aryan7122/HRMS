@@ -285,7 +285,7 @@ const DesignationDetails = () => {
                                 <p>{designationDetails.department_id} </p>
                             </div>
                             <div>
-                                <h4>Created Date</h4>
+                                <h4>Created At</h4>
                                 <p>                                {`${new Date(designationDetails.created_at).getDate()}-${new Date(designationDetails.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(designationDetails.created_at).getFullYear()}`}</p>
                             </div>                           
                         </div>

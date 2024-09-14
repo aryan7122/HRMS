@@ -35,27 +35,18 @@ const AllJobList = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
     const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
-
+    // 
+    const [loading, setLoading] = useState(true);
+    const [sms, setSms] = useState('')
+    const [statusId, setStatusId] = useState('')
+    const [statusNew, setStatusNew] = useState('')
+    // 
     const [allDel, setAllDel] = useState(true);
     const [thisDel, setThisDel] = useState(false)
     const [toggleLeft, setToggleLeft] = useState(false)
     const [isOpen, setIsOpen] = useState(null);
-
-    const DelThis = () => {
-        setThisDel(!thisDel);
-
-    }
-
-    const toggleDropdown = (i) => {
-        setIsOpen(prev => (prev == i ? null : i));
-    };
-    console.log('isOpen', isOpen)
-
-
     // 
 
-    const [hidImport, setHidImport] = useState(true);
-    const navigate = useNavigate()
     const [employees, setEmployees] = useState([
         // { JobTitle: "IT Consultant", Department: "Marketing", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
         // { JobTitle: "Cloud Architect", Department: "Customer Success", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Draft", isChecked: false },
@@ -68,13 +59,42 @@ const AllJobList = () => {
         // { JobTitle: "QA Engineer", Department: "Sales", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
 
     ]);
+    const [employees2, setEmployees2] = useState();
+
+    useEffect(() => {
+        // Employees ka data employees2 me set karna
+        setEmployees2(employees);
+    }, [employees]); // Jab bhi employees change hoga, yeh effect trigger hoga
+
+
+    const DelThis = () => {
+        setThisDel(!thisDel);
+
+    }
+
+    const toggleDropdown = (i) => {
+        setIsOpen(prev => (prev == i ? null : i));
+    };
+    // console.log('isOpen', isOpen)
+
+
+    // 
+
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
+    const [hidImport, setHidImport] = useState(true);
+    const navigate = useNavigate()
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
     const [selectedStatus, setSelectedStatus] = useState('All');
     const [selectAll, setSelectAll] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    // console.log('searchQuery', searchQuery)
+    console.log('employees', employees)
+
+    console.log('employees2', employees2)
+    console.log('filteredEmployees', filteredEmployees)
 
 
     // console.log(selectedDepartment)
@@ -83,7 +103,7 @@ const AllJobList = () => {
         setHidImport(!hidImport);
         toggleFilter3()
     };
-
+    // table select checkbox
     const handleSelectAll = () => {
         setAllDel(!allDel)
         const updatedEmployees = filteredEmployees.map(emp => ({
@@ -98,16 +118,23 @@ const AllJobList = () => {
         const updatedEmployees = [...filteredEmployees];
         updatedEmployees[index].isChecked = !updatedEmployees[index].isChecked;
         setFilteredEmployees(updatedEmployees);
+
     };
+    // table select checkbox
+
+
+    // page index active
+    // Function to generate the pages to display
 
     const indexOfLastEmployee = currentPage * rowsPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - rowsPerPage;
     const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
     const totalPages = Math.ceil(filteredEmployees.length / rowsPerPage);
     // 
-    // page index active
+    // setFilteredEmployees(currentEmployees)
+    // setSurrentEmployees2(currentEmployees)
+    // console.log('currentEmployees2', filteredEmployees)
 
-    // Function to generate the pages to display
     const generatePages = () => {
         let pages = [];
 
@@ -150,11 +177,12 @@ const AllJobList = () => {
         setSearchQuery(e.target.value);
     };
 
-
+    // index page
     const handleFilterChange = (e) => {
+
         setSelectedDepartment(e.target.value);
         let updatedEmployees = employees;
-
+        console.log('updatedEmployees', updatedEmployees)
         if (searchQuery) {
             updatedEmployees = updatedEmployees.filter(emp =>
                 emp.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -174,7 +202,7 @@ const AllJobList = () => {
     };
 
 
-
+    // refresh all page
     const handleRefresh = () => {
         setFilteredEmployees(employees);
         setSearchQuery('');
@@ -220,10 +248,10 @@ const AllJobList = () => {
     const filter_left = () => {
         setToggleLeft(!toggleLeft)
     }
-    const filter_leftClose = () => {
-        // setToggleLeft(false)
-        toggleFilter2()
-    }
+    // const filter_leftClose = () => {
+    //     // setToggleLeft(false)
+    //     toggleFilter2()
+    // }
     const [fileName, setFileName] = useState('');
 
     const handleFileChange = (event) => {
@@ -232,11 +260,6 @@ const AllJobList = () => {
             setFileName(file.name); // Set the file name in the state
         }
     };
-
-    const [loading, setLoading] = useState(true);
-    const [sms, setSms] = useState('')
-    const [statusId, setStatusId] = useState('')
-    const [statusNew, setStatusNew] = useState('')
 
 
     // console.log('updateId', statusId)
@@ -348,7 +371,14 @@ const AllJobList = () => {
         // });
         setSms('')
     };
+    const [activeFilter, setActiveFilter] = useState(null); // Track the active filter
+    // const filterRef2 = useRef(null);
 
+    const filter_leftClose = (filterType) => {
+        console.log(`${filterType} 👉`);
+        setActiveFilter(filterType); // Set the active filter
+        toggleFilter2()
+    };
 
     return (
         <div id='allEmp'>
@@ -406,7 +436,7 @@ const AllJobList = () => {
                     </svg>
                 </div>
 
-                <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2} >
+                {/* <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2} >
                     <div className="all">
                         <div className='listActive' onClick={filter_leftClose}>
                             <span> <FaList /></span>All
@@ -437,7 +467,59 @@ const AllJobList = () => {
                             <span><IoIosCloseCircleOutline /></span>Cancelled
                         </div>
                     </div>
+                </div> */}
+
+                <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}>
+                    <div className="all">
+                        <div
+                            className={`listActive ${activeFilter === 'all' ? 'listActive' : ''}`}
+                            onClick={() => filter_leftClose('all')}
+                        >
+                            <span><FaList /></span>All
+                        </div>
+                    </div>
+                    <div
+                        className={`active ${activeFilter === 'draft' ? 'listActive' : ''}`}
+                        onClick={() => filter_leftClose('draft')}
+                    >
+                        <div>
+                            <span><PiCheckSquare /></span>Draft
+                        </div>
+                    </div>
+                    <div
+                        className={`inactive ${activeFilter === 'open' ? 'listActive' : ''}`}
+                        onClick={() => filter_leftClose('open')}
+                    >
+                        <div>
+                            <span><MdWork /></span>Open
+                        </div>
+                    </div>
+                    <div
+                        className={`resigned ${activeFilter === 'onHold' ? 'listActive' : ''}`}
+                        onClick={() => filter_leftClose('onHold')}
+                    >
+                        <div>
+                            <span><FaRegClock /></span>On hold
+                        </div>
+                    </div>
+                    <div
+                        className={`terminated ${activeFilter === 'filled' ? 'listActive' : ''}`}
+                        onClick={() => filter_leftClose('filled')}
+                    >
+                        <div>
+                            <span><PiCheckSquare /></span>Filled
+                        </div>
+                    </div>
+                    <div
+                        className={`notice_period ${activeFilter === 'cancelled' ? 'listActive' : ''}`}
+                        onClick={() => filter_leftClose('cancelled')}
+                    >
+                        <div>
+                            <span><IoIosCloseCircleOutline /></span>Cancelled
+                        </div>
+                    </div>
                 </div>
+
                 <div className="right">
                     <div className="refresh divRight" onClick={handleRefresh}>
                         <div className='div_box'>
@@ -597,8 +679,8 @@ const AllJobList = () => {
                                                         UpdateStatusHndle(emp.id);
                                                     }}>
                                                         <div
-                                                           
-                                                          
+
+
                                                         >
                                                             {emp.job_status}
                                                         </div>
@@ -607,7 +689,7 @@ const AllJobList = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                { isOpen === index && (
+                                                {isOpen === index && (
                                                     <div>
                                                         <div className="status-options" >
                                                             {
@@ -625,7 +707,7 @@ const AllJobList = () => {
                                                                 ))
                                                             }
                                                         </div>
-                                                     
+
                                                     </div>
                                                 )}
                                             </div>
