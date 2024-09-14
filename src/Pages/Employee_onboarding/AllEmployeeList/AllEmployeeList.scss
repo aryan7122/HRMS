@@ -760,10 +760,11 @@
      
 
       tr:hover {
-        background-color: $lightprimary;
-        transition: 0.3s ease;
-        
-      }
+  background-color: $lightprimary; /* Use your defined variable or color here */
+  transition: background-color 0.3s ease, transform 0.2s linear;
+  animation: tdHoverScale 0.5s linear  forwards ;
+}
+
       tr{
         border: 1px solid red !important;
       }
@@ -1034,6 +1035,14 @@
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+@keyframes tdHoverScale {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.001);
   }
 }
 .allEmployeeList .employee-table table {

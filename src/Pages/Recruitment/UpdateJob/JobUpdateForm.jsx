@@ -64,7 +64,13 @@ const JobUpdateForm = ({ onSubmit }) => {
         }));
     };
 
+    //  filter search
+    const [searchQueryEmploymentType, setSearchQueryEmploymentType] = useState('');
+    const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
+    const [searchQueryDesignation, setSearchQueryDesignation] = useState('');
+    const [searchQueryRequiredSkills, setSearchQueryRequiredSkills] = useState('');
 
+    // filter search
 
     const token = localStorage.getItem('access_token');
 
@@ -186,6 +192,31 @@ const JobUpdateForm = ({ onSubmit }) => {
     }, [id, token]);
     // 
 
+    // filter search
+
+    const handleSearchQueryChangeEmploymentType = (e) => setSearchQueryEmploymentType(e.target.value);
+    const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
+    const handleSearchQueryChangeDesignation = (e) => setSearchQueryDesignation(e.target.value);
+    const handleSearchQueryChangeRequiredSkills = (e) => setSearchQueryRequiredSkills(e.target.value);
+
+    const employmentTypeOptions = [
+        'Part-time', 'Full-time', 'Consultant', 'Permanent', 'On Contract', 'Intern', 'Trainee'
+    ];
+
+    const requiredSkillsOptions = [
+        'Communication Skills', 'Software Development', 'Leadership Skills', 'Team Collaboration',
+        'Problem Solving', 'Project Management', 'Data Analysis'
+    ];
+
+    const filteredRequiredSkillsOptions = requiredSkillsOptions.filter(option =>
+        option.toLowerCase().includes(searchQueryRequiredSkills.toLowerCase())
+    );
+    const filteredEmploymentTypeOptions = employmentTypeOptions.filter(option =>
+        option.toLowerCase().includes(searchQueryEmploymentType.toLowerCase())
+    );
+
+    // filter search
+
     return (
         <>
             <div className="" onSubmit={onSubmit}>
@@ -209,19 +240,31 @@ const JobUpdateForm = ({ onSubmit }) => {
 
                             {/* Designation Dropdown */}
                             <div className="form-group">
-                                <label className='starred'>Designation*</label>
+                                <label>Designation</label>
                                 <div className="dropdown">
                                     <div className="dropdown-button" onClick={() => toggleDropdown('designation')}>
-                                        <div>{formData.designation || "Select Designation"}</div>
+                                        <div>{formData.designation || "Select designation"}</div>
                                         <span id='toggle_selectIcon'> {!dropdowns.designation ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                     </div>
-
                                     {dropdowns.designation && (
                                         <div className="dropdown-menu">
-                                            <div className="dropdown-item" onClick={() => selectOption('designation', 'Chief Technology Officer (CTO)')}>Chief Technology Officer (CTO)</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('designation', 'Chief Information Officer (CIO)')}>Chief Information Officer (CIO)</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('designation', 'Manager')}>Manager</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('designation', 'HR')}>HR</div>
+                                            <input
+                                                type="search"
+                                                className='search22'
+                                                placeholder="Search designation"
+                                                value={searchQueryDesignation}
+                                                id='searchDepartmentHead'
+                                                onChange={handleSearchQueryChangeDesignation}
+                                            />
+                                            <div className="dropdown_I">
+                                                {['Administration', 'Developer', 'Manager'].filter(option =>
+                                                    option.toLowerCase().includes(searchQueryDesignation.toLowerCase())
+                                                ).map(option => (
+                                                    <div className="dropdown-item" onClick={() => selectOption('designation', option)} key={option}>
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -229,24 +272,36 @@ const JobUpdateForm = ({ onSubmit }) => {
 
                             {/* Department Dropdown */}
                             <div className="form-group">
-                                <label className='starred'>Department*</label>
+                                <label>Department</label>
                                 <div className="dropdown">
                                     <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
-                                        <div>{formData.department || "Select Department"}</div>
+                                        <div>{formData.department || "Select department"}</div>
                                         <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                     </div>
-
                                     {dropdowns.department && (
                                         <div className="dropdown-menu">
-                                            <div className="dropdown-item" onClick={() => selectOption('department', 'Data Analysis')}>Data Analysis</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('department', 'Software Architect')}>Software Architect</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('department', 'App Developer')}>App Developer</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('department', 'Web Developer')}>Web Developer</div>
+                                            <input
+                                                type="search"
+                                                className='search22'
+                                                placeholder="Search department"
+                                                value={searchQueryDepartment}
+                                                id='searchDepartmentHead'
+
+                                                onChange={handleSearchQueryChangeDepartment}
+                                            />
+                                            <div className="dropdown_I">
+                                                {['Management', 'Development', 'HR'].filter(option =>
+                                                    option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
+                                                ).map(option => (
+                                                    <div className="dropdown-item" onClick={() => selectOption('department', option)} key={option}>
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     )}
                                 </div>
                             </div>
-
                             {/* Job Location Checkboxes */}
                             <div className="form-group" >
                                 <label>Job Location*</label>
@@ -319,18 +374,36 @@ const JobUpdateForm = ({ onSubmit }) => {
 
                             {/* Employment Type Dropdown */}
                             <div className="form-group">
-                                <label>Employment Type*</label>
+                                <label>Employment Type</label>
                                 <div className="dropdown">
                                     <div className="dropdown-button" onClick={() => toggleDropdown('employmentType')}>
-                                        <div>{formData.employmentType || "Select Employment Type"}</div>
-                                        <span id='toggle_selectIcon'> {!dropdowns.employmentType ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                        <div>{formData.employmentType || "Select employment type"}</div>
+                                        <span id='toggle_selectIcon'>
+                                            {!dropdowns.employmentType ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                        </span>
                                     </div>
-
                                     {dropdowns.employmentType && (
-                                        <div className="dropdown-menu">
-                                            <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Full-time')}>Full-time</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Part-time')}>Part-time</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('employmentType', 'Contract')}>Contract</div>
+                                        <div className='dropdown-menu'>
+                                            <input
+                                                type="search"
+                                                className='search22'
+                                                placeholder="Search employment type"
+                                                value={searchQueryEmploymentType}
+                                                onChange={handleSearchQueryChangeEmploymentType}
+                                                id='searchDepartmentHead'
+
+                                            />
+                                            <div className="dropdown_I">
+                                                {filteredEmploymentTypeOptions.map(option => (
+                                                    <div
+                                                        key={option}
+                                                        className="dropdown-item"
+                                                        onClick={() => selectOption('employmentType', option)}
+                                                    >
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -358,15 +431,32 @@ const JobUpdateForm = ({ onSubmit }) => {
                                 <div className="dropdown">
                                     <div className="dropdown-button" onClick={() => toggleDropdown('requiredSkills')}>
                                         <div>{formData.requiredSkills || "Select Required Skills"}</div>
-                                        <span id='toggle_selectIcon'> {!dropdowns.requiredSkills ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                        <span id='toggle_selectIcon'>
+                                            {!dropdowns.requiredSkills ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                        </span>
                                     </div>
 
                                     {dropdowns.requiredSkills && (
                                         <div className="dropdown-menu">
-                                            <div className="dropdown-item" onClick={() => selectOption('requiredSkills', 'Communication Skills')}>Communication Skills</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('requiredSkills', 'Software Development')}>Software Development</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('requiredSkills', 'Leadership Skills')}>Leadership Skills</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('requiredSkills', 'Team Collaboration')}>Team Collaboration</div>
+                                            <input
+                                                type="search"
+                                                className='search22'
+                                                id='searchDepartmentHead'
+                                                placeholder="Search skills"
+                                                value={searchQueryRequiredSkills}
+                                                onChange={handleSearchQueryChangeRequiredSkills}
+                                            />
+                                            <div className="dropdown_I">
+                                                {filteredRequiredSkillsOptions.map(option => (
+                                                    <div
+                                                        key={option}
+                                                        className="dropdown-item"
+                                                        onClick={() => selectOption('requiredSkills', option)}
+                                                    >
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -389,7 +479,7 @@ const JobUpdateForm = ({ onSubmit }) => {
                     <div id='submitBtn_next_main'>
                         <div id='submitBtn' >
                             <div className='div'>
-                                <button type="submit" >Update </button>
+                                <button type="submit" >Submit </button>
                                 <span><CiCircleChevRight /></span>
                             </div>
                             <div className="lineBar"></div>

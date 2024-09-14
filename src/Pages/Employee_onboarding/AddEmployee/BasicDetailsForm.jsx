@@ -124,16 +124,16 @@ const BasicDetailsForm = ({ onSubmit }) => {
 
     //
     const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
-    const [searchQueryReportingManager, setSearchQueryReportingManager] = useState('');
     const [searchQueryDesignation, setSearchQueryDesignation] = useState('');
+    const [searchQueryReportingManager, setSearchQueryReportingManager] = useState('');
     const [searchQuerySourceOfHire, setSearchQuerySourceOfHire] = useState('');
     const [searchQueryEmploymentType, setSearchQueryEmploymentType] = useState('');
     const [searchQueryEmployeeStatus, setSearchQueryEmployeeStatus] = useState('');
 
 
     const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
-    const handleSearchQueryChangeReportingManager = (e) => setSearchQueryReportingManager(e.target.value);
     const handleSearchQueryChangeDesignation = (e) => setSearchQueryDesignation(e.target.value);
+    const handleSearchQueryChangeReportingManager = (e) => setSearchQueryReportingManager(e.target.value);
     const handleSearchQueryChangeSourceOfHire = (e) => setSearchQuerySourceOfHire(e.target.value);
     const handleSearchQueryChangeEmploymentType = (e) => setSearchQueryEmploymentType(e.target.value);
     const handleSearchQueryChangeEmployeeStatus = (e) => setSearchQueryEmployeeStatus(e.target.value);
