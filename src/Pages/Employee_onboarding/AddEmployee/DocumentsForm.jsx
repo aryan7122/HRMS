@@ -272,7 +272,7 @@ const DocumentsForm = ({ onSubmit }) => {
                             {form.documentType === '' && (
                                 <>
                                     <div className="form-group">
-                                        <label>Select Document Type</label>
+                                        <label> Document Name</label>
                                         <div className="dropdown">
                                             <div className="dropdown-button" ref={employmentTypeButtonRef} onClick={toggleEmploymentType}>
                                                 <div>{form.documentType || "Select document type"}</div>
@@ -338,7 +338,7 @@ const DocumentsForm = ({ onSubmit }) => {
                             {form.documentType === 'Aadhaar' && (
                                 <>
                                     <div className="form-group">
-                                        <label>Select Document Type</label>
+                                        <label> Document Name</label>
                                         <div className="dropdown">
                                             <div className="dropdown-button" ref={employmentTypeButtonRef2} onClick={toggleEmploymentType2}>
                                                 <div>{form.documentType || "Select document type"}</div>
@@ -420,7 +420,7 @@ const DocumentsForm = ({ onSubmit }) => {
                             {form.documentType === 'PAN' && (
                                 <>
                                     <div className="form-group">
-                                        <label>Select Document Type</label>
+                                        <label> Document Name</label>
                                         <div className="dropdown">
                                             <div className="dropdown-button" ref={employmentTypeButtonRef3} onClick={toggleEmploymentType3}>
                                                 <div>{form.documentType || "Select document type"}</div>
@@ -485,7 +485,7 @@ const DocumentsForm = ({ onSubmit }) => {
                             {form.documentType === 'UAN' && (
                                 <>
                                     <div className="form-group">
-                                        <label>Select Document Type</label>
+                                        <label> Document Name</label>
                                         <div className="dropdown">
                                             <div className="dropdown-button" ref={employmentTypeButtonRef4} onClick={toggleEmploymentType4}>
                                                 <div>{form.documentType || "Select document type"}</div>
@@ -550,7 +550,7 @@ const DocumentsForm = ({ onSubmit }) => {
                             {form.documentType === 'Other' && (
                                 <>
                                     <div className="form-group">
-                                        <label>Select Document Type</label>
+                                        <label> Document Name</label>
                                         <div className="dropdown">
                                             <div className="dropdown-button" ref={employmentTypeButtonRef5} onClick={toggleEmploymentType5}>
                                                 <div>{form.documentType || "Select document type"}</div>

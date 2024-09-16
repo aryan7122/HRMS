@@ -16,7 +16,7 @@
     &.active {
       background: #4e1584;
 
-      // color: white;
+      color: rgb(255, 255, 255) !important;
     }
     &:last-child{
       border-top-right-radius: 8px;
@@ -25,7 +25,7 @@
 
     &.filled {
       background: #400f6f;
-      color: white;
+      color: rgb(215, 213, 213);
     }
   }
 }
