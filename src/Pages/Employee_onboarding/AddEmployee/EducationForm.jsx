@@ -108,7 +108,7 @@ const EducationForm = ({ onSubmit }) => {
                                 <label>Institute Name</label>
                                 <input
                                     type="text"
-                                    placeholder="Institute Name"
+                                    placeholder="Enter Institute Name"
                                     name="instituteName"
                                     value={form.instituteName}
                                     onChange={(e) => handleChange(index, e)}
@@ -120,6 +120,7 @@ const EducationForm = ({ onSubmit }) => {
                                 <input
                                     type="text"
                                     name="degree"
+                                    placeholder='Enter Degree '
                                     value={form.degree}
                                     onChange={(e) => handleChange(index, e)}
                                     required
@@ -134,6 +135,7 @@ const EducationForm = ({ onSubmit }) => {
                                     value={form.specialization}
                                     onChange={(e) => handleChange(index, e)}
                                     required
+                                    placeholder='Enter Specialization'
                                 />
                             </div>
 

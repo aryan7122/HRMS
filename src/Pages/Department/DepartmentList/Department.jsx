@@ -18,9 +18,11 @@ import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import './Department.scss';
 import { OutsideClick } from '../../../components/OutSideClick';
 import axios from 'axios';
-
+import { OutsideClick2 } from './OutsideClick2'
 const Department = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+    const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
+    const { isOpen: isDepartmentOpen2, ref: departmentRef2, buttonRef: departmentButtonRef2, handleToggle: toggleDepartment2, setIsOpen: setDepartmentOpen2 } = OutsideClick2();
 
     const [loading, setLoading] = useState(true);
 
@@ -235,10 +237,35 @@ const Department = () => {
         navigate('/departmentdetails');
     }
 
-    const selectOption = (dropdown, value) => {
-        setFormData(prev => ({ ...prev, department1: value }));
-        setSearchTerm(''); // Clear search term on select
-        toggleDropdown(dropdown); // Hide dropdown after selection
+    // const selectOption = (dropdown, value) => {
+    //     setFormData(prev => ({ ...prev, department1: value }));
+    //     setSearchTerm(''); // Clear search term on select
+    //     toggleDropdown(dropdown); // Hide dropdown after selection
+    //     setDepartmentOpen(false)
+
+    // };
+    // Function to select an option and update the formDetails_2
+    // const selectOption = (field, option) => {
+    //     setFormDetails_2((prevState) => ({
+    //         ...prevState,
+    //         parentDepartment_2: option,
+    //     }));
+    //     setDepartmentOpen(false); // Close the dropdown after selection
+    //     setDepartmentOpen2(false)
+
+    //     // setIsDepartmentOpen(false); 
+    // };
+    const selectOption = (field, option) => {
+        // alert(field)
+        setFormDetails_2((prevState) => ({
+            ...prevState,
+            [field]: option, // Correctly update the field
+        }));
+        if (field === 'parentDepartment_2') {
+            setDepartmentOpen(false); // Close parent department dropdown
+        } else if (field === 'departmentHead_2') {
+            setDepartmentOpen2(false); // Close department head dropdown
+        }
     };
 
     const handleSubmit222 = () => {
@@ -312,12 +339,20 @@ const Department = () => {
                 setEmployees(prevEmployees => [...prevEmployees, response.data.designation]);
                 // Optional: Form reset kar sakte ho
                 // setFormData_3(initialFormDetails_2);
+                formDetails_2.departmentName_2= ''  // Email ko formData se lo
+                formDetails_2.departmentHead_2 ='' // Department ID ko formData se lo
+                formDetails_2.parentDepartment_2 = ''
             })
             .catch(error => {
                 console.error("Error during create/update:", error);
             });
     };
     // popup
+    const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
+    const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
+
+    const [searchQueryDepartment2, setSearchQueryDepartment2] = useState('');
+    const handleSearchQueryChangeDepartment2 = (e) => setSearchQueryDepartment2(e.target.value);
 
     return (
         <div>
@@ -501,8 +536,8 @@ const Department = () => {
                                     </div>
                                 </div>
                                 <div className="popup-body">
-                                    <form className='upfom' onSubmit={handleSubmitForm_2}>
-                                        <label className='redcolor'>Department Name*</label>
+                                    <form className="upfom" onSubmit={handleSubmitForm_2}>
+                                        <label className="redcolor">Department Name*</label>
                                         <input
                                             type="text"
                                             name="departmentName_2"
@@ -511,47 +546,65 @@ const Department = () => {
                                             onChange={handleInputChangeForm_2}
                                             required
                                         />
-                                        <label className='blackcolor1'>Parent Department</label>
-                                        <input
-                                            type="text"
-                                            name="parentDepartment_2"
-                                            placeholder="Enter Parent Department Name"
-                                            value={formDetails_2.parentDepartment_2}
-                                            onChange={handleInputChangeForm_2} // Use handleInputChangeForm_2
-                                        />
 
-                                        <div className="form-group">
-                                            <label>Department Head</label>
-                                            <div className="dropdown1">
-                                                <div className="dropdown-button1" onClick={() => toggleDropdownVisibility_2('departmentDropdownOpen_2')}>
-                                                    <div className='downbtn'>{formDetails_2.departmentHead_2 || "Choose or search head"}</div>
-                                                    <span id='toggle_selectIcon'>
-                                                        {!dropdownVisibility_2.departmentDropdownOpen_2 ? <IoIosArrowDown /> : <IoIosArrowUp />}
-                                                    </span>
-                                                </div>
-
-                                                {dropdownVisibility_2.departmentDropdownOpen_2 && (
-                                                    <div className="dropdown-menu1">
-                                                        <input
-                                                            type="search"
-                                                            className='search22'
-                                                            placeholder="Search head of Department"
-                                                            value={searchQuery_2}
-                                                            onChange={handleSearchQueryChange_2}
-                                                            id="searchDepartmentHead_2"
-                                                        />
-                                                        <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Akash Shinde')}>Akash Shinde</div>
-                                                        <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Rajat Munde')}>Rajat Munde</div>
-                                                        <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Arman Singh')}>Arman Singh</div>
-                                                        <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Arman Singh')}>Arman Singh</div>
-                                                        <div className="dropdown-item1" onClick={() => handleDepartmentHeadSelection_2('Arman Singh')}>Arman Singh</div>
-
-                                                    </div>
-                                                )}
+                                        <label className="blackcolor1">Parent Department</label>
+                                        <div className="dropdown">
+                                            <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
+                                                <div className='divselect'>{formDetails_2.parentDepartment_2 || "Select department"}</div>
+                                                <span id="toggle_selectIcon"> {!isDepartmentOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                             </div>
+                                            {isDepartmentOpen && (
+                                                <div className="dropdown-menu" ref={departmentRef}>
+                                                    <input
+                                                        type="search"
+                                                        className="search22"
+                                                        placeholder="Search department"
+                                                        value={searchQueryDepartment}
+                                                        id="searchDepartmentHead"
+                                                        onChange={handleSearchQueryChangeDepartment}
+                                                    />
+                                                    <div className="dropdown_I">
+                                                        {['Management', 'Development', 'HR', 'Sales', 'Finance'].filter(option =>
+                                                            option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
+                                                        ).map(option => (
+                                                            <div className="dropdown-item" onClick={() => selectOption('parentDepartment_2', option)} key={option}>
+                                                                {option}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <label>Department Head</label>
+                                        <div className="dropdown">
+                                            <div className="dropdown-button" ref={departmentButtonRef2} onClick={toggleDepartment2}>
+                                                <div className='divselect'>{formDetails_2.departmentHead_2 || "Select department head"}</div>
+                                                <span id="toggle_selectIcon"> {!isDepartmentOpen2 ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                            </div>
+                                            {isDepartmentOpen2 && (
+                                                <div className="dropdown-menu" ref={departmentRef2}>
+                                                    <input
+                                                        type="search"
+                                                        className="search22"
+                                                        placeholder="Search head of Department"
+                                                        value={searchQueryDepartment2}
+                                                        id="searchDepartmentHead"
+                                                        onChange={handleSearchQueryChangeDepartment2}
+                                                    />
+                                                    <div className="dropdown_I">
+                                                        {['Arman Singh', 'Akash Shinde', 'Rajat Munde', 'Priya Patel', 'Niharika Rao'].filter(option =>
+                                                            option.toLowerCase().includes(searchQueryDepartment2.toLowerCase())
+                                                        ).map(option => (
+                                                            <div className="dropdown-item" onClick={() => selectOption('departmentHead_2', option)} key={option}>
+                                                                {option}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
 
-                                        <div className='popupbtn' id="submitDepartmentFormButton_2">
+                                        <div className="popupbtn" id="submitDepartmentFormButton_2">
                                             <button type="submit">Submit
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
                                                     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
@@ -560,10 +613,11 @@ const Department = () => {
                                             </button>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
                         </div>
+
+
                     )}
 
                 </div>
@@ -597,7 +651,7 @@ const Department = () => {
                 </div>
 
             </div>
-        </div >
+        </div>
 
 
     );

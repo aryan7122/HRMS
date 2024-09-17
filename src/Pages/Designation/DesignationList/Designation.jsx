@@ -17,9 +17,10 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import './Designation.scss';
 import { OutsideClick } from '../../../components/OutSideClick';
 import axios from 'axios';
-
+import { OutsideClick2 } from '../../Department/DepartmentList/OutsideClick2'
 const Designation = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+    const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
 
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
@@ -62,6 +63,7 @@ const Designation = () => {
 
 
 
+    const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
 
 
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
@@ -236,11 +238,11 @@ const Designation = () => {
         department_3: '',
         Description_3: '',
     };
-
     const [formData_3, setFormData_3] = useState(initialFormData_3);
     const [dropdowns_3, setDropdowns_3] = useState({
         departmentOpen_3: false,
     });
+    console.log('department_3', formData_3.department_3)
 
     const handleInputChange_3 = (event) => {
         const { name, value } = event.target;
@@ -257,13 +259,26 @@ const Designation = () => {
         }));
     };
 
-    const selectOption_3 = (field, value) => {
+    // const selectOption = (field, value) => {
+    //     setFormData_3((prevState) => ({
+    //         ...prevState,
+    //         [field]: value,
+    //     }));
+    //     // toggleDropdown_3('departmentOpen_3');
+    //     // alert(field)
+    // };
+    // Function to select an option and update the formDetails_2
+    const selectOption = (field, option) => {
         setFormData_3((prevState) => ({
             ...prevState,
-            [field]: value,
+            [field]: option,
         }));
-        toggleDropdown_3('departmentOpen_3');
+        setDepartmentOpen(false)
     };
+
+    // const toggleDepartment = () => {
+    //     setIsDepartmentOpen(!isDepartmentOpen);
+    // };
 
     const handleSubmitForm_3 = (event) => {
         event.preventDefault();
@@ -291,6 +306,9 @@ const Designation = () => {
                 console.error("Error during create/update:", error);
             });
     };
+    
+    const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
+
 
 
     
@@ -477,12 +495,14 @@ const Designation = () => {
                                                     value={formData_3.email_3}
                                                     onChange={handleInputChange_3}
                                                     required
+                                                    className='imputaddD'
                                                 />
+                                               
                                             </div>
 
                                             <div className="form-group" id="depart">
-                                                <label>Department</label>
-                                                <div className="dropdown10">
+                                                <label className='Departmentlabel'>Department</label>
+                                                {/* <div className="dropdown10">
                                                     <div className="dropdown-button10" onClick={() => toggleDropdown_3('departmentOpen_3')}>
                                                         <div className='choose1'>{formData_3.department_3 || "Choose department"}</div>
                                                         <span id='toggle_selectIcon'>
@@ -496,6 +516,35 @@ const Designation = () => {
                                                             <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department2')}>Department2</div>
                                                             <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department3')}>Department3</div>
                                                             <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department4')}>Department4</div>
+                                                        </div>
+                                                    )}
+                                                </div> */}
+                                                <div className="dropdown3">
+                                                    <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
+                                                        <div>{formData_3.department_3 || "Select department"}</div>
+                                                        <span id='toggle_selectIcon'>
+                                                            {!isDepartmentOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                                        </span>
+                                                    </div>
+                                                    {isDepartmentOpen && (
+                                                        <div className="dropdown-menu" ref={departmentRef}>
+                                                            <input
+                                                                type="search"
+                                                                className='search22'
+                                                                placeholder="Search department"
+                                                                value={searchQueryDepartment}
+                                                                id='searchDepartmentHead'
+                                                                onChange={handleSearchQueryChangeDepartment}
+                                                            />
+                                                            <div className="dropdown_I">
+                                                                {['Management', 'Development', 'HR'].filter(option =>
+                                                                    option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
+                                                                ).map(option => (
+                                                                    <div className="dropdown-item" onClick={() => selectOption('department_3', option)} key={option}>
+                                                                        {option}
+                                                                    </div>
+                                                                ))}
+                                                            </div>
                                                         </div>
                                                     )}
                                                 </div>

@@ -497,7 +497,6 @@ const AllEmployeeList = () => {
                                             </div>
                                         </div>
                                     </td> */}
-
                                 </tr>
                             ))}
                         </tbody>

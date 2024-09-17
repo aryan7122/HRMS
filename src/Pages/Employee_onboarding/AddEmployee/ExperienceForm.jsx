@@ -144,7 +144,7 @@ const ExperienceForm = ({ onSubmit }) => {
                                 <label>Company Name</label>
                                 <input
                                     type="text"
-                                    placeholder="Company name"
+                                    placeholder="Enter Company name"
                                     name="companyName"
                                     value={form.companyName}
                                     onChange={(e) => handleChange(index, e)}
@@ -156,6 +156,7 @@ const ExperienceForm = ({ onSubmit }) => {
                                 <input
                                     type="text"
                                     name="industry"
+                                    placeholder='Enter Industry Name'
                                     value={form.industry}
                                     onChange={(e) => handleChange(index, e)}
                                     required
@@ -166,6 +167,7 @@ const ExperienceForm = ({ onSubmit }) => {
                                 <input
                                     type="text"
                                     name="jobTitle"
+                                    placeholder='Enter Job Title'
                                     value={form.jobTitle}
                                     onChange={(e) => handleChange(index, e)}
                                     required
@@ -175,10 +177,10 @@ const ExperienceForm = ({ onSubmit }) => {
                                 <label>Duration</label>
                                 <input
                                     type="text"
-                                    name="duration"
+                                    name=" duration"
                                     value={form.duration}  // Display calculated duration
                                     readOnly
-                                    placeholder="Duration"
+                                    placeholder="Enter Duration"
                                 />
                             </div>
                             <div className="form-group" id='form_group_Duration'>

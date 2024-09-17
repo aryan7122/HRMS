@@ -445,6 +445,7 @@
       margin-bottom: 50px !important;
 
       .dropdown-button {
+        cursor: #320B57 !important;
         font-size: 14px;
         background-color: #fff;
         // z-index: 9999 !important;
@@ -740,4 +741,12 @@
 .dropdown-item.disabled {
     color: grey;
     pointer-events: none;
+}
+
+
+#indexTitile{
+  display: flex !important;
+  // border: 1px solid red;
+  width: 200px !important;
+
 }

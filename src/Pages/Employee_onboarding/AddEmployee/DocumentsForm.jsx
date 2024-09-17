@@ -190,7 +190,7 @@ const DocumentsForm = ({ onSubmit }) => {
                 {educationForms.map((form, index) => (
                     <div key={index} id='form'>
                         <div className='div_heading add_exp'>
-                            <h2>Identity Information</h2>
+                            <h2 id='indexTitile'>Identity Information {index +1}</h2>
                             {index === 0 ?
                                 <div type="button" onClick={handleAddEducation}>
                                     <li className='li_add_emp'>
@@ -275,7 +275,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                         <label> Document Name</label>
                                         <div className="dropdown">
                                             <div className="dropdown-button" ref={employmentTypeButtonRef} onClick={toggleEmploymentType}>
-                                                <div>{form.documentType || "Select document type"}</div>
+                                                <div>{form.documentType || "Select"}</div>
                                                 <span id='toggle_selectIcon'>
                                                     {!isEmploymentTypeOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
                                                 </span>
@@ -383,7 +383,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <label>Front Document Attachment</label>
+                                        <label>Front  Attachment</label>
                                         <div className="file-upload">
                                             <input
                                                 type="file"
@@ -399,7 +399,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                         </div>
                                     </div>
                                     <div className="form-group">
-                                        <label>Back Document Attachment</label>
+                                        <label>Back Attachment</label>
                                         <div className="file-upload">
                                             <input
                                                 type="file"
@@ -465,7 +465,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <label>Document Attachment</label>
+                                        <label> Attachment</label>
                                         <div className="file-upload">
                                             <input
                                                 type="file"
@@ -530,7 +530,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <label>Document Attachment</label>
+                                        <label> Attachment</label>
                                         <div className="file-upload">
                                             <input
                                                 type="file"
@@ -595,7 +595,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <label>Document Attachment</label>
+                                        <label> Attachment</label>
                                         <div className="file-upload">
                                             <input
                                                 type="file"

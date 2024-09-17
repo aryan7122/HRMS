@@ -158,11 +158,11 @@ const BasicDetailsForm = ({ onSubmit }) => {
     const handleSearchQueryChangeEmployeeStatus = (e) => setSearchQueryEmployeeStatus(e.target.value);
 
     const employmentTypeOptions = [
-        'Consultant', 'Permanent', 'On Contract', 'Intern', 'Trainee'
+     'Permanent', 'On Contract', 'Intern', 'Trainee'
     ];
 
     const employeeStatusOptions = [
-        'Permanent', 'Probation', 'Intern', 'Contract', 'Temporary', 'On Leave', 'Retired', 'Resigned', 'Laid Off', 'Terminated', 'Resigned', 'Notice Period'
+        'Active', 'Terminated', 'Resigned', 'Probation', 'Notice Period'
     ];
     const filteredEmploymentTypeOptions = employmentTypeOptions.filter(option =>
         option.toLowerCase().includes(searchQueryEmploymentType.toLowerCase())
@@ -192,7 +192,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                 />
                                 <label htmlFor="file" className="custom-file-upload">
                                     {!isUploaded && <GrCloudUpload size={20} />}
-                                    <span>{isUploaded ? fileName : 'Upload photo'}</span>
+                                    <span>{isUploaded ? fileName : 'Profile Picture'}</span>
                                 </label>
                             </div>
                         </div>
@@ -521,7 +521,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                             id="searchDepartmentHead"
                                         />
                                         <div className="dropdown_I">
-                                            {['Referral', 'Direct', 'Campus'].filter(option =>
+                                            {['Referral', 'Direct', 'Campus','Advertisement'].filter(option =>
                                                 option.toLowerCase().includes(searchQuerySourceOfHire.toLowerCase())
                                             ).map(option => (
                                                 <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', option)} key={option}>

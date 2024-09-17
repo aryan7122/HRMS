@@ -19,6 +19,7 @@ import { deprecatedPropType } from '@mui/material';
 // popup
 import { IoMdAdd, IoIosCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { OutsideClick2 } from '../DepartmentList/OutsideClick2'
 
 // popup
 const DepartmentDetails = () => {
@@ -28,6 +29,8 @@ const DepartmentDetails = () => {
     const [departmentdetails2, setDepartmentdetails2] = useState('');
     const [departmentdetails3, setDepartmentdetails3] = useState('');
     const [currentSlide, setCurrentSlide] = useState(0); // State to track current slide
+    const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
+    const { isOpen: isDepartmentOpen2, ref: departmentRef2, buttonRef: departmentButtonRef2, handleToggle: toggleDepartment2, setIsOpen: setDepartmentOpen2 } = OutsideClick2();
 
     const [employees, setEmployees] = useState([
         { name: "Akash Shinde", Roll: "Lead Design", email: "Akashhrms@gmail.com", phone: "+918555031082", Image: img_emp1, DOB: '2024-08-12' },
@@ -45,6 +48,8 @@ const DepartmentDetails = () => {
 
     ]);
 
+    const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
+    const [searchQueryDepartment2, setSearchQueryDepartment2] = useState('');
     const projects = [
         {
             name: "E-commerce Website Redesign",
@@ -240,17 +245,17 @@ const DepartmentDetails = () => {
         setShowPopup(false);
     };
     // const EmployeeSlider = ({ employees }) => {
-        // Helper function to chunk the employees array
-        const chunkArray = (arr, size) => {
-            const result = [];
-            for (let i = 0; i < arr.length; i += size) {
-                result.push(arr.slice(i, i + size));
-            }
-            return result;
-        };
+    // Helper function to chunk the employees array
+    const chunkArray = (arr, size) => {
+        const result = [];
+        for (let i = 0; i < arr.length; i += size) {
+            result.push(arr.slice(i, i + size));
+        }
+        return result;
+    };
 
-        // Chunk the employees array into groups of 4
-        const employeeChunks = chunkArray(employees, 4);
+    // Chunk the employees array into groups of 4
+    const employeeChunks = chunkArray(employees, 4);
 
 
     // Slider Component
@@ -283,14 +288,32 @@ const DepartmentDetails = () => {
                 setEmployees(prevEmployees => [...prevEmployees, response.data.designation]);
                 // Optional: Form reset kar sakte ho
                 // setFormData_3(initialFormDetails_2);
+                formDetails_2.departmentName_2 = ''  // Email ko formData se lo
+                formDetails_2.departmentHead_2 = '' // Department ID ko formData se lo
+                formDetails_2.parentDepartment_2 = ''
             })
             .catch(error => {
                 console.error("Error during create/update:", error);
             });
     };
+    const selectOption = (field, option) => {
+        setFormDetails_2((prevState) => ({
+            ...prevState,
+            [field]: option, // Correctly update the field
+        }));
+        if (field === 'parentDepartment_2') {
+            setDepartmentOpen(false); // Close parent department dropdown
+        } else if (field === 'departmentHead_2') {
+            setDepartmentOpen2(false); // Close department head dropdown
+        }
+    };
+
+    // popup
+    const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
+
+    const handleSearchQueryChangeDepartment2 = (e) => setSearchQueryDepartment2(e.target.value);
 
 
- 
 
     return (
         <div className="profile-page">
@@ -383,7 +406,7 @@ const DepartmentDetails = () => {
                                 <path d="M16.5 22V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </span>Employees in Department</h3></div>
-                        
+
                         <div className="Emp4">
                             <Slider {...settings}>
                                 {employeeChunks.map((chunk, index) => (
@@ -446,7 +469,7 @@ const DepartmentDetails = () => {
                     </div>
                 </div>
             </div>
-            {showPopup && (
+            {/* {showPopup && (
                 <div className="popup-overlay">
                     <div className="popup">
                         <div className="popup-header">
@@ -519,6 +542,100 @@ const DepartmentDetails = () => {
                                 </div>
                             </form>
 
+                        </div>
+                    </div>
+                </div>
+            )} */}
+            {showPopup && (
+                <div className="popup-overlay">
+                    <div className="popup">
+                        <div className="popup-header">
+                            <h3>Add New Department</h3>
+                            <div className="close_btn" onClick={closePopup}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                                    <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="currentColor" stroke-width="1.5" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div className="popup-body">
+                            <form className="upfom" onSubmit={handleSubmitForm_2}>
+                                <label className="redcolor">Department Name*</label>
+                                <input
+                                    type="text"
+                                    name="departmentName_2"
+                                    placeholder="Enter Department Name"
+                                    value={formDetails_2.departmentName_2}
+                                    onChange={handleInputChangeForm_2}
+                                    required
+                                />
+
+                                <label className="blackcolor1">Parent Department</label>
+                                <div className="dropdown">
+                                    <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
+                                        <div className='divselect'>{formDetails_2.parentDepartment_2 || "Select department"}</div>
+                                        <span id="toggle_selectIcon"> {!isDepartmentOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    </div>
+                                    {isDepartmentOpen && (
+                                        <div className="dropdown-menu" ref={departmentRef}>
+                                            <input
+                                                type="search"
+                                                className="search22"
+                                                placeholder="Search department"
+                                                value={searchQueryDepartment}
+                                                id="searchDepartmentHead"
+                                                onChange={handleSearchQueryChangeDepartment}
+                                            />
+                                            <div className="dropdown_I">
+                                                {['Management', 'Development', 'HR', 'Sales', 'Finance'].filter(option =>
+                                                    option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
+                                                ).map(option => (
+                                                    <div className="dropdown-item" onClick={() => selectOption('parentDepartment_2', option)} key={option}>
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                                <label>Department Head</label>
+                                <div className="dropdown">
+                                    <div className="dropdown-button" ref={departmentButtonRef2} onClick={toggleDepartment2}>
+                                        <div className='divselect'>{formDetails_2.departmentHead_2 || "Select department head"}</div>
+                                        <span id="toggle_selectIcon"> {!isDepartmentOpen2 ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    </div>
+                                    {isDepartmentOpen2 && (
+                                        <div className="dropdown-menu" ref={departmentRef2}>
+                                            <input
+                                                type="search"
+                                                className="search22"
+                                                placeholder="Search head of Department"
+                                                value={searchQueryDepartment2}
+                                                id="searchDepartmentHead"
+                                                onChange={handleSearchQueryChangeDepartment2}
+                                            />
+                                            <div className="dropdown_I">
+                                                {['Arman Singh', 'Akash Shinde', 'Rajat Munde', 'Priya Patel', 'Niharika Rao'].filter(option =>
+                                                    option.toLowerCase().includes(searchQueryDepartment2.toLowerCase())
+                                                ).map(option => (
+                                                    <div className="dropdown-item" onClick={() => selectOption('departmentHead_2', option)} key={option}>
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="popupbtn" id="submitDepartmentFormButton_2">
+                                    <button type="submit">Submit
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
+                                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
+                                            <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
