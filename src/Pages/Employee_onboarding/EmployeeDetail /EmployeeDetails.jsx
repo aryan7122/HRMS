@@ -28,7 +28,7 @@ const EmployeeDetails = () => {
                 return <Experience />;
         }
     };
-
+    
     const AllEmp = () => {
         navigate('/all-employee-list')
     }

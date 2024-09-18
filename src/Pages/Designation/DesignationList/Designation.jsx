@@ -502,23 +502,7 @@ const Designation = () => {
 
                                             <div className="form-group" id="depart">
                                                 <label className='Departmentlabel'>Department</label>
-                                                {/* <div className="dropdown10">
-                                                    <div className="dropdown-button10" onClick={() => toggleDropdown_3('departmentOpen_3')}>
-                                                        <div className='choose1'>{formData_3.department_3 || "Choose department"}</div>
-                                                        <span id='toggle_selectIcon'>
-                                                            {!dropdowns_3.departmentOpen_3 ? <IoIosArrowDown /> : <IoIosArrowUp />}
-                                                        </span>
-                                                    </div>
-
-                                                    {dropdowns_3.departmentOpen_3 && (
-                                                        <div className="dropdown-menu10">
-                                                            <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department1')}>Department1</div>
-                                                            <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department2')}>Department2</div>
-                                                            <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department3')}>Department3</div>
-                                                            <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department4')}>Department4</div>
-                                                        </div>
-                                                    )}
-                                                </div> */}
+                                               
                                                 <div className="dropdown3">
                                                     <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
                                                         <div>{formData_3.department_3 || "Select department"}</div>

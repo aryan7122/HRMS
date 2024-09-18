@@ -14,9 +14,12 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { OutsideClick2 } from '../../Department/DepartmentList/OutsideClick2'
 
 // popup
 const DesignationDetails = () => {
+    const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
+
     // popup
     const initialFormData_3 = {
         email_3: '',
@@ -57,6 +60,7 @@ const DesignationDetails = () => {
         toggleDropdown_3('departmentOpen_3');
     };
 
+    const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
 
     // 
     const [currentSlide, setCurrentSlide] = useState(0); // State to track current slide
@@ -157,6 +161,13 @@ const DesignationDetails = () => {
       
     }
 
+    const selectOption = (field, option) => {
+        setFormData_3((prevState) => ({
+            ...prevState,
+            [field]: option,
+        }));
+        setDepartmentOpen(false)
+    };
 
     // popup 
   
@@ -228,6 +239,8 @@ const DesignationDetails = () => {
                 console.error("Error during create/update:", error);
             });
     };
+    const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
+
 
     // popup
 
@@ -338,7 +351,7 @@ const DesignationDetails = () => {
                 <div className="popup-overlay">
                     <div className="popup-content">
                         <div className="add-designation-header">
-                            <h2>Update Designation</h2>
+                            <h2>Add New Designation</h2>
                             <button className="close_btn" onClick={closePopup}>
                                 <IoIosCloseCircleOutline />
                             </button>
@@ -355,25 +368,40 @@ const DesignationDetails = () => {
                                             value={formData_3.email_3}
                                             onChange={handleInputChange_3}
                                             required
+                                            className='imputaddD'
                                         />
+
                                     </div>
 
                                     <div className="form-group" id="depart">
-                                        <label>Department</label>
-                                        <div className="dropdown10">
-                                            <div className="dropdown-button10" onClick={() => toggleDropdown_3('departmentOpen_3')}>
-                                                <div className='choose1'>{formData_3.department_3 || "Choose department"}</div>
+                                        <label className='Departmentlabel'>Department</label>
+
+                                        <div className="dropdown3">
+                                            <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
+                                                <div>{formData_3.department_3 || "Select department"}</div>
                                                 <span id='toggle_selectIcon'>
-                                                    {!dropdowns_3.departmentOpen_3 ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                                    {!isDepartmentOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
                                                 </span>
                                             </div>
-
-                                            {dropdowns_3.departmentOpen_3 && (
-                                                <div className="dropdown-menu10">
-                                                    <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department1')}>Department1</div>
-                                                    <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department2')}>Department2</div>
-                                                    <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department3')}>Department3</div>
-                                                    <div className="dropdown-item10" onClick={() => selectOption_3('department_3', 'Department4')}>Department4</div>
+                                            {isDepartmentOpen && (
+                                                <div className="dropdown-menu" ref={departmentRef}>
+                                                    <input
+                                                        type="search"
+                                                        className='search22'
+                                                        placeholder="Search department"
+                                                        value={searchQueryDepartment}
+                                                        id='searchDepartmentHead'
+                                                        onChange={handleSearchQueryChangeDepartment}
+                                                    />
+                                                    <div className="dropdown_I">
+                                                        {['Management', 'Development', 'HR'].filter(option =>
+                                                            option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
+                                                        ).map(option => (
+                                                            <div className="dropdown-item" onClick={() => selectOption('department_3', option)} key={option}>
+                                                                {option}
+                                                            </div>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             )}
                                         </div>
@@ -386,12 +414,12 @@ const DesignationDetails = () => {
 
                                 <textarea
                                     placeholder="Enter description"
-                                    name="Description_3"
+                                    name="Description_3" // Ensure name matches the form data key
                                     value={formData_3.Description_3}
                                     onChange={handleInputChange_3}
                                 ></textarea>
 
-                                <button type="submit">Update
+                                <button type="submit">Submit
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
                                         <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
                                         <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

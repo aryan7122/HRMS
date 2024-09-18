@@ -15,6 +15,8 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { OutsideClick } from '../../../components/OutSideClick';
 import OutsideClick4 from './OutSideClick4.jsx';
+import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
 
 import './AllEmployeeList.scss';
 
@@ -31,17 +33,17 @@ const AllEmployeeList = () => {
 
     const navigate = useNavigate()
     const [employees, setEmployees] = useState([
-        { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "ananya.singh@example.com", phone: "+918555031082", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "vijay.shah@example.com", phone: "+917555232340", department: "Maintenance", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "arjun.reddy@example.com", phone: "+918555079422", department: "Manning", dateOfJoining: "16-May-2024", status: "Resigned", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "aarti.pandey@example.com", phone: "+919955565042", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Terminated", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "priya.sharma@example.com", phone: "+918553613128", department: "Operations", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "kavita.agarwal@example.com", phone: "+918555234569", department: "Engineering", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "raj.malhotra@example.com", phone: "+918555205575", department: "Manning", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "rahul.mishra@example.com", phone: "+919255544527", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "meera.verma@example.com", phone: "+919555566270", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "manish.jain@example.com", phone: "+917555639758", department: "HSEQ", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
-        { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "neha.patel@example.com", phone: "+919655516575", department: "IT", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false }
+        // { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "ananya.singh@example.com", phone: "+918555031082", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "vijay.shah@example.com", phone: "+917555232340", department: "Maintenance", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "arjun.reddy@example.com", phone: "+918555079422", department: "Manning", dateOfJoining: "16-May-2024", status: "Resigned", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "aarti.pandey@example.com", phone: "+919955565042", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Terminated", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "priya.sharma@example.com", phone: "+918553613128", department: "Operations", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "kavita.agarwal@example.com", phone: "+918555234569", department: "Engineering", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "raj.malhotra@example.com", phone: "+918555205575", department: "Manning", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "rahul.mishra@example.com", phone: "+919255544527", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "meera.verma@example.com", phone: "+919555566270", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "manish.jain@example.com", phone: "+917555639758", department: "HSEQ", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "neha.patel@example.com", phone: "+919655516575", department: "IT", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false }
     ]);
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
@@ -88,16 +90,24 @@ const AllEmployeeList = () => {
         setCurrentPage(1);
     };
 
+
     const statuses = ['Active', 'Inactive', 'Resigned', 'Terminated', 'Notice Period'];
     const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
     const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
-
+    // 
+    const [loading, setLoading] = useState(true);
+    const [sms, setSms] = useState('')
+    const [statusId, setStatusId] = useState('')
+    const [statusNew, setStatusNew] = useState('')
+    // 
+    // 
     const handleStatusChange = (index, newStatus) => {
         const updatedEmployees = [...filteredEmployees];
         updatedEmployees[index].status = newStatus;
         setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
-        isFilterOpen4(null)
+        // isFilterOpen4(null)
+        setSms('')
     };
 
     const handleSearchChange = (e) => {
@@ -167,7 +177,7 @@ const AllEmployeeList = () => {
         navigate('/add-employee')
     }
     const JobDetailsPage = () => {
-        navigate('/employee-details')
+        navigate(`/employee-details`)
     }
     const filter_left = () => {
         setToggleLeft(!toggleLeft)
@@ -186,8 +196,104 @@ const AllEmployeeList = () => {
         }
     };
 
+    // 
+
+    // api get6 list
+    const token = localStorage.getItem('access_token');
+    console.log('token:',token)
+
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/employee/list', {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                // setEmployees(response.data.job_opening);
+                setEmployees(response.data.employee)
+                setFilteredEmployees(response.data.employee); // filteredEmployees ko bhi sync karo
+                console.log('response 🥳', response.data.employee);
+                // setLoading(false);
+                // setSms()
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+
+
+            });
+    }, []);
+    // update status
+
+
+    // useEffect(() => {
+
+    //     if (statusId && statusNew) {
+
+    //         axios.post('https://devstronauts.com/public/api/jobopening/status-update', {
+    //             job_id: statusId,
+    //             job_status: statusNew
+    //         }, {
+    //             headers: {
+    //                 'Authorization': `Bearer ${token}`
+    //             }
+    //         })
+    //             .then(response => {
+    //                 console.log('🥳',response)
+    //                 // setUpdatingEmpId(statusId);
+    //                 setSms(`Status update successfully`)
+    //                 toast.success('Status update successfully.', {
+    //                     position: "top-right",
+    //                     autoClose: 3000,
+    //                     hideProgressBar: false,
+    //                     closeOnClick: true,
+    //                     pauseOnHover: true,
+    //                     draggable: true,
+    //                     progress: undefined,
+    //                     theme: "light",
+    //                 });
+    //                 if (response.data.success === true) {
+    //                     // setShowAlert(true)
+    //                     // setTimeout(() => {
+    //                     //     setShowAlert(false)
+    //                     // }, 4000);
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 // setSms('Status update Failed')
+    //                 // alert(error)
+    //                 toast.error('Status update Failed.', {
+    //                     position: "top-right",
+    //                     autoClose: 3000,
+    //                     hideProgressBar: false,
+    //                     closeOnClick: true,
+    //                     pauseOnHover: true,
+    //                     draggable: true,
+    //                     progress: undefined,
+    //                     theme: "light",
+    //                 });
+    //                 // setShowAlertError(true)
+    //                 // setTimeout(() => {
+    //                 //     setShowAlertError(false)
+    //                 // }, 4000);
+
+    //                 console.error("Error fetching data: ", error);
+    //             });
+    //     }
+    // }, [statusNew]);
+
+    // 
+
     return (
         <div id='allEmp'>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
@@ -419,27 +525,25 @@ const AllEmployeeList = () => {
                                             </span>
                                         } */}
                                     </td>
-                                    <td onClick={JobDetailsPage}>{emp.id}</td>
-                                    <td onClick={JobDetailsPage} >{emp.firstName}</td>
-                                    <td onClick={JobDetailsPage}>{emp.lastName}</td>
-                                    <td onClick={JobDetailsPage}>{emp.email}</td>
-                                    <td onClick={JobDetailsPage}>{emp.phone}</td>
-                                    <td onClick={JobDetailsPage}>{emp.department}</td>
-                                    <td onClick={JobDetailsPage}>{emp.dateOfJoining}</td>
-                                    
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.id}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.first_name}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.last_name}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.email}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.phone_code +' '+ emp.mobile}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.department_id}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.joining_date}</td>
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
                                                 <div onClick={toggleFilter4} ref={filterButtonRef4}>
                                                     <div
-                                                        className={`status-display ${emp.status.toLowerCase().replace(' ', '-')}`}
+                                                        className={`status-display ${emp.employee_status ? emp.employee_status.toLowerCase().replace(' ', '-') : ''}`}
                                                         onClick={() => setIsOpen(isOpen === index ? null : index)}
                                                     >
-                                                        <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}
-                                                        ></span>
+                                                        <span className={`left_dot ${emp.employee_status ? emp.employee_status.toLowerCase().replace(' ', '-') : ''}`}></span>
                                                         <div>
                                                             <div className="EmpS" >
-                                                                {emp.status}
+                                                                {emp.employee_status}
                                                             </div>
                                                             <div className="^wdown">
                                                                 <MdOutlineKeyboardArrowDown />
@@ -501,6 +605,11 @@ const AllEmployeeList = () => {
                             ))}
                         </tbody>
                     </table>
+                    {loading ? (
+                        <div id='Loading'>
+                            <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
+                        </div> // Show loading text or spinner when data is being fetched
+                    ) : ('')}
                 </div>
                 <div className="pagination">
                     <div className="rows-per-page">
