@@ -723,7 +723,6 @@ input {
 
 
 
-/*  */
 .wave {
   animation-name: wave-animation;
   /* Refers to the name of your @keyframes element below */
@@ -771,7 +770,6 @@ input {
     transform: rotate(0.0deg)
   }
 }
-
 
 
 .Alert{

@@ -376,8 +376,18 @@ img{
             font-size: 18px;
             width: 30px;
             height: 30px;
-            h3 {
-            }
+           .BirthdaySVG{
+              border-radius: 50%;
+              width: 25px;
+              height: 25px;
+              padding: 2px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border: 2px solid #30005A !important;
+            
+           }
+
           }
         }
 
@@ -489,7 +499,7 @@ img{
                 height: 40px;
                 border-radius: 50%;
                 margin-left: -20px;
-                border: 1px solid red;
+                border: 1px solid #A448EE;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1070,7 +1080,7 @@ img{
           justify-content: space-between;
           align-items: center;
           // padding: 10px;
-          border: 1px solid #ebe7ee !important;
+          border: 1px solid #cfcccc !important;
           margin: 10px 0 20px 0;
           border-radius: 10px;
           box-shadow: 0px 0px 10px 0.1px rgba(165, 157, 157, 0.16);
@@ -1279,3 +1289,5 @@ img{
     scale: 1;
   }
 }
+
+

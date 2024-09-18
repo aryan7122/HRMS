@@ -797,12 +797,12 @@ const AllJobList = () => {
                 <div className="pagination">
                     <div className="rows-per-page">
                         <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
-                            <option value={5}>5 par page</option>
-                            <option value={10}>10 par page</option>
-                            <option value={30}>30 par page</option>
-                            <option value={50}>50 par page</option>
-                            <option value={70}>70 par page</option>
-                            <option value={100}>100 par page</option>
+                            <option value={5}>5 per page</option>
+                            <option value={10}>10 per page</option>
+                            <option value={30}>30 per page</option>
+                            <option value={50}>50 per page</option>
+                            <option value={70}>70 per page</option>
+                            <option value={100}>100 per page</option>
                         </select>
                     </div>
                     <div className="page-navigation">

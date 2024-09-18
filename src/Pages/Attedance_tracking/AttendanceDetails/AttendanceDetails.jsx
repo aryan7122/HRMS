@@ -76,7 +76,7 @@ const AttendanceDetails = () => {
                         <div className="about_user">
                             <h3>Ramesh Gupta</h3>
                             {/* <p>Web Developer / Full-Time</p> */}
-                            <div className='On_Hold'><h4></h4> <h5>On Hold</h5></div>
+                            <div className=''><h4></h4> <h5>On Hold</h5></div>
                         </div>
                     </div>
                     <div className="action_card">

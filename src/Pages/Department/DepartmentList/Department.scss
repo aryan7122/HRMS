@@ -837,10 +837,11 @@
             margin: 0 2px;
             border-radius: 5px;
             cursor: pointer;
+            background: #9d05e4 !important;
 
             &.activePageIndex {
               background-color: #6a05a4bd !important;
-              color: rgb(157, 5, 228);
+              color: #ffffff;
             }
             button:hover {
               border: 1px solid $primary-color;

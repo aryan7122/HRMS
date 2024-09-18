@@ -89,8 +89,8 @@ const EmployeeDashboard = () => {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
-        arrows: false,  
-        beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex), 
+        arrows: false,
+        beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex),
         customPaging: (i) => (
             <div
                 style={{
@@ -186,7 +186,14 @@ const EmployeeDashboard = () => {
                         <div className="header_Birthday">
                             <h3>Employee Birthday Today</h3>
                             <div>
-                                <LiaBirthdayCakeSolid />
+                                <span className='BirthdaySVG'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#30005a" fill="none">
+                                        <path d="M13.5 4.5C13.5 5.32843 12.8284 6 12 6C11.1716 6 10.5 5.32843 10.5 4.5C10.5 3.67157 12 2 12 2C12 2 13.5 3.67157 13.5 4.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                        <path d="M12 6V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M17.6667 14C19.2315 14 20.5 12.8807 20.5 11.5C20.5 10.1193 19.2315 9 17.6667 9H6.33333C4.76853 9 3.5 10.1193 3.5 11.5C3.5 12.8807 4.76853 14 6.33333 14C7.70408 14 8.90415 13.1411 9.16667 12C9.42919 13.1411 10.6293 14 12 14C13.3707 14 14.5708 13.1411 14.8333 12C15.0959 13.1411 16.2959 14 17.6667 14Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                        <path d="M5 14L5.52089 16.5796C6.04532 19.1768 6.30754 20.4754 7.19608 21.2377C8.08462 22 9.33608 22 11.839 22H12.161C14.6639 22 15.9154 22 16.8039 21.2377C17.6925 20.4754 17.9547 19.1768 18.4791 16.5796L19 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </span>
                             </div>
                         </div>
                         <div className="top_border"></div>
@@ -214,16 +221,22 @@ const EmployeeDashboard = () => {
                 </div>
 
                 <div className="chart_Performance_Stats">
-
+                    <div className="headerCrt">
+                        <h3>Performance Stats</h3>
+                        <select>
+                            <option>This Month</option>
+                            <option>This Week</option>
+                        </select>
+                    </div>
                     <BarChart
                         series={[
-                            { data: [9, 8, 8, 3, 8, 8, 6], stack: 'B', label: 'Assigned Hours', color: '#591AB7' }, 
+                            { data: [9, 8, 8, 3, 8, 8, 6], stack: 'B', label: 'Assigned Hours', color: '#591AB7' },
                             { data: [8, 7, 8, 4, 8, 1, 8], stack: 'A', label: 'Total Hours Worked', color: '#7C3CE9' },
                         ]}
                         xAxis={[
                             { scaleType: 'band', data: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], },
                         ]}
-                        style={{ width: '100%', height: '420px' }}
+                        style={{ width: '100%', height: '370px' }}
                     />
 
                 </div>
@@ -233,7 +246,12 @@ const EmployeeDashboard = () => {
                 <div className="box_">
                     <div className="head">
                         <p>All Employees</p>
-                        <TfiLayoutMenuSeparated />
+                        {/* <TfiLayoutMenuSeparated /> */}
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#4a4a4a" fill="none">
+                            <path d="M11.9959 12H12.0049" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M17.9998 12H18.0088" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M5.99981 12H6.00879" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
                     </div>
                     <div className="centerData">
                         <div>
@@ -241,7 +259,12 @@ const EmployeeDashboard = () => {
                             <h2>210</h2>
                         </div>
                         <div className='up'>
-                            <span> <IoMdTrendingUp /></span>
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#4a4a4a" fill="none">
+                                    <path d="M20 13V8H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M20 8L15 13C14.1174 13.8826 13.6762 14.3238 13.1346 14.3726C13.045 14.3807 12.955 14.3807 12.8654 14.3726C12.3238 14.3238 11.8826 13.8826 11 13C10.1174 12.1174 9.67615 11.6762 9.13457 11.6274C9.04504 11.6193 8.95496 11.6193 8.86543 11.6274C8.32385 11.6762 7.88256 12.1174 7 13L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
                             <p>2%</p>
                         </div>
                     </div>
@@ -252,7 +275,12 @@ const EmployeeDashboard = () => {
                 <div className="box_">
                     <div className="head">
                         <p>All Employees</p>
-                        <TfiLayoutMenuSeparated />
+                        {/* <TfiLayoutMenuSeparated /> */}
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#4a4a4a" fill="none">
+                            <path d="M11.9959 12H12.0049" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M17.9998 12H18.0088" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M5.99981 12H6.00879" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
                     </div>
                     <div className="centerData">
                         <div>
@@ -260,7 +288,12 @@ const EmployeeDashboard = () => {
                             <h2>210</h2>
                         </div>
                         <div className='up'>
-                            <span> <IoMdTrendingUp /></span>
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#4a4a4a" fill="none">
+                                    <path d="M20 13V8H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M20 8L15 13C14.1174 13.8826 13.6762 14.3238 13.1346 14.3726C13.045 14.3807 12.955 14.3807 12.8654 14.3726C12.3238 14.3238 11.8826 13.8826 11 13C10.1174 12.1174 9.67615 11.6762 9.13457 11.6274C9.04504 11.6193 8.95496 11.6193 8.86543 11.6274C8.32385 11.6762 7.88256 12.1174 7 13L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
                             <p>2%</p>
                         </div>
                     </div>
@@ -271,7 +304,12 @@ const EmployeeDashboard = () => {
                 <div className="box_">
                     <div className="head">
                         <p>All Employees</p>
-                        <TfiLayoutMenuSeparated />
+                        {/* <TfiLayoutMenuSeparated /> */}
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#4a4a4a" fill="none">
+                            <path d="M11.9959 12H12.0049" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M17.9998 12H18.0088" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M5.99981 12H6.00879" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
                     </div>
                     <div className="centerData">
                         <div>
@@ -290,7 +328,12 @@ const EmployeeDashboard = () => {
                 <div className="box_">
                     <div className="head">
                         <p>All Employees</p>
-                        <TfiLayoutMenuSeparated />
+                        {/* <TfiLayoutMenuSeparated /> */}
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#4a4a4a" fill="none">
+                            <path d="M11.9959 12H12.0049" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M17.9998 12H18.0088" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M5.99981 12H6.00879" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
                     </div>
                     <div className="centerData">
                         <div>
