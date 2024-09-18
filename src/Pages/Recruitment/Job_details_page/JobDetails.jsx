@@ -53,6 +53,30 @@ const JobDetails = () => {
                 });
         }
     }, [jobData, token]); // Add jobData as dependency
+    // HandleDelete
+    const HandleDelete = () => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/jobopening/delete', { id }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // setDepartmentdetails(response.data.department);
+                    // setDepartmentdetails2(response.data.department.enteredbyid)
+                    console.log('⚠️ delete ❗', response)
+                    // setLoading(false);
+                    navigate('/all-job-list')
+
+                })
+                .catch(error => {
+                    setLoading(false);
+                    // setError(true);
+                    console.error("Error fetching designation details:", error);
+                });
+        }
+    }
+    // HandleDelete
 
     const JobList = () => {
         navigate('/all-job-list');
@@ -96,7 +120,7 @@ const JobDetails = () => {
                     </div>
                     <div className="action_card">
                         <div onClick={JOBUPDATE}><BiEditAlt /></div>
-                        <div><span><MdDeleteOutline /></span>Delete</div>
+                        <div onClick={HandleDelete}><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
                 <div className="info-cards" style={{ paddingBottom: '30px' }}>

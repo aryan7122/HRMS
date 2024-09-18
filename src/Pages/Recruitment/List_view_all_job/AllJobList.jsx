@@ -95,7 +95,7 @@ const AllJobList = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     // console.log('searchQuery', searchQuery)
-    
+
 
     // console.log(selectedDepartment)
 
@@ -295,7 +295,28 @@ const AllJobList = () => {
     }, [statusId, statusNew, token, sms]);
     // update status
 
+    const HandleDelete = () => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/department/delete', { id }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // setDepartmentdetails(response.data.department);
+                    // setDepartmentdetails2(response.data.department.enteredbyid)
+                    console.log('⚠️ delete ❗', response)
+                    // setLoading(false);
+                    navigate('/department')
 
+                })
+                .catch(error => {
+                    setLoading(false);
+                    setError(true);
+                    console.error("Error fetching designation details:", error);
+                });
+        }
+    }
     useEffect(() => {
 
         if (statusId && statusNew) {
@@ -380,8 +401,8 @@ const AllJobList = () => {
         toggleFilter2()
     };
     // 
-  
-    
+
+
 
     return (
         <div id='allEmp'>
@@ -728,7 +749,7 @@ const AllJobList = () => {
                                                         UpdateStatusHndle(emp.id);
                                                     }}>
                                                         <div
-                                                           
+
                                                         >
                                                             {emp.job_status}
                                                         </div>

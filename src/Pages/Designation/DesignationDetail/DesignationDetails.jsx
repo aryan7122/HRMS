@@ -124,7 +124,30 @@ const DesignationDetails = () => {
         }
     }, [designationDetails2,designationDetails]);
 
+    // HandleDelete
+    const HandleDelete = () => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/designation/delete', { id }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // setDepartmentdetails(response.data.department);
+                    // setDepartmentdetails2(response.data.department.enteredbyid)
+                    console.log('⚠️ delete ❗', response)
+                    // setLoading(false);
+                    navigate('/designation')
 
+                })
+                .catch(error => {
+                    setLoading(false);
+                    setError(true);
+                    console.error("Error fetching designation details:", error);
+                });
+        }
+    }
+    // HandleDelete
 
     const handleBackToDesignations = () => {
         navigate('/designation');
@@ -270,7 +293,7 @@ const DesignationDetails = () => {
                     <div className="action_card">
                         <div><RxReload /></div>
                         <div onClick={UpdatedesignationDetails}><BiEditAlt /></div>
-                        <div><span><MdDeleteOutline /></span>Delete</div>
+                        <div onClick={HandleDelete}><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
                 <div className="info-cards">

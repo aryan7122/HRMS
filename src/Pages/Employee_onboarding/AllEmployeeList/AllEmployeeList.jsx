@@ -26,7 +26,12 @@ const AllEmployeeList = () => {
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
     // const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick4();
-
+    // 
+    const [loading, setLoading] = useState(true);
+    const [sms, setSms] = useState('')
+    const [statusId, setStatusId] = useState('')
+    const [statusNew, setStatusNew] = useState('')
+    // 
     const [hidImport, setHidImport] = useState(true);
     const [allDel, setAllDel] = useState(false);
     const [toggleLeft, setToggleLeft] = useState(false)
@@ -94,25 +99,16 @@ const AllEmployeeList = () => {
     const statuses = ['Active', 'Inactive', 'Resigned', 'Terminated', 'Notice Period'];
     const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
     const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
-    // 
-    const [loading, setLoading] = useState(true);
-    const [sms, setSms] = useState('')
-    const [statusId, setStatusId] = useState('')
-    const [statusNew, setStatusNew] = useState('')
-    // 
-    // 
-    const handleStatusChange = (index, newStatus) => {
-        const updatedEmployees = [...filteredEmployees];
-        updatedEmployees[index].status = newStatus;
-        setFilteredEmployees(updatedEmployees);
-        setIsOpen(null);
-        // isFilterOpen4(null)
-        setSms('')
-    };
+ 
+ 
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
+
+    const UpdateStatusHndle = (id) => {
+        setStatusId(id)
+    }
 
 
     const handleFilterChange = (e) => {
@@ -212,7 +208,7 @@ const AllEmployeeList = () => {
                 // setEmployees(response.data.job_opening);
                 setEmployees(response.data.employee)
                 setFilteredEmployees(response.data.employee); // filteredEmployees ko bhi sync karo
-                console.log('response 🥳', response.data.employee);
+                // console.log('response 🥳', response.data.employee);
                 // setLoading(false);
                 // setSms()
             })
@@ -221,67 +217,71 @@ const AllEmployeeList = () => {
 
 
             });
-    }, []);
-    // update status
+    }, [statusId, statusNew, token, sms]);
+ 
+    useEffect(() => {
+        if (statusId && statusNew) {
 
+            axios.post('https://devstronauts.com/public/api/employee/status/update', {
+                emp_id: statusId,
+                employee_status: statusNew
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // setUpdatingEmpId(statusId);
+                    setSms(`Status update successfully`)
+                    toast.success('Status update successfully.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    console.log('👉✅❤️👋',response)
+                    if (response.data.success === true) {
+                        // setShowAlert(true)
+                        // setTimeout(() => {
+                        //     setShowAlert(false)
+                        // }, 4000);
+                    }
+                })
+                .catch(error => {
+                    // setSms('Status update Failed')
+                    // alert(error)
+                    toast.error('Status update Failed.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    // setShowAlertError(true)
+                    // setTimeout(() => {
+                    //     setShowAlertError(false)
+                    // }, 4000);
 
-    // useEffect(() => {
-
-    //     if (statusId && statusNew) {
-
-    //         axios.post('https://devstronauts.com/public/api/jobopening/status-update', {
-    //             job_id: statusId,
-    //             job_status: statusNew
-    //         }, {
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`
-    //             }
-    //         })
-    //             .then(response => {
-    //                 console.log('🥳',response)
-    //                 // setUpdatingEmpId(statusId);
-    //                 setSms(`Status update successfully`)
-    //                 toast.success('Status update successfully.', {
-    //                     position: "top-right",
-    //                     autoClose: 3000,
-    //                     hideProgressBar: false,
-    //                     closeOnClick: true,
-    //                     pauseOnHover: true,
-    //                     draggable: true,
-    //                     progress: undefined,
-    //                     theme: "light",
-    //                 });
-    //                 if (response.data.success === true) {
-    //                     // setShowAlert(true)
-    //                     // setTimeout(() => {
-    //                     //     setShowAlert(false)
-    //                     // }, 4000);
-    //                 }
-    //             })
-    //             .catch(error => {
-    //                 // setSms('Status update Failed')
-    //                 // alert(error)
-    //                 toast.error('Status update Failed.', {
-    //                     position: "top-right",
-    //                     autoClose: 3000,
-    //                     hideProgressBar: false,
-    //                     closeOnClick: true,
-    //                     pauseOnHover: true,
-    //                     draggable: true,
-    //                     progress: undefined,
-    //                     theme: "light",
-    //                 });
-    //                 // setShowAlertError(true)
-    //                 // setTimeout(() => {
-    //                 //     setShowAlertError(false)
-    //                 // }, 4000);
-
-    //                 console.error("Error fetching data: ", error);
-    //             });
-    //     }
-    // }, [statusNew]);
-
+                    console.error("Error fetching data: ", error);
+                });
+        }
+    }, [statusNew]);
     // 
+    const handleStatusChange = (index, newStatus) => {
+        setStatusNew(newStatus)
+        const updatedEmployees = [...filteredEmployees];
+        updatedEmployees[index].status = newStatus;
+        setFilteredEmployees(updatedEmployees);
+        setIsOpen(null);
+        setSms('')
+    };
 
     return (
         <div id='allEmp'>
@@ -525,7 +525,7 @@ const AllEmployeeList = () => {
                                             </span>
                                         } */}
                                     </td>
-                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.id}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.employee_id}</td>
                                     <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.first_name}</td>
                                     <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.last_name}</td>
                                     <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.email}</td>
@@ -541,7 +541,9 @@ const AllEmployeeList = () => {
                                                         onClick={() => setIsOpen(isOpen === index ? null : index)}
                                                     >
                                                         <span className={`left_dot ${emp.employee_status ? emp.employee_status.toLowerCase().replace(' ', '-') : ''}`}></span>
-                                                        <div>
+                                                        <div onClick={() => {
+                                                            UpdateStatusHndle(emp.id);
+                                                        }}>
                                                             <div className="EmpS" >
                                                                 {emp.employee_status}
                                                             </div>
@@ -567,40 +569,7 @@ const AllEmployeeList = () => {
                                             </div>
                                         </div>
                                     </td>
-                                    {/* <td >
-                                        <div key={index} className="status-dropdown">
-                                            <div className="status-container">
-                                                <div onClick={() => toggleFilter4(index)} ref={filterButtonRef4}>
-                                                    <div
-                                                        className={`status-display ${emp.status.toLowerCase().replace(' ', '-')}`}
-                                                    >
-                                                        <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}></span>
-                                                        <div>
-                                                            <div className="EmpS">
-                                                                {emp.status}
-                                                            </div>
-                                                            <div className="^wdown">
-                                                                <MdOutlineKeyboardArrowDown />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {isFilterOpen4 === index && (
-                                                    <div className="status-options" ref={filterRef4}>
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </td> */}
+                                    
                                 </tr>
                             ))}
                         </tbody>

@@ -153,7 +153,7 @@ const DepartmentDetails = () => {
                 .then(response => {
                     setDepartmentdetails(response.data.department);
                     setDepartmentdetails2(response.data.department.enteredbyid)
-                    console.log('response.data.designation', response.data.department)
+                    // console.log('response.data.designation', response.data.department)
                     setLoading(false);
                 })
                 .catch(error => {
@@ -163,7 +163,30 @@ const DepartmentDetails = () => {
                 });
         }
     }, [id, token]);
+    // HandleDelete
+    const HandleDelete = () => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/department/delete', { id }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // setDepartmentdetails(response.data.department);
+                    // setDepartmentdetails2(response.data.department.enteredbyid)
+                    console.log('⚠️ delete ❗', response)
+                    // setLoading(false);
+                    navigate('/department')
 
+                })
+                .catch(error => {
+                    setLoading(false);
+                    setError(true);
+                    console.error("Error fetching designation details:", error);
+                });
+        }
+    }
+    // HandleDelete
     useEffect(() => {
         // if (departmentdetails) {  // Ensure jobData is available before making this call
         axios.post('https://devstronauts.com/public/api/get-user', {
@@ -175,7 +198,7 @@ const DepartmentDetails = () => {
         })
             .then(response => {
                 // setJobData2(response.data.created_by);
-                console.log('👉👉👉👉', response.data.created_by)
+                // console.log('👉👉👉👉', response.data.created_by)
                 setDepartmentdetails3(response.data.created_by)
             })
             .catch(error => {
@@ -341,7 +364,7 @@ const DepartmentDetails = () => {
                     <div className="action_card">
                         <div><RxReload /></div>
                         <div onClick={PopUpUpdate}><BiEditAlt /></div>
-                        <div><span><MdDeleteOutline /></span>Delete</div>
+                        <div onClick={HandleDelete}><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
                 <div className="info-cards">
