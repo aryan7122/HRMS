@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSidebarW } from '../slices/userSlice';
 import { setLiHover } from '../slices/userSlice';
 
-
+// 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
 
     // redux
@@ -268,22 +268,22 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
                             >
                                 <li>
-                                    <span>
+                                    <span className='spanLiP'>
                                         <span><TbFileMinus /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Files</p>} {isOpen ? '' : <div className='hover_P'><p>Files</p> <div></div></div>}
                                     </span>
                                 </li>
                                 <li>
-                                    <span>
+                                    <span className='spanLiP'>
                                         <span><TbGraph /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Performance</p>}  {isOpen ? '' : <div className='hover_P'><p>Performance</p> <div></div></div>}
                                     </span>
                                 </li>
                                 <li>
-                                    <span>
+                                    <span className='spanLiP'>
                                         <span><TbFolderSymlink /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Onboarding</p>}  {isOpen ? '' : <div className='hover_P'><p>Onboarding</p> <div></div></div>}
                                     </span>
                                 </li>
                                 <li>
-                                    <span>
+                                    <span className='spanLiP'>
                                         <span><BsClipboardData /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Report</p>}  {isOpen ? '' : <div className='hover_P'><p>Report</p> <div></div></div>}
                                     </span>
                                 </li>
@@ -381,12 +381,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                                         </div>
 
                                     </div>
-
-
-
-
-
-
                                 </ul>
                             </div>
                         </div>

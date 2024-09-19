@@ -230,7 +230,17 @@
       display: block;
       animation: zoomIn 0.5s forwards;
     }
+ li .spanLiP{
+  display: flex;
+  flex-direction: column;
 
+  width: 100%;
+  .openP{
+    // border: 1px solid red !important;
+    margin-top: 1px !important;
+
+  }
+ }
     li span:hover .hover_P {
       // transition: height 0.3s ease-in-out;
 
