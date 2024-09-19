@@ -34,6 +34,7 @@ const AllAttendanceList = (ClosePop) => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
+    const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
 
     const [allDel, setAllDel] = useState(true);
     const [thisDel, setThisDel] = useState(false)
@@ -384,13 +385,12 @@ const AllAttendanceList = (ClosePop) => {
                     </div>
                 </div>
                 <div className="right">
-                    <div className="toggle_selectIcon divRight" onClick={DateDropdowns}>
-
+                    <div className="toggle_selectIcon divRight" onClick={toggleFilter4} ref={filterButtonRef4}>
                         <div className='div_box' >
-                            <span id='toggle_selectIcon'>Select Date {!dropdowns ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                            <span id='toggle_selectIcon'>Select Date {!isFilterOpen4 ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                         </div>
-                        {dropdowns &&
-                            <div id='DateDropdowns'>
+                        {isFilterOpen4 &&
+                            <div id='DateDropdowns' ref={filterRef4}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs} >
                                     <DateCalendar />
                                 </LocalizationProvider>
@@ -600,76 +600,76 @@ const AllAttendanceList = (ClosePop) => {
 
                                 </tr>
                             ))} */}
-                                <>
-                                    {AttendanceData.map((data, index) => {
-                                        // PunchIn और PunchOut को JavaScript Date object में convert करें
-                                        const punchInTime = new Date(`1970-01-01T${data.punchIn}:00`);
-                                        const punchOutTime = new Date(`1970-01-01T${data.punchOut}:00`);
+                            <>
+                                {AttendanceData.map((data, index) => {
+                                    // PunchIn और PunchOut को JavaScript Date object में convert करें
+                                    const punchInTime = new Date(`1970-01-01T${data.punchIn}:00`);
+                                    const punchOutTime = new Date(`1970-01-01T${data.punchOut}:00`);
 
-                                        // Total time in milliseconds
-                                        const totalMilliseconds = punchOutTime - punchInTime;
+                                    // Total time in milliseconds
+                                    const totalMilliseconds = punchOutTime - punchInTime;
 
-                                        // Convert milliseconds to hours and minutes
-                                        const totalHours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
-                                        const totalMinutes = Math.floor((totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+                                    // Convert milliseconds to hours and minutes
+                                    const totalHours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
+                                    const totalMinutes = Math.floor((totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
 
-                                        // Format as "HH:MM"
-                                        const totalTimeWorked = `${totalHours}h ${totalMinutes}m`;
+                                    // Format as "HH:MM"
+                                    const totalTimeWorked = `${totalHours}h ${totalMinutes}m`;
 
-                                        return (
-                                            <tr key={index}>
-                                                <td>
-                                                    <input type="checkbox" checked={data.isChecked} onChange={() => handleCheckboxChange(index)} />
-                                                </td>
-                                                <td onClick={AttendanceDetailsPage}>{data.employeeName}</td>
-                                                <td onClick={AttendanceDetailsPage}>{data.date}</td>
-                                                <td onClick={AttendanceDetailsPage}>{data.shift}</td>
-                                                <td onClick={AttendanceDetailsPage}>{data.punchIn}</td>
-                                                <td onClick={AttendanceDetailsPage}>{data.punchOut}</td>
-                                                <td>{totalHours > 0 ? totalTimeWorked : '-'}</td>
-                                                <td onClick={AttendanceDetailsPage}>{data.overtime}</td>
-                                                <td>
-                                                    <div className="status-dropdown">
-                                                        <div key={index} className="status-container">
-                                                            <div
-                                                                className={`status-display ${data.status ? data.status.toLowerCase().replace(' ', '-') : ''}`}
-                                                                onClick={() => setIsOpen(isOpen === index ? null : index)}
-                                                            >
-                                                                {data.status && (
-                                                                    <>
-                                                                        <span className={`left_dot ${data.status.toLowerCase().replace(' ', '-')}`}></span>
-                                                                        <div>
-                                                                            <div className="">
-                                                                                {data.status}
-                                                                            </div>
-                                                                            <div className="^wdown">
-                                                                                <MdOutlineKeyboardArrowDown />
-                                                                            </div>
+                                    return (
+                                        <tr key={index}>
+                                            <td>
+                                                <input type="checkbox" checked={data.isChecked} onChange={() => handleCheckboxChange(index)} />
+                                            </td>
+                                            <td onClick={AttendanceDetailsPage}>{data.employeeName}</td>
+                                            <td onClick={AttendanceDetailsPage}>{data.date}</td>
+                                            <td onClick={AttendanceDetailsPage}>{data.shift}</td>
+                                            <td onClick={AttendanceDetailsPage}>{data.punchIn}</td>
+                                            <td onClick={AttendanceDetailsPage}>{data.punchOut}</td>
+                                            <td>{totalHours > 0 ? totalTimeWorked : '-'}</td>
+                                            <td onClick={AttendanceDetailsPage}>{data.overtime}</td>
+                                            <td>
+                                                <div className="status-dropdown">
+                                                    <div key={index} className="status-container">
+                                                        <div
+                                                            className={`status-display ${data.status ? data.status.toLowerCase().replace(' ', '-') : ''}`}
+                                                            onClick={() => setIsOpen(isOpen === index ? null : index)}
+                                                        >
+                                                            {data.status && (
+                                                                <>
+                                                                    <span className={`left_dot ${data.status.toLowerCase().replace(' ', '-')}`}></span>
+                                                                    <div>
+                                                                        <div className="">
+                                                                            {data.status}
                                                                         </div>
-                                                                    </>
-                                                                )}
-                                                            </div>
-                                                            {isOpen === index && (
-                                                                <div className="status-options">
-                                                                    {statuses.map(status => (
-                                                                        <div
-                                                                            key={status}
-                                                                            className="status-option"
-                                                                            onClick={() => handleStatusChange(index, status)}
-                                                                        >
-                                                                            {status}
+                                                                        <div className="^wdown">
+                                                                            <MdOutlineKeyboardArrowDown />
                                                                         </div>
-                                                                    ))}
-                                                                </div>
+                                                                    </div>
+                                                                </>
                                                             )}
                                                         </div>
+                                                        {isOpen === index && (
+                                                            <div className="status-options">
+                                                                {statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => handleStatusChange(index, status)}
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}
                                                     </div>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                </>
-                          
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </>
+
                         </tbody>
                     </table>
                     {loading ? (

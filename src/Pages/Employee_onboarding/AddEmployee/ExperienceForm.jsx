@@ -148,7 +148,7 @@ const ExperienceForm = ({ onSubmit }) => {
                                     name="companyName"
                                     value={form.companyName}
                                     onChange={(e) => handleChange(index, e)}
-                                    required
+                                    
                                 />
                             </div>
                             <div className="form-group">
@@ -159,7 +159,7 @@ const ExperienceForm = ({ onSubmit }) => {
                                     placeholder='Enter Industry Name'
                                     value={form.industry}
                                     onChange={(e) => handleChange(index, e)}
-                                    required
+                                    
                                 />
                             </div>
                             <div className="form-group">
@@ -170,7 +170,7 @@ const ExperienceForm = ({ onSubmit }) => {
                                     placeholder='Enter Job Title'
                                     value={form.jobTitle}
                                     onChange={(e) => handleChange(index, e)}
-                                    required
+                                    
                                 />
                             </div>
                             <div className="form-group">
@@ -194,14 +194,14 @@ const ExperienceForm = ({ onSubmit }) => {
                                         name="startDate"
                                         value={form.startDate}
                                         onChange={(e) => handleChange(index, e)}
-                                        required
+                                        
                                     />
                                     <input
                                         type="date"
                                         name="endDate"
                                         value={form.endDate}
                                         onChange={(e) => handleChange(index, e)}
-                                        required
+                                        
                                     />
                                 </div>
                             </div>
@@ -213,7 +213,7 @@ const ExperienceForm = ({ onSubmit }) => {
                                         name='photo'
                                         id="file"
                                         onChange={(e) => handleFileChange(index, e)}
-                                        required
+                                        
                                     />
                                     <label htmlFor="file" className="custom-file-upload">
                                         {!isUploaded && <GrCloudUpload className="upload-icon" />}

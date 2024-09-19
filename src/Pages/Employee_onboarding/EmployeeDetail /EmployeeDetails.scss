@@ -541,25 +541,8 @@
 }
 
 
-li,p,h3,h2,h1,h4,h5,span,button,img{
-//  border: 1px solid red !important;
-      animation: ScrollAnimationView linear ;
-      animation-timeline: view();
-      animation-range: 0% cover 1%;
-}
-
-@keyframes ScrollAnimationView {
-  from {
-    opacity: 0;
-    scale: 0.5;
-  }
-  to {
-    opacity: 1;
-    scale: 1;
 
 
-  }
-}
 #notFounPageID{
   margin:  0 auto;
   width: 98%;

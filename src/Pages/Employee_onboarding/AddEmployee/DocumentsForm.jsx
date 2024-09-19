@@ -324,7 +324,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                                 name='attachment'
                                                 id="file"
                                                 onChange={(e) => handleFileChange(index, e)}
-                                                required
+                                                
                                             />
                                             <label htmlFor="file" className="custom-file-upload">
                                                 {!isUploaded && <GrCloudUpload className="upload-icon" />}
@@ -390,7 +390,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                                 name='attachment'
                                                 id="file"
                                                 onChange={(e) => handleFileChange(index, e)}
-                                                required
+                                                
                                             />
                                             <label htmlFor="file" className="custom-file-upload">
                                                 {!isUploaded && <GrCloudUpload className="upload-icon" />}
@@ -406,7 +406,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                                 name='attachment'
                                                 id="file"
                                                 onChange={(e) => handleFileChange(index, e)}
-                                                required
+                                                
                                             />
                                             <label htmlFor="file" className="custom-file-upload">
                                                 {!isUploaded && <GrCloudUpload className="upload-icon" />}
@@ -472,7 +472,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                                 name='attachment'
                                                 id="file"
                                                 onChange={(e) => handleFileChange(index, e)}
-                                                required
+                                                
                                             />
                                             <label htmlFor="file" className="custom-file-upload">
                                                 {!isUploaded && <GrCloudUpload className="upload-icon" />}
@@ -537,7 +537,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                                 name='attachment'
                                                 id="file"
                                                 onChange={(e) => handleFileChange(index, e)}
-                                                required
+                                                
                                             />
                                             <label htmlFor="file" className="custom-file-upload">
                                                 {!isUploaded && <GrCloudUpload className="upload-icon" />}
@@ -602,7 +602,7 @@ const DocumentsForm = ({ onSubmit }) => {
                                                 name='attachment'
                                                 id="file"
                                                 onChange={(e) => handleFileChange(index, e)}
-                                                required
+                                                
                                             />
                                             <label htmlFor="file" className="custom-file-upload">
                                                 {!isUploaded && <GrCloudUpload className="upload-icon" />}

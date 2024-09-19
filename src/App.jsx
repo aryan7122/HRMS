@@ -13,7 +13,7 @@ import EmployeeDashboard from './Pages/Dashboard_and_Profile/EmployeeDashboard/E
 import AllEmployeeList from './Pages/Employee_onboarding/AllEmployeeList/AllEmployeeList.jsx';
 import AddEmloyee from './Pages/Employee_onboarding/AddEmployee/AddEmloyee.jsx';
 import EmployeeDetails from './Pages/Employee_onboarding/EmployeeDetail /EmployeeDetails.jsx';
-
+import '../src/styles/EffectSroll.scss'
 
 import './styles/App.scss';
 

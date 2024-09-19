@@ -905,10 +905,10 @@
   padding-top: 60px;
   z-index: 999;
   backdrop-filter: blur(3px);
-  // border: 1px solid red;
   //
-    .dropdown {
-      width: 100%;
+  .dropdown {
+    width: 100%;
+    // border: 1px solid red !important;
       height: 33px;
       // position: relative;
       border: 1px solid #e4e3e4;
@@ -977,6 +977,7 @@
         }
       }
       .dropdown_I{
+        // border: 1px solid red !important;
                 max-height: 170px;
                         overflow-y: auto;
                         overflow-x: hidden;

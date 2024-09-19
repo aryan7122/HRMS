@@ -97,6 +97,7 @@
         width: 35px;
         height: 45px;
         font-size: 24px !important;
+     
       }
       .color_li {
         color: #fff;
@@ -106,6 +107,7 @@
         }
         svg{
           color: #fff;
+          
         }
       }
       .color_li:active {
@@ -310,12 +312,16 @@
       // border-left: 1px solid rgba(255, 255, 255, 0.158);
       // border-top: 1px solid rgba(255, 255, 255, 0.144);
     }
-    li span {
+    li  {
       // height: 40px;
+      // border: 1px solid red !important;
+      animation: ScrollAnimationView linear;
+  animation-timeline: view();
+  animation-range: 0% cover 12%;
+  transition: transform 0.3s ease;
     }
 
     .li span {
-      // border: 1px solid red !important;
 
       background-color: #320b57;
       background-image: linear-gradient(120.71deg, #451a6d 21.08%, #ffffff00 84.63%);
@@ -349,9 +355,7 @@
       color: #fff;
     }
     li span svg {
-      animation: ScrollAnimationView linear;
-      animation-timeline: view();
-      animation-range: 0% cover 1%;
+     
     }
 
     .li .hover_menu {

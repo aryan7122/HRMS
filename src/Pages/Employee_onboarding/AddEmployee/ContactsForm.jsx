@@ -112,7 +112,7 @@ const ContactsForm = ({ onSubmit }) => {
                                 <CountryDropdown
                                     value={formData.country}
                                     onChange={(val) => setFormData(prevState => ({ ...prevState, country: val }))}
-                                    required
+                                    
                                 />
                             </div>
                             <div className="form-group">
@@ -121,7 +121,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     country={formData.country}
                                     value={formData.state}
                                     onChange={(val) => setFormData(prevState => ({ ...prevState, state: val }))}
-                                    required
+                                    
                                 />
                             </div>
                             <div className="form-group">
@@ -132,7 +132,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     name="city"
                                     value={formData.city}
                                     onChange={handleChange}
-                                    required
+                                    
                                 />
                             </div>
                             <div className="form-group">
@@ -143,7 +143,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     name="street1"
                                     value={formData.street1}
                                     onChange={handleChange}
-                                    required
+                                    
                                 />
                             </div>
                             <div className="form-group">
@@ -164,7 +164,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     name="zipCode"
                                     value={formData.zipCode}
                                     onChange={handleChange}
-                                    required
+                                    
                                 />
                             </div>
                             <div className="form-group">
@@ -175,7 +175,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     name="personalContactNumber"
                                     value={formData.personalContactNumber}
                                     onChange={handleChange}
-                                    required
+                                    
                                 />
                             </div>
                             <div className="form-group">
@@ -186,7 +186,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     name="emergencyContactNumber"
                                     value={formData.emergencyContactNumber}
                                     onChange={handleChange}
-                                    required
+                                    
                                 />
                             </div>
                             <div className="form-group">
@@ -197,14 +197,14 @@ const ContactsForm = ({ onSubmit }) => {
                                     name="personalEmail"
                                     value={formData.personalEmail}
                                     onChange={handleChange}
-                                    required
+                                    
                                 />
                             </div>
                         </div>
                     </div>
 
                     <div id='form'>
-                        <div className='div_heading'>
+                        <div className='div_heading' id='div_headingBit'>
                             <h2>Permanent Address</h2>
                             <div className='SameAddress'>
                                 <input
@@ -221,7 +221,7 @@ const ContactsForm = ({ onSubmit }) => {
                                 <CountryDropdown
                                     value={formData.permanentCountry}
                                     onChange={(val) => setFormData(prevState => ({ ...prevState, permanentCountry: val }))}
-                                    required={!sameAsPresent}
+                                    // required={!sameAsPresent}
                                     disabled={sameAsPresent}
                                 />
                             </div>
@@ -231,7 +231,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     country={formData.permanentCountry}
                                     value={formData.permanentState}
                                     onChange={(val) => setFormData(prevState => ({ ...prevState, permanentState: val }))}
-                                    required={!sameAsPresent}
+                                    // required={!sameAsPresent}
                                     disabled={sameAsPresent}
                                 />
                             </div>
@@ -243,7 +243,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     name="permanentCity"
                                     value={formData.permanentCity}
                                     onChange={handleChange}
-                                    required={!sameAsPresent}
+                                    // required={!sameAsPresent}
                                     disabled={sameAsPresent}
                                 />
                             </div>
@@ -255,7 +255,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     name="permanentStreet1"
                                     value={formData.permanentStreet1}
                                     onChange={handleChange}
-                                    required={!sameAsPresent}
+                                    // required={!sameAsPresent}
                                     disabled={sameAsPresent}
                                 />
                             </div>
@@ -278,7 +278,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     name="permanentZipCode"
                                     value={formData.permanentZipCode}
                                     onChange={handleChange}
-                                    required={!sameAsPresent}
+                                    // required={!sameAsPresent}
                                     disabled={sameAsPresent}
                                 />
                             </div>
@@ -290,7 +290,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     name="permanentPersonalContactNumber"
                                     value={formData.permanentPersonalContactNumber}
                                     onChange={handleChange}
-                                    required={!sameAsPresent}
+                                    // required={!sameAsPresent}
                                     disabled={sameAsPresent}
                                 />
                             </div>
@@ -302,7 +302,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     name="permanentEmergencyContactNumber"
                                     value={formData.permanentEmergencyContactNumber}
                                     onChange={handleChange}
-                                    required={!sameAsPresent}
+                                    // required={!sameAsPresent}
                                     disabled={sameAsPresent}
                                 />
                             </div>
@@ -314,7 +314,7 @@ const ContactsForm = ({ onSubmit }) => {
                                     name="permanentPersonalEmail"
                                     value={formData.permanentPersonalEmail}
                                     onChange={handleChange}
-                                    required={!sameAsPresent}
+                                    // required={!sameAsPresent}
                                     disabled={sameAsPresent}
                                 />
                             </div>

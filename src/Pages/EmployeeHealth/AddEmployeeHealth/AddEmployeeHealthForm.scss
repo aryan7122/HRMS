@@ -398,11 +398,11 @@
         border: 1px solid #650f6f;
       }
       @media (max-width: 1205px) {
-        input,
-        select,
-        label {
-          font-size: 0.9rem !important;
-        }
+        // input,
+        // select,
+        // label {
+        //   font-size: 0.9rem !important;
+        // }
       }
 
       // input[type="file"]:hover {
@@ -462,7 +462,7 @@
         border-radius: 2px !important;
         display: flex;
         align-items: center;
-        width: 94%;
+        // width: 94%;
         justify-content: space-between;
         height: 23px;
         div:nth-child(2) {

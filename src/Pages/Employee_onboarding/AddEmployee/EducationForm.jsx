@@ -112,7 +112,7 @@ const EducationForm = ({ onSubmit }) => {
                                     name="instituteName"
                                     value={form.instituteName}
                                     onChange={(e) => handleChange(index, e)}
-                                    required
+                                    
                                 />
                             </div>
                             <div className="form-group">
@@ -123,7 +123,7 @@ const EducationForm = ({ onSubmit }) => {
                                     placeholder='Enter Degree '
                                     value={form.degree}
                                     onChange={(e) => handleChange(index, e)}
-                                    required
+                                    
                                 />
                             </div>
 
@@ -134,7 +134,7 @@ const EducationForm = ({ onSubmit }) => {
                                     name="specialization"
                                     value={form.specialization}
                                     onChange={(e) => handleChange(index, e)}
-                                    required
+                                    
                                     placeholder='Enter Specialization'
                                 />
                             </div>
@@ -148,7 +148,7 @@ const EducationForm = ({ onSubmit }) => {
                                         accept="image/*"
                                         id="file"
                                         onChange={(e) => handleFileChange(index, e)}
-                                        required
+                                        
                                     />
                                     <label htmlFor="file" className="custom-file-upload">
                                         {!isUploaded && <GrCloudUpload className="upload-icon" />}
@@ -163,7 +163,7 @@ const EducationForm = ({ onSubmit }) => {
                                     name="completionDate"
                                     value={form.completionDate}
                                     onChange={(e) => handleChange(index, e)}
-                                    required
+                                    
                                     placeholder='Date of Completion'
                                 />
                             </div>
@@ -178,14 +178,14 @@ const EducationForm = ({ onSubmit }) => {
                                         name="fromDate"
                                         value={form.fromDate}
                                         onChange={(e) => handleChange(index, e)}
-                                        required
+                                        
                                     />
                                     <input
                                         type="date"
                                         name="toDate"
                                         value={form.toDate}
                                         onChange={(e) => handleChange(index, e)}
-                                        required
+                                        
                                     />
                                 </div>
                             </div>

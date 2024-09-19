@@ -188,7 +188,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                     accept="image/*"
                                     id="file"
                                     onChange={handleFileChange}
-                                    required
+                                    
                                 />
                                 <label htmlFor="file" className="custom-file-upload">
                                     {!isUploaded && <GrCloudUpload size={20} />}
@@ -197,7 +197,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                             </div>
                         </div>
                         <div className="form-group">
-                            <label>First Name</label>
+                            <label className='starred'>First Name*</label>
                             <input
                                 type="text"
                                 placeholder="Enter first name"
@@ -208,7 +208,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Last Name</label>
+                            <label className='starred'>Last Name*</label>
                             <input
                                 type="text"
                                 placeholder="Enter last name"
@@ -225,7 +225,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                 name="dob"
                                 value={formData.dob}
                                 onChange={handleChange}
-                                required
+                                
                             />
                         </div>
                         <div className="form-group">
@@ -236,7 +236,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                 name="age"
                                 value={formData.age}
                                 onChange={handleChange}
-                                required
+                                
                             />
                         </div>
                         {/* Gender Dropdown */}
@@ -258,7 +258,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                             </div>
                         </div>
                         <div className="form-group">
-                            <label>Email ID</label>
+                            <label className='starred'>Email ID*</label>
                             <input
                                 type="email"
                                 placeholder="Enter email id"
@@ -276,7 +276,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                 name="contactNumber"
                                 value={formData.contactNumber}
                                 onChange={handleChange}
-                                required
+                                
                             />
                         </div>
                         {/* Reporting Manager Dropdown */}
@@ -388,7 +388,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                 name="doj"
                                 value={formData.doj}
                                 onChange={handleChange}
-                                required
+                                
                             />
                         </div>
 
@@ -400,7 +400,7 @@ const BasicDetailsForm = ({ onSubmit }) => {
                                 name="employeeId"
                                 value={formData.employeeId}
                                 onChange={handleChange}
-                                required
+                                
                             />
                         </div>
                         {/* Marital Status Dropdown */}

@@ -952,15 +952,3 @@ table {
   text-align: center;
   // border: 1px solid;
 }
-
-@keyframes ScrollAnimationView {
-  from {
-    opacity: 0;
-    scale: 0.5;
-  }
-  to {
-    opacity: 1;
-    scale: 1;
-
-  }
-}

@@ -295,33 +295,10 @@ const AllJobList = () => {
     }, [statusId, statusNew, token, sms]);
     // update status
 
-    const HandleDelete = () => {
-        if (id) {
-            axios.post('https://devstronauts.com/public/api/department/delete', { id }, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-                .then(response => {
-                    // setDepartmentdetails(response.data.department);
-                    // setDepartmentdetails2(response.data.department.enteredbyid)
-                    console.log('⚠️ delete ❗', response)
-                    // setLoading(false);
-                    navigate('/department')
-
-                })
-                .catch(error => {
-                    setLoading(false);
-                    setError(true);
-                    console.error("Error fetching designation details:", error);
-                });
-        }
-    }
+ 
     useEffect(() => {
-
         if (statusId && statusNew) {
-
-            axios.post('https://devstronauts.com/public/api/jobopening/status-update', {
+            axios.post('https://devstronauts.com/public/api/jobopening/status/update', {
                 job_id: statusId,
                 job_status: statusNew
             }, {
