@@ -18,6 +18,8 @@ import './Designation.scss';
 import { OutsideClick } from '../../../components/OutSideClick';
 import axios from 'axios';
 import { OutsideClick2 } from '../../Department/DepartmentList/OutsideClick2'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Designation = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
@@ -38,7 +40,7 @@ const Designation = () => {
     // const [designations, setDesignations] = useState([]);
     const token = localStorage.getItem('access_token');
     const [loading, setLoading] = useState(true);
-    
+
     // console.log('employees::', employees)
 
     useEffect(() => {
@@ -58,6 +60,8 @@ const Designation = () => {
                 console.error("Error fetching data: ", error);
             });
     }, []);
+
+  
 
 
 
@@ -171,6 +175,7 @@ const Designation = () => {
 
 
 
+    // 
     const handleRefresh = () => {
         setFilteredEmployees(employees);
         setSearchQuery('');
@@ -178,8 +183,12 @@ const Designation = () => {
         setSelectedStatus('All');
         setCurrentPage(1);
         setRowsPerPage(10);
+       
     };
-    // 
+    useEffect(() => {
+        setFilteredEmployees(employees);
+    }, [handleRefresh])
+    
     const [showFilter, setShowFilter] = useState(false);
     const [showCustomDate, setShowCustomDate] = useState(false);
     const [showEmploymentType, setShowEmploymentType] = useState(false);
@@ -212,6 +221,7 @@ const Designation = () => {
 
     const closePopup = () => {
         setShowPopup(false);
+
     };
 
     const handleDesignationclick2 = (designation) => {
@@ -226,7 +236,7 @@ const Designation = () => {
     const DesignationDetails = () => {
         navigate('/designationdeatils');
     }
-// 
+    // 
 
 
 
@@ -282,7 +292,6 @@ const Designation = () => {
 
     const handleSubmitForm_3 = (event) => {
         event.preventDefault();
-
         // Sab fields bharne ke baad hi API ko call karo
         axios.post('https://devstronauts.com/public/api/designation/create/update', {
             designation_name: formData_3.email_3,  // Email ko formData se lo
@@ -294,6 +303,17 @@ const Designation = () => {
             }
         })
             .then(response => {
+                toast.success('New Designation Create successfully.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                setShowPopup(false);
                 console.log(response);
                 // Data create/update ho gaya, ab loading false karo
                 setLoading(false);
@@ -303,18 +323,37 @@ const Designation = () => {
                 setFormData_3(initialFormData_3);
             })
             .catch(error => {
+                toast.error('Error during create', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
                 console.error("Error during create/update:", error);
             });
     };
-    
+
     const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
 
 
 
-    
+
 
     return (
         <div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
@@ -497,12 +536,12 @@ const Designation = () => {
                                                     required
                                                     className='imputaddD'
                                                 />
-                                               
+
                                             </div>
 
                                             <div className="form-group" id="depart">
                                                 <label className='Departmentlabel'>Department</label>
-                                               
+
                                                 <div className="dropdown3">
                                                     <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
                                                         <div>{formData_3.department_3 || "Select department"}</div>

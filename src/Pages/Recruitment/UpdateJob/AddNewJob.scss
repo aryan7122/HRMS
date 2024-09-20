@@ -307,7 +307,7 @@
   }
   @media (max-width: 1105px) {
     form {
-      width: 95% !important;
+      // width: 95% !important;
     }
   }
   @media (max-width: 905px) {
@@ -482,7 +482,7 @@
         .dropdown-item {
           overflow: visible;
           // padding: 10px;
-          padding: 5px 10px;
+          padding: 5px 5px;
           width: 91%;
           cursor: pointer;
           margin: 3px 6px;
@@ -711,7 +711,7 @@ input[type="checkbox"]:checked {
     }
     // border: 1px solid red;
     .checkboxLable {
-      width: 100px;
+      // width: 100px;
       display: flex;
       // width: 90px;
       margin-top: 5px;

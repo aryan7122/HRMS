@@ -19,6 +19,8 @@ import './Department.scss';
 import { OutsideClick } from '../../../components/OutSideClick';
 import axios from 'axios';
 import { OutsideClick2 } from './OutsideClick2'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Department = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
@@ -174,6 +176,7 @@ const Department = () => {
         setCurrentPage(1);
         setRowsPerPage(10);
     };
+
     // 
     const [showFilter, setShowFilter] = useState(false);
     const [showCustomDate, setShowCustomDate] = useState(false);
@@ -312,13 +315,15 @@ const Department = () => {
         }));
         toggleDropdownVisibility_2('departmentDropdownOpen_2');
     };
+    useEffect(() => {
+        setFilteredEmployees(employees);
+    }, [handleRefresh])
 
     const handleSubmitForm_2 = (event) => {
         event.preventDefault();
-
         // Reset form fields
         // Reset search query
-        toggleDropdownVisibility_2('departmentDropdownOpen_2'); // Close dropdown
+        // toggleDropdownVisibility_2('departmentDropdownOpen_2'); // Close dropdown
         axios.post('https://devstronauts.com/public/api/department/create/update', {
             department_name: formDetails_2.departmentName_2,  // Email ko formData se lo
             department_head: formDetails_2.departmentHead_2, // Department ID ko formData se lo
@@ -329,21 +334,46 @@ const Department = () => {
             }
         })
             .then(response => {
-                console.log("Form Submitted:", formDetails_2);
-                setFormDetails_2(initialFormDetails_2);
-                setSearchQuery_2('');
-                console.log('response parent_department', initialFormDetails_2);
+                
+                // console.log("Form Submitted:", formDetails_2);
+                // setFormDetails_2(initialFormDetails_2);
+                // setSearchQuery_2('');
+                // console.log('response parent_department', initialFormDetails_2);
                 // Data create/update ho gaya, ab loading false karo
                 // setLoading(false);
                 // Employees ko update karo ya response ke according set karo
-                setEmployees(prevEmployees => [...prevEmployees, response.data.designation]);
+                setShowPopup(false);
+                setEmployees(prevEmployees => [...prevEmployees, response.data.department]);
+                console.log('response', response.data)
                 // Optional: Form reset kar sakte ho
                 // setFormData_3(initialFormDetails_2);
                 formDetails_2.departmentName_2= ''  // Email ko formData se lo
                 formDetails_2.departmentHead_2 ='' // Department ID ko formData se lo
                 formDetails_2.parentDepartment_2 = ''
+
+                // 
+                toast.success('New Department  Create successfully.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             })
             .catch(error => {
+                toast.error('Error during create', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
                 console.error("Error during create/update:", error);
             });
     };

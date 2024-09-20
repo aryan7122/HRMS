@@ -68,7 +68,7 @@
         .dropdown-item {
           overflow: visible;
           // padding: 10px;
-          padding: 5px 10px;
+          padding: 5px 5px;
           width: 91%;
           cursor: pointer;
           margin: 3px 6px;
@@ -341,7 +341,7 @@
   //  overflow: visible;
 }
   .allEmployeeList .employee-table #Small_table {
-    min-width: 100% !important; /* Ensure minimum width for the table */
+    // min-width: 100% !important; /* Ensure minimum width for the table */
     margin: 0 auto; /* Center align the table */
     // overflow-x: visible !important;
     // table-layout: fixed;
@@ -353,10 +353,10 @@
    overflow: auto;
 }
   .allEmployeeList .employee-table #Small_table {
-    min-width: 900px !important; /* Ensure minimum width for the table */
-    margin: 0 auto; /* Center align the table */
-    overflow-x: auto !important;
-    table-layout: auto;
+    // min-width: 900px !important; /* Ensure minimum width for the table */
+    // margin: 0 auto; /* Center align the table */
+    // overflow-x: auto !important;
+    // table-layout: auto;
   }
 }
 #inputD{

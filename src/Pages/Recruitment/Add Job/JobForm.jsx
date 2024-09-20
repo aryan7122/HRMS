@@ -10,17 +10,23 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addJobForm } from '../../../slices/jobSlice';
 import { useSelector } from 'react-redux';
-
+import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const JobForm = ({ onSubmit }) => {
     const dispatch = useDispatch();
     const jobs = useSelector((state) => state.job.jobs);
+    const { isOpen: isDesignationOpen, ref: designationRef, buttonRef: designationButtonRef, handleToggle: toggleDesignation, setIsOpen: setDesignationOpen } = OutsideClick();
+    const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick();
+    const { isOpen: isMaritalStatusOpen, ref: maritalStatusRef, buttonRef: maritalStatusButtonRef, handleToggle: toggleMaritalStatus, setIsOpen: setMaritalStatusOpen } = OutsideClick();
+    const { isOpen: isEmploymentTypeOpen, ref: employmentTypeRef, buttonRef: employmentTypeButtonRef, handleToggle: toggleEmploymentType, setIsOpen: setEmploymentTypeOpen } = OutsideClick();
+    const { isOpen: isExperienceOpen, ref: experienceRef, buttonRef: experienceButtonRef, handleToggle: toggleExperience, setIsOpen: setSExperienceOpen } = OutsideClick();
+    const { isOpen: isRequiredSkills, ref: requiredSkillsRef, buttonRef: requiredSkillsButtonRef, handleToggle: toggleRequiredSkills, setIsOpen: setRequiredSkillsOpen } = OutsideClick();
 
     const [sms, setSms] = useState('')
 
     const [showAlert, setShowAlert] = useState(false);
     const [showAlertError, setShowAlertError] = useState(false);
-
-
 
     console.log('jobRRR', jobs)
     const [formData, setFormData] = useState({
@@ -67,25 +73,7 @@ const JobForm = ({ onSubmit }) => {
         }));
     };
 
-    // const handleSubmit = (event) => {
-    //     dispatch(addJobForm(formData));
-
-    //     event.preventDefault();
-    //     console.log('Job_formData', formData);
-    //     setFormData({
-    //         jobTitle: '',
-    //         designation: '',
-    //         department: '',
-    //         jobLocation: '',
-    //         jobStatus: '',
-    //         noOfPositions: '',
-    //         employmentType: '',
-    //         experience: '',
-    //         requiredSkills: '',
-    //         description: ''
-    //     });
-    //     //
-
+  
     // };
     const [loading, setLoading] = useState(false);
 
@@ -94,7 +82,7 @@ const JobForm = ({ onSubmit }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();  // Prevent default form submission
-        setLoading(true)
+        // setLoading(true)
         axios.post(`https://devstronauts.com/public/api/jobopening/create/update`,
             {
                 // id: 4,  // Replace this with dynamic if needed
@@ -119,6 +107,16 @@ const JobForm = ({ onSubmit }) => {
                 setSms('New Job Data Create successfully')
                 // alert(error)
                 if (response.status === 200) {
+                    toast.success('New Job Create successfully.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
                     setLoading(false)
                     setShowAlert(true)
                     setTimeout(() => {
@@ -149,6 +147,16 @@ const JobForm = ({ onSubmit }) => {
                 setTimeout(() => {
                     setShowAlertError(false)
                 }, 4000);
+                toast.error('Error during create', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             });
     };
 
@@ -175,6 +183,12 @@ const JobForm = ({ onSubmit }) => {
             ...prevState,
             [dropdown]: false
         }));
+        setDesignationOpen(false)
+        setDepartmentOpen(false)
+        setMaritalStatusOpen(false)
+        setEmploymentTypeOpen(false)
+        setSExperienceOpen(false)
+        setRequiredSkillsOpen(false)
     };
     if (loading) {
         return <div id='notFounPageID'><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" /></div>; // Loading state
@@ -208,8 +222,17 @@ const JobForm = ({ onSubmit }) => {
     return (
         <>
             <div className="" onSubmit={onSubmit}>
-                {showAlert ? <div> <div id='showAlert' ><p> {sms}</p></div> </div> : ''}
-                {showAlertError ? <div> <div id='showAlertError' ><p>{sms}</p></div> </div> : ''}
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
+                {/* {showAlert ? <div> <div id='showAlert' ><p> {sms}</p></div> </div> : ''} */}
+                {/* {showAlertError ? <div> <div id='showAlertError' ><p>{sms}</p></div> </div> : ''} */}
 
                 <form onSubmit={handleSubmit}>
                     <div id='form'>
@@ -230,12 +253,12 @@ const JobForm = ({ onSubmit }) => {
                             <div className="form-group">
                                 <label>Designation</label>
                                 <div className="dropdown">
-                                    <div className="dropdown-button" onClick={() => toggleDropdown('designation')}>
+                                    <div className="dropdown-button" ref={designationButtonRef} onClick={toggleDesignation}>
                                         <div>{formData.designation || "Select designation"}</div>
-                                        <span id='toggle_selectIcon'> {!dropdowns.designation ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                        <span id='toggle_selectIcon'> {!isDesignationOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                     </div>
-                                    {dropdowns.designation && (
-                                        <div className="dropdown-menu">
+                                    {isDesignationOpen && (
+                                        <div className="dropdown-menu" ref={designationRef}>
                                             <input
                                                 type="search"
                                                 className='search22'
@@ -262,19 +285,18 @@ const JobForm = ({ onSubmit }) => {
                             <div className="form-group">
                                 <label>Department</label>
                                 <div className="dropdown">
-                                    <div className="dropdown-button" onClick={() => toggleDropdown('department')}>
+                                    <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
                                         <div>{formData.department || "Select department"}</div>
-                                        <span id='toggle_selectIcon'> {!dropdowns.department ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                        <span id='toggle_selectIcon'> {!isDepartmentOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                     </div>
-                                    {dropdowns.department && (
-                                        <div className="dropdown-menu">
+                                    {isDepartmentOpen && (
+                                        <div className="dropdown-menu" ref={departmentRef}>
                                             <input
                                                 type="search"
                                                 className='search22'
                                                 placeholder="Search department"
                                                 value={searchQueryDepartment}
                                                 id='searchDepartmentHead'
-
                                                 onChange={handleSearchQueryChangeDepartment}
                                             />
                                             <div className="dropdown_I">
@@ -331,13 +353,13 @@ const JobForm = ({ onSubmit }) => {
                             <div className="form-group">
                                 <label>Job Status*</label>
                                 <div className="dropdown">
-                                    <div className="dropdown-button" onClick={() => toggleDropdown('jobStatus')}>
+                                    <div className="dropdown-button" ref={maritalStatusRef} onClick={toggleMaritalStatus}>
                                         <div>{formData.jobStatus || "Select Job Status"}</div>
-                                        <span id='toggle_selectIcon'> {!dropdowns.jobStatus ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                        <span id='toggle_selectIcon'> {!isMaritalStatusOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
                                     </div>
 
-                                    {dropdowns.jobStatus && (
-                                        <div className="dropdown-menu">
+                                    {isMaritalStatusOpen && (
+                                        <div className="dropdown-menu" ref={maritalStatusButtonRef}>
                                             <div className="dropdown-item" onClick={() => selectOption('jobStatus', 'Open')}>Open</div>
                                             <div className="dropdown-item" onClick={() => selectOption('jobStatus', 'Draft')}>Draft</div>
                                             <div className="dropdown-item" onClick={() => selectOption('jobStatus', 'Filled')}>Filled</div>
@@ -347,6 +369,7 @@ const JobForm = ({ onSubmit }) => {
                                     )}
                                 </div>
                             </div>
+                            
 
                             <div className="form-group">
                                 <label>No. of Positions*</label>
@@ -356,7 +379,7 @@ const JobForm = ({ onSubmit }) => {
                                     name="noOfPositions"
                                     value={formData.noOfPositions}
                                     onChange={handleChange}
-                                    required
+                                    
                                 />
                             </div>
 
@@ -364,22 +387,21 @@ const JobForm = ({ onSubmit }) => {
                             <div className="form-group">
                                 <label>Employment Type</label>
                                 <div className="dropdown">
-                                    <div className="dropdown-button" onClick={() => toggleDropdown('employmentType')}>
+                                    <div className="dropdown-button" ref={employmentTypeButtonRef} onClick={toggleEmploymentType}>
                                         <div>{formData.employmentType || "Select employment type"}</div>
                                         <span id='toggle_selectIcon'>
-                                            {!dropdowns.employmentType ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                            {!isEmploymentTypeOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
                                         </span>
                                     </div>
-                                    {dropdowns.employmentType && (
-                                        <div className='dropdown-menu'>
+                                    {isEmploymentTypeOpen && (
+                                        <div className="dropdown-menu" ref={employmentTypeRef}>
                                             <input
                                                 type="search"
-                                                className='search22'
+                                                className="search22"
                                                 placeholder="Search employment type"
                                                 value={searchQueryEmploymentType}
                                                 onChange={handleSearchQueryChangeEmploymentType}
-                                                id='searchDepartmentHead'
-
+                                                id="searchDepartmentHead"
                                             />
                                             <div className="dropdown_I">
                                                 {filteredEmploymentTypeOptions.map(option => (
@@ -400,13 +422,15 @@ const JobForm = ({ onSubmit }) => {
                             <div className="form-group">
                                 <label>Experience*</label>
                                 <div className="dropdown">
-                                    <div className="dropdown-button" onClick={() => toggleDropdown('experience')}>
+                                    <div className="dropdown-button" ref={experienceButtonRef} onClick={toggleExperience}>
                                         <div>{formData.experience || "Select Experience"}</div>
-                                        <span id='toggle_selectIcon'> {!dropdowns.experience ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                        <span id='toggle_selectIcon'>
+                                            {!isExperienceOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                        </span>
                                     </div>
 
-                                    {dropdowns.experience && (
-                                        <div className="dropdown-menu">
+                                    {isExperienceOpen && (
+                                        <div className="dropdown-menu" ref={experienceRef}>
                                             <div className="dropdown-item" onClick={() => selectOption('experience', 'Fresher')}>Fresher</div>
                                             <div className="dropdown-item" onClick={() => selectOption('experience', 'Experienced')}>Experienced</div>
                                         </div>
@@ -417,15 +441,15 @@ const JobForm = ({ onSubmit }) => {
                             <div className="form-group">
                                 <label>Required Skills*</label>
                                 <div className="dropdown">
-                                    <div className="dropdown-button" onClick={() => toggleDropdown('requiredSkills')}>
+                                    <div className="dropdown-button" ref={requiredSkillsButtonRef} onClick={toggleRequiredSkills}>
                                         <div>{formData.requiredSkills || "Select Required Skills"}</div>
                                         <span id='toggle_selectIcon'>
-                                            {!dropdowns.requiredSkills ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                            {!isRequiredSkills ? <IoIosArrowDown /> : <IoIosArrowUp />}
                                         </span>
                                     </div>
 
-                                    {dropdowns.requiredSkills && (
-                                        <div className="dropdown-menu">
+                                    {isRequiredSkills && (
+                                        <div className="dropdown-menu" ref={requiredSkillsRef}>
                                             <input
                                                 type="search"
                                                 className='search22'
@@ -459,7 +483,7 @@ const JobForm = ({ onSubmit }) => {
                                     name="description"
                                     value={formData.description}
                                     onChange={handleChange}
-                                    required
+                                    
                                 />
                             </div>
                         </div>

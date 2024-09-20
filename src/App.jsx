@@ -61,6 +61,7 @@ import EmployeeHealthDetails from './Pages/EmployeeHealth/EmployeeHealthDetails/
 
 
 import { useSelector } from 'react-redux';
+import All_leaves_List from './Pages/LeaveManagement/All_leaves_List/All_leaves_List.jsx';
 
 
 const App = () => {
@@ -145,6 +146,8 @@ const App = () => {
                   <Route path="/designationdeatils/:id" element={<DesignationDetails />} />
                   <Route path="/employeehealthdetails" element={<EmployeeHealthDetails />} />
                   <Route path="/birthday" element={<BirthdayList />} />
+                    {/* {All_leaves_List } */}
+                    <Route path="/leave-master" element={<All_leaves_List />} />
 
 
                 </Routes>

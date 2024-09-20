@@ -5,7 +5,13 @@ import '../../Employee_onboarding/EmployeeDetail /EmployeeDetails.scss';
 import { MdWorkHistory } from "react-icons/md";
 import { BiEditAlt } from "react-icons/bi";
 import { MdDeleteOutline } from "react-icons/md";
+// 
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 
+// 
 const JobDetails = () => {
     const { id } = useParams(); // Get the job ID from the URL
     const [jobData, setJobData] = useState(null);
@@ -54,7 +60,14 @@ const JobDetails = () => {
         }
     }, [jobData, token]); // Add jobData as dependency
     // HandleDelete
+      const [open, setOpen] = useState(false);
+
     const HandleDelete = () => {
+        // confirm()
+        setOpen(true)
+
+    }
+    const DelteConform = () => {
         if (id) {
             axios.post('https://devstronauts.com/public/api/jobopening/delete', { id }, {
                 headers: {
@@ -76,6 +89,7 @@ const JobDetails = () => {
                 });
         }
     }
+    
     // HandleDelete
 
     const JobList = () => {
@@ -96,6 +110,27 @@ const JobDetails = () => {
 
     return (
         <div className="profile-page">
+           
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                backdrop={<div className="backdrop" />}
+                className="dialog"
+            >
+                <DialogHeading className="heading">Are you sure?</DialogHeading>
+                <p className="description">
+                    You want to delete this Job Detail
+                </p>
+                <div className="buttons">
+                    <div onClick={DelteConform}>
+                        <Button className="button" onClick={() => toast("Hello!")}>
+                            Delete
+                        </Button>
+                    </div>
+                    <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                </div>
+            </Dialog>
             <div className="details">
                 <div className="title_top">
                     <h2>Job Details</h2>

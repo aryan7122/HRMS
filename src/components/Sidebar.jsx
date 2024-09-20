@@ -135,7 +135,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </svg>,
             submenu: [
                 { label: 'All Leave', path: '/all-leave' },
-                { label: 'Leave Master', path: '/Leave Master' },
+                { label: 'Leave Master', path: '/leave-master' },
                 { label: 'Leave Application', path: '/leave-application' },
                 { label: 'Attendance', path: '/attendance' },
                 { label: 'Holidays', path: '/holidays' },

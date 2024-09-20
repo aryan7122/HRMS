@@ -20,7 +20,11 @@ import { deprecatedPropType } from '@mui/material';
 import { IoMdAdd, IoIosCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { OutsideClick2 } from '../DepartmentList/OutsideClick2'
-
+import '../../../components/style.css';
+// 
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // popup
 const DepartmentDetails = () => {
 
@@ -134,13 +138,17 @@ const DepartmentDetails = () => {
     console.log('departmentdetails2::', departmentdetails2)
 
     const [loading, setLoading] = useState(true);
+    const [refresh, setRefresh] = useState(false);
+
     const [error, setError] = useState(false);
     const { id } = useParams();
     // alert(id)
     const navigate = useNavigate();
     const token = localStorage.getItem('access_token');
 
-
+    const handleRefresh = () => {
+        setRefresh(!refresh)
+    };
 
     console.log('departmentdetails::', departmentdetails)
     useEffect(() => {
@@ -162,9 +170,16 @@ const DepartmentDetails = () => {
                     console.error("Error fetching designation details:", error);
                 });
         }
-    }, [id, token]);
+    }, [id, token, refresh,]);
+    const [open, setOpen] = useState(false);
+
     // HandleDelete
     const HandleDelete = () => {
+        // confirm()
+        setOpen(true)
+
+    }
+    const DelteConform = () => {
         if (id) {
             axios.post('https://devstronauts.com/public/api/department/delete', { id }, {
                 headers: {
@@ -205,7 +220,7 @@ const DepartmentDetails = () => {
                 console.error("Error fetching user data: ", error);
             });
         // }
-    }, [id, token, departmentdetails]);
+    }, [id, token]);
 
     const AllEmp = () => {
         navigate('/department')
@@ -264,6 +279,7 @@ const DepartmentDetails = () => {
             parentDepartment_2: departmentdetails?.parent_department || '',
         });
     }
+
     const closePopup = () => {
         setShowPopup(false);
     };
@@ -284,8 +300,10 @@ const DepartmentDetails = () => {
     // Slider Component
 
 
+
     const handleSubmitForm_2 = (event) => {
         event.preventDefault();
+        // setFilteredEmployees(employees);
 
         // Reset form fields
         // Reset search query
@@ -301,6 +319,17 @@ const DepartmentDetails = () => {
             }
         })
             .then(response => {
+                toast.success('Designation Detail update successfully.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                setRefresh(!refresh)
                 console.log("Form Submitted:", formDetails_2);
                 setFormDetails_2(initialFormDetails_2);
                 setSearchQuery_2('');
@@ -308,7 +337,8 @@ const DepartmentDetails = () => {
                 // Data create/update ho gaya, ab loading false karo
                 // setLoading(false);
                 // Employees ko update karo ya response ke according set karo
-                setEmployees(prevEmployees => [...prevEmployees, response.data.designation]);
+                setShowPopup(false);
+                setEmployees(prevEmployees => [...prevEmployees, response.data.department]);
                 // Optional: Form reset kar sakte ho
                 // setFormData_3(initialFormDetails_2);
                 formDetails_2.departmentName_2 = ''  // Email ko formData se lo
@@ -316,6 +346,16 @@ const DepartmentDetails = () => {
                 formDetails_2.parentDepartment_2 = ''
             })
             .catch(error => {
+                toast.error('Designation Detail update Failed.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
                 console.error("Error during create/update:", error);
             });
     };
@@ -340,6 +380,39 @@ const DepartmentDetails = () => {
 
     return (
         <div className="profile-page">
+            <div className="">
+                
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    closeOnClick
+                    pauseOnHover
+                    draggable
+                    theme="error"
+                />
+                <Dialog
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                    backdrop={<div className="backdrop" />}
+                    className="dialog"
+                >
+                    <DialogHeading className="heading">Are you sure?</DialogHeading>
+                    <p className="description">
+                        You want to delete this Department Detail
+                    </p>
+                    <div className="buttons">
+                        <div onClick={DelteConform}>
+                        <Button className="button" onClick={() => toast("Hello!")}>
+                            Delete
+                        </Button>
+                        </div>
+                        <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                    </div>
+                </Dialog>
+            </div>
+            {/* <ToastContainer className="toast-container" /> */}
             <div className="details">
                 <div className="title_top">
                     <h2>Department Detail</h2>
@@ -362,7 +435,7 @@ const DepartmentDetails = () => {
                         </div>
                     </div>
                     <div className="action_card">
-                        <div><RxReload /></div>
+                        <div onClick={handleRefresh} ><RxReload /></div>
                         <div onClick={PopUpUpdate}><BiEditAlt /></div>
                         <div onClick={HandleDelete}><span><MdDeleteOutline /></span>Delete</div>
                     </div>
@@ -651,7 +724,7 @@ const DepartmentDetails = () => {
                                 </div>
 
                                 <div className="popupbtn" id="submitDepartmentFormButton_2">
-                                    <button type="submit">Submit
+                                    <button type="submit">Update
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
                                             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
                                             <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

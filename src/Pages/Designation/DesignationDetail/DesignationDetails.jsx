@@ -17,6 +17,13 @@ import "slick-carousel/slick/slick-theme.css";
 import { OutsideClick2 } from '../../Department/DepartmentList/OutsideClick2'
 
 // popup
+// 
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import 'react-toastify/dist/ReactToastify.css';
+
+// 
 const DesignationDetails = () => {
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
 
@@ -85,6 +92,11 @@ const DesignationDetails = () => {
         // { name: "New Employee 4", Roll: "Developer", email: "newemp4@gmail.com", phone: "+918888888887", Image: img_emp1, DOB: '2024-08-13' },
     ]);
     console.log('designationDetails::', designationDetails)
+    const [refresh, setRefresh] = useState(false);
+
+    const handleRefresh = () => {
+        setRefresh(!refresh)
+    };
 
     useEffect(() => {
         if (id) {
@@ -103,7 +115,8 @@ const DesignationDetails = () => {
                     console.error("Error fetching designation details:", error);
                 });
         }
-    }, [id, token]);
+    }, [id, token, refresh]);
+
     useEffect(() => {
         if (designationDetails) {  // Ensure jobData is available before making this call
             axios.post('https://devstronauts.com/public/api/get-user', {
@@ -125,7 +138,14 @@ const DesignationDetails = () => {
     }, [designationDetails2,designationDetails]);
 
     // HandleDelete
+    const [open, setOpen] = useState(false);
+
     const HandleDelete = () => {
+        // confirm()
+        setOpen(true)
+
+    }
+    const DelteConform = () => { 
         if (id) {
             axios.post('https://devstronauts.com/public/api/designation/delete', { id }, {
                 headers: {
@@ -147,6 +167,8 @@ const DesignationDetails = () => {
                 });
         }
     }
+
+    
     // HandleDelete
 
     const handleBackToDesignations = () => {
@@ -233,7 +255,7 @@ const DesignationDetails = () => {
     const employeeChunks = chunkArray(employees, 4);
 // slider end
 
-
+   
 
     const handleSubmitForm_3 = (event) => {
         event.preventDefault();
@@ -250,6 +272,19 @@ const DesignationDetails = () => {
             }
         })
             .then(response => {
+                toast.success('Department Detail update successfully.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                setRefresh(!refresh)
+                setShowPopup(false)
+
                 console.log(response);
                 // Data create/update ho gaya, ab loading false karo
                 setLoading(false);
@@ -259,6 +294,16 @@ const DesignationDetails = () => {
                 setFormData_3(initialFormData_3);
             })
             .catch(error => {
+                toast.error('Department Detail update Failed.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
                 console.error("Error during create/update:", error);
             });
     };
@@ -269,6 +314,35 @@ const DesignationDetails = () => {
 
     return (
         <div className="profile-page">
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                backdrop={<div className="backdrop" />}
+                className="dialog"
+            >
+                <DialogHeading className="heading">Are you sure?</DialogHeading>
+                <p className="description">
+                    You want to delete this Designation Detail
+                </p>
+                <div className="buttons">
+                    <div onClick={DelteConform}>
+                        <Button className="button" onClick={() => toast("Hello!")}>
+                            Delete
+                        </Button>
+                    </div>
+                    <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                </div>
+            </Dialog>
             <div className="details">
                 <div className="title_top">
                     <h2>Designation  Detail</h2>
@@ -291,7 +365,7 @@ const DesignationDetails = () => {
                         </div>
                     </div>
                     <div className="action_card">
-                        <div><RxReload /></div>
+                        <div onClick={handleRefresh}><RxReload /></div>
                         <div onClick={UpdatedesignationDetails}><BiEditAlt /></div>
                         <div onClick={HandleDelete}><span><MdDeleteOutline /></span>Delete</div>
                     </div>
@@ -442,7 +516,7 @@ const DesignationDetails = () => {
                                     onChange={handleInputChange_3}
                                 ></textarea>
 
-                                <button type="submit">Submit
+                                <button type="submit">Update
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
                                         <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
                                         <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
