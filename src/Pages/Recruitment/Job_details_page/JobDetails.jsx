@@ -9,7 +9,6 @@ import { MdDeleteOutline } from "react-icons/md";
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import 'react-toastify/dist/ReactToastify.css';
 
 // 
 const JobDetails = () => {

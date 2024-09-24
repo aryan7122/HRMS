@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import './AddEmloyee.scss';
+import { useState,useEffect } from 'react';
+import './UpdateEmloyee.scss';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
@@ -9,9 +9,11 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 // import { OutsideClick } from '../../../components/OutSideClick';
 import { OutsideClick } from './OutsideClick.jsx'
 import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const BasicDetailsForm = ({ onSubmit, next }) => {
-    
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
     const [inconSelect, setInconSelect] = useState(false)
@@ -44,6 +46,59 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
         employeeStatus: '',
         sourceOfHire: ''
     });
+    const { id } = useParams();
+    const token = localStorage.getItem('access_token');
+    useEffect(() => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/employee/details', {
+                user_id: id
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    const data = response.data.result;
+                    console.log('data', data.employee[0].joining_date)
+                    setFormData({
+                        employeeId: data.employee[0].employee_id || '',
+                        firstName: data.first_name || '',
+                        lastName: data.last_name || '',
+                        photo: data.employee[0].image || '',
+                        dob: data.employee[0].date_of_birth || '',
+                        age: data.employee[0].age || '',
+                        gender: data.employee[0].gender || '',
+                        email: data.employee[0].email || '',
+                        contactNumber: data.employee[0].mobile_no || '',
+                        reportingManager: data.employee[0].reporting_manager || '',
+                        department: data.employee[0].department_id || '',
+                        designation: data.employee[0].designation_id || '',
+                        doj: data.employee[0].joining_date || '',
+                        maritalStatus: data.employee[0].marital || '',
+                        doe: data.employee[0].date_of_exit || '',
+                        employmentType: data.employee[0].employment_type || '',
+                        employeeStatus: data.employee[0].employee_status || '',
+                        sourceOfHire: data.employee[0].source_of_hire || ''
+                    });
+
+                    console.log('response', response.data.result);
+                    // toast.success(response.data.message);
+                })
+                .catch(error => {
+                    console.error("Error fetching employee details:", error);
+                    toast.error('Failed to fetch employee details.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                });
+        }
+    }, [id, token]);  // token and id dependancy
 
     const [searchQuery_2, setSearchQuery_2] = useState('');
     const handleSearchQueryChange_2 = (event) => {
@@ -87,62 +142,6 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
         event.preventDefault();
         // console.log('onSubmit', formData)
         onSubmit(formData)
-        // try {
-        //     const response = await axios.post('https://devstronauts.com/public/api/employee/create/update', { 
-        //         first_name: formData.firstName,
-        //         last_name: formData.lastName,
-        //         email: formData.email,
-        //         mobile_no: formData.contactNumber,
-        //         date_of_birth: formData.dob,
-        //         age: formData.age,
-        //         marital: formData.maritalStatus,
-        //         gender: formData.gender,
-        //         joining_date: formData.doj,
-        //         designation_id: "1", // is value ko dynamic bana sakte hain form ke hisaab se
-        //         department_id: "1",  // is value ko dynamic bana sakte hain form ke hisaab se
-        //         reporting_manager: formData.reportingManager,
-        //         date_of_exit: formData.doe || "",  // agar empty hai toh default empty string
-        //         employment_type: formData.employmentType,
-        //         employee_status: formData.employeeStatus,
-        //         source_of_hire: formData.sourceOfHire,
-        //         image: fileName || " " 
-        //      }, {
-        //         headers: {
-        //             'Authorization': `Bearer ${token}`
-        //         }
-        //     });
-        //     console.log("🌍 API Response emp id: ", response.data.result.id);
-        //     localStorage.setItem('EmployeeCreateID', response.data.result.id);
-
-        //     alert('API Response: "Employee Created Successfully"', response.message)
-        //     // Agar response sahi hai toh form reset kar dena
-        //     // setFormData({
-        //     //     employeeId: '',
-        //     //     firstName: '',
-        //     //     lastName: '',
-        //     //     dob: '',
-        //     //     age: '',
-        //     //     gender: '',
-        //     //     email: '',
-        //     //     contactNumber: '',
-        //     //     reportingManager: '',
-        //     //     department: '',
-        //     //     designation: '',
-        //     //     doj: '',
-        //     //     photo: '',
-        //     //     maritalStatus: '',
-        //     //     doe: '',
-        //     //     employmentType: '',
-        //     //     employeeStatus: '',
-        //     //     sourceOfHire: ''
-        //     // });
-
-        //     setIsUploaded(false);
-        //     setFileName('');
-        // } catch (error) {
-        //     console.error("Error sending data to API: ", error);
-        // }
-        // console.log(formData);
     };
     
     
@@ -591,7 +590,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                     <div id='submitBtn_next_main'>
                         <div id='submitBtn' >
                             <div className='div'>
-                                <button type="submit" >Submit </button>
+                                <button type="submit" >Update </button>
                                 <span><CiCircleChevRight /></span>
                             </div>
                             <div className="lineBar"></div>

@@ -1,11 +1,15 @@
-import { useState } from 'react';
-import './AddEmloyee.scss';
+import { useState, useEffect } from 'react';
+import './UpdateEmloyee.scss';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoMdAddCircleOutline, IoMdCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ExperienceForm = ({ onSubmit, next }) => {
     // Using the 'experiences' key inside the state as per your suggestion
@@ -25,7 +29,53 @@ const ExperienceForm = ({ onSubmit, next }) => {
             }
         ]
     });
+    const { id } = useParams();
+    const token = localStorage.getItem('access_token');
 
+    useEffect(() => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/employee/details', {
+                user_id: id
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    const data = response.data.result.experiences;
+
+                    console.log('data', data);
+
+                    if (data && data.length > 0) {
+                        setExperienceForms({
+                            experiences: data.map(exp => ({
+                                company_name: exp.company_name || "",
+                                industry: exp.industry || "",
+                                job_title: exp.job_title || "",
+                                duration: exp.duration || "",
+                                from_date: exp.from_date || "",
+                                to_date: exp.to_date || "",
+                                description: exp.description || "",
+                                photo: exp.photo || ''  // Assuming photo field exists
+                            }))
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching employee details:", error);
+                    toast.error('Failed to fetch employee details.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                });
+        }
+    }, [id, token]);
     const handleFileChange = (index, event) => {
         const file = event.target.files[0];
         if (file) {
@@ -235,7 +285,7 @@ const ExperienceForm = ({ onSubmit, next }) => {
                 <div id='submitBtn_next_main'>
                     <div id='submitBtn'>
                         <div className='div'>
-                            <button type="submit">Submit</button>
+                            <button type="submit">Update</button>
                             <span><CiCircleChevRight /></span>
                         </div>
                         <div className="lineBar"></div>

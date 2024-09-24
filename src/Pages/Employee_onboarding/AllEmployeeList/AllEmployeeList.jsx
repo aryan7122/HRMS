@@ -206,10 +206,11 @@ const AllEmployeeList = () => {
         })
             .then(response => {
                 // setEmployees(response.data.job_opening);
-                setEmployees(response.data.employee)
-                setFilteredEmployees(response.data.employee); // filteredEmployees ko bhi sync karo
-                // console.log('response 🥳', response.data.employee);
-                // setLoading(false);
+                setEmployees(response.data.result)
+                setFilteredEmployees(response.data.result); // filteredEmployees ko bhi sync karo
+                console.log('response 🥳', response.data.result);
+                // setDepartmentdetails2(response.data.result.department_id)
+                setLoading(false);
                 // setSms()
             })
             .catch(error => {
@@ -218,7 +219,30 @@ const AllEmployeeList = () => {
 
             });
     }, [statusId, statusNew, token, sms]);
- 
+    //  
+    const [departmentdetails3, setDepartmentdetails3] = useState('');
+    const [departmentdetails2, setDepartmentdetails2] = useState('');
+    console.log('departmentdetails3 ::', departmentdetails3)
+    useEffect(() => {
+        // if (departmentdetails) {  // Ensure jobData is available before making this call
+        axios.post('https://devstronauts.com/public/api/get-user', {
+            enteredbyid: departmentdetails2
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                // setJobData2(response.data.created_by);
+                console.log('👉👉👉👉', response.data.created_by)
+                setDepartmentdetails3(response.data.department_id)
+            })
+            .catch(error => {
+                console.error("Error fetching user data: ", error);
+            });
+        // }
+    }, [token]);
+    // 
     useEffect(() => {
         if (statusId && statusNew) {
 
@@ -525,13 +549,13 @@ const AllEmployeeList = () => {
                                             </span>
                                         } */}
                                     </td>
-                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.employee_id}</td>
-                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.first_name}</td>
-                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.last_name}</td>
-                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.email}</td>
-                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.phone_code +' '+ emp.mobile}</td>
-                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.department_id}</td>
-                                    <td onClick={() => navigate(`/employee-details/${emp.id}`)}>{emp.joining_date}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.employee_id}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.first_name}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.last_name}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.email}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.phone_code +' '+ emp.mobile}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.department_id}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.joining_date}</td>
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">

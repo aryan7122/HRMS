@@ -918,16 +918,14 @@ table {
   margin-top: 350px !important;
 }
 .allEmployeeList .employee-table{
-  overflow-x: auto !important ;
-  // overflow-y: hidden !important;
-  height: auto !important;
+  
   
 }
 .allEmployeeList .employee-table table th .status-dropdown .status-options, .allEmployeeList .employee-table table td .status-dropdown .status-options{
   // position: relative !important;
 }
   .allEmployeeList .employee-table table {
-    min-width: 1050px ; /* Ensure minimum width for the table */
+    // min-width: 1050px ; /* Ensure minimum width for the table */
     // margin: 0 auto; /* Center align the table */
   }
 
@@ -941,8 +939,14 @@ table {
   }
 }
 
-@media (max-width: 1035px) {
-  
+@media (max-width: 1055px) {
+  .allEmployeeList .employee-table  {
+    // overa
+    // border: 1px solid red !important;
+    // min-width: 1055px; /* Adjust this value as per the width of your table cell */
+}
+
+
   // .EmpOn_Second_Head .left {
   //   display: grid !important;
   //   height: fit-content !important;
@@ -960,4 +964,13 @@ table {
     min-width: 100%; /* Adjust table width to fit container */
     margin: 0 auto; /* Center align the table */
   }
+}
+
+
+.td{
+      white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    padding: 10px;
 }

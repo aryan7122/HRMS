@@ -550,13 +550,13 @@ const AllAttendanceList = (ClosePop) => {
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} onClick={DelThis} />
                                        
                                     </td>
-                                    <td onClick={JobDetailsPage}>{emp.EmployeeName}</td>
-                                    <td onClick={JobDetailsPage}>{emp.Date}</td>
-                                    <td onClick={JobDetailsPage}>{emp.Shift}</td>
-                                    <td onClick={JobDetailsPage}>{emp.PunchIn}</td>
-                                    <td onClick={JobDetailsPage}>{emp.PunchOut}</td>
-                                    <td onClick={JobDetailsPage}>{emp.TotalHoursWorked}</td>
-                                    <td onClick={JobDetailsPage}>{emp.Overtime}</td>
+                                    <td className='td' onClick={JobDetailsPage}>{emp.EmployeeName}</td>
+                                    <td className='td'  onClick={JobDetailsPage}>{emp.Date}</td>
+                                    <td className='td'  onClick={JobDetailsPage}>{emp.Shift}</td>
+                                    <td className='td' onClick={JobDetailsPage}>{emp.PunchIn}</td>
+                                    <td className='td'  onClick={JobDetailsPage}>{emp.PunchOut}</td>
+                                    <td className='td'  onClick={JobDetailsPage}>{emp.TotalHoursWorked}</td>
+                                    <td className='td'  onClick={JobDetailsPage}>{emp.Overtime}</td>
 
 
                                     <td>

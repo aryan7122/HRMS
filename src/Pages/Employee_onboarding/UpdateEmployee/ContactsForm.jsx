@@ -1,35 +1,98 @@
 import { useState, useEffect } from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import Select from 'react-select';
-import './AddEmloyee.scss';
+import './UpdateEmloyee.scss';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate, useParams } from 'react-router-dom';
 
-const ContactsForm = ({ onSubmit,next }) => {
+const ContactsForm = ({ onSubmit, next }) => {
     const [formData, setFormData] = useState({
-        country: '101',
-        state: '254',
-        city: '5454',
-        street1: '254',
-        street2: '5454',
+        country: '',
+        state: '',
+        city: '',
+        street1: '',
+        street2: '',
         zipCode: '',
         personalContactNumber: '',
         emergencyContactNumber: '',
         personalEmail: '',
-        permanentCountry: '101',
-        permanentState: '254',
-        permanentCity: '5454',
-        permanentStreet1: '254',
-        permanentStreet2: '254',
+        permanentCountry: '',
+        permanentState: '',
+        permanentCity: '',
+        permanentStreet1: '',
+        permanentStreet2: '',
         permanentZipCode: '',
         permanentPersonalContactNumber: '',
         permanentEmergencyContactNumber: '',
         permanentPersonalEmail: ''
     });
-    const EmployeeCreateID = localStorage.getItem('EmployeeCreateID');
+
+    // const EmployeeCreateID = localStorage.getItem('EmployeeCreateID');
+    const { id } = useParams();
+    const token = localStorage.getItem('access_token');
+    
+    useEffect(() => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/employee/details', {
+                user_id: id
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    const data = response.data.result;
+
+                    // Present और Permanent address contact data
+                    const presentAddress = data.contacts.find(contact => contact.address_type === "Present") || {};
+                    const permanentAddress = data.contacts.find(contact => contact.address_type === "Permanent") || {};
+                    console.log('presentAddress', permanentAddress)
+                    setFormData({
+                        // Present Address Data
+                        country: presentAddress.country_id || '',
+                        state: presentAddress.state_id || '',
+                        city: presentAddress.city_id || '',
+                        street1: presentAddress.street_1 || '',
+                        street2: presentAddress.street_2 || '',
+                        zipCode: presentAddress.zip_code || '',
+                        personalContactNumber: presentAddress.personal_contact_no || '',
+                        emergencyContactNumber: presentAddress.emergency_contact_no || '',
+                        personalEmail: presentAddress.personal_email_id || '',
+
+                        // Permanent Address Data
+                        permanentCountry: permanentAddress.country_id || '',
+                        permanentState: permanentAddress.state_id || '',
+                        permanentCity: permanentAddress.city_id || '',
+                        permanentStreet1: permanentAddress.street_1 || '',
+                        permanentStreet2: permanentAddress.street_2 || '',
+                        permanentZipCode: permanentAddress.zip_code || '',
+                        permanentPersonalContactNumber: permanentAddress.personal_contact_no || '',
+                        permanentEmergencyContactNumber: permanentAddress.emergency_contact_no || '',
+                        permanentPersonalEmail: permanentAddress.personal_email_id || ''
+                    });
+                    console.log('Employee details fetched successfully:', data);
+                })
+                .catch(error => {
+                    console.error("Error fetching employee details:", error);
+                    toast.error('Failed to fetch employee details.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                });
+        }
+    }, [id, token]);
 
     const [sameAsPresent, setSameAsPresent] = useState(false);
 
@@ -64,114 +127,18 @@ const ContactsForm = ({ onSubmit,next }) => {
             [field]: selectedOption.value
         }));
     };
-    const token = localStorage.getItem('access_token');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         event.preventDefault();
         console.log('contact form', formData)
         onSubmit(formData)
-        // // console.log(formData);
-        // try {
-        //     const response = await axios.post('https://devstronauts.com/public/api/employee/create/update', {
-        //         id: EmployeeCreateID,
-        //         contacts: [
-        //             {
-        //                 address_type: "Present",
-        //                 street_1: formData.street1,
-        //                 street_2: formData.street2,
-        //                 zip_code: formData.zipCode,
-        //                 city_id: formData.city,   // Ensure this is city_id, not city name
-        //                 state_id: formData.state, // Ensure this is state_id
-        //                 country_id: formData.country, // Ensure this is country_id
-        //                 personal_contact_no: formData.personalContactNumber,
-        //                 emergency_contact_no: formData.emergencyContactNumber,
-        //                 personal_email_id: formData.personalEmail,
-        //                 is_present_address: "1" // Present address ko "1" set karna
-        //             },
-        //             {
-        //                 address_type: "Permanent",
-        //                 street_1: formData.permanentStreet1,
-        //                 street_2: formData.permanentStreet2,
-        //                 zip_code: formData.permanentZipCode,
-        //                 city_id: formData.permanentCity,
-        //                 state_id: formData.permanentState,
-        //                 country_id: formData.permanentCountry,
-        //                 personal_contact_no: formData.permanentPersonalContactNumber,
-        //                 emergency_contact_no: formData.permanentEmergencyContactNumber,
-        //                 personal_email_id: formData.permanentPersonalEmail,
-        //                 is_present_address: "0" // Permanent address ko "0" set karna
-        //             }
-        //         ]
-        //     }, {
-        //         headers: {
-        //             'Authorization': `Bearer ${token}`
-        //         }
-        //     });
-        //     console.log("🌍 API Response emp id: ", response.data.result.id);
-        //     localStorage.setItem('EmployeeCreateID', response.data.result.id);
 
-        //     alert('API Response: "Employee Created Successfully"', response.message)
-        //     // Agar response sahi hai toh form reset kar dena
-        //     setFormData({
-        //         country: '',
-        //         state: '',
-        //         city: '',
-        //         street1: '',
-        //         street2: '',
-        //         zipCode: '',
-        //         personalContactNumber: '',
-        //         emergencyContactNumber: '',
-        //         personalEmail: '',
-        //         permanentCountry: '',
-        //         permanentState: '',
-        //         permanentCity: '',
-        //         permanentStreet1: '',
-        //         permanentStreet2: '',
-        //         permanentZipCode: '',
-        //         permanentPersonalContactNumber: '',
-        //         permanentEmergencyContactNumber: '',
-        //         permanentPersonalEmail: ''
-        //     });
-        //     setIsUploaded(false);
-        //     setFileName('');
-        // } catch (error) {
-        //     console.error("Error sending data to API: ", error);
-        // }
-
-        // Handle form submission
-        // Show success message or alert if needed
-        // setShowAlert(true);
-        // setTimeout(() => {
-        //     setShowAlert(false);
-        // }, 4300);
-
-        // Reset form fields
-        // setFormData({
-        //     country: '',
-        //     state: '',
-        //     city: '',
-        //     street1: '',
-        //     street2: '',
-        //     zipCode: '',
-        //     personalContactNumber: '',
-        //     emergencyContactNumber: '',
-        //     personalEmail: '',
-        //     permanentCountry: '',
-        //     permanentState: '',
-        //     permanentCity: '',
-        //     permanentStreet1: '',
-        //     permanentStreet2: '',
-        //     permanentZipCode: '',
-        //     permanentPersonalContactNumber: '',
-        //     permanentEmergencyContactNumber: '',
-        //     permanentPersonalEmail: ''
-        // });
         setSameAsPresent(false);
     };
     const nextSumbit = (event) => {
         event.preventDefault();
-        // console.log('onSubmit', formData)
+        console.log('onSubmit', formData)
         next(formData)
     }
 
@@ -190,7 +157,7 @@ const ContactsForm = ({ onSubmit,next }) => {
                                 <CountryDropdown
                                     value={formData.country}
                                     onChange={(val) => setFormData(prevState => ({ ...prevState, country: val }))}
-                                    
+
                                 />
                             </div>
                             <div className="form-group">
@@ -199,7 +166,7 @@ const ContactsForm = ({ onSubmit,next }) => {
                                     country={formData.country}
                                     value={formData.state}
                                     onChange={(val) => setFormData(prevState => ({ ...prevState, state: val }))}
-                                    
+
                                 />
                             </div>
                             <div className="form-group">
@@ -210,7 +177,7 @@ const ContactsForm = ({ onSubmit,next }) => {
                                     name="city"
                                     value={formData.city}
                                     onChange={handleChange}
-                                    
+
                                 />
                             </div>
                             <div className="form-group">
@@ -221,7 +188,7 @@ const ContactsForm = ({ onSubmit,next }) => {
                                     name="street1"
                                     value={formData.street1}
                                     onChange={handleChange}
-                                    
+
                                 />
                             </div>
                             <div className="form-group">
@@ -242,7 +209,7 @@ const ContactsForm = ({ onSubmit,next }) => {
                                     name="zipCode"
                                     value={formData.zipCode}
                                     onChange={handleChange}
-                                    
+
                                 />
                             </div>
                             <div className="form-group">
@@ -253,7 +220,7 @@ const ContactsForm = ({ onSubmit,next }) => {
                                     name="personalContactNumber"
                                     value={formData.personalContactNumber}
                                     onChange={handleChange}
-                                    
+
                                 />
                             </div>
                             <div className="form-group">
@@ -264,7 +231,7 @@ const ContactsForm = ({ onSubmit,next }) => {
                                     name="emergencyContactNumber"
                                     value={formData.emergencyContactNumber}
                                     onChange={handleChange}
-                                    
+
                                 />
                             </div>
                             <div className="form-group">
@@ -275,7 +242,7 @@ const ContactsForm = ({ onSubmit,next }) => {
                                     name="personalEmail"
                                     value={formData.personalEmail}
                                     onChange={handleChange}
-                                    
+
                                 />
                             </div>
                         </div>
@@ -325,7 +292,6 @@ const ContactsForm = ({ onSubmit,next }) => {
                                     disabled={sameAsPresent}
                                 />
                             </div>
-                            
                             <div className="form-group">
                                 <label>Street 1</label>
                                 <input
@@ -403,7 +369,7 @@ const ContactsForm = ({ onSubmit,next }) => {
                     <div id='submitBtn_next_main'>
                         <div id='submitBtn' >
                             <div className='div'>
-                                <button type="submit" >Submit </button>
+                                <button type="submit" >Update </button>
                                 <span><CiCircleChevRight /></span>
                             </div>
                             <div className="lineBar"></div>

@@ -1,8 +1,10 @@
 // Education.js
-// import React from 'react';
-import iconEdu from '../../../assets/icons/edu.png'
+import React from 'react';
+import iconEdu from '../../../assets/icons/edu.png';
 
-const Education = () => {
+const Education = ({ employeeData }) => {
+    console.log('data', employeeData);
+
     return (
         <div>
             <div className="education">
@@ -21,27 +23,15 @@ const Education = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>M.S.B.T.E</td>
-                            <td>Masters</td>
-                            <td>Science</td>
-                            <td>16-Jan-2024</td>
-                            <td>16-Apr-2024</td>
-                        </tr>
-                        <tr>
-                            <td>C.B.S.E</td>
-                            <td>H.S.C</td>
-                            <td>Maths</td>
-                            <td>25-Mar-2022</td>
-                            <td>25-Mar-2023</td>
-                        </tr>
-                        <tr>
-                            <td>D.B.S.E</td>
-                            <td>S.S.C</td>
-                            <td>Economics</td>
-                            <td>16-May-2018</td>
-                            <td>16-May-2021</td>
-                        </tr>
+                        {employeeData.map((edu) => (
+                            <tr key={edu.id}>
+                                <td>{edu.institute_name}</td>
+                                <td>{edu.degree}</td>
+                                <td>{edu.specialization}</td>
+                                <td>{new Date(edu.from_date).toLocaleDateString()}</td>
+                                <td>{new Date(edu.to_date).toLocaleDateString()}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

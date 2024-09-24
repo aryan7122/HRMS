@@ -13,6 +13,7 @@ import EmployeeDashboard from './Pages/Dashboard_and_Profile/EmployeeDashboard/E
 import AllEmployeeList from './Pages/Employee_onboarding/AllEmployeeList/AllEmployeeList.jsx';
 import AddEmloyee from './Pages/Employee_onboarding/AddEmployee/AddEmloyee.jsx';
 import EmployeeDetails from './Pages/Employee_onboarding/EmployeeDetail /EmployeeDetails.jsx';
+
 import '../src/styles/EffectSroll.scss'
 
 import './styles/App.scss';
@@ -62,6 +63,7 @@ import EmployeeHealthDetails from './Pages/EmployeeHealth/EmployeeHealthDetails/
 
 import { useSelector } from 'react-redux';
 import All_leaves_List from './Pages/LeaveManagement/All_leaves_List/All_leaves_List.jsx';
+import UpdateEmloyee from './Pages/Employee_onboarding/UpdateEmployee/UpdateEmloyee.jsx';
 
 
 const App = () => {
@@ -120,8 +122,10 @@ const App = () => {
                   <Route path="/admin-profile" element={<AdminProfile />} />
                   <Route path="/Employee-profile" element={<EmployeeProfile />} />
                   <Route path="/all-employee-list" element={<AllEmployeeList />} />
-                  <Route path="/add-employee" element={<AddEmloyee />} />
-                  <Route path="/employee-details" element={<EmployeeDetails />} />
+                    <Route path="/add-employee" element={<AddEmloyee />} />
+                  <Route path="/employee-details/:id" element={<EmployeeDetails />} />
+                    <Route path="/UpdateEmloyee/:id" element={<UpdateEmloyee />} />
+
                   {/* recruitment */}
                   <Route path="/all-job-list" element={<AllJobList />} />
                   <Route path="/add-job" element={<AddNewJob />} />

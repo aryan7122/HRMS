@@ -1,25 +1,28 @@
-import { useState } from 'react';
-import './AddEmloyee.scss';
+import { useState, useRef } from 'react';
+import './UpdateEmloyee.scss';
 import { HiUserPlus } from "react-icons/hi2";
 import { TfiClose } from "react-icons/tfi";
-import Confetti from 'react-confetti';
-import BasicDetailsForm from './BasicDetailsForm';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import BasicDetailsForm from './BasicDetailsForm.jsx';
 import ContactsForm from './ContactsForm.jsx';
 import ExperienceForm from './ExperienceForm.jsx';
 import EducationForm from './EducationForm.jsx';
 import DocumentsForm from './DocumentsForm.jsx';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
 
-const AddEmployee = () => {
+const UpdateEmployee = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-    })
+    const [formData, setFormData] = useState({});
+    const [loading, setLoading] = useState(false);
+    const formDataRef = useRef(formData); // useRef for storing latest form data
+    const token = localStorage.getItem('access_token');
+
     const prepareFormData = (formData) => {
         return {
-            // id: 18,
+            id: id,
             first_name: formData.firstName || '',
             last_name: formData.lastName || '',
             email: formData.email || '',
@@ -71,112 +74,82 @@ const AddEmployee = () => {
         };
     };
 
-    const clonedFormData = JSON.parse(JSON.stringify(formData));
-    const token = localStorage.getItem('access_token');
-    const formDataApi = prepareFormData({ ...clonedFormData });
-    console.log('formDataApi❗', formDataApi)
-    console.log('clonedFormData', clonedFormData)
-    //         ...prevData,
-    //         ...newData,
-    //     }));
-    //     if (!validateFormData(formDataApi)) {
-    //         return;
-    //     }
-    //     try {
-    //         const response = await axios.post('https://devstronauts.com/public/api/employee/create/update',
-    //             formDataApi,
-    //             {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${token}`,
-    //                 },
-    //             }
-    //         );
-    //         toast.success(response.data.message, {
-    //             position: "top-right",
-    //             autoClose: 3000,
-    //             theme: "light",
-    //         });
-    //         console.log("🌍 API Response: ", response);
-
-    //         if (response.data.success) {
-    //             toast.success(response.data.message, {
-    //                 position: "top-right",
-    //                 autoClose: 3000,
-    //                 theme: "light",
-    //             });
-
-    //             setTimeout(() => {
-    //                 navigate('/all-employee-list');
-    //             }, 2300);
-    //         }
-    //     } catch (error) {
-    //         console.error("Error message: ", error.message);
-    //         toast.error('Failed sending data to API', {
-    //             position: "top-right",
-    //             autoClose: 3000,
-    //             theme: "light",
-    //         });
-    //     }
-    // };
-    const handleFormData = async (newData) => {
-        // Pehle formData update karo
-        setFormData((prevData) => ({
-            ...prevData,
-            ...newData,
+ 
+    const handleNext = (newData) => {
+        const updatedData = { ...formDataRef.current, ...newData }; // Update ref
+        setFormData(updatedData); // Update state
+        formDataRef.current = updatedData; // Keep ref in sync
+        // 
+        const currentForm = formNames[activeFormIndex];
+        setFilledForms((prevState) => ({
+            ...prevState,
+            [currentForm]: true,
         }));
+        setActiveFormIndex(activeFormIndex + 1);
 
-        // Phir naya formData useEffect ke baad API ke liye ready karne ke liye wait karo
-        const formDataApi = prepareFormData({
-            ...formData, // Ensure latest form data here
-            ...newData,  // Combine with newData
-        });
+    };
 
-        console.log('formDataApi❗', JSON.stringify(formDataApi));
+    const handleFormData = async (newData) => {
+        const updatedData = { ...formDataRef.current, ...newData };
+        setFormData(updatedData);
+        formDataRef.current = updatedData;
 
-        if (!validateFormData(formDataApi)) {
-            return;
-        }
-        if (token && formDataApi) {
+        const formDataApi = prepareFormData(updatedData);
+        // console.log('formDataApi❗', formDataApi);
+
+        setLoading(true);
+
+        // if (!validateFormData(formDataApi)) {
+        //     setLoading(false);
+        //     return;
+        // }
+        if (id && token && formDataApi) {
             try {
+                // console.log("Request URL: ", url);
+                console.log("Request Body: ", formDataApi);
+
                 const response = await axios.post('https://devstronauts.com/public/api/employee/create/update',
-                    // JSON.stringify(formDataApi),
-                    formDataApi,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json',
-                        },
-                    }
-                );
+                    formDataApi
+                , {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
 
-                if (response.data.success) {
-                    toast.success(response.data.message, {
-                        position: "top-right",
-                        autoClose: 3000,
-                        theme: "light",
-                    });
-
-                    setTimeout(() => {
-                        navigate('/all-employee-list');
-                    }, 2300);
-                }
-            } catch (error) {
-                console.error("Error message: ", error.message);
-                toast.error(error.message || 'Failed sending data to API', {
+                // if (response.data && response.data.success) {
+                toast.success(response.data.message || 'Employee updated successfully!', {
                     position: "top-right",
                     autoClose: 3000,
                     theme: "light",
                 });
+
+                setTimeout(() => {
+                    // navigate('/all-employee-list');
+                }, 2300);
+                // }
+            } catch (error) {
+                console.error("Error message: ", error.message);
+                toast.error('Failed sending data to API', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    theme: "light",
+                });
+            } finally {
+                setLoading(false);
             }
         }
-    };
-
+    }
     const validateFormData = (formDataApi) => {
-        if (!formDataApi.first_name || !formDataApi.email) {
-            toast.error('First Name and Email are required!', { position: "top-right", autoClose: 3000 });
+        if (!formDataApi.first_name || formDataApi.first_name.trim() === '') {
+            toast.error('First Name is required!', { position: "top-right", autoClose: 3000 });
             return false;
         }
-        if (!formDataApi.contacts.length) {
+        if (!formDataApi.email || formDataApi.email.trim() === '') {
+            toast.error('Email is required!', { position: "top-right", autoClose: 3000 });
+            return false;
+        }
+        if (!formDataApi.contacts || formDataApi.contacts.length === 0) {
             toast.error('At least one contact is required.', { position: "top-right", autoClose: 3000 });
             return false;
         }
@@ -193,29 +166,17 @@ const AddEmployee = () => {
         'Documents': false,
     });
 
-    const handleNext = (newData) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            ...newData,
-        }));
-        const currentForm = formNames[activeFormIndex];
-        setFilledForms((prevState) => ({
-            ...prevState,
-            [currentForm]: true,
-        }));
-        setActiveFormIndex(activeFormIndex + 1);
-    };
-
     const AllEmp = () => {
         navigate('/all-employee-list');
     };
 
     return (
         <>
+            {/* {loading && <div className="loader">Loading...</div>} */}
             <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} closeOnClick pauseOnHover draggable />
             <div className="employee-form">
                 <div className="top-bar">
-                    <h2><HiUserPlus /> Add Employee</h2>
+                    <h2><HiUserPlus /> Update Employee</h2>
                     <span className="close_nav" onClick={AllEmp}><TfiClose /></span>
                 </div>
 
@@ -236,11 +197,11 @@ const AddEmployee = () => {
                     {activeFormIndex === 1 && <ContactsForm onSubmit={handleFormData} next={handleNext} />}
                     {activeFormIndex === 2 && <ExperienceForm onSubmit={handleFormData} next={handleNext} />}
                     {activeFormIndex === 3 && <EducationForm onSubmit={handleFormData} next={handleNext} />}
-                    {activeFormIndex === 4 && <DocumentsForm onSubmit={handleFormData} next={handleNext} />}
+                    {activeFormIndex === 4 && <DocumentsForm onSubmit={handleFormData} />}
                 </div>
             </div>
         </>
     );
 };
 
-export default AddEmployee;
+export default UpdateEmployee;

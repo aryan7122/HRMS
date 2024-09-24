@@ -1,11 +1,15 @@
-import { useState } from 'react';
-import './AddEmloyee.scss';
+import { useState,useEffect } from 'react';
+import './UpdateEmloyee.scss';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoMdAddCircleOutline, IoMdCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EducationForm = ({ onSubmit, next }) => {
     const [fileName, setFileName] = useState('');
@@ -25,6 +29,53 @@ const EducationForm = ({ onSubmit, next }) => {
             }
         ]
     });
+    const { id } = useParams();
+    const token = localStorage.getItem('access_token');
+
+
+    useEffect(() => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/employee/details', {
+                user_id: id
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    const data = response.data.result.educations;
+
+                    console.log('data', data);
+
+                    if (data && data.length > 0) {
+                        setEducationForms({
+                            educations: data.map(edu => ({
+                                institute_name: edu.institute_name || "",
+                                degree: edu.degree || "",
+                                specialization: edu.specialization || "",
+                                attachment: edu.attachment || "",
+                                date_of_completion: edu.date_of_completion || "",
+                                from_date: edu.from_date || "",
+                                to_date: edu.to_date || ""
+                            }))
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching employee details:", error);
+                    toast.error('Failed to fetch employee details.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                });
+        }
+    }, [id, token]);
 
     // Handle file change
     const handleFileChange = (index, event) => {
@@ -202,7 +253,7 @@ const EducationForm = ({ onSubmit, next }) => {
                 <div id='submitBtn_next_main'>
                     <div id='submitBtn' >
                         <div className='div'>
-                            <button type="submit">Submit </button>
+                            <button type="submit">Update </button>
                             <span><CiCircleChevRight /></span>
                         </div>
                         <div className="lineBar"></div>

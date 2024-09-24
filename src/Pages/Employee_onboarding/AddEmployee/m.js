@@ -11,7 +11,7 @@ import { OutsideClick } from './OutsideClick.jsx'
 import axios from 'axios';
 
 const BasicDetailsForm = ({ onSubmit, next }) => {
-    
+
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
     const [inconSelect, setInconSelect] = useState(false)
@@ -83,74 +83,65 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
     // const token = localStorage.getItem('access_token');
     // console.log(' formData.firstName:',  formData.firstName)
 
-    const handleSubmit =  (event) => {
-        event.preventDefault();
-        // console.log('onSubmit', formData)
-        onSubmit(formData)
-        // try {
-        //     const response = await axios.post('https://devstronauts.com/public/api/employee/create/update', { 
-        //         first_name: formData.firstName,
-        //         last_name: formData.lastName,
-        //         email: formData.email,
-        //         mobile_no: formData.contactNumber,
-        //         date_of_birth: formData.dob,
-        //         age: formData.age,
-        //         marital: formData.maritalStatus,
-        //         gender: formData.gender,
-        //         joining_date: formData.doj,
-        //         designation_id: "1", // is value ko dynamic bana sakte hain form ke hisaab se
-        //         department_id: "1",  // is value ko dynamic bana sakte hain form ke hisaab se
-        //         reporting_manager: formData.reportingManager,
-        //         date_of_exit: formData.doe || "",  // agar empty hai toh default empty string
-        //         employment_type: formData.employmentType,
-        //         employee_status: formData.employeeStatus,
-        //         source_of_hire: formData.sourceOfHire,
-        //         image: fileName || " " 
-        //      }, {
-        //         headers: {
-        //             'Authorization': `Bearer ${token}`
-        //         }
-        //     });
-        //     console.log("🌍 API Response emp id: ", response.data.result.id);
-        //     localStorage.setItem('EmployeeCreateID', response.data.result.id);
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     try {
+    //         const response = await axios.post('https://devstronauts.com/public/api/employee/create/update', { 
+    //             first_name: formData.firstName,
+    //             last_name: formData.lastName,
+    //             email: formData.email,
+    //             mobile_no: formData.contactNumber,
+    //             date_of_birth: formData.dob,
+    //             age: formData.age,
+    //             marital: formData.maritalStatus,
+    //             gender: formData.gender,
+    //             joining_date: formData.doj,
+    //             designation_id: "1", // is value ko dynamic bana sakte hain form ke hisaab se
+    //             department_id: "1",  // is value ko dynamic bana sakte hain form ke hisaab se
+    //             reporting_manager: formData.reportingManager,
+    //             date_of_exit: formData.doe || "",  // agar empty hai toh default empty string
+    //             employment_type: formData.employmentType,
+    //             employee_status: formData.employeeStatus,
+    //             source_of_hire: formData.sourceOfHire,
+    //             image: fileName || " " 
+    //          }, {
+    //             headers: {
+    //                 'Authorization': `Bearer ${token}`
+    //             }
+    //         });
+    //         console.log("🌍 API Response emp id: ", response.data.result.id);
+    //         localStorage.setItem('EmployeeCreateID', response.data.result.id);
 
-        //     alert('API Response: "Employee Created Successfully"', response.message)
-        //     // Agar response sahi hai toh form reset kar dena
-        //     // setFormData({
-        //     //     employeeId: '',
-        //     //     firstName: '',
-        //     //     lastName: '',
-        //     //     dob: '',
-        //     //     age: '',
-        //     //     gender: '',
-        //     //     email: '',
-        //     //     contactNumber: '',
-        //     //     reportingManager: '',
-        //     //     department: '',
-        //     //     designation: '',
-        //     //     doj: '',
-        //     //     photo: '',
-        //     //     maritalStatus: '',
-        //     //     doe: '',
-        //     //     employmentType: '',
-        //     //     employeeStatus: '',
-        //     //     sourceOfHire: ''
-        //     // });
+    //         alert('API Response: "Employee Created Successfully"', response.message)
+    //         // Agar response sahi hai toh form reset kar dena
+    //         // setFormData({
+    //         //     employeeId: '',
+    //         //     firstName: '',
+    //         //     lastName: '',
+    //         //     dob: '',
+    //         //     age: '',
+    //         //     gender: '',
+    //         //     email: '',
+    //         //     contactNumber: '',
+    //         //     reportingManager: '',
+    //         //     department: '',
+    //         //     designation: '',
+    //         //     doj: '',
+    //         //     photo: '',
+    //         //     maritalStatus: '',
+    //         //     doe: '',
+    //         //     employmentType: '',
+    //         //     employeeStatus: '',
+    //         //     sourceOfHire: ''
+    //         // });
 
-        //     setIsUploaded(false);
-        //     setFileName('');
-        // } catch (error) {
-        //     console.error("Error sending data to API: ", error);
-        // }
-        // console.log(formData);
-    };
-    
-    
-    const nextSumbit = (event) => {
-        event.preventDefault();
-        // console.log('onSubmit', formData)
-        next(formData)
-    }
+    //         setIsUploaded(false);
+    //         setFileName('');
+    //     } catch (error) {
+    //         console.error("Error sending data to API: ", error);
+    //     }
+    //     // console.log(formData);
+    // };
 
     const toggleDropdown = (dropdown) => {
         setDropdowns(prevState => ({
@@ -206,7 +197,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
     const handleSearchQueryChangeEmployeeStatus = (e) => setSearchQueryEmployeeStatus(e.target.value);
 
     const employmentTypeOptions = [
-     'Permanent', 'On Contract', 'Intern', 'Trainee'
+        'Permanent', 'On Contract', 'Intern', 'Trainee'
     ];
 
     const employeeStatusOptions = [
@@ -220,11 +211,11 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
         option.toLowerCase().includes(searchQueryEmployeeStatus.toLowerCase())
     );
     // 
-   
+
 
     return (
         <>
-            <div className="" onSubmit={handleSubmit}>
+            <div className="" onSubmit={onSubmit}>
                 <form >
                     <div className="from1">
                         <div className="form-group">
@@ -236,10 +227,10 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                     accept="image/*"
                                     id="file"
                                     onChange={handleFileChange}
-                                    
+
                                 />
                                 <label htmlFor="file" className="custom-file-upload">
-                                    {!isUploaded && 
+                                    {!isUploaded &&
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
                                             <path d="M17.4776 9.01106C17.485 9.01102 17.4925 9.01101 17.5 9.01101C19.9853 9.01101 22 11.0294 22 13.5193C22 15.8398 20.25 17.7508 18 18M17.4776 9.01106C17.4924 8.84606 17.5 8.67896 17.5 8.51009C17.5 5.46695 15.0376 3 12 3C9.12324 3 6.76233 5.21267 6.52042 8.03192M17.4776 9.01106C17.3753 10.1476 16.9286 11.1846 16.2428 12.0165M6.52042 8.03192C3.98398 8.27373 2 10.4139 2 13.0183C2 15.4417 3.71776 17.4632 6 17.9273M6.52042 8.03192C6.67826 8.01687 6.83823 8.00917 7 8.00917C8.12582 8.00917 9.16474 8.38194 10.0005 9.01101" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             <path d="M12 13L12 21M12 13C11.2998 13 9.99153 14.9943 9.5 15.5M12 13C12.7002 13 14.0085 14.9943 14.5 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -293,7 +284,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
 
                             />
                         </div>
-                       
+
                         <div className="form-group">
                             <label>Date of Birth</label>
                             <input
@@ -301,7 +292,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                 name="dob"
                                 value={formData.dob}
                                 onChange={handleChange}
-                                
+
                             />
                         </div>
                         <div className="form-group">
@@ -312,7 +303,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                 name="age"
                                 value={formData.age}
                                 onChange={handleChange}
-                                
+
                             />
                         </div>
                         {/* Gender Dropdown */}
@@ -440,7 +431,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                 name="doj"
                                 value={formData.doj}
                                 onChange={handleChange}
-                                
+
                             />
                         </div>
 
@@ -452,7 +443,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                 name="employeeId"
                                 value={formData.employeeId}
                                 onChange={handleChange}
-                                
+
                             />
                         </div>
                         {/* Marital Status Dropdown */}
@@ -573,7 +564,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                             id="searchDepartmentHead"
                                         />
                                         <div className="dropdown_I">
-                                            {['Referral', 'Direct', 'Campus','Advertisement'].filter(option =>
+                                            {['Referral', 'Direct', 'Campus', 'Advertisement'].filter(option =>
                                                 option.toLowerCase().includes(searchQuerySourceOfHire.toLowerCase())
                                             ).map(option => (
                                                 <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', option)} key={option}>
@@ -602,7 +593,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                         <div className="form">
                             <p>Next Page</p>
                             <span className='not_active'><IoIosArrowDropleft /></span>
-                            <button type="button" onClick={nextSumbit}>
+                            <button type="button" onClick={next}>
                                 <IoIosArrowDropright />
                             </button>
                         </div>
@@ -614,3 +605,66 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
 };
 export default BasicDetailsForm;
 // 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// user_id: 5,
+// first_name: formData.firstName || '',
+// last_name: formData.lastName || '',
+// email: formData.email || '',
+// mobile_no: formData.contactNumber || '',
+// date_of_birth: formData.dob || "", // Default to empty string if dob is empty
+// age: formData.age || '',
+// marital: formData.maritalStatus || '',
+// gender: formData.gender || '',
+// joining_date: formData.doj || '',
+// designation_id: "", // Dynamic value can be set here
+// department_id: "", // Dynamic value can be set here
+// reporting_manager: formData.reportingManager || "",
+// date_of_exit: formData.doe || "", // Default to empty string if doe is empty
+// employment_type: formData.employmentType || "",
+// employee_status: formData.employeeStatus || "",
+// source_of_hire: formData.sourceOfHire || "",
+// image: formData.photo || " ", // Fallback if photo is empty
+// contacts: [
+//     {
+//         address_type: "Present",
+//         street_1: formData.street1 || "",
+//         street_2: formData.street2 || "",
+//         zip_code: formData.zipCode || "",
+//         city_id: formData.city || "",
+//         state_id: formData.state || "",
+//         country_id: formData.country || "",
+//         personal_contact_no: formData.personalContactNo || "",
+//         emergency_contact_no: formData.emergencyContactNumber || "",
+//         personal_email_id: formData.personalEmailId || "",
+//         is_present_address: "",
+//     },
+//     {
+//         address_type: "Permanent",
+//         street_1: formData.permanentStreet1 || "",
+//         street_2: formData.permanentStreet2 || "",
+//         zip_code: formData.permanentZipCode || "",
+//         city_id: formData.permanentCity || "",
+//         state_id: formData.permanentState || "",
+//         country_id: formData.permanentCountry || "",
+//         personal_contact_no: formData.permanentPersonalContactNumber || "",
+//         emergency_contact_no: formData.permanentEmergencyContactNumber || "",
+//         personal_email_id: formData.personalEmail || "",
+//         is_present_address: "0",
+//     }
+// ],
+// experiences: formData.experiences || [],
+// educations: formData.educations || [],
+// documents: formData.documents || [],

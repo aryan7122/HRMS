@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './AddEmloyee.scss';
+import './UpdateEmloyee.scss';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
@@ -9,8 +9,12 @@ import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { OutsideClick } from './OutsideClick.jsx';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { number } from 'prop-types';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate, useParams } from 'react-router-dom';
 
-const DocumentsForm = ({ onSubmit,next }) => {
+const DocumentsForm = ({ onSubmit }) => {
     const [educationForms, setEducationForms] = useState([
         {
             documentType: '',
@@ -49,52 +53,48 @@ const DocumentsForm = ({ onSubmit,next }) => {
             }
         ]
     });
+    const { id } = useParams();
+    const token = localStorage.getItem('access_token');
+    useEffect(() => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/employee/details', {
+                user_id: id
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    const data = response.data.result.documents;
 
-    // useEffect(() => {
-    //     if (id) {
-    //         axios.post('https://devstronauts.com/public/api/employee/details', {
-    //             user_id: id
-    //         }, {
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`
-    //             }
-    //         })
-    //             .then(response => {
-    //                 const data = response.data.result;
+                    console.log('documents data', data);
 
-    //                 // Documents data from the API response
-    //                 const documents = data.documents.map(document => ({
-    //                     document_name: document.document_name || '',
-    //                     document_id: document.document_id || '',
-    //                     attachment_1: document.attachment_1 || '',
-    //                     attachment_2: document.attachment_2 || ''
-    //                 }));
-
-    //                 setAllDocumentsData({
-    //                     documents: documents.length ? documents : [{
-    //                         document_name: '',
-    //                         document_id: '',
-    //                         attachment_1: '',
-    //                         attachment_2: ''
-    //                     }]
-    //                 });
-    //                 console.log('Documents data fetched successfully:', documents);
-    //             })
-    //             .catch(error => {
-    //                 console.error("Error fetching documents data:", error);
-    //                 toast.error('Failed to fetch documents data.', {
-    //                     position: "top-right",
-    //                     autoClose: 3000,
-    //                     hideProgressBar: false,
-    //                     closeOnClick: true,
-    //                     pauseOnHover: true,
-    //                     draggable: true,
-    //                     progress: undefined,
-    //                     theme: "light",
-    //                 });
-    //             });
-    //     }
-    // }, [id, token]);
+                    if (data && data.length > 0) {
+                        setAllDocumentsData({
+                            documents: data.map(doc => ({
+                                document_name: doc.document_name || '',
+                                document_id: doc.document_id || '',
+                                attachment_1: doc.attachment_1 || '',
+                                attachment_2: doc.attachment_2 || ''
+                            }))
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching documents:", error);
+                    toast.error('Failed to fetch documents.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                });
+        }
+    }, [id, token]);
 
     // select
     const [selectedDocuments, setSelectedDocuments] = useState([]);
@@ -178,7 +178,7 @@ const DocumentsForm = ({ onSubmit,next }) => {
         ]);
     };
     // console.log('&&&&&&', educationForms[educationForms.length - 1].documentType)
-    console.log('setSelectOneOp❗',selectOneOp)
+    // console.log('setSelectOneOp❗',selectOneOp)
     useEffect(()=>{
         setSelectOneOp(educationForms[educationForms.length - 1].documentType)
     }, [educationForms])
@@ -233,15 +233,9 @@ const DocumentsForm = ({ onSubmit,next }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('allDocumentsData', allDocumentsData.documents); // All document data printed here
+        // console.log('allDocumentsData', allDocumentsData.documents); // All document data printed here
         onSubmit(allDocumentsData)
     };
-    const nextSumbit = (event) => {
-        event.preventDefault();
-        console.log('allDocumentsData', allDocumentsData.documents); // All document data printed here
-        next(allDocumentsData)
-    };
-    
 
     // 
 
@@ -258,7 +252,7 @@ const DocumentsForm = ({ onSubmit,next }) => {
                             <h2 id='indexTitile'>Identity Information {index + 1}</h2>
                             {index === 0 ?
                                 <div>
-                                    {console.log('form.documentType,', form.documentType)}
+                                    {/* {console.log('form.documentType,', form.documentType)} */}
                                     {selectOneOp === '' ? ''
                                         :
                                         <div type="button" onClick={handleAddEducation}>
@@ -639,7 +633,7 @@ const DocumentsForm = ({ onSubmit,next }) => {
                 <div id='submitBtn_next_main'>
                     <div id='submitBtn' >
                         <div className='div'>
-                            <button type="submit" >Submit </button>
+                            <button type="submit" >Update </button>
                             <span><CiCircleChevRight /></span>
                         </div>
                         <div className="lineBar"></div>
@@ -648,11 +642,11 @@ const DocumentsForm = ({ onSubmit,next }) => {
                         </div>
                     </div>
                     <div className="form">
-                        <p>Next Page</p>
+                        {/* <p>Next Page</p>
                         <span className='not_active'><IoIosArrowDropleft /></span>
                         <button type="button" onClick={nextSumbit}>
                             <IoIosArrowDropright />
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </form>

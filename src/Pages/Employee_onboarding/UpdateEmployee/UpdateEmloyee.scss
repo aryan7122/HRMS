@@ -49,11 +49,11 @@
       align-items: center;
       justify-content: center;
       margin-top: 15px;
-      cursor: pointer !important;
-      z-index: 1;
       // overflow: hidden;
-
-      // border: 1px solid red;
+    }
+    .close_nav:hover {
+      border: 1px solid red !important;
+      color: red !important;
     }
     div {
       overflow: hidden;
@@ -370,7 +370,7 @@
         background-color: #ffffff0b;
         border: 1px solid rgba(128, 128, 128, 0.291);
         border-radius: 3px;
-        color: #1d0534;
+        color: #320B57 !important;
         font-size: 14px;
 
         //
@@ -403,7 +403,8 @@
       //     }
 
       .custom-file-upload {
-        // border: 1px solid red !important;
+        height: 20px !important;
+        // border: 1px solid red;
         display: inline-block;
         padding: 6px 12px;
         cursor: pointer;
@@ -442,9 +443,9 @@
       // z-index: 1;
       background: #fff;
       margin-bottom: 50px !important;
-      
+
       .dropdown-button {
-        // border: 1px solid red !important;
+        color: #320B57 !important;
         font-size: 14px;
         background-color: #fff;
         // z-index: 9999 !important;
@@ -473,6 +474,7 @@
         // top: 100%;
         left: 0;
         width: 100px;
+        // max-height: 170px;
         border: 1px solid #fff;
         // border-radius: 4px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -481,10 +483,7 @@
         background-color: #fff;
         padding-bottom: 10px !important;
         .dropdown-item {
-          // overflow-x: hidden;
-          // overflow-x: hidden !important;
-          // border: 1px solid red !important;
-          // overflow: visible;
+          overflow: visible;
           // padding: 10px;
           padding: 5px 5px;
           width: 91%;
@@ -498,6 +497,10 @@
         .dropdown-item:hover {
           color: #400f6f;
         }
+      }
+      .dropdown_I{
+                max-height: 170px;
+                        overflow-y: auto;
       }
     }
     .dropdown:hover {
@@ -529,58 +532,78 @@
       // cursor: pointer;
     }
   }
-  form .form2 {
+  #div_headingBit{
     // border: 1px solid red !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+  }
+  form #form .div_heading h2 {
+    // width: 160px;
     // height: 210px;
     // padding-bottom: 50px;
   }
+  form #form .div_heading .SameAddress {
+    width: 200px;
+    // border: 1px solid red !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  #form .div_heading input {
+    margin-left: 0;
+  }
 }
-// #submitBtn_next_main {
-//   width: 92%;
-//   color: #fff;
-//   position: absolute;
-//   bottom: 10px;
-//   left: 110px;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   text-align: center;
-//   // border: 1px solid red;
-//   height: 63px;
-//   margin-bottom: -10px;
-//   background: #fff;
-//   .form {
-//     right: 10px;
-//     color: black;
-//     display: flex;
-//     width: 120px;
-//     text-align: center;
-//     align-items: center;
-//     // border: 1px solid red;
-//     position: absolute;
-//     gap: 5px;
-//     margin-bottom: -20px;
-//     p {
-//       color: #938a8a;
-//       margin-right: 2px;
-//       font-size: 13px;
-//     }
-//     span {
-//       font-size: 22px !important;
-//       cursor: not-allowed;
-//     }
-//     .not_active {
-//       color: rgb(178, 170, 170) !important;
-//     }
-//     button {
-//       background: #fff;
-//       outline: none;
-//       border: none;
-//       font-size: 22px;
-//       cursor: pointer;
-//     }
-//   }
-// }
+#submitBtn_next_main {
+  width: calc(100% - 105px);
+  color: #fff;
+  position: fixed;
+  bottom: 10px;
+  // left: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  // border: 1px solid red;
+  box-shadow: 0px 0px 10px 0.5px rgba(218, 217, 217, 0.699);
+  height: 63px;
+  margin-bottom: -10px;
+  background: #fff;
+  .form {
+    right: 10px;
+    color: black;
+    display: flex;
+    width: 120px;
+    text-align: center;
+    align-items: center;
+    // border: 1px solid red;
+    position: absolute;
+    gap: 5px;
+    margin-bottom: -20px;
+    p {
+      color: #938a8a;
+      margin-right: 2px;
+      font-size: 13px;
+    }
+    span {
+      font-size: 22px !important;
+      cursor: not-allowed;
+    }
+    .not_active {
+      color: rgb(255, 255, 255) !important;
+    }
+
+    button {
+      background: #fff;
+      outline: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+    }
+  }
+}
 #submitBtn {
   // border: 1px solid red;
   // z-index: 1;
@@ -659,25 +682,23 @@
 }
 
 //
-@media (max-width: 1429px) {
-  .employee-form form {
-    width: 95% !important;
-  }
-}
-@media (max-width: 1379px) {
-  .employee-form form {
-    width: 100% !important;
-  }
-  .employee-form form .from1 .dropdown .dropdown-button {
-    border: 1px solid #e6e6e6 !important;
-  }
-}
-@media (max-width: 1179px) {
-  .employee-form form {
-    width: 100% !important;
-  }
-  .employee-form form .from1 .dropdown .dropdown-button {
-    border: 1px solid #e6e6e6 !important;
+@media (max-width: 1401px) {
+  li:hover #hover_P {
+     rotate: 180deg;
+    margin-left: -120px !important;
+    position: relative;
+    p {
+      rotate: 180deg;
+      margin-top: -1% !important;
+      // border: 1px solid red;
+      // height: 5px;
+      margin-left: 15px !important;
+      text-align: start;
+      height: fit-content !important;
+     
+    }
+    div {
+    }
   }
 }
 @media (max-width: 881px) {
@@ -686,121 +707,52 @@
     margin-bottom: 0px !important;
   }
   li:hover #hover_P {
-    display: none !important;
-  }
-}
-input[type="checkbox"]:checked {
-  background-color: #400f6f !important;
-}
-
-.DescriptionJob {
-  width: 100%;
-  .form-group {
-    textarea {
-      height: 100px !important;
-    }
+    // display: none !important;
   }
 }
 
-.checkbox {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .checkboxDivJob {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    input {
-      margin-right: 5px;
-    }
-    // border: 1px solid red;
-    .checkboxLable {
-      // width: 100px;
-      display: flex;
-      // width: 90px;
-      margin-top: 5px;
-    }
-  }
+.starred {
+  color: red !important;
+}
+.active {
+  // color: #fff !important;
 }
 
-input[type="checkbox"] {
-  z-index: 0 !important;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  width: 20px !important;
-  height: 20px !important;
-  border: 2px solid #000;
-  cursor: pointer;
-  position: relative;
-  border-radius: 3px;
-  border: 1px solid grey;
+.not_active {
+  color: rgb(255, 255, 255) !important;
 }
 
-input[type="checkbox"]:not(:checked) {
-  background-color: white;
+.filled {
+  color: #dcecd4 !important;
+}
+.navbar-items span.filled {
+  background: #310b54 !important;
 }
 
-input[type="checkbox"]:checked {
-  background-color: $primary-color;
+
+#searchDepartmentHead{
+  // border: 1px solid red;
+  border: 1px solid #e9e5e5;
+  background: #fff;
+  outline: none;
+  margin: 0 auto;
+  margin-top: 5px;
+  width: 98%;
+  margin-bottom: 5px;
+}
+#searchDepartmentHead:hover{
+  border: 1px solid #a90490;
 }
 
-input[type="checkbox"]:checked::after {
-  content: "";
-  position: absolute;
-  top: 0px;
-  left: 5px;
-  width: 6px;
-  height: 12px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+.dropdown-item.disabled {
+    color: grey;
+    pointer-events: none;
 }
 
-@media (max-width: 1216px) {
-  .employee-form form {
-    width: 100% !important;
-  }
-}
 
-#requiredSkillsSelect {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  max-width: 20vw; /* width 1000% se change karke 100% kar diya */
-  max-height: 40px;
-  overflow-x: auto; /* Horizontal scrolling allow karega */
-  white-space: nowrap; /* Text ko ek hi line me rakhne ke liye */
-  padding: 5px;
-}
+#indexTitile{
+  display: flex !important;
+  // border: 1px solid red;
+  width: 200px !important;
 
-#requiredSkillsSelect::-webkit-scrollbar {
-  height: 5px; /* Scrollbar ki height */
-}
-
-#requiredSkillsSelect::-webkit-scrollbar-thumb {
-  background: #ccc; /* Scrollbar ka color */
-  border-radius: 10px; /* Scrollbar ko round banane ke liye */
-}
-
-.skill-chip {
-  background: #7D58E9;
-  padding: 4px 10px;
-  display: flex;
-  align-items: center;
-  border-radius: 20px;
-  color: #fff;
-  font-size: 13px;
-  white-space: nowrap; /* Ek hi line me text ko rakhne ke liye */
-}
-
-.skill-chip span {
-  margin-right: 5px;
-  cursor: pointer; /* X icon par cursor pointer */
-}
-
-#dropdown_buttonSkill {
-  overflow-y: hidden;
-  overflow-x: auto !important;
-  // border: 1px solid red !important;
 }

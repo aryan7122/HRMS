@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../../Employee_onboarding/AddEmployee/AddEmloyee.scss';
 import '../../Employee_onboarding/AddEmployee/NavbarForm.scss';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -12,8 +12,12 @@ import { addJobForm } from '../../../slices/jobSlice';
 import { useSelector } from 'react-redux';
 import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+
 import "react-toastify/dist/ReactToastify.css";
 const JobForm = ({ onSubmit }) => {
+    const navigate = useNavigate()
+
     const dispatch = useDispatch();
     const jobs = useSelector((state) => state.job.jobs);
     const { isOpen: isDesignationOpen, ref: designationRef, buttonRef: designationButtonRef, handleToggle: toggleDesignation, setIsOpen: setDesignationOpen } = OutsideClick();
@@ -38,10 +42,10 @@ const JobForm = ({ onSubmit }) => {
         noOfPositions: '',
         employmentType: '',
         experience: '',
-        requiredSkills: '',
+        requiredSkills: [],
         description: ''
     });
-
+    console.log('formData', formData)
     const [dropdowns, setDropdowns] = useState({
         designation: false,
         department: false,
@@ -76,16 +80,16 @@ const JobForm = ({ onSubmit }) => {
   
     // };
     const [loading, setLoading] = useState(false);
+    const [selectedSkills, setSelectedSkills] = useState([]);
 
 
     const token = localStorage.getItem('access_token');
-
+    console.log('formData.requiredSkills.join(', ')', formData.requiredSkills)
     const handleSubmit = (event) => {
         event.preventDefault();  // Prevent default form submission
         // setLoading(true)
         axios.post(`https://devstronauts.com/public/api/jobopening/create/update`,
             {
-                // id: 4,  // Replace this with dynamic if needed
                 job_title: formData.jobTitle,
                 department: formData.department,
                 designation: formData.designation,
@@ -94,7 +98,7 @@ const JobForm = ({ onSubmit }) => {
                 no_of_position: formData.noOfPositions,
                 employee_type: formData.employmentType,
                 experience: formData.experience,
-                skills: formData.requiredSkills,
+                skills: formData.requiredSkills.join(', '),
                 description: formData.description,
             }, {
             headers: {
@@ -121,7 +125,8 @@ const JobForm = ({ onSubmit }) => {
                     setShowAlert(true)
                     setTimeout(() => {
                         setShowAlert(false)
-                    }, 4000);
+                        navigate('/all-job-list')
+                    }, 2000);
                 }
                 // Clear the form after successful submission
                 setFormData({
@@ -133,9 +138,10 @@ const JobForm = ({ onSubmit }) => {
                     noOfPositions: '',
                     employmentType: '',
                     experience: '',
-                    requiredSkills: '',
-                    description: ''
+                    requiredSkills: [],
+                    description: '',
                 });
+                setSelectedSkills([])
             })
             .catch(error => {
                 setLoading(false)
@@ -173,6 +179,20 @@ const JobForm = ({ onSubmit }) => {
             [dropdown]: !dropdowns[dropdown]
         });
     };
+    useEffect(() => {
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            requiredSkills: selectedSkills
+        }));
+    }, [selectedSkills]); 
+    const handleSkillSelection = (dropdown, skill) => {
+        // Check if skill already exists in selectedSkills
+        if (!selectedSkills.includes(skill)) {
+            setSelectedSkills(prevSkills => [...prevSkills, skill]);
+        }
+                setRequiredSkillsOpen(false)
+
+    };
 
     const selectOption = (dropdown, value) => {
         setFormData(prevState => ({
@@ -189,7 +209,13 @@ const JobForm = ({ onSubmit }) => {
         setEmploymentTypeOpen(false)
         setSExperienceOpen(false)
         setRequiredSkillsOpen(false)
+        // if (!selectedSkills.includes(value)) {
+        //     setSelectedSkills(prevState => [...prevState, value]);
+        // }
+        // // setRequiredSkillsOpen(false);
+        setSearchQueryRequiredSkills('');  
     };
+
     if (loading) {
         return <div id='notFounPageID'><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" /></div>; // Loading state
     }
@@ -204,11 +230,21 @@ const JobForm = ({ onSubmit }) => {
     const employmentTypeOptions = [
         'Part-time', 'Full-time', 'Consultant', 'Permanent', 'On Contract', 'Intern', 'Trainee'
     ];
-
     const requiredSkillsOptions = [
         'Communication Skills', 'Software Development', 'Leadership Skills', 'Team Collaboration',
-        'Problem Solving', 'Project Management', 'Data Analysis'
+        'Problem Solving', 'Project Management', 'Data Analysis', 'PHP', 'Java', 'Laravel',
+        'JavaScript', 'React.js', 'Node.js', 'Python', 'Machine Learning', 'Artificial Intelligence',
+        'DevOps', 'Cloud Computing', 'AWS', 'Azure', 'Docker', 'Kubernetes', 'MySQL', 'MongoDB',
+        'HTML', 'CSS', 'TypeScript', 'REST API', 'GraphQL', 'Version Control', 'Git', 'Agile Methodology',
+        'Scrum', 'UI/UX Design', 'Figma', 'Adobe XD', 'Testing', 'Quality Assurance', 'Jenkins',
+        'CI/CD', 'Data Visualization', 'Cybersecurity', 'Networking', 'Technical Writing', 'Time Management',
+        'Digital Marketing', 'SEO', 'Content Creation', 'Customer Support', 'Salesforce', 'Microsoft Excel',
+        'SQL', 'NoSQL', 'Blockchain', 'Web3', 'Mobile Development', 'Flutter', 'Android Development',
+        'iOS Development', 'Swift', 'Kotlin', 'Automation', 'Pandas', 'NumPy', 'TensorFlow', 'PyTorch',
+        'Database Management', 'Backend Development', 'Frontend Development', 'API Integration', 'Microservices',
+        'Problem Solving', 'Team Leadership', 'Public Speaking', 'Conflict Resolution', 'Strategic Thinking'
     ];
+
 
     const filteredRequiredSkillsOptions = requiredSkillsOptions.filter(option =>
         option.toLowerCase().includes(searchQueryRequiredSkills.toLowerCase())
@@ -216,7 +252,23 @@ const JobForm = ({ onSubmit }) => {
     const filteredEmploymentTypeOptions = employmentTypeOptions.filter(option =>
         option.toLowerCase().includes(searchQueryEmploymentType.toLowerCase())
     );
+    const removeSkill = (skillToRemove) => {
+        setSelectedSkills(prevState => prevState.filter(skill => skill !== skillToRemove));
+    };
+   
+   
 
+   
+
+    // const selectOption = (skill) => {
+    //     if (!selectedSkills.includes(skill)) {
+    //         setSelectedSkills(prevState => [...prevState, skill]);
+    //     }
+    //     setRequiredSkillsOpen(false);
+    //     setSearchQueryRequiredSkills('');  // Clear search query after selecting
+    // };
+
+   
     // filter search
 
     return (
@@ -438,7 +490,7 @@ const JobForm = ({ onSubmit }) => {
                                 </div>
                             </div>
 
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label>Required Skills*</label>
                                 <div className="dropdown">
                                     <div className="dropdown-button" ref={requiredSkillsButtonRef} onClick={toggleRequiredSkills}>
@@ -472,8 +524,65 @@ const JobForm = ({ onSubmit }) => {
                                         </div>
                                     )}
                                 </div>
-                            </div>
+                            </div> */}
 
+                            <div className="form-group">
+                                <label>Required Skills*</label>
+
+                                {/* Display selected skills */}
+                                <div className="selected-skills">
+                                    {/* {selectedSkills.map(skill => (
+                                        <div key={skill} className="skill-chip">
+                                            {skill} <span onClick={() => removeSkill(skill)}>×</span>
+                                        </div>
+                                    ))} */}
+                                </div>
+
+                                <div className="dropdown">
+                                    <div id='dropdown_buttonSkill' className="dropdown-button" ref={requiredSkillsButtonRef} onClick={toggleRequiredSkills}>
+                                        <div id='requiredSkillsSelect'>
+                                            {/* Show selected skills or placeholder */}
+                                            {selectedSkills.length > 0 ? (
+                                                selectedSkills.map((skill, index) => (
+                                                    <div key={skill + index}  className="skill-chip">
+                                                        <span onClick={() => removeSkill(skill)}>×</span>  {skill} 
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                "Select Required Skills"
+                                            )}
+                                        </div>
+
+                                        <span id='toggle_selectIcon'>
+                                            {!isRequiredSkills ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                        </span>
+                                    </div>
+
+                                    {isRequiredSkills && (
+                                        <div className="dropdown-menu" ref={requiredSkillsRef}>
+                                            <input
+                                                type="search"
+                                                className='search22'
+                                                id='searchDepartmentHead'
+                                                placeholder="Search skills"
+                                                value={searchQueryRequiredSkills}
+                                                onChange={handleSearchQueryChangeRequiredSkills}
+                                            />
+                                            <div className="dropdown_I">
+                                                {filteredRequiredSkillsOptions.map(option => (
+                                                    <div
+                                                        key={option}
+                                                        className="dropdown-item"
+                                                        onClick={() => handleSkillSelection('requiredSkills', option)}
+                                                    >
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                         <div id='Description' className='DescriptionJob'>
                             <div className="form-group">

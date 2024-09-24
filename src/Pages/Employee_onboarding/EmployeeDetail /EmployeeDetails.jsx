@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './EmployeeDetails.scss';
 import Experience from './Experience.jsx';
 import Education from './Education.jsx';
@@ -8,35 +8,169 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdWorkHistory } from "react-icons/md";
 import { RxReload } from "react-icons/rx";
 import { BiEditAlt } from "react-icons/bi";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 import { MdDeleteOutline } from "react-icons/md";
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Contacts from './Contacts.jsx';
 
 const EmployeeDetails = () => {
     const [activeTab, setActiveTab] = useState('experience');
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { id } = useParams();
+    const token = localStorage.getItem('access_token');
+    const [refresh, setRefresh] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+
+    const [employeeData, setEmployeeData] = useState(null); // To store the employee details from API
+    useEffect(() => {
+        setLoading(true)
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/employee/details', {
+                user_id: id
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    setEmployeeData(response.data.result); // Store API data
+                    console.log('response', response)
+                    // toast.success(response.data.message, {
+                    //     position: "top-right",
+                    //     autoClose: 3000,
+                    //     hideProgressBar: false,
+                    //     closeOnClick: true,
+                    //     pauseOnHover: true,
+                    //     draggable: true,
+                    //     progress: undefined,
+                    //     theme: "light",
+                    // });
+                    setLoading(false);
+                })
+                .catch(error => {
+                    setLoading(false);
+                    setError(true);
+                    // setLoading(false);
+                    // setError(true);
+                    console.error("Error fetching designation details:", error);
+                    toast.error('Designation Detail update Failed.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                });
+        }
+    }, [id, token]);
 
     const renderContent = () => {
+        if (!employeeData) return <div>Loading...</div>
         switch (activeTab) {
             case 'experience':
-                return <Experience />;
+                return <Experience employeeData={employeeData} />;
             case 'education':
-                return <Education />;
+                return <Education employeeData={employeeData.educations} />;
             case 'documents':
-                return <Documents />;
+                return <Documents employeeData={employeeData.documents} />;
+            case 'contacts':
+                return <Contacts employeeData={employeeData.contacts} />;
             default:
                 return <Experience />;
         }
     };
-    
+
     const AllEmp = () => {
         navigate('/all-employee-list')
     }
     const AllEmpPage = () => {
         navigate('/all-employee-list')
     }
+    const UpdateEmloyee = () => {
+        navigate('/UpdateEmloyee')
+    }
+
+    const handleRefresh = () => {
+        setRefresh(!refresh)
+    };
+    console.log('employeeData 🧭', employeeData)
+
+
+    const HandleDelete = () => {
+        setOpen(true)
+    }
+    const DelteConform = () => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/employee/delete', {
+                user_id: id
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // setDepartmentdetails(response.data.department);
+                    // setDepartmentdetails2(response.data.department.enteredbyid)
+                    console.log('⚠️ delete ❗', response)
+                    // setLoading(false);
+                    navigate('/all-employee-list')
+
+                })
+                .catch(error => {
+                    // setLoading(false);
+                    // setError(true);
+                    console.error("Error fetching designation details:", error);
+                });
+        }
+    }
+    if (loading) {
+        return <div id="notFounPageID"><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="Loading..." /></div>;
+    }
+
+    if (error || !employeeData) {
+        return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
+    }
+
     return (
         <div className="profile-page">
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                backdrop={<div className="backdrop" />}
+                className="dialog"
+            >
+                <DialogHeading className="heading">Are you sure?</DialogHeading>
+                <p className="description">
+                    You want to delete this Department Detail
+                </p>
+                <div className="buttons">
+                    <div onClick={DelteConform}>
+                        <Button className="button" onClick={() => toast("Deleted")}>
+                            Delete
+                        </Button>
+                    </div>
+                    <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                </div>
+            </Dialog>
             <div className="details">
                 <div className="title_top">
                     <h2>Employee Details</h2>
@@ -53,15 +187,15 @@ const EmployeeDetails = () => {
                             <img src="https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg" alt="" />
                         </div>
                         <div className="about_user">
-                            <h3>Akash Shinde</h3>
+                            <h3>{employeeData.first_name + ' ' + employeeData.last_name || ''}</h3>
                             <p>Web Developer / Full-Time</p>
-                            <div><h4></h4> <h5>Active</h5></div>
+                            <div><h4></h4> <h5>{employeeData.employee_status}</h5></div>
                         </div>
                     </div>
                     <div className="action_card">
-                        <div><RxReload/></div>
-                        <div><BiEditAlt /></div>
-                        <div><span><MdDeleteOutline/></span>Delete</div>
+                        <div onClick={handleRefresh}><RxReload /></div>
+                        <div onClick={() => navigate(`/UpdateEmloyee/${employeeData.id}`)}><BiEditAlt /></div>
+                        <div onClick={HandleDelete}><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
                 <div className="info-cards">
@@ -78,7 +212,7 @@ const EmployeeDetails = () => {
                             </div>
                             <div>
                                 <h4>Date of Joining</h4>
-                                <p>04-Apr-2024</p>
+                                <p>{employeeData.joining_date || '-'}</p>
                             </div>
                             <div>
                                 <h4>Designation</h4>
@@ -90,19 +224,23 @@ const EmployeeDetails = () => {
                             </div>
                             <div>
                                 <h4>Source of Hire</h4>
-                                <p>Website</p>
+                                <p>{employeeData.source_of_hire || '-'}</p>
                             </div>
                             <div>
                                 <h4>Employee Type</h4>
-                                <p>Permanent-Full time</p>
+                                <p>{employeeData.employment_type || '-'}</p>
                             </div>
-                             <div>
+                            <div>
+                                <h4>Employee Experience</h4>
+                                <p>{employeeData.experience || '-'}</p>
+                            </div>
+                            <div>
                                 <h4>Work Mail</h4>
                                 <p>akasahcodes@gmail.com</p>
                             </div>
                             <div>
                                 <h4>Date of Exit</h4>
-                                <p>-</p>
+                                <p>{employeeData.date_of_exit || '-'}</p>
                             </div>
                         </div>
                     </div>
@@ -111,27 +249,31 @@ const EmployeeDetails = () => {
                         <div className='contentInformation'>
                             <div>
                                 <h4>Employee ID</h4>
-                                <p>EMP - 270015SC</p>
+                                <p>{employeeData.employee_id || '-'}</p>
                             </div>
                             <div>
                                 <h4>Contact Number</h4>
-                                <p>+91 80173 65995</p>
+                                <p>{employeeData.mobile_no || '-'}</p>
                             </div>
                             <div>
                                 <h4>Email</h4>
-                                <p>akshinde@gmail.com</p>
+                                <p>{employeeData.email || '-'}</p>
                             </div>
                             <div>
                                 <h4>Date of Birth</h4>
-                                <p>04 - 02 - 1996</p>
+                                <p>{employeeData.date_of_birth || '-'}</p>
                             </div>
                             <div>
                                 <h4>Age</h4>
-                                <p>06 years 05 months</p>
+                                <p>{employeeData.age || '-'}</p>
                             </div>
                             <div>
                                 <h4>Gender</h4>
-                                <p>Male</p>
+                                <p>{employeeData.gender || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Marital</h4>
+                                <p>{employeeData.marital || '-'}</p>
                             </div>
                         </div>
                         {/* Personal information content */}
@@ -156,6 +298,12 @@ const EmployeeDetails = () => {
                         onClick={() => setActiveTab('documents')}
                     >
                         Documents
+                    </button>
+                    <button
+                        className={activeTab === 'contacts' ? 'active' : ''}
+                        onClick={() => setActiveTab('contacts')}
+                    >
+                        Contacts
                     </button>
                 </div>
 

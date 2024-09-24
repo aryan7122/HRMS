@@ -434,12 +434,12 @@ const All_Applicant_list = () => {
                                             </span>
                                         } */}
                                     </td>
-                                    <td onClick={JobDetailsPage}>{emp.ApplicantName}</td>
-                                    <td onClick={JobDetailsPage}>{emp.Email}</td>
-                                    <td onClick={JobDetailsPage}>{emp.MobileNumber}</td>
-                                    <td onClick={JobDetailsPage}>{emp.JobOpening}</td>
-                                    <td onClick={JobDetailsPage}>{emp.Source}</td>
-                                    <td onClick={JobDetailsPage}>{emp.SourceName}</td>
+                                    <td className='td' onClick={JobDetailsPage}>{emp.ApplicantName}</td>
+                                    <td className='td' onClick={JobDetailsPage}>{emp.Email}</td>
+                                    <td className='td' onClick={JobDetailsPage}>{emp.MobileNumber}</td>
+                                    <td className='td' onClick={JobDetailsPage}>{emp.JobOpening}</td>
+                                    <td className='td'  onClick={JobDetailsPage}>{emp.Source}</td>
+                                    <td className='td'  onClick={JobDetailsPage}>{emp.SourceName}</td>
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
