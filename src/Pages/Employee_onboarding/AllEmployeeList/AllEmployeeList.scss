@@ -397,7 +397,9 @@
         border: 1px solid $border;
         color: $hover-color;
         border-radius: 10px !important;
+        
       }
+      
       .listActive {
         color: rgb(115, 15, 173);
         background-color: rgba(135, 8, 190, 0.195);
@@ -410,7 +412,14 @@
         // border: 1px solid $border-color;
         box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.107) !important;
       }
+     
     }
+    .listActiveStatus {
+       
+        color: rgb(115, 15, 173);
+        background-color: rgba(135, 8, 190, 0.195);
+        //  color: black !important;
+      }
   }
 
   .right {
@@ -607,14 +616,13 @@
 }
 
 .allEmployeeList {
-
   margin-top: 10px;
   // margin-left: -10px;
   // display: flex;
   // width: 100%;
   height: 60px;
   padding: 10px;
-  
+
   .head {
     width: 98.2%;
     height: 60px;
@@ -637,8 +645,7 @@
       justify-content: space-between;
       margin-bottom: 10px;
     }
-    
-   
+
     table {
       width: 97%;
       border-collapse: collapse;
@@ -649,7 +656,7 @@
         border-bottom: 1px solid #dddddd5d;
         border-left: 1px solid #dddddd5d;
         border: 1px solid #dddddd5d;
-         
+
         .status-dropdown {
           z-index: 1;
           width: fit-content;
@@ -657,7 +664,7 @@
             position: relative;
             margin-bottom: 10px;
           }
-          
+
           .status-display {
             padding: 8px 12px;
             border-radius: 44px;
@@ -670,8 +677,8 @@
             }
 
             &.active {
-              background-color: #d3e8fd ;
-              color: #0070f3 ;
+              background-color: #d3e8fd;
+              color: #0070f3;
             }
             &.inactive {
               background-color: #dce70731;
@@ -697,7 +704,7 @@
               border-radius: 50%;
               // background: #000;
               &.active {
-                background-color: #0070f3 ;
+                background-color: #0070f3;
               }
               &.inactive {
                 background-color: #afac1d;
@@ -728,7 +735,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
             .status-option {
               position: relative;
-              
+
               padding: 8px 12px;
               cursor: pointer;
               display: flex;
@@ -743,7 +750,7 @@
       th {
         color: $primary-color;
         background-color: $lightprimary;
-          
+
         div {
           display: flex;
           align-items: center;
@@ -757,18 +764,17 @@
           }
         }
       }
-     
 
       tr:hover {
-  // background-color: $lightprimary; /* Use your defined variable or color here */
-  // transition: background-color 0.3s ease, transform 0.2s linear;
-  // animation: tdHoverScale 0.5s linear  forwards ;
-}
+        // background-color: $lightprimary; /* Use your defined variable or color here */
+        // transition: background-color 0.3s ease, transform 0.2s linear;
+        // animation: tdHoverScale 0.5s linear  forwards ;
+      }
 
-      tr{
+      tr {
         border: 1px solid red !important;
       }
-      td:last-child{
+      td:last-child {
         // overflow-y: auto;
       }
 
@@ -916,7 +922,7 @@
   .EmpOn_Second_Head .right .divRight:nth-child(2) {
     // margin-right: -60px;
   }
-  
+
   .allEmployeeList .employee-table table {
     // border: 1px solid red !important;
     // min-width: 1340px ; /* Ensure minimum width for the table */
@@ -933,19 +939,18 @@
     height: 100%;
   }
 }
-#filter_left:hover{
-   border: 1px solid #e127e1;
-    box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);
-        transition: 0.3s ease;
-
+#filter_left:hover {
+  border: 1px solid #e127e1;
+  box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);
+  transition: 0.3s ease;
 }
-#filter_left:active{
-   border: 1px solid $primary-color;
-    box-shadow: 0px 0px 0px 2px rgba(164, 94, 204, 0.104);
-    transition: 0.3s ease;
+#filter_left:active {
+  border: 1px solid $primary-color;
+  box-shadow: 0px 0px 0px 2px rgba(164, 94, 204, 0.104);
+  transition: 0.3s ease;
 }
 @media (max-width: 1250px) {
-  #filter_left{
+  #filter_left {
     display: block !important;
     margin-left: 30px;
     border: 1px solid rgb(205, 203, 203);
@@ -957,52 +962,51 @@
     border-radius: 7px;
     padding-top: 2px;
   }
- 
-  .EmpOn_Second_Head .filterLeftOpen{
-  display: none !important;
 
-  border: 1px solid rgb(0, 255, 51);
+  .EmpOn_Second_Head .filterLeftOpen {
+    display: none !important;
 
+    border: 1px solid rgb(0, 255, 51);
   }
 
-  .EmpOn_Second_Head .filterLeftClose{
+  .EmpOn_Second_Head .filterLeftClose {
     transition: 0.3s ease-in-out;
-  width: 180px !important;
-  height: fit-content !important;
-  padding: 10px 0px;
-  border-radius: 10px;
-  // border: 1px solid red;
-  position: absolute;
-  box-shadow: 0px 0px 10px 5px #f4f3f3;
-  height: fit-content;
-  margin-top: 310px;
-  // margin-left: -40px;
-  left: 130px !important;
-  gap: 10px;
-  text-align: start;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: start !important;
-  z-index: 2;
-  background: #fff;
-  justify-content: start !important;
-}
-.EmpOn_Second_Head .filterLeftClose div {
-  width: 130px !important;
-  text-align: start !important;
-  align-items: center !important;
-  justify-content: start !important;
-  padding-left: 10px !important;
-  margin-left: 5px !important;
-  div{
+    width: 180px !important;
+    height: fit-content !important;
+    padding: 10px 0px;
+    border-radius: 10px;
+    // border: 1px solid red;
+    position: absolute;
+    box-shadow: 0px 0px 10px 5px #f4f3f3;
+    height: fit-content;
+    margin-top: 310px;
+    // margin-left: -40px;
+    left: 130px !important;
+    gap: 10px;
+    text-align: start;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: start !important;
+    z-index: 2;
+    background: #fff;
+    justify-content: start !important;
+  }
+  .EmpOn_Second_Head .filterLeftClose div {
+    width: 130px !important;
+    text-align: start !important;
+    align-items: center !important;
+    justify-content: start !important;
     padding-left: 10px !important;
+    margin-left: 5px !important;
+    div {
+      padding-left: 10px !important;
+    }
   }
+  .EmpOn_Second_Head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-  .EmpOn_Second_Head{
-  display: flex;
-  align-items: center;
-  justify-content: space-between
-  };
 }
 
 @media (max-width: 1035px) {
@@ -1014,13 +1018,13 @@
   //   gap: 10px;
   // }
 
-  .allEmployeeList{
+  .allEmployeeList {
   }
   .allEmployeeList .employee-table {
     // margin-top: 65px !important;
     // overflow-x: auto; /* Ensure table remains scrollable */
   }
-  
+
   .allEmployeeList .employee-table table {
     min-width: 100%; /* Adjust table width to fit container */
     margin: 0 auto; /* Center align the table */
@@ -1046,9 +1050,12 @@
   }
 }
 .allEmployeeList .employee-table table {
-    // overflow-y: visible !important;
-            // overflow-x: auto !important;
-            //       overflow: visible !important;
-
-
+  // overflow-y: visible !important;
+  // overflow-x: auto !important;
+  //       overflow: visible !important;
 }
+
+
+
+
+

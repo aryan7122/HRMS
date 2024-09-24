@@ -400,7 +400,6 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                 )}
                             </div>
                         </div>
-
                         {/* Designation Dropdown */}
                         <div className="form-group">
                             <label>Designation</label>

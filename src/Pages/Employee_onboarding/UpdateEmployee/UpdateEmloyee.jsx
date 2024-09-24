@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './UpdateEmloyee.scss';
 import { HiUserPlus } from "react-icons/hi2";
 import { TfiClose } from "react-icons/tfi";
@@ -46,9 +46,9 @@ const UpdateEmployee = () => {
                     street_1: formData.street1 || '',
                     street_2: formData.street2 || '',
                     zip_code: formData.zipCode || '',
-                    city_id: formData.city || '',
-                    state_id: formData.state || '',
-                    country_id: formData.country || '',
+                    city_id: formData.cityId || '',
+                    state_id: formData.stateId || '',
+                    country_id: formData.countryId || '',
                     personal_contact_no: formData.personalContactNo || '',
                     emergency_contact_no: formData.emergencyContactNumber || '',
                     personal_email_id: formData.personalEmailId || '',
@@ -59,9 +59,9 @@ const UpdateEmployee = () => {
                     street_1: formData.permanentStreet1 || '',
                     street_2: formData.permanentStreet2 || '',
                     zip_code: formData.permanentZipCode || '',
-                    city_id: formData.permanentCity || '',
-                    state_id: formData.permanentState || '',
-                    country_id: formData.permanentCountry || '',
+                    city_id: formData.p_stateId || '',
+                    state_id: formData.p_stateId || '',
+                    country_id: formData.p_cityId || '',
                     personal_contact_no: formData.permanentPersonalContactNumber || '',
                     emergency_contact_no: formData.permanentEmergencyContactNumber || '',
                     personal_email_id: formData.permanentPersonalEmail || '',
@@ -74,7 +74,14 @@ const UpdateEmployee = () => {
         };
     };
 
- 
+
+    const updateFill = (newData) => {
+        const updatedData = { ...formDataRef.current, ...newData }; // Update ref
+        setFormData(updatedData); // Update state
+        formDataRef.current = updatedData; // Keep ref in sync
+
+    };
+
     const handleNext = (newData) => {
         const updatedData = { ...formDataRef.current, ...newData }; // Update ref
         setFormData(updatedData); // Update state
@@ -110,12 +117,12 @@ const UpdateEmployee = () => {
 
                 const response = await axios.post('https://devstronauts.com/public/api/employee/create/update',
                     formDataApi
-                , {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
+                    , {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                    });
 
                 // if (response.data && response.data.success) {
                 toast.success(response.data.message || 'Employee updated successfully!', {
@@ -124,10 +131,12 @@ const UpdateEmployee = () => {
                     theme: "light",
                 });
 
-                setTimeout(() => {
-                    // navigate('/all-employee-list');
-                }, 2300);
-                // }
+                if (response.data.message == 'Employee updated successfully!'){
+                    setTimeout(() => {
+                        navigate(`/employee-details/${id}`)
+                    }, 2300);
+                }
+
             } catch (error) {
                 console.error("Error message: ", error.message);
                 toast.error('Failed sending data to API', {
@@ -173,11 +182,12 @@ const UpdateEmployee = () => {
     return (
         <>
             {/* {loading && <div className="loader">Loading...</div>} */}
-            <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} closeOnClick pauseOnHover draggable />
+            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover draggable />
+
             <div className="employee-form">
                 <div className="top-bar">
                     <h2><HiUserPlus /> Update Employee</h2>
-                    <span className="close_nav" onClick={AllEmp}><TfiClose /></span>
+                    <span className="close_nav" onClick={() => navigate(`/employee-details/${id}`)}><TfiClose /></span>
                 </div>
 
                 <div className="navbar-items">
@@ -193,11 +203,11 @@ const UpdateEmployee = () => {
                 </div>
 
                 <div className="form-content">
-                    {activeFormIndex === 0 && <BasicDetailsForm onSubmit={handleFormData} next={handleNext} />}
-                    {activeFormIndex === 1 && <ContactsForm onSubmit={handleFormData} next={handleNext} />}
-                    {activeFormIndex === 2 && <ExperienceForm onSubmit={handleFormData} next={handleNext} />}
-                    {activeFormIndex === 3 && <EducationForm onSubmit={handleFormData} next={handleNext} />}
-                    {activeFormIndex === 4 && <DocumentsForm onSubmit={handleFormData} />}
+                    {activeFormIndex === 0 && <BasicDetailsForm onSubmit={handleFormData} next={handleNext} update={updateFill} />}
+                    {activeFormIndex === 1 && <ContactsForm onSubmit={handleFormData} next={handleNext} update={updateFill} />}
+                    {activeFormIndex === 2 && <ExperienceForm onSubmit={handleFormData} next={handleNext} update={updateFill} />}
+                    {activeFormIndex === 3 && <EducationForm onSubmit={handleFormData} next={handleNext} update={updateFill} />}
+                    {activeFormIndex === 4 && <DocumentsForm onSubmit={handleFormData} update={updateFill} />}
                 </div>
             </div>
         </>

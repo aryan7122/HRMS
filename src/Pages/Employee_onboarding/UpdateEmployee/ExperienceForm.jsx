@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from 'react-router-dom';
 
-const ExperienceForm = ({ onSubmit, next }) => {
+const ExperienceForm = ({ onSubmit, next,update }) => {
     // Using the 'experiences' key inside the state as per your suggestion
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
@@ -59,6 +59,7 @@ const ExperienceForm = ({ onSubmit, next }) => {
                                 photo: exp.photo || ''  // Assuming photo field exists
                             }))
                         });
+                        update(experienceForms)
                     }
                 })
                 .catch(error => {

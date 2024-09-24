@@ -178,13 +178,13 @@
       }
     }
 
-    .info-cards {
+    .info_cardsEmp{
       display: flex;
       justify-content: space-between;
-      // border: 1px solid red;
       margin: 10px 20px !important;
       gap: 20px;
       .card {
+        // border: 1px solid red !important;
         width: 100%;
         border-radius: 10px;
         border: 1px solid rgba(198, 190, 190, 0.432);
@@ -240,6 +240,9 @@
           }
           }
         }
+      }
+      .card222{
+        width: 100% !important;
       }
     }
 // 

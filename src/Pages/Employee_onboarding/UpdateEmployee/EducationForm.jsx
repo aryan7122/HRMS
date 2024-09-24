@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from 'react-router-dom';
 
-const EducationForm = ({ onSubmit, next }) => {
+const EducationForm = ({ onSubmit, next, update }) => {
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
 
@@ -59,6 +59,7 @@ const EducationForm = ({ onSubmit, next }) => {
                                 to_date: edu.to_date || ""
                             }))
                         });
+                        update(educationForms)
                     }
                 })
                 .catch(error => {

@@ -14,7 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from 'react-router-dom';
 
-const DocumentsForm = ({ onSubmit }) => {
+const DocumentsForm = ({ onSubmit, }) => {
     const [educationForms, setEducationForms] = useState([
         {
             documentType: '',
@@ -179,7 +179,7 @@ const DocumentsForm = ({ onSubmit }) => {
     };
     // console.log('&&&&&&', educationForms[educationForms.length - 1].documentType)
     // console.log('setSelectOneOp❗',selectOneOp)
-    useEffect(()=>{
+    useEffect(() => {
         setSelectOneOp(educationForms[educationForms.length - 1].documentType)
     }, [educationForms])
     const selectOption = (index, option) => {

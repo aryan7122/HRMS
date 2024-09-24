@@ -43,12 +43,12 @@ const AddEmployee = () => {
                     street_1: formData.street1 || '',
                     street_2: formData.street2 || '',
                     zip_code: formData.zipCode || '',
-                    city_id: formData.city || '',
-                    state_id: formData.state || '',
-                    country_id: formData.country || '',
-                    personal_contact_no: formData.personalContactNo || '',
+                    city_id: formData.cityId || '',
+                    state_id: formData.stateId || '',
+                    country_id: formData.countryId || '',
+                    personal_contact_no: formData.personalContactNumber || '',
                     emergency_contact_no: formData.emergencyContactNumber || '',
-                    personal_email_id: formData.personalEmailId || '',
+                    personal_email_id: formData.personalEmail || '',
                     is_present_address: "1"
                 },
                 {
@@ -56,9 +56,9 @@ const AddEmployee = () => {
                     street_1: formData.permanentStreet1 || '',
                     street_2: formData.permanentStreet2 || '',
                     zip_code: formData.permanentZipCode || '',
-                    city_id: formData.permanentCity || '',
-                    state_id: formData.permanentState || '',
-                    country_id: formData.permanentCountry || '',
+                    city_id: formData.p_stateId || '',
+                    state_id: formData.p_stateId || '',
+                    country_id: formData.p_cityId || '',
                     personal_contact_no: formData.permanentPersonalContactNumber || '',
                     emergency_contact_no: formData.permanentEmergencyContactNumber || '',
                     personal_email_id: formData.permanentPersonalEmail || '',
@@ -76,62 +76,19 @@ const AddEmployee = () => {
     const formDataApi = prepareFormData({ ...clonedFormData });
     console.log('formDataApi❗', formDataApi)
     console.log('clonedFormData', clonedFormData)
-    //         ...prevData,
-    //         ...newData,
-    //     }));
-    //     if (!validateFormData(formDataApi)) {
-    //         return;
-    //     }
-    //     try {
-    //         const response = await axios.post('https://devstronauts.com/public/api/employee/create/update',
-    //             formDataApi,
-    //             {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${token}`,
-    //                 },
-    //             }
-    //         );
-    //         toast.success(response.data.message, {
-    //             position: "top-right",
-    //             autoClose: 3000,
-    //             theme: "light",
-    //         });
-    //         console.log("🌍 API Response: ", response);
 
-    //         if (response.data.success) {
-    //             toast.success(response.data.message, {
-    //                 position: "top-right",
-    //                 autoClose: 3000,
-    //                 theme: "light",
-    //             });
-
-    //             setTimeout(() => {
-    //                 navigate('/all-employee-list');
-    //             }, 2300);
-    //         }
-    //     } catch (error) {
-    //         console.error("Error message: ", error.message);
-    //         toast.error('Failed sending data to API', {
-    //             position: "top-right",
-    //             autoClose: 3000,
-    //             theme: "light",
-    //         });
-    //     }
-    // };
     const handleFormData = async (newData) => {
-        // Pehle formData update karo
         setFormData((prevData) => ({
             ...prevData,
             ...newData,
         }));
 
-        // Phir naya formData useEffect ke baad API ke liye ready karne ke liye wait karo
         const formDataApi = prepareFormData({
             ...formData, // Ensure latest form data here
             ...newData,  // Combine with newData
         });
 
-        console.log('formDataApi❗', JSON.stringify(formDataApi));
+        // console.log('formDataApi❗', JSON.stringify(formDataApi));
 
         if (!validateFormData(formDataApi)) {
             return;
@@ -149,16 +106,19 @@ const AddEmployee = () => {
                     }
                 );
 
-                if (response.data.success) {
+                console.log('response', response)
+                if (response.status == 200) {
                     toast.success(response.data.message, {
                         position: "top-right",
                         autoClose: 3000,
                         theme: "light",
                     });
 
-                    setTimeout(() => {
-                        navigate('/all-employee-list');
-                    }, 2300);
+                    if (response.data.message == 'Employee Created Successfully') {
+                        setTimeout(() => {
+                            navigate('/all-employee-list');
+                        }, 2300);
+                    }
                 }
             } catch (error) {
                 console.error("Error message: ", error.message);
@@ -212,7 +172,8 @@ const AddEmployee = () => {
 
     return (
         <>
-            <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} closeOnClick pauseOnHover draggable />
+            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover draggable />
+
             <div className="employee-form">
                 <div className="top-bar">
                     <h2><HiUserPlus /> Add Employee</h2>

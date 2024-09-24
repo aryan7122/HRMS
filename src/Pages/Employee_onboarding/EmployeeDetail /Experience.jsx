@@ -1,64 +1,50 @@
-// Experience.js
-// import React from 'react';
-import imgFacbook from '../../../assets/icons/facbook.png'
-import imgDropbox from '../../../assets/icons/dropbox.png'
-import imgMailchimp from '../../../assets/icons/Mailchimp.png'
-import imgPaypal from '../../../assets/icons/paypal.png'
-
+import React from 'react';
+import imgFacbook from '../../../assets/icons/facbook.png';
+import imgDropbox from '../../../assets/icons/dropbox.png';
+import imgMailchimp from '../../../assets/icons/Mailchimp.png';
+import imgPaypal from '../../../assets/icons/paypal.png';
 import './EmployeeDetails.scss';
 
-const Experience = () => {
+const Experience = ({ employeeData }) => {
+    console.log('employeeData Experience', employeeData);
+
+    const getCompanyLogo = (companyName) => {
+        switch (companyName.toLowerCase()) {
+            case 'facebook':
+                return imgFacbook;
+            case 'dropbox':
+                return imgDropbox;
+            case 'mailchimp':
+                return imgMailchimp;
+            case 'paypal':
+                return imgPaypal;
+            default:
+                return imgFacbook; // Default fallback image
+        }
+    };
+
     return (
         <div>
             <div className="experience-grid">
-                <div className="experience-card">
-                    <div className='logo_title'>
-                        <img src={imgFacbook} alt="Facebook" />
-                        <div>
-                            <h3>Web Developer</h3>
-                            <p>04/02/2023 - 11/06/2023</p>
+                {employeeData.map((experience, index) => (
+                    <div className="experience-card" key={index}>
+                        <div className="logo_title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="38" height="38" color="#4a4a4a" fill="none">
+                                <path d="M10 13.3333C10 13.0233 10 12.8683 10.0341 12.7412C10.1265 12.3961 10.3961 12.1265 10.7412 12.0341C10.8683 12 11.0233 12 11.3333 12H12.6667C12.9767 12 13.1317 12 13.2588 12.0341C13.6039 12.1265 13.8735 12.3961 13.9659 12.7412C14 12.8683 14 13.0233 14 13.3333V14C14 15.1046 13.1046 16 12 16C10.8954 16 10 15.1046 10 14V13.3333Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M13.9 13.5H15.0826C16.3668 13.5 17.0089 13.5 17.5556 13.3842C19.138 13.049 20.429 12.0207 20.9939 10.6455C21.1891 10.1704 21.2687 9.59552 21.428 8.4457C21.4878 8.01405 21.5177 7.79823 21.489 7.62169C21.4052 7.10754 20.9932 6.68638 20.4381 6.54764C20.2475 6.5 20.0065 6.5 19.5244 6.5H4.47562C3.99351 6.5 3.75245 6.5 3.56187 6.54764C3.00682 6.68638 2.59477 7.10754 2.51104 7.62169C2.48229 7.79823 2.51219 8.01405 2.57198 8.4457C2.73128 9.59552 2.81092 10.1704 3.00609 10.6455C3.571 12.0207 4.86198 13.049 6.44436 13.3842C6.99105 13.5 7.63318 13.5 8.91743 13.5H10.1" stroke="currentColor" stroke-width="1.5" />
+                                <path d="M3.5 11.5V13.5C3.5 17.2712 3.5 19.1569 4.60649 20.3284C5.71297 21.5 7.49383 21.5 11.0556 21.5H12.9444C16.5062 21.5 18.287 21.5 19.3935 20.3284C20.5 19.1569 20.5 17.2712 20.5 13.5V11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M15.5 6.5L15.4227 6.14679C15.0377 4.38673 14.8452 3.50671 14.3869 3.00335C13.9286 2.5 13.3199 2.5 12.1023 2.5H11.8977C10.6801 2.5 10.0714 2.5 9.61309 3.00335C9.15478 3.50671 8.96228 4.38673 8.57727 6.14679L8.5 6.5" stroke="currentColor" stroke-width="1.5" />
+                            </svg>
+                            <div>
+                                <h3>{experience.job_title}</h3>
+                                <p>{experience.from_date} - {experience.to_date}</p>
+                            </div>
                         </div>
+                        <h3>{experience.company_name}</h3>
+                        <p>{experience.description || 'No description available'}</p>
+                        <button>{experience.job_title}.png</button>
                     </div>
-                    <h3>Facebook</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, thing here described adipiscing elit, thing here described.</p>
-                    <button>Image.png</button>
-                </div>
-                <div className="experience-card">
-                    <div className='logo_title'>
-                        <img src={imgDropbox} alt="Facebook" />
-                        <div>
-                            <h3>Sr.Web developer</h3>
-                            <p>04/02/2023 - 11/06/2023</p>
-                        </div>
-                    </div>
-                    <h3>Dropbox</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, thing here described adipiscing elit, thing here described.</p>
-                    <button>Image.png</button>
-                </div>
-                <div className="experience-card">
-                    <div className='logo_title'>
-                        <img src={imgMailchimp} alt="Facebook" />
-                        <div>
-                            <h3>Sr.Web developer</h3>
-                            <p>04/02/2023 - 11/06/2023</p>
-                        </div>
-                    </div>
-                    <h3>Mailchimp</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, thing here described adipiscing elit, thing here described.</p>
-                    <button>Image.png</button>
-                </div>
-                <div className="experience-card">
-                    <div className='logo_title'>
-                        <img src={imgPaypal} alt="Facebook" />
-                        <div>
-                            <h3>Sr.Web developer</h3>
-                            <p>04/02/2023 - 11/06/2023</p>
-                        </div>
-                    </div>
-                    <h3>Paypal</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, thing here described adipiscing elit, thing here described.</p>
-                    <button>Image.png</button>
-                </div>
+                ))}
             </div>
         </div>
     );

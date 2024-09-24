@@ -29,8 +29,8 @@ const Documents = (employeeData) => {
                         </tr> */}
                         {employeeData.employeeData.map((doc,index) => (
                             <tr key={index}>
-                                <td>{doc.name || '-'}</td>
-                                <td>{doc.id || '-'}</td>
+                                <td>{doc.document_name || '-'}</td>
+                                <td>{doc.document_id || '-'}</td>
                                 <td><GoEye /></td>
                             </tr>
                         ))}

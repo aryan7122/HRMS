@@ -16,7 +16,6 @@ import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Contacts from './Contacts.jsx';
-
 const EmployeeDetails = () => {
     const [activeTab, setActiveTab] = useState('experience');
     const navigate = useNavigate();
@@ -28,6 +27,8 @@ const EmployeeDetails = () => {
     const [error, setError] = useState(false);
 
     const [employeeData, setEmployeeData] = useState(null); // To store the employee details from API
+    const [employeeData2, setEmployeeData2] = useState(null); // To store the employee details from API
+
     useEffect(() => {
         setLoading(true)
         if (id) {
@@ -39,7 +40,9 @@ const EmployeeDetails = () => {
                 }
             })
                 .then(response => {
-                    setEmployeeData(response.data.result); // Store API data
+                    setEmployeeData(response.data.result.employee[0]); // Store API data
+                    setEmployeeData2(response.data.result); // Store API data
+
                     console.log('response', response)
                     // toast.success(response.data.message, {
                     //     position: "top-right",
@@ -74,16 +77,16 @@ const EmployeeDetails = () => {
     }, [id, token]);
 
     const renderContent = () => {
-        if (!employeeData) return <div>Loading...</div>
+        if (!employeeData2) return <div>Loading...</div>
         switch (activeTab) {
             case 'experience':
-                return <Experience employeeData={employeeData} />;
+                return <Experience employeeData={employeeData2.experiences} />;
             case 'education':
-                return <Education employeeData={employeeData.educations} />;
+                return <Education employeeData={employeeData2.educations} />;
             case 'documents':
-                return <Documents employeeData={employeeData.documents} />;
+                return <Documents employeeData={employeeData2.documents} />;
             case 'contacts':
-                return <Contacts employeeData={employeeData.contacts} />;
+                return <Contacts employeeData={employeeData2.contacts} />;
             default:
                 return <Experience />;
         }
@@ -102,7 +105,7 @@ const EmployeeDetails = () => {
     const handleRefresh = () => {
         setRefresh(!refresh)
     };
-    console.log('employeeData 🧭', employeeData)
+    console.log('employeeData 🧭', employeeData2)
 
 
     const HandleDelete = () => {
@@ -198,7 +201,7 @@ const EmployeeDetails = () => {
                         <div onClick={HandleDelete}><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
-                <div className="info-cards">
+                <div className="info_cardsEmp">
                     <div className="card">
                         <div className='top_head'> <h3> <span><MdWorkHistory /></span>Work Information</h3></div>
                         <div className='contentInformation'>

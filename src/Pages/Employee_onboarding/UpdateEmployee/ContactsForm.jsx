@@ -7,11 +7,33 @@ import { CiCircleChevRight } from "react-icons/ci";
 import { TfiClose } from "react-icons/tfi";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import axios from 'axios';
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { OutsideClick } from './OutsideClick.jsx'
+import useLocationData from '../../../Snippet/UseLocationData.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from 'react-router-dom';
+import { number } from 'prop-types';
 
-const ContactsForm = ({ onSubmit, next }) => {
+
+const ContactsForm = ({ onSubmit, next, update }) => {
+
+    const { isOpen: isCountryOpen, ref: countryRef, buttonRef: countryButtonRef, handleToggle: toggleCountry, setIsOpen: setCountryOpen } = OutsideClick();
+    const { isOpen: isStateOpen, ref: stateRef, buttonRef: stateButtonRef, handleToggle: toggleState, setIsOpen: setStateOpen } = OutsideClick();
+    const { isOpen: isCityOpen, ref: cityRef, buttonRef: cityButtonRef, handleToggle: toggleCity, setIsOpen: setCityOpen } = OutsideClick();
+    const { isOpen: isPermanentCountryOpen, ref: permanentCountryRef, buttonRef: permanentCountryButtonRef, handleToggle: togglePermanentCountry, setIsOpen: setPermanentCountryOpen } = OutsideClick();
+    const { isOpen: isPermanentStateOpen, ref: permanentStateRef, buttonRef: permanentStateButtonRef, handleToggle: togglePermanentState, setIsOpen: setPermanentStateOpen } = OutsideClick();
+    const { isOpen: isPermanentCityOpen, ref: permanentCityRef, buttonRef: permanentCityButtonRef, handleToggle: togglePermanentCity, setIsOpen: setPermanentCityOpen } = OutsideClick();
+    const { locationsapi, fetchStates, fetchCities, fetchCountriesName } = useLocationData();
+    const [dataDetail, setDataDetail] = useState({})
+    const [dataDetailP, setDataDetailP] = useState({})
+
+    const [numberInput, setNumberInput] = useState(false)
+
+
+    const { id } = useParams();
+    const token = localStorage.getItem('access_token');
+
     const [formData, setFormData] = useState({
         country: '',
         state: '',
@@ -33,10 +55,7 @@ const ContactsForm = ({ onSubmit, next }) => {
         permanentPersonalEmail: ''
     });
 
-    // const EmployeeCreateID = localStorage.getItem('EmployeeCreateID');
-    const { id } = useParams();
-    const token = localStorage.getItem('access_token');
-    
+
     useEffect(() => {
         if (id) {
             axios.post('https://devstronauts.com/public/api/employee/details', {
@@ -48,11 +67,14 @@ const ContactsForm = ({ onSubmit, next }) => {
             })
                 .then(response => {
                     const data = response.data.result;
-
                     // Present और Permanent address contact data
                     const presentAddress = data.contacts.find(contact => contact.address_type === "Present") || {};
                     const permanentAddress = data.contacts.find(contact => contact.address_type === "Permanent") || {};
+
+                    setDataDetail(presentAddress)
+                    setDataDetailP(permanentAddress)
                     console.log('presentAddress', permanentAddress)
+                    setNumberInput(false)
                     setFormData({
                         // Present Address Data
                         country: presentAddress.country_id || '',
@@ -76,7 +98,8 @@ const ContactsForm = ({ onSubmit, next }) => {
                         permanentEmergencyContactNumber: permanentAddress.emergency_contact_no || '',
                         permanentPersonalEmail: permanentAddress.personal_email_id || ''
                     });
-                    console.log('Employee details fetched successfully:', data);
+                    // console.log('Employee details fetched successfully:', data);
+                    // update(formData)
                 })
                 .catch(error => {
                     console.error("Error fetching employee details:", error);
@@ -93,8 +116,30 @@ const ContactsForm = ({ onSubmit, next }) => {
                 });
         }
     }, [id, token]);
+   
 
+    console.log('locationsapi', locationsapi)
+  
+    useEffect(() => {
+        const stateID = formData.country
+        if (typeof formData.country === 'number') {
+            console.log('❗country', typeof formData.country === 'number');
+            console.log('formData state', stateID);
+            fetchCountriesName(stateID)
+            const CountriesName = locationsapi.countries;
+            if (CountriesName) {
+                // setFormData({
+                //     ...formData,
+                //     country: CountriesName 
+                // });
+            } else {
+                console.error('Country not found');
+            }
+        }
+    }, [formData.country]);
+    
     const [sameAsPresent, setSameAsPresent] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         if (sameAsPresent) {
@@ -121,30 +166,80 @@ const ContactsForm = ({ onSubmit, next }) => {
         }));
     };
 
-    const handleCityChange = (selectedOption, field) => {
+    const selectOption = (dropdown, value, id) => {
         setFormData(prevState => ({
             ...prevState,
-            [field]: selectedOption.value
+            [dropdown]: value // Set the name in formData
         }));
+
+        // Set the ID separately based on dropdown
+        if (dropdown === 'country') {
+            setFormData(prevState => ({
+                ...prevState,
+                countryId: id // Save the country ID in a separate field
+            }));
+            fetchStates(id); // Directly fetch states when country is selected
+        } else if (dropdown === 'state') {
+            setFormData(prevState => ({
+                ...prevState,
+                stateId: id // Save the state ID in a separate field
+            }));
+            fetchCities(id); // Directly fetch cities when state is selected
+        } else if (dropdown === 'city') {
+            setFormData(prevState => ({
+                ...prevState,
+                cityId: id // Save the city ID in a separate field
+            }));
+        } else if (dropdown === 'permanentCountry') {
+            setFormData(prevState => ({
+                ...prevState,
+                p_countryId: id // Save the permanent country ID in a separate field
+            }));
+            fetchStates(id); // Directly fetch states for permanent country
+        } else if (dropdown === 'permanentState') {
+            setFormData(prevState => ({
+                ...prevState,
+                p_stateId: id // Save the permanent state ID in a separate field
+            }));
+            fetchCities(id); // Directly fetch cities for permanent state
+        } else if (dropdown === 'permanentCity') {
+            setFormData(prevState => ({
+                ...prevState,
+                p_cityId: id // Save the permanent city ID in a separate field
+            }));
+        }
+
+        setSearchQuery('');  // Clear the search query after selection
+
+        // Close all dropdowns
+        setPermanentCountryOpen(false);
+        setPermanentCityOpen(false);
+        setPermanentStateOpen(false);
+        setCityOpen(false);
+        setCountryOpen(false);
+        setStateOpen(false);
     };
+
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         event.preventDefault();
-        console.log('contact form', formData)
+        // console.log('contact form', formData)
         onSubmit(formData)
-
         setSameAsPresent(false);
     };
     const nextSumbit = (event) => {
         event.preventDefault();
-        console.log('onSubmit', formData)
+        // console.log('onSubmit', formData)
         next(formData)
     }
+    const handleSearchQueryChange = (e) => setSearchQuery(e.target.value);
 
 
     return (
         <>
+            <useLocationData />
             <div className="" onSubmit={handleSubmit}>
                 <form >
                     <div id='form'>
@@ -152,34 +247,109 @@ const ContactsForm = ({ onSubmit, next }) => {
                             <h2>Present Address</h2>
                         </div>
                         <div className="from1">
+                            {/* Country Dropdown with Search */}
                             <div className="form-group">
                                 <label>Country/Region</label>
-                                <CountryDropdown
-                                    value={formData.country}
-                                    onChange={(val) => setFormData(prevState => ({ ...prevState, country: val }))}
+                                <div className="dropdown">
+                                    <div className="dropdown-button" ref={countryButtonRef} onClick={toggleCountry}>
+                                        <div>{formData.country || "Select Country"}</div>
+                                        <span>{!isCountryOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}</span>
+                                    </div>
+                                    {isCountryOpen && (
+                                        <div className="dropdown-menu" ref={countryRef}>
+                                            <input
+                                                type="search"
+                                                className="search-input"
+                                                placeholder="Search country"
+                                                value={searchQuery}
+                                                id='searchDepartmentHead'
+                                                onChange={handleSearchQueryChange}
+                                            />
+                                            {locationsapi.countries
+                                                .filter(country =>
+                                                    country.name.toLowerCase().includes(searchQuery.toLowerCase())
+                                                )
+                                                .map(country => (
+                                                    <div
+                                                        className="dropdown-item"
+                                                        onClick={() => selectOption('country', country.name, country.id)} // Pass name and id
+                                                        key={country.id}
+                                                    >
+                                                        {country.name}
+                                                    </div>
+                                                ))}
 
-                                />
+
+                                        </div>
+                                    )}
+                                </div>
                             </div>
+
+                            {/* State Dropdown with Search */}
                             <div className="form-group">
                                 <label>State</label>
-                                <RegionDropdown
-                                    country={formData.country}
-                                    value={formData.state}
-                                    onChange={(val) => setFormData(prevState => ({ ...prevState, state: val }))}
+                                <div className="dropdown">
+                                    <div className="dropdown-button" ref={stateButtonRef} onClick={toggleState}>
+                                        <div>{formData.state || "Select State"}</div>
+                                        <span>{!isStateOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}</span>
+                                    </div>
+                                    {isStateOpen && locationsapi.states && (
+                                        <div className="dropdown-menu" ref={stateRef}>
+                                            <input
+                                                type="search"
+                                                className="search-input"
+                                                placeholder="Search state"
+                                                value={searchQuery}
+                                                id='searchDepartmentHead'
+                                                onChange={handleSearchQueryChange}
+                                            />
 
-                                />
+                                            {locationsapi.states
+                                                .filter(state =>
+                                                    state.name.toLowerCase().includes(searchQuery.toLowerCase())
+                                                ).map(state => (
+                                                    <div className="dropdown-item" onClick={() => selectOption('state', state.name, state.id)} key={state.id}>
+                                                        {state.name}
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
+
+                            {/* City Dropdown with Search */}
                             <div className="form-group">
                                 <label>City</label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter City"
-                                    name="city"
-                                    value={formData.city}
-                                    onChange={handleChange}
+                                <div className="dropdown">
+                                    <div className="dropdown-button" ref={cityButtonRef} onClick={toggleCity}>
+                                        <div>{formData.city || "Enter City"}</div>
+                                        <span>{!isCityOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}</span>
+                                    </div>
+                                    {isCityOpen && locationsapi.cities && (
+                                        <div className="dropdown-menu" ref={cityRef}>
+                                            <input
+                                                type="search"
+                                                className="search-input"
+                                                placeholder="Search city"
+                                                value={searchQuery}
+                                                id='searchDepartmentHead'
+                                                onChange={handleSearchQueryChange}
+                                            />
+                                            {locationsapi.cities
+                                                .filter(city =>
+                                                    city.name.toLowerCase().includes(searchQuery.toLowerCase())
+                                                ).map(city => (
+                                                    <div className="dropdown-item" onClick={() => selectOption('city', city.name, city.id)} key={city.id}>
+                                                        {city.name}
+                                                    </div>
+                                                ))}
 
-                                />
+                                        </div>
+                                    )}
+                                </div>
                             </div>
+
+
                             <div className="form-group">
                                 <label>Street 1</label>
                                 <input
@@ -191,6 +361,7 @@ const ContactsForm = ({ onSubmit, next }) => {
 
                                 />
                             </div>
+
                             <div className="form-group">
                                 <label>Street 2</label>
                                 <input
@@ -261,37 +432,116 @@ const ContactsForm = ({ onSubmit, next }) => {
                             </div>
                         </div>
                         <div className="from1">
+
+                            {/*  */}
+                            {/* Country Dropdown with Search */}
+                            {/* Country Dropdown with Search */}
                             <div className="form-group">
                                 <label>Country/Region</label>
-                                <CountryDropdown
-                                    value={formData.permanentCountry}
-                                    onChange={(val) => setFormData(prevState => ({ ...prevState, permanentCountry: val }))}
-                                    // required={!sameAsPresent}
-                                    disabled={sameAsPresent}
-                                />
+                                <div className="dropdown">
+                                    <div className="dropdown-button" ref={permanentCountryButtonRef} onClick={togglePermanentCountry}>
+                                        <div>{formData.permanentCountry || "Select Country"}</div>
+                                        <span>{!isPermanentCountryOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}</span>
+                                    </div>
+                                    {isPermanentCountryOpen && locationsapi.countries && (
+                                        <div className="dropdown-menu" ref={permanentCountryRef}>
+                                            <input
+                                                type="search"
+                                                className="search-input"
+                                                placeholder="Search country"
+                                                value={searchQuery}
+                                                id='searchDepartmentHead'
+                                                onChange={handleSearchQueryChange}
+                                            />
+
+                                            {locationsapi.countries
+                                                .filter(country =>
+                                                    country.name.toLowerCase().includes(searchQuery.toLowerCase())
+                                                )
+                                                .map(country => (
+                                                    <div
+                                                        className="dropdown-item"
+                                                        onClick={() => selectOption('permanentCountry', country.name, country.id)} // Pass name and id
+                                                        key={country.id}
+                                                    >
+                                                        {country.name}
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
+
+                            {/* State Dropdown with Search */}
+                            {/* State Dropdown with Search */}
                             <div className="form-group">
                                 <label>State</label>
-                                <RegionDropdown
-                                    country={formData.permanentCountry}
-                                    value={formData.permanentState}
-                                    onChange={(val) => setFormData(prevState => ({ ...prevState, permanentState: val }))}
-                                    // required={!sameAsPresent}
-                                    disabled={sameAsPresent}
-                                />
+                                <div className="dropdown">
+                                    <div className="dropdown-button" ref={permanentStateButtonRef} onClick={togglePermanentState}>
+                                        <div>{formData.permanentState || "Select State"}</div>
+                                        <span>{!isPermanentStateOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}</span>
+                                    </div>
+                                    {isPermanentStateOpen && locationsapi.states && (
+                                        <div className="dropdown-menu" ref={permanentStateRef}>
+                                            <input
+                                                type="search"
+                                                className="search-input"
+                                                placeholder="Search state"
+                                                value={searchQuery}
+                                                id='searchDepartmentHead'
+                                                onChange={handleSearchQueryChange}
+                                            />
+
+                                            {locationsapi.states
+                                                .filter(state =>
+                                                    state.name.toLowerCase().includes(searchQuery.toLowerCase())
+                                                ).map(state => (
+                                                    <div className="dropdown-item" onClick={() => selectOption('permanentState', state.name, state.id)} key={state.id}>
+                                                        {state.name}
+                                                    </div>
+                                                ))}
+
+                                        </div>
+                                    )}
+                                </div>
                             </div>
+
+
+                            {/* City Dropdown with Search */}
+                            {/* City Dropdown with Search */}
                             <div className="form-group">
                                 <label>City</label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter City"
-                                    name="permanentCity"
-                                    value={formData.permanentCity}
-                                    onChange={handleChange}
-                                    // required={!sameAsPresent}
-                                    disabled={sameAsPresent}
-                                />
+                                <div className="dropdown">
+                                    <div className="dropdown-button" ref={permanentCityButtonRef} onClick={togglePermanentCity}>
+                                        <div>{formData.permanentCity || "Enter City"}</div>
+                                        <span>{!isPermanentCityOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}</span>
+                                    </div>
+                                    {isPermanentCityOpen && locationsapi.cities && (
+                                        <div className="dropdown-menu" ref={permanentCityRef}>
+                                            <input
+                                                type="search"
+                                                className="search-input"
+                                                placeholder="Search city"
+                                                value={searchQuery}
+                                                id='searchDepartmentHead'
+                                                onChange={handleSearchQueryChange}
+                                            />
+
+                                            {locationsapi.cities
+                                                .filter(city =>
+                                                    city.name.toLowerCase().includes(searchQuery.toLowerCase())
+                                                ).map(city => (
+                                                    <div className="dropdown-item" onClick={() => selectOption('permanentCity', city.name, city.id)} key={city.id}>
+                                                        {city.name}
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
+
+                            {/*  */}
+
                             <div className="form-group">
                                 <label>Street 1</label>
                                 <input
@@ -390,5 +640,4 @@ const ContactsForm = ({ onSubmit, next }) => {
         </>
     );
 };
-
 export default ContactsForm;
