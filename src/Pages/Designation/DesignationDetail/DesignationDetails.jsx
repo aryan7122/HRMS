@@ -336,7 +336,7 @@ const DesignationDetails = () => {
                 </p>
                 <div className="buttons">
                     <div onClick={DelteConform}>
-                        <Button className="button" onClick={() => toast("Hello!")}>
+                        <Button className="button" onClick={() => toast("Deleted")}>
                             Delete
                         </Button>
                     </div>

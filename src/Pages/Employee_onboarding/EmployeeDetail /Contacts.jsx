@@ -1,21 +1,38 @@
-import iconEdu from '../../../assets/icons/edu.png'
+import iconEdu from '../../../assets/icons/edu.png';
 import { MdDeleteOutline } from "react-icons/md";
 import { MdWorkHistory } from "react-icons/md";
-import useLocationData from '../../../Snippet/UseLocationData.jsx'
+import useLocationData from '../../../Snippet/UseLocationData.jsx';
 import { useState, useEffect } from 'react';
 
 const Contacts = ({ employeeData }) => {
+
     console.log('data', employeeData);
     const { locationsapi, fetchStates, fetchCities, fetchCountriesName } = useLocationData();
-
     const presentAddress = employeeData.find(contact => contact.address_type === "Present") || {};
     const permanentAddress = employeeData.find(contact => contact.address_type === "Permanent") || {};
-    console.log('locationsapi', locationsapi)
-    const idC = presentAddress.country_id
-    const c = locationsapi.countries
+    console.log('locationsapi', locationsapi);
+    const [cun, setCun] = useState(null); // Initialize state
+    const countriesname = JSON.stringify(cun)
+    // Fetch country name based on the country id
     useEffect(() => {
-        fetchCountriesName(idC)
-    }, [presentAddress.country_id])
+        if (presentAddress.country_id) {
+            fetchCountriesName(presentAddress.country_id);
+        }
+    }, [presentAddress.country_id]);
+
+    useEffect(() => {
+        if (locationsapi.countries) {
+            setCun(locationsapi.countries); // Set countries data once fetched
+            // alert(typeof JSON.stringify(locationsapi.countries))
+        }
+    }, [locationsapi.countries]);
+
+    useEffect(() => {
+        if (typeof presentAddress.state_id == 'number') {
+            fetchStates(presentAddress.state_id)
+        }
+    }, [presentAddress.state_id])
+
     return (
         <div>
             <div className="info_cardsEmp">
@@ -25,7 +42,13 @@ const Contacts = ({ employeeData }) => {
                     <div className='contentInformation'>
                         <div>
                             <h4>Country</h4>
-                            {/* <p>{ c || '-'}</p> */}
+                            {countriesname &&
+                                <>
+                                    <p>
+                                        {countriesname}
+                                    </p>
+                                </>
+                            }
                         </div>
                         <div>
                             <h4>State</h4>
@@ -105,7 +128,7 @@ const Contacts = ({ employeeData }) => {
                     </div>
                 </div>
 
-               
+
             </div>
         </div>
     );

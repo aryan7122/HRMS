@@ -388,7 +388,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                             onChange={handleSearchQueryChangeDepartment}
                                         />
                                         <div className="dropdown_I">
-                                            {['Management', 'Development', 'HR'].filter(option =>
+                                            {['Management','HR',"Sales","IT",].filter(option =>
                                                 option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
                                             ).map(option => (
                                                 <div className="dropdown-item" onClick={() => selectOption('department', option)} key={option}>

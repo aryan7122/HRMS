@@ -20,6 +20,7 @@ import axios from 'axios';
 import { OutsideClick2 } from '../../Department/DepartmentList/OutsideClick2'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const Designation = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
@@ -38,36 +39,10 @@ const Designation = () => {
         // { designation_name: "Delivery Manager", department_id: "Game Design", description: "Lorem ipsum dolor sit amet crem ipsum dolor sit ame..." },
     ]);
     // const [designations, setDesignations] = useState([]);
-    const token = localStorage.getItem('access_token');
     const [loading, setLoading] = useState(true);
+    const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
 
     // console.log('employees::', employees)
-
-    useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/designation/list', {}, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(response => {
-                setEmployees(response.data.designation);
-                setFilteredEmployees(response.data.designation); // filteredEmployees ko bhi sync karo
-                console.log('response', response.data.designation);
-                setLoading(false);
-
-            })
-            .catch(error => {
-                console.error("Error fetching data: ", error);
-            });
-    }, []);
-
-  
-
-
-
-
-
-    const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
 
 
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
@@ -183,30 +158,39 @@ const Designation = () => {
         setSelectedStatus('All');
         setCurrentPage(1);
         setRowsPerPage(10);
-       
+        setSelectedDate(null)
+        setFromDate(null)
+        setToDate(null)
     };
-    useEffect(() => {
-        setFilteredEmployees(employees);
-    }, [handleRefresh])
-    
+    // useEffect(() => {
+    //     setFilteredEmployees(employees);
+    // }, [handleRefresh])
+
     const [showFilter, setShowFilter] = useState(false);
     const [showCustomDate, setShowCustomDate] = useState(false);
     const [showEmploymentType, setShowEmploymentType] = useState(false);
     const [showDepartment, setShowDepartment] = useState(false);
+    const [showDateRange, setShowDateRange] = useState(false)
 
     const showFilterHandle = () => {
         setShowFilter(!showFilter)
+    }
+    const handleDateRangeClick = () => {
+        setShowDateRange(!showDateRange)
+        setShowCustomDate(false);
     }
     const handleCustomDateClick = () => {
         setShowCustomDate(!showCustomDate);
         setShowEmploymentType(false);
         setShowDepartment(false);
+        setShowDateRange(false)
     };
 
     const handleEmploymentTypeClick = () => {
         setShowEmploymentType(!showEmploymentType);
         setShowCustomDate(false);
         setShowDepartment(false);
+        setShowDateRange(false)
     };
 
     const handleDepartmentClick = () => {
@@ -286,17 +270,50 @@ const Designation = () => {
         setDepartmentOpen(false)
     };
 
+    const [selectedDate, setSelectedDate] = useState(null);
+    console.log('selectedDate', selectedDate)
+    const handleDateChange = (event) => {
+
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setSelectedDate(formattedDate);
+
+    };
+
+
+    const [fromDate, setFromDate] = useState(null);
+    const [toDate, setToDate] = useState(null);
+
+    // Function to handle the date change and format it to yyyy/mm/dd
+    const handleFromDateChange = (event) => {
+
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setFromDate(formattedDate);
+    };
+    const handleToDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setToDate(formattedDate);
+    };
+
+
     // const toggleDepartment = () => {
     //     setIsDepartmentOpen(!isDepartmentOpen);
     // };
+    const token = localStorage.getItem('access_token');
+
 
     const handleSubmitForm_3 = (event) => {
         event.preventDefault();
         // Sab fields bharne ke baad hi API ko call karo
         axios.post('https://devstronauts.com/public/api/designation/create/update', {
-            designation_name: formData_3.email_3,  // Email ko formData se lo
-            department_id: formData_3.department_3, // Department ID ko formData se lo
-            description: formData_3.Description_3   // Description ko formData se lo
+            designation_name: formData_3.email_3,
+            department_id: formData_3.department_3,
+            description: formData_3.Description_3
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -336,6 +353,28 @@ const Designation = () => {
                 console.error("Error during create/update:", error);
             });
     };
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/designation/list', {
+            search: searchQuery,
+            custom_date: selectedDate,
+            fromDate: fromDate,
+            toDate: toDate
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                setEmployees(response.data.designation);
+                setFilteredEmployees(response.data.designation); // filteredEmployees ko bhi sync karo
+                console.log('response', response.data.designation);
+                setLoading(false);
+
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+            });
+    }, [searchQuery, selectedDate, fromDate, toDate, handleSubmitForm_3]);
 
     const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
 
@@ -359,7 +398,7 @@ const Designation = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Designation list <p>10 total</p>
+                            All Designation list <p>{currentEmployees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={handleAddDesginationClick}>
@@ -417,27 +456,39 @@ const Designation = () => {
                         </div>
 
                         {isFilterOpen2 && (
-                            <div className="filter-container" ref={filterRef2}>
+                            <div className="filter-container " ref={filterRef2}>
                                 <div className="filter-options">
-                                    <div className="filter-option" onClick={handleCustomDateClick}>
-                                        <p>Custom Date </p>
+                                    <div className="filter-option" >
+                                        <p onClick={handleCustomDateClick}>Custom Date {!showCustomDate ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showCustomDate && (
                                             <div className="dropdown-content date-h">
-                                                <div><MdDateRange /> Select Custom date</div>
-                                                <input type="date" />
+                                                <div><span><MdDateRange /></span>{!selectedDate ? 'Select Custom date' : selectedDate} </div>
+                                                {/* <br /> */}
+                                                <input type="date" name="date" id="" onChange={handleDateChange} />
                                             </div>
                                         )}
                                     </div>
                                     <div className="filter-option">
-                                        <p onClick={handleEmploymentTypeClick}>Date Range</p>
-                                        <div className="dropdown-content date-h">
-                                            <p>Form Date </p>
-                                            <div><MdDateRange /> Select Form date</div>
-                                            <input type="date" />
-                                        </div>
+                                        <p onClick={handleDateRangeClick}>Date Range  {!showDateRange ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                        {showDateRange && (
+                                            <div >
+                                                <label id='daterange-contener'>From</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!fromDate ? 'Select Custom date' : fromDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleFromDateChange} />
+                                                </div>
+                                                <label id='daterange-contener'>To</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!toDate ? 'Select Custom date' : toDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleToDateChange} />
+                                                </div>
+                                            </div>
+                                        )}
 
                                     </div>
-                                    <div className="filter-option">
+                                    {/* <div className="filter-option">
                                         <p onClick={handleDepartmentClick}>Department</p>
                                         {showDepartment && (
                                             <div className="dropdown-content">
@@ -459,7 +510,7 @@ const Designation = () => {
                                                 </ul>
                                             </div>
                                         )}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
 
@@ -612,27 +663,19 @@ const Designation = () => {
                     </div>
                     <div className="page-navigation">
                         <div className="page-numbers">
-                            {generatePages().map((page, index) => (
+                            {[...Array(totalPages)].map((_, pageIndex) => (
                                 <button
-                                    key={index}
-                                    className={currentPage === page ? 'activePageIndex' : ''}
-                                    onClick={() => handlePageChange(page)}
-                                    disabled={page === '...'}
+                                    key={pageIndex + 1}
+                                    className={currentPage === pageIndex + 1 ? 'activePageIndex' : ''}
+                                    onClick={() => handlePageChange(pageIndex + 1)}
                                 >
-                                    {page}
+                                    {pageIndex + 1}
+                                    {console.log('currentPage', pageIndex + 1)}
                                 </button>
                             ))}
                         </div>
-
-                        {/* Previous Button */}
-                        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-                            <FaAngleLeft />
-                        </button>
-
-                        {/* Next Button */}
-                        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
-                            <FaAngleRight />
-                        </button>
+                        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
+                        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
                     </div>
                 </div>
 

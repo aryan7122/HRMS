@@ -17,6 +17,7 @@ import { OutsideClick } from '../../../components/OutSideClick';
 import OutsideClick4 from './OutSideClick4.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 import './AllEmployeeList.scss';
 
@@ -152,6 +153,9 @@ const AllEmployeeList = () => {
         setSelectedStatus('All');
         setCurrentPage(1);
         setRowsPerPage(10);
+        setSelectedDepartmentId(null)
+        setSelectedDate(null)
+        setSelectedFilter(null)
     };
     // 
     const [showFilter, setShowFilter] = useState(false);
@@ -166,18 +170,21 @@ const AllEmployeeList = () => {
         setShowCustomDate(!showCustomDate);
         setShowEmploymentType(false);
         setShowDepartment(false);
+
     };
 
     const handleEmploymentTypeClick = () => {
         setShowEmploymentType(!showEmploymentType);
         setShowCustomDate(false);
         setShowDepartment(false);
+
     };
 
     const handleDepartmentClick = () => {
         setShowDepartment(!showDepartment);
         setShowCustomDate(false);
         setShowEmploymentType(false);
+
     };
     const NewJobPage = () => {
         navigate('/add-employee')
@@ -204,13 +211,27 @@ const AllEmployeeList = () => {
 
     // 
     const [employmentType, setEmploymentType] = useState('');
-
+    const [selectedDate, setSelectedDate] = useState(null);
+    
+    const handleDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setSelectedDate(formattedDate);
+    };
     // Handle change when a radio button is clicked
     const handleEmploymentTypeChange = (event) => {
         setEmploymentType(event.target.value);
         console.log('Selected Employment Type:', event.target.value); // Debugging purpose
-        toggleFilter()
+        // toggleFilter()
     };
+
+    const [selectedDepartmentId, setSelectedDepartmentId] = useState(''); // State to store selected department
+
+    const handleDepartmentChange = (event) => {
+        setSelectedDepartmentId(event.target.value); // Update state on radio button change
+    };
+
     // api get6 list
     const token = localStorage.getItem('access_token');
     // console.log('token:', token)
@@ -220,8 +241,8 @@ const AllEmployeeList = () => {
             search: searchQuery,
             employee_status: selectedFilter,   //
             employment_type: employmentType,
-            department_id: "",
-            created_at: ""
+            department_id: selectedDepartmentId,
+            custom_date: selectedDate
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -241,7 +262,7 @@ const AllEmployeeList = () => {
 
 
             });
-    }, [statusId, statusNew, token, sms, searchQuery, selectedFilter, employmentType]);
+    }, [statusId, statusNew, token, sms, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId]);
     //  
     const [departmentdetails3, setDepartmentdetails3] = useState('');
     const [departmentdetails2, setDepartmentdetails2] = useState('');
@@ -346,7 +367,7 @@ const AllEmployeeList = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Employee list <p>102 total</p>
+                            All Employee list <p>{currentEmployees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={NewJobPage}>
@@ -462,132 +483,169 @@ const AllEmployeeList = () => {
                         {isFilterOpen && (
                             <div className="filter-container" ref={filterRef}>
                                 <div className="filter-options">
-                                    <div className="filter-option" onClick={handleCustomDateClick}>
-                                        <p>Custom Date </p>
+                                    <div className="filter-option" >
+                                        <p onClick={handleCustomDateClick}>Custom Date {!showCustomDate ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showCustomDate && (
                                             <div className="dropdown-content date-h">
-                                                <div><MdDateRange /> Select Custom date</div>
-                                                <input type="date" />
+                                                <div><span><MdDateRange /></span>{!selectedDate ? 'Select Custom date' : selectedDate} </div>
+                                                {/* <br /> */}
+                                                <input type="date" name="date" id="" onChange={handleDateChange} />
                                             </div>
                                         )}
                                     </div>
                                     <div className="filter-option">
-                                        <p onClick={handleEmploymentTypeClick}>Employment Type</p>
+                                        <p onClick={handleEmploymentTypeClick}>Employment Type {!showEmploymentType ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showEmploymentType && (
-                                            <div  className="dropdown-content">
-                                            <ul>
-                                                <li>
-                                                    <input
-                                                        type="radio"
-                                                        id="All"
-                                                        name="employmentType"
-                                                        className="custom-radio"
-                                                        value=" "
-                                                        onChange={handleEmploymentTypeChange}
-                                                    />
-                                                    <label htmlFor="All">All</label>
-                                                </li>
-                                            <li>
-                                                <input
-                                                    type="radio"
-                                                    id="permanent"
-                                                    name="employmentType"
-                                                    className="custom-radio"
-                                                    value="Permanent"
-                                                    onChange={handleEmploymentTypeChange}
-                                                />
-                                                <label htmlFor="permanent">Permanent</label>
-                                            </li>
-                                            <li>
-                                                <input
-                                                    type="radio"
-                                                    id="contract"
-                                                    name="employmentType"
-                                                    className="custom-radio"
-                                                    value="Contract"
-                                                    onChange={handleEmploymentTypeChange}
-                                                />
-                                                <label htmlFor="contract">On Contract</label>
-                                            </li>
-                                            <li>
-                                                <input
-                                                    type="radio"
-                                                    id="intern"
-                                                    name="employmentType"
-                                                    className="custom-radio"
-                                                    value="Intern"
-                                                    onChange={handleEmploymentTypeChange}
-                                                />
-                                                <label htmlFor="intern">Intern</label>
-                                            </li>
-                                            <li>
-                                                <input
-                                                    type="radio"
-                                                    id="trainee"
-                                                    name="employmentType"
-                                                    className="custom-radio"
-                                                    value="Trainee"
-                                                    onChange={handleEmploymentTypeChange}
-                                                />
-                                                <label htmlFor="trainee">Trainee</label>
-                                                </li>
-                                                
-                                        </ul>
-                                        {/* <p>Selected Employment Type: {employmentType}</p> Displaying selected value */}
-                                    </div>
-                                    
+                                            <div className="dropdown-content">
+                                                <ul>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="All"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value=" "
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label htmlFor="All">All</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="permanent"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value="Permanent"
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label htmlFor="permanent">Permanent</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="contract"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value="Contract"
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label htmlFor="contract">On Contract</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="intern"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value="Intern"
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label htmlFor="intern">Intern</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="trainee"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value="Trainee"
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label htmlFor="trainee">Trainee</label>
+                                                    </li>
+
+                                                </ul>
+                                                {/* <p>Selected Employment Type: {employmentType}</p> Displaying selected value */}
+                                            </div>
+
 
 
                                         )}
+                                    </div>
+                                    <div className="filter-option">
+                                        <p onClick={handleDepartmentClick}>Department {!showDepartment ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                        {showDepartment && (
+                                            <div className="dropdown-content">
+                                                <ul>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="all-department"
+                                                            name="department"
+                                                            value=" " // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
+                                                        <label htmlFor="all-department">All Department</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="it"
+                                                            name="department"
+                                                            value="IT" // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
+                                                        <label htmlFor="it">IT</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="hr"
+                                                            name="department"
+                                                            value="HR" // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
+                                                        <label htmlFor="hr">HR</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="sales"
+                                                            name="department"
+                                                            value="Sales" // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
+                                                        <label htmlFor="sales">Sales</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="management"
+                                                            name="department"
+                                                            value="Management" // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
+                                                        <label htmlFor="management">Management</label>
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
-                                <div className="filter-option">
-                                    <p onClick={handleDepartmentClick}>Department</p>
-                                    {showDepartment && (
-                                        <div className="dropdown-content">
-                                            <ul>
-                                                <li>
-                                                    <input type="radio" id="all-department" name="department" className="custom-radio" />
-                                                    <label htmlFor="all-department">All Department</label>
-                                                </li>
-                                                <li>
-                                                    <input type="radio" id="it" name="department" className="custom-radio" />
-                                                    <label htmlFor="it">IT</label>
-                                                </li>
-                                                <li>
-                                                    <input type="radio" id="hr" name="department" className="custom-radio" />
-                                                    <label htmlFor="hr">HR</label>
-                                                </li>
-                                                <li>
-                                                    <input type="radio" id="sales" name="department" className="custom-radio" />
-                                                    <label htmlFor="sales">Sales</label>
-                                                </li>
-                                                <li>
-                                                    <input type="radio" id="management" name="department" className="custom-radio" />
-                                                    <label htmlFor="management">Management</label>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
                             </div>
                         )}
 
+                    </div>
                 </div>
             </div>
-        </div>
-            {/* All Employee  List*/ }
-    <div className="allEmployeeList">
-        {/* <div className="head">
+            {/* All Employee  List*/}
+            <div className="allEmployeeList">
+                {/* <div className="head">
                 </div> */}
-        <div className="employee-table">
+                <div className="employee-table">
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>
-                            <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
-                            {/* {allDel &&
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
+                                    {/* {allDel &&
                                         <span id='deleteThis'>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ff0000" fill="none">
                                                 <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
@@ -597,23 +655,23 @@ const AllEmployeeList = () => {
                                             </svg>
                                         </span>
                                     } */}
-                        </th>
-                        <th> <div>Employee ID<span><TiArrowUnsorted /></span></div></th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email ID</th>
-                        <th>Phone Number</th>
-                        <th><div>Department <span><TiArrowUnsorted /></span></div></th>
-                        <th>Date of Joining</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentEmployees.map((emp, index) => (
-                        <tr key={index}>
-                            <td>
-                                <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} />
-                                {/* {emp.isChecked &&
+                                </th>
+                                <th> <div>Employee ID<span><TiArrowUnsorted /></span></div></th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email ID</th>
+                                <th>Phone Number</th>
+                                <th><div>Department <span><TiArrowUnsorted /></span></div></th>
+                                <th>Date of Joining</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {currentEmployees.map((emp, index) => (
+                                <tr key={index}>
+                                    <td>
+                                        <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} />
+                                        {/* {emp.isChecked &&
                                             <span id='deleteThis'>
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ff0000" fill="none">
                                                     <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
@@ -623,7 +681,7 @@ const AllEmployeeList = () => {
                                                 </svg>
                                             </span>
                                         } */}
-                                {/* {emp.isChecked &&
+                                        {/* {emp.isChecked &&
                                             <span id='deleteThis'>
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ff0000" fill="none">
                                                     <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
@@ -633,92 +691,92 @@ const AllEmployeeList = () => {
                                                 </svg>
                                             </span>
                                         } */}
-                            </td>
-                            <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.employee_id}</td>
-                            <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.first_name}</td>
-                            <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.last_name}</td>
-                            <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.email}</td>
-                            <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.phone_code + ' ' + emp.mobile}</td>
-                            <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.department_id}</td>
-                            <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.joining_date}</td>
-                            <td>
-                                <div className="status-dropdown">
-                                    <div key={index} className="status-container">
-                                        <div onClick={toggleFilter4} ref={filterButtonRef4}>
-                                            <div
-                                                className={`status-display ${emp.employee_status ? emp.employee_status.toLowerCase().replace(' ', '-') : ''}`}
-                                                onClick={() => setIsOpen(isOpen === index ? null : index)}
-                                            >
-                                                <span className={`left_dot ${emp.employee_status ? emp.employee_status.toLowerCase().replace(' ', '-') : ''}`}></span>
-                                                <div onClick={() => {
-                                                    UpdateStatusHndle(emp.id);
-                                                }}>
-                                                    <div className="EmpS" >
-                                                        {emp.employee_status}
-                                                    </div>
-                                                    <div className="^wdown">
-                                                        <MdOutlineKeyboardArrowDown />
+                                    </td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.employee_id}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.first_name}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.last_name}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.email}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.phone_code + ' ' + emp.mobile}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.department_id}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.joining_date}</td>
+                                    <td>
+                                        <div className="status-dropdown">
+                                            <div key={index} className="status-container">
+                                                <div onClick={toggleFilter4} ref={filterButtonRef4}>
+                                                    <div
+                                                        className={`status-display ${emp.employee_status ? emp.employee_status.toLowerCase().replace(' ', '-') : ''}`}
+                                                        onClick={() => setIsOpen(isOpen === index ? null : index)}
+                                                    >
+                                                        <span className={`left_dot ${emp.employee_status ? emp.employee_status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                        <div onClick={() => {
+                                                            UpdateStatusHndle(emp.id);
+                                                        }}>
+                                                            <div className="EmpS" >
+                                                                {emp.employee_status}
+                                                            </div>
+                                                            <div className="^wdown">
+                                                                <MdOutlineKeyboardArrowDown />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                {isOpen === index && (
+                                                    <div className="status-options" ref={filterRef4}>
+                                                        {statuses.map(status => (
+                                                            <div
+                                                                key={status}
+                                                                className="status-option"
+                                                                onClick={() => handleStatusChange(index, status)}
+                                                            >
+                                                                {status}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
-                                        {isOpen === index && (
-                                            <div className="status-options" ref={filterRef4}>
-                                                {statuses.map(status => (
-                                                    <div
-                                                        key={status}
-                                                        className="status-option"
-                                                        onClick={() => handleStatusChange(index, status)}
-                                                    >
-                                                        {status}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </td>
+                                    </td>
 
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            {loading ? (
-                <div id='Loading'>
-                    <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
-                </div> // Show loading text or spinner when data is being fetched
-            ) : ('')}
-        </div>
-        <div className="pagination">
-            <div className="rows-per-page">
-                <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
-                    <option value={5}>5 per page</option>
-                    <option value={10}>10 per page</option>
-                    <option value={30}>30 per page</option>
-                    <option value={50}>50 per page</option>
-                    <option value={70}>70 per page</option>
-                    <option value={100}>100 per page</option>
-                </select>
-            </div>
-            <div className="page-navigation">
-                <div className="page-numbers">
-                    {[...Array(totalPages)].map((_, pageIndex) => (
-                        <button
-                            key={pageIndex + 1}
-                            className={currentPage === pageIndex + 1 ? 'activePageIndex' : ''}
-                            onClick={() => handlePageChange(pageIndex + 1)}
-                        >
-                            {pageIndex + 1}
-                            {/* {console.log('currentPage', pageIndex + 1)} */}
-                        </button>
-                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    {loading ? (
+                        <div id='Loading'>
+                            <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
+                        </div> // Show loading text or spinner when data is being fetched
+                    ) : ('')}
                 </div>
-                <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
-                <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
-            </div>
-        </div>
+                <div className="pagination">
+                    <div className="rows-per-page">
+                        <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
+                            <option value={5}>5 per page</option>
+                            <option value={10}>10 per page</option>
+                            <option value={30}>30 per page</option>
+                            <option value={50}>50 per page</option>
+                            <option value={70}>70 per page</option>
+                            <option value={100}>100 per page</option>
+                        </select>
+                    </div>
+                    <div className="page-navigation">
+                        <div className="page-numbers">
+                            {[...Array(totalPages)].map((_, pageIndex) => (
+                                <button
+                                    key={pageIndex + 1}
+                                    className={currentPage === pageIndex + 1 ? 'activePageIndex' : ''}
+                                    onClick={() => handlePageChange(pageIndex + 1)}
+                                >
+                                    {pageIndex + 1}
+                                    {/* {console.log('currentPage', pageIndex + 1)} */}
+                                </button>
+                            ))}
+                        </div>
+                        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}> <FaAngleLeft /></button>
+                        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}><FaAngleRight /></button>
+                    </div>
+                </div>
 
-    </div>
+            </div>
         </div >
     );
 };

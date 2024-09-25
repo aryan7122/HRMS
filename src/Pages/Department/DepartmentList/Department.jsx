@@ -25,9 +25,7 @@ const Department = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
     const { isOpen: isDepartmentOpen2, ref: departmentRef2, buttonRef: departmentButtonRef2, handleToggle: toggleDepartment2, setIsOpen: setDepartmentOpen2 } = OutsideClick2();
-
     const [loading, setLoading] = useState(true);
-
     const [hidImport, setHidImport] = useState(true);
     const [employees, setEmployees] = useState([
         // { deptName: "Manning", deptHead: "Sunil Bhadouriya", parentDept: "HSEQ" },
@@ -45,23 +43,7 @@ const Department = () => {
     ]);
     const token = localStorage.getItem('access_token');
 
-    useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/department/list', {}, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(response => {
-                setEmployees(response.data.department);
-                setFilteredEmployees(response.data.department); // filteredEmployees ko bhi sync karo
-                console.log('response 🥳', response.data.department);
-                setLoading(false);
 
-            })
-            .catch(error => {
-                console.error("Error fetching data: ", error);
-            });
-    }, []);
 
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
@@ -175,6 +157,9 @@ const Department = () => {
         setSelectedStatus('All');
         setCurrentPage(1);
         setRowsPerPage(10);
+        setSelectedDate(null)
+        setFromDate(null)
+        setToDate(null)
     };
 
     // 
@@ -182,6 +167,8 @@ const Department = () => {
     const [showCustomDate, setShowCustomDate] = useState(false);
     const [showEmploymentType, setShowEmploymentType] = useState(false);
     const [showDepartment, setShowDepartment] = useState(false);
+    const [showDateRange, setShowDateRange] = useState(false)
+
     const [dropdowns, setDropdowns] = useState({
         department1: false
     });
@@ -204,6 +191,10 @@ const Department = () => {
 
     const showFilterHandle = () => {
         setShowFilter(!showFilter)
+    }
+    const handleDateRangeClick = () => {
+        setShowDateRange(!showDateRange)
+        setShowCustomDate(false);
     }
     const handleCustomDateClick = () => {
         setShowCustomDate(!showCustomDate);
@@ -276,6 +267,8 @@ const Department = () => {
         console.log("Button clicked!");
     };
 
+    
+    
     // popup
     const initialFormDetails_2 = {
         departmentName_2: '',
@@ -315,44 +308,30 @@ const Department = () => {
         }));
         toggleDropdownVisibility_2('departmentDropdownOpen_2');
     };
-    useEffect(() => {
-        setFilteredEmployees(employees);
-    }, [handleRefresh])
-
+    // useEffect(() => {
+    //     setFilteredEmployees(employees);
+    // }, [handleRefresh])
+    const [run, setRun] = useState(null)
+    console.log('formDetails_2', formDetails_2)
     const handleSubmitForm_2 = (event) => {
+        setRun(',')
         event.preventDefault();
-        // Reset form fields
-        // Reset search query
-        // toggleDropdownVisibility_2('departmentDropdownOpen_2'); // Close dropdown
         axios.post('https://devstronauts.com/public/api/department/create/update', {
             department_name: formDetails_2.departmentName_2,  // Email ko formData se lo
             department_head: formDetails_2.departmentHead_2, // Department ID ko formData se lo
-            parent_department: formDetails_2.parentDepartment_2   // Description ko formData se lo
+            parent_department: formDetails_2.parentDepartment_2, // Description ko formData se lo
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
             .then(response => {
-                
-                // console.log("Form Submitted:", formDetails_2);
-                // setFormDetails_2(initialFormDetails_2);
-                // setSearchQuery_2('');
-                // console.log('response parent_department', initialFormDetails_2);
-                // Data create/update ho gaya, ab loading false karo
-                // setLoading(false);
-                // Employees ko update karo ya response ke according set karo
-                setShowPopup(false);
-                setEmployees(prevEmployees => [...prevEmployees, response.data.department]);
-                console.log('response', response.data)
+                setRun(null)
+                // setEmployees(prevEmployees => [...prevEmployees, response.data.department]);
+                console.log('response', response)
                 // Optional: Form reset kar sakte ho
                 // setFormData_3(initialFormDetails_2);
-                formDetails_2.departmentName_2= ''  // Email ko formData se lo
-                formDetails_2.departmentHead_2 ='' // Department ID ko formData se lo
-                formDetails_2.parentDepartment_2 = ''
-
-                // 
-                toast.success('New Department  Create successfully.', {
+                toast.success(response.data.message || 'New Department  Create successfully.', {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -362,6 +341,12 @@ const Department = () => {
                     progress: undefined,
                     theme: "light",
                 });
+                setTimeout(() => {
+                    formDetails_2.departmentName_2 = ''  // Email ko formData se lo
+                    formDetails_2.departmentHead_2 = '' // Department ID ko formData se lo
+                    formDetails_2.parentDepartment_2 = ''
+                    setShowPopup()
+                }, 2000);
             })
             .catch(error => {
                 toast.error('Error during create', {
@@ -378,6 +363,61 @@ const Department = () => {
             });
     };
     // popup
+
+
+    const [selectedDate, setSelectedDate] = useState(null);
+    console.log('selectedDate', selectedDate)
+    const handleDateChange = (event) => {
+
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setSelectedDate(formattedDate);
+
+    };
+
+
+    const [fromDate, setFromDate] = useState(null);
+    const [toDate, setToDate] = useState(null);
+
+    // Function to handle the date change and format it to yyyy/mm/dd
+    const handleFromDateChange = (event) => {
+
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setFromDate(formattedDate);
+    };
+    const handleToDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setToDate(formattedDate);
+    };
+
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/department/list', {
+            search: searchQuery,
+            custom_date: selectedDate,
+            fromDate: fromDate,
+            toDate: toDate
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                setEmployees(response.data.department);
+                setFilteredEmployees(response.data.department); // filteredEmployees ko bhi sync karo
+                console.log('response 🥳', response.data.department);
+                setLoading(false);
+
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+            });
+    }, [token, run, selectedDate, fromDate, toDate, searchQuery]);
+    // 
     const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
     const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
 
@@ -386,12 +426,13 @@ const Department = () => {
 
     return (
         <div>
+
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Departments list <p>08 total</p>
+                            All Departments list <p>{currentEmployees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={handleAddDepartmentClick}>
@@ -451,16 +492,37 @@ const Department = () => {
                         {isFilterOpen2 && (
                             <div className="filter-container" ref={filterRef2}>
                                 <div className="filter-options">
-                                    <div className="filter-option" onClick={handleCustomDateClick}>
-                                        <p>Custom Date </p>
+                                    <div className="filter-option" >
+                                        <p onClick={handleCustomDateClick}>Custom Date {!showCustomDate ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showCustomDate && (
                                             <div className="dropdown-content date-h">
-                                                <div><MdDateRange /> Select Custom date</div>
-                                                <input type="date" />
+                                                <div><span><MdDateRange /></span>{!selectedDate ? 'Select Custom date' : selectedDate} </div>
+                                                {/* <br /> */}
+                                                <input type="date" name="date" id="" onChange={handleDateChange} />
                                             </div>
                                         )}
                                     </div>
                                     <div className="filter-option">
+                                        <p onClick={handleDateRangeClick}>Date Range  {!showDateRange ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                        {showDateRange && (
+                                            <div >
+                                                <label id='daterange-contener'>From</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!fromDate ? 'Select Custom date' : fromDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleFromDateChange} />
+                                                </div>
+                                                <label id='daterange-contener'>To</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!toDate ? 'Select Custom date' : toDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleToDateChange} />
+                                                </div>
+                                            </div>
+                                        )}
+
+                                    </div>
+                                    {/* <div className="filter-option">
                                         <p onClick={handleEmploymentTypeClick}>Employment Type</p>
                                         {showEmploymentType && (
                                             <div className="dropdown-content">
@@ -513,7 +575,7 @@ const Department = () => {
                                                 </ul>
                                             </div>
                                         )}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         )}
@@ -539,10 +601,13 @@ const Department = () => {
                         <tbody>
                             {currentEmployees.map((emp, index) => (
                                 <tr key={index} >
-                                    <td ><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
-                                    <td onClick={() => navigate(`/departmentdetails/${emp.id}`)}>{emp.deptName || emp.department_name || '-'}</td>
-                                    <td onClick={() => navigate(`/departmentdetails/${emp.id}`)}>{emp.deptHead || emp.department_head || '-'}</td>
-                                    <td onClick={() => navigate(`/departmentdetails/${emp.id}`)}>{emp.parentDept || emp.parent_department || '-'}</td>
+                                    <td>
+                                        <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} />
+                                    </td>
+                                    {console.log(' emp.department_namelllll', emp.department_name)}
+                                    <td onClick={() => navigate(`/departmentdetails/${emp.id}`)}>{emp.department_name || '-'}</td>
+                                    <td onClick={() => navigate(`/departmentdetails/${emp.id}`)}>{emp.department_head || '-'}</td>
+                                    <td onClick={() => navigate(`/departmentdetails/${emp.id}`)}>{emp.parent_department || '-'}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -555,6 +620,15 @@ const Department = () => {
 
                     {showPopup && (
                         <div className="popup-overlay">
+                            <ToastContainer
+                                position="top-right"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                closeOnClick
+                                pauseOnHover
+                                draggable
+                                theme="error"
+                            />
                             <div className="popup">
                                 <div className="popup-header">
                                     <h3>Add New Department</h3>
@@ -635,7 +709,7 @@ const Department = () => {
                                         </div>
 
                                         <div className="popupbtn" id="submitDepartmentFormButton_2">
-                                            <button type="submit">Submit
+                                            <button type="submit" >Submit
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
                                                     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
                                                     <path d="M10.5 8C10.5 8 13.5 10.946 13.5 12C13.5 13.0541 10.5 16 10.5 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

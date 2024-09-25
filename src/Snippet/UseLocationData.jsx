@@ -6,7 +6,7 @@ const useLocationData = () => {
         countries: [],
         states: [],
         cities: [],
-        countryName:''
+        countryName:[]
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

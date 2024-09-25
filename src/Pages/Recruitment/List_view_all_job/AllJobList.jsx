@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import './AllJobList.scss';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { GiBackstab, GiNotebook } from "react-icons/gi";
@@ -28,6 +29,10 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import LodinImg from '../../../assets/loding.gif'
 import { OutsideClickStatus } from './OutsideClickStatus.jsx'; // Adjust import path if necessary
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 
 const AllJobList = () => {
 
@@ -38,8 +43,29 @@ const AllJobList = () => {
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
     // const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatusDropdown } = OutsideClickStatus();
 
+    const [selectedFilter, setSelectedFilter] = useState(null);
+    // alert(selectedFilter)
+    console.log('states', selectedFilter)
 
+    const filter_leftClose = (filterName) => {
+        setSelectedFilter(filterName);
+        setToggleLeft(false)
+        toggleFilter2()
+    };
+
+    const [employmentType, setEmploymentType] = useState(""); // State to store the selected employment type
+
+    const handleEmploymentChange = (e) => {
+        setEmploymentType(e.target.value); // Set the value of the selected radio button
+    };
+    // const filter_leftClose = (filterType) => {
+    //     console.log(`${filterType} 👉`);
+    //     setActiveFilter(filterType); // Set the active filter
+    //     toggleFilter2()
+    // };
     // 
+    // 
+
     const [loading, setLoading] = useState(true);
     const [sms, setSms] = useState('')
     const [statusId, setStatusId] = useState('')
@@ -118,7 +144,6 @@ const AllJobList = () => {
         const updatedEmployees = [...filteredEmployees];
         updatedEmployees[index].isChecked = !updatedEmployees[index].isChecked;
         setFilteredEmployees(updatedEmployees);
-
     };
     // table select checkbox
 
@@ -210,6 +235,8 @@ const AllJobList = () => {
         setSelectedStatus('All');
         setCurrentPage(1);
         setRowsPerPage(10);
+        setSelectedDate(null)
+        setSelectedFilter(null)
     };
     // 
     const [showFilter, setShowFilter] = useState(false);
@@ -260,7 +287,15 @@ const AllJobList = () => {
             setFileName(file.name); // Set the file name in the state
         }
     };
-
+    const [selectedDate, setSelectedDate] = useState(null);
+    console.log('selectedDate', selectedDate)
+    const handleDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setSelectedDate(formattedDate);
+    };
+    // H
 
     // console.log('updateId', statusId)
     // console.log('status', statusId)
@@ -273,7 +308,12 @@ const AllJobList = () => {
     const token = localStorage.getItem('access_token');
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/jobopening/list', {}, {
+        axios.post('https://devstronauts.com/public/api/jobopening/list', {
+            search: searchQuery,
+            job_status: selectedFilter,
+            employee_type: employmentType,
+            custom_date: selectedDate,
+        }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -292,10 +332,10 @@ const AllJobList = () => {
 
 
             });
-    }, [statusId, statusNew, token, sms]);
+    }, [statusId, statusNew, token, sms, searchQuery, selectedFilter, employmentType, selectedDate]);
     // update status
 
- 
+
     useEffect(() => {
         if (statusId && statusNew) {
             axios.post('https://devstronauts.com/public/api/jobopening/status/update', {
@@ -372,12 +412,7 @@ const AllJobList = () => {
     const [activeFilter, setActiveFilter] = useState(null); // Track the active filter
     // const filterRef2 = useRef(null);
 
-    const filter_leftClose = (filterType) => {
-        console.log(`${filterType} 👉`);
-        setActiveFilter(filterType); // Set the active filter
-        toggleFilter2()
-    };
-    // 
+
 
 
 
@@ -397,7 +432,7 @@ const AllJobList = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Jobs list <p>204 total</p>
+                            All Jobs list <p>{currentEmployees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={NewJobPage}>
@@ -437,85 +472,53 @@ const AllJobList = () => {
                     </svg>
                 </div>
 
-                {/* <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2} >
-                    <div className="all">
-                        <div className='listActive' onClick={filter_leftClose}>
-                            <span> <FaList /></span>All
-                        </div>
-                    </div>
-                    <div className="active" onClick={filter_leftClose}>
-                        <div>
-                            <span><PiCheckSquare /></span>Draft
-                        </div>
-                    </div>
-                    <div className="inactive" onClick={filter_leftClose}>
-                        <div>
-                            <span> <MdWork /> </span>Open
-                        </div>
-                    </div>
-                    <div className="resigned" onClick={filter_leftClose}>
-                        <div>
-                            <span> <FaRegClock /> </span>On hold
-                        </div>
-                    </div>
-                    <div className="terminated" onClick={filter_leftClose}>
-                        <div>
-                            <span><PiCheckSquare /></span>Filled
-                        </div>
-                    </div>
-                    <div className="notice_period" onClick={filter_leftClose}>
-                        <div>
-                            <span><IoIosCloseCircleOutline /></span>Cancelled
-                        </div>
-                    </div>
-                </div> */}
-
                 <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}>
                     <div className="all">
                         <div
-                            className={`listActive ${activeFilter === 'all' ? 'listActive' : ''}`}
-                            onClick={() => filter_leftClose('all')}
+                            className={selectedFilter == null ? 'listActiveStatus' : ''}
+                            onClick={() => filter_leftClose(null)}
                         >
-                            <span><FaList /></span>All
+                            <span className=''><FaList /></span>All
                         </div>
                     </div>
                     <div
-                        className={`active ${activeFilter === 'draft' ? 'listActive' : ''}`}
                         onClick={() => filter_leftClose('draft')}
                     >
-                        <div>
+                        <div
+                            className={`active ${selectedFilter === 'draft' ? 'listActiveStatus' : ''}`}
+                        >
                             <span><PiCheckSquare /></span>Draft
                         </div>
                     </div>
                     <div
-                        className={`inactive ${activeFilter === 'open' ? 'listActive' : ''}`}
                         onClick={() => filter_leftClose('open')}
                     >
-                        <div>
+                        <div className={`inactive ${selectedFilter === 'open' ? 'listActive' : ''}`}
+                        >
                             <span><MdWork /></span>Open
                         </div>
                     </div>
                     <div
-                        className={`resigned ${activeFilter === 'onHold' ? 'listActive' : ''}`}
                         onClick={() => filter_leftClose('onHold')}
                     >
-                        <div>
+                        <div className={`resigned ${selectedFilter === 'onHold' ? 'listActive' : ''}`}
+                        >
                             <span><FaRegClock /></span>On hold
                         </div>
                     </div>
                     <div
-                        className={`terminated ${activeFilter === 'filled' ? 'listActive' : ''}`}
                         onClick={() => filter_leftClose('filled')}
                     >
-                        <div>
+                        <div className={`terminated ${selectedFilter === 'filled' ? 'listActive' : ''}`}
+                        >
                             <span><PiCheckSquare /></span>Filled
                         </div>
                     </div>
                     <div
-                        className={`notice_period ${activeFilter === 'cancelled' ? 'listActive' : ''}`}
                         onClick={() => filter_leftClose('cancelled')}
                     >
-                        <div>
+                        <div className={`notice_period ${selectedFilter === 'cancelled' ? 'listActive' : ''}`}
+                        >
                             <span><IoIosCloseCircleOutline /></span>Cancelled
                         </div>
                     </div>
@@ -546,41 +549,80 @@ const AllJobList = () => {
                         </div>
 
                         {isFilterOpen && (
+                            
                             <div className="filter-container" ref={filterRef}>
                                 <div className="filter-options">
-                                    {/* <div className="filter-option" onClick={handleCustomDateClick}>
-                                        <p>Custom Date </p>
+                                    
+                                    <div className="filter-option" >
+                                        <p onClick={handleCustomDateClick}>Custom Date {!showCustomDate ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showCustomDate && (
                                             <div className="dropdown-content date-h">
-                                                <div><MdDateRange /> Select Custom date</div>
-                                                <input type="date" />
+                                                <div><span><MdDateRange /></span>{!selectedDate ? 'Select Custom date' : selectedDate} </div>
+                                                {/* <br /> */}
+                                                <input type="date" name="date" id="" onChange={handleDateChange} />
                                             </div>
                                         )}
-                                    </div> */}
+                                    </div>
+                                 
                                     <div className="filter-option">
-                                        <p onClick={handleEmploymentTypeClick}>Experience Level</p>
+                                        <p onClick={handleEmploymentTypeClick}>Experience Level {!showEmploymentType ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showEmploymentType && (
                                             <div className="dropdown-content">
                                                 <ul>
                                                     <li>
-                                                        <input type="radio" id="permanent" name="employmentType" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="all"
+                                                            name="employmentType"
+                                                            value=""
+                                                            className="custom-radio"
+                                                            checked={employmentType === ""}
+                                                            onChange={handleEmploymentChange}
+                                                        />
+                                                        <label htmlFor="all">All</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="permanent"
+                                                            name="employmentType"
+                                                            value="Entry level"
+                                                            className="custom-radio"
+                                                            checked={employmentType === "Entry level"}
+                                                            onChange={handleEmploymentChange}
+                                                        />
                                                         <label htmlFor="permanent">Entry level</label>
                                                     </li>
                                                     <li>
-                                                        <input type="radio" id="contract" name="employmentType" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="contract"
+                                                            name="employmentType"
+                                                            value="Mid level"
+                                                            className="custom-radio"
+                                                            checked={employmentType === "Mid level"}
+                                                            onChange={handleEmploymentChange}
+                                                        />
                                                         <label htmlFor="contract">Mid level</label>
                                                     </li>
                                                     <li>
-                                                        <input type="radio" id="intern" name="employmentType" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="intern"
+                                                            name="employmentType"
+                                                            value="Senior"
+                                                            className="custom-radio"
+                                                            checked={employmentType === "Senior"}
+                                                            onChange={handleEmploymentChange}
+                                                        />
                                                         <label htmlFor="intern">Senior</label>
                                                     </li>
-
                                                 </ul>
                                             </div>
                                         )}
                                     </div>
                                     <div className="filter-option">
-                                        <p onClick={handleDepartmentClick}>Department</p>
+                                        <p onClick={handleDepartmentClick}>Department {!showDepartment ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showDepartment && (
                                             <div className="dropdown-content">
                                                 <ul>

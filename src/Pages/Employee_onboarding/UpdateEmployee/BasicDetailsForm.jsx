@@ -287,7 +287,7 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
                         <div className="form-group">
                             <label>Contact Number</label>
                             <input
-                                type="text"
+                                type="number"
                                 placeholder="Enter contact number"
                                 name="contactNumber"
                                 value={formData.contactNumber}
@@ -390,7 +390,7 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
                                             onChange={handleSearchQueryChangeDepartment}
                                         />
                                         <div className="dropdown_I">
-                                            {['Management', 'Development', 'HR'].filter(option =>
+                                            {['Management', 'HR', "Sales", "IT",].filter(option =>
                                                 option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
                                             ).map(option => (
                                                 <div className="dropdown-item" onClick={() => selectOption('department', option)} key={option}>
