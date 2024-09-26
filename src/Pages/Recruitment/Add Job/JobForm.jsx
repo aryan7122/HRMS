@@ -73,7 +73,7 @@ const JobForm = ({ onSubmit }) => {
         const { value } = event.target;
         setFormData(prevState => ({
             ...prevState,
-            jobLocation: [value]
+            jobLocation: value
         }));
     };
 
@@ -84,7 +84,7 @@ const JobForm = ({ onSubmit }) => {
 
 
     const token = localStorage.getItem('access_token');
-    console.log('formData.requiredSkills.join(', ')', formData.requiredSkills)
+    console.log('formData.requiredSkills.join(', ')', formData)
     const handleSubmit = (event) => {
         event.preventDefault();  // Prevent default form submission
         // setLoading(true)
@@ -93,7 +93,7 @@ const JobForm = ({ onSubmit }) => {
                 job_title: formData.jobTitle,
                 department: formData.department,
                 designation: formData.designation,
-                job_location: formData.jobLocation.join(', '),
+                job_location: formData.jobLocation,
                 job_status: formData.jobStatus,
                 no_of_position: formData.noOfPositions,
                 employee_type: formData.employmentType,
@@ -133,7 +133,7 @@ const JobForm = ({ onSubmit }) => {
                     jobTitle: '',
                     designation: '',
                     department: '',
-                    jobLocation: [],
+                    jobLocation: '',
                     jobStatus: '',
                     noOfPositions: '',
                     employmentType: '',
@@ -228,7 +228,7 @@ const JobForm = ({ onSubmit }) => {
     const handleSearchQueryChangeRequiredSkills = (e) => setSearchQueryRequiredSkills(e.target.value);
 
     const employmentTypeOptions = [
-        'Part-time', 'Full-time', 'Consultant', 'Permanent', 'On Contract', 'Intern', 'Trainee'
+      'Permanent', 'On Contract', 'Intern', 'Trainee'
     ];
     const requiredSkillsOptions = [
         'Communication Skills', 'Software Development', 'Leadership Skills', 'Team Collaboration',

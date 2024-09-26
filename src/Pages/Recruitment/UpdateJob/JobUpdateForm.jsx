@@ -40,7 +40,7 @@ const JobUpdateForm = ({ onSubmit }) => {
         jobTitle: '',
         designation: '',
         department: '',
-        jobLocation: [],
+        jobLocation: '',
         jobStatus: '',
         noOfPositions: '',
         employmentType: '',
@@ -70,7 +70,7 @@ const JobUpdateForm = ({ onSubmit }) => {
         const { value } = event.target;
         setFormData(prevState => ({
             ...prevState,
-            jobLocation: [value]
+            jobLocation: value
         }));
     };
 
@@ -131,7 +131,7 @@ const JobUpdateForm = ({ onSubmit }) => {
                     jobTitle: '',
                     designation: '',
                     department: '',
-                    jobLocation: [],
+                    jobLocation: '',
                     jobStatus: '',
                     noOfPositions: '',
                     employmentType: '',
@@ -179,8 +179,8 @@ const JobUpdateForm = ({ onSubmit }) => {
         });
     };
     const [selectedSkills, setSelectedSkills] = useState([]);
-    console.log('selectedSkills', selectedSkills.join(','))
-    // console.log('formData', formData.requiredSkills)
+    // console.log('selectedSkills', selectedSkills.join(','))
+    console.log('formData', formData)
 
     useEffect(() => {
         if (formData.requiredSkills) {
@@ -280,7 +280,7 @@ const JobUpdateForm = ({ onSubmit }) => {
     const handleSearchQueryChangeRequiredSkills = (e) => setSearchQueryRequiredSkills(e.target.value);
 
     const employmentTypeOptions = [
-        'Part-time', 'Full-time', 'Consultant', 'Permanent', 'On Contract', 'Intern', 'Trainee'
+       'Permanent', 'On Contract', 'Intern', 'Trainee'
     ];
 
     const requiredSkillsOptions = [

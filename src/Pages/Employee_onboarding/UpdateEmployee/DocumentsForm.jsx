@@ -23,26 +23,6 @@ const DocumentsForm = ({ onSubmit, }) => {
             attachmentBack: '',
         }
     ]);
-
-    // const [allDocumentsData, setAllDocumentsData] = useState({
-    //     aadhaar: {
-    //         number: '',
-    //         frontAttachment: '',
-    //         backAttachment: '',
-    //     },
-    //     pan: {
-    //         number: '',
-    //         attachment: '',
-    //     },
-    //     uan: {
-    //         number: '',
-    //         attachment: '',
-    //     },
-    //     other: {
-    //         number: '',
-    //         attachment: '',
-    //     }
-    // });
     const [allDocumentsData, setAllDocumentsData] = useState({
         documents: [
             {
@@ -194,30 +174,6 @@ const DocumentsForm = ({ onSubmit, }) => {
         setEducationForms(newForms);
     };
 
-    // const updateDocumentData = (index, newData) => {
-    //     const form = educationForms[index];
-    //     let updatedData = { ...allDocumentsData };
-
-    //     switch (form.documentType) {
-    //         case 'Aadhaar':
-    //             updatedData.aadhaar = { ...updatedData.aadhaar, ...newData };
-    //             break;
-    //         case 'PAN':
-    //             updatedData.pan = { ...updatedData.pan, ...newData };
-    //             break;
-    //         case 'UAN':
-    //             updatedData.uan = { ...updatedData.uan, ...newData };
-    //             break;
-    //         case 'Other':
-    //             updatedData.other = { ...updatedData.other, ...newData };
-    //             break;
-    //         default:
-    //             break;
-    //     }
-
-    //     setAllDocumentsData(updatedData);
-    // };
-    // Update document data in allDocumentsData
     const updateDocumentData = (index, newData) => {
         const updatedDocuments = [...allDocumentsData.documents];
         updatedDocuments[index] = {
@@ -240,9 +196,7 @@ const DocumentsForm = ({ onSubmit, }) => {
     // 
 
     const documentOptions = ['Aadhaar', 'PAN', 'UAN', 'Other'];
-    // const toggleEmploymentType = (id) => {
-    //     setOpenDropdown(prev => prev === id ? null : id); // Toggle state based on id
-    // };
+    
     return (
         <div id="Education_form">
             <form onSubmit={handleSubmit}>

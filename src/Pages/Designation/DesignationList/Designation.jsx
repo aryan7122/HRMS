@@ -320,7 +320,7 @@ const Designation = () => {
             }
         })
             .then(response => {
-                toast.success('New Designation Create successfully.', {
+                toast.success('Designation Create successfully.', {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,

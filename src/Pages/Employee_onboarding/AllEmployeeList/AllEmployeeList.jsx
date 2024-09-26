@@ -696,7 +696,7 @@ const AllEmployeeList = () => {
                                     <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.first_name}</td>
                                     <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.last_name}</td>
                                     <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.email}</td>
-                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.phone_code + ' ' + emp.mobile}</td>
+                                    <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.phone_code + ' ' + emp.mobile_no}</td>
                                     <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.department_id}</td>
                                     <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.joining_date}</td>
                                     <td>

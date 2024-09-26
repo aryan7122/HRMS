@@ -131,11 +131,11 @@ const UpdateEmployee = () => {
                     theme: "light",
                 });
 
-                if (response.data.message == 'Employee updated successfully!'){
-                    setTimeout(() => {
-                        navigate(`/employee-details/${id}`)
-                    }, 2300);
-                }
+                setTimeout(() => {
+                    navigate(`/employee-details/${id}`)
+                }, 2300);
+                // if (response.data.message == 'Employee updated successfully!'){
+                // }
 
             } catch (error) {
                 console.error("Error message: ", error.message);

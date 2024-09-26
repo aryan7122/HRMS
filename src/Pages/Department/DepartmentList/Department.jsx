@@ -331,7 +331,7 @@ const Department = () => {
                 console.log('response', response)
                 // Optional: Form reset kar sakte ho
                 // setFormData_3(initialFormDetails_2);
-                toast.success(response.data.message || 'New Department  Create successfully.', {
+                toast.success(response.data.message || 'Department  Create successfully', {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,

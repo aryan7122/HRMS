@@ -213,14 +213,14 @@ const DepartmentDetails = () => {
         })
             .then(response => {
                 // setJobData2(response.data.created_by);
-                // console.log('👉👉👉👉', response.data.created_by)
+                console.log('👉👉👉👉', response.data.created_by)
                 setDepartmentdetails3(response.data.created_by)
             })
             .catch(error => {
                 console.error("Error fetching user data: ", error);
             });
         // }
-    }, [id, token]);
+    }, [id, token, refresh, departmentdetails2]);
 
     const AllEmp = () => {
         navigate('/department')
@@ -233,7 +233,7 @@ const DepartmentDetails = () => {
     }
 
     if (error || !departmentdetails) {
-        return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
+        return <div id="notFounPageID"><img src="https://miro.medium.com/v2/resize:fit:996/1*C5oq4FeTlcpNXrXfnPpxTQ.gif" alt="Error loading data" /></div>;
     }
 
 
@@ -319,7 +319,7 @@ const DepartmentDetails = () => {
             }
         })
             .then(response => {
-                toast.success('Designation Detail update successfully.', {
+                toast.success('Department updated successfully', {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -346,7 +346,7 @@ const DepartmentDetails = () => {
                 formDetails_2.parentDepartment_2 = ''
             })
             .catch(error => {
-                toast.error('Designation Detail update Failed.', {
+                toast.error('Designation Update Failed', {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -471,7 +471,9 @@ const DepartmentDetails = () => {
 
                             <div>
                                 <h4>Created By</h4>
-                                <p>{departmentdetails3}</p>
+                                {departmentdetails3 && (
+                                <p>{departmentdetails3 || '-'}</p>
+                                )}
                             </div>
 
                             <div>

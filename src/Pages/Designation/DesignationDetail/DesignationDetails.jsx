@@ -180,7 +180,7 @@ const DesignationDetails = () => {
     }
 
     if (error || !designationDetails) {
-        return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
+        return <div id="notFounPageID"><img src="https://miro.medium.com/v2/resize:fit:996/1*C5oq4FeTlcpNXrXfnPpxTQ.gif" alt="Error loading data" /></div>;
     }
 
 
@@ -272,7 +272,7 @@ const DesignationDetails = () => {
             }
         })
             .then(response => {
-                toast.success('Department Detail update successfully.', {
+                toast.success('Designation Updated successfully', {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -294,7 +294,7 @@ const DesignationDetails = () => {
                 setFormData_3(initialFormData_3);
             })
             .catch(error => {
-                toast.error('Department Detail update Failed.', {
+                toast.error('Designation  Update Failed.', {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -396,7 +396,7 @@ const DesignationDetails = () => {
                             </div>
                             <div>
                                 <h4>Created At</h4>
-                                <p>                                {`${new Date(designationDetails.created_at).getDate()}-${new Date(designationDetails.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(designationDetails.created_at).getFullYear()}`}</p>
+                                <p>   {`${new Date(designationDetails.created_at).getDate()}-${new Date(designationDetails.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(designationDetails.created_at).getFullYear()}`}</p>
                             </div>                           
                         </div>
                         <div id='DescriptionJOB'>

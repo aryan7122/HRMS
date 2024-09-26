@@ -7,31 +7,11 @@ import { useState, useEffect } from 'react';
 const Contacts = ({ employeeData }) => {
 
     console.log('data', employeeData);
-    const { locationsapi, fetchStates, fetchCities, fetchCountriesName } = useLocationData();
-    const presentAddress = employeeData.find(contact => contact.address_type === "Present") || {};
-    const permanentAddress = employeeData.find(contact => contact.address_type === "Permanent") || {};
-    console.log('locationsapi', locationsapi);
-    const [cun, setCun] = useState(null); // Initialize state
-    const countriesname = JSON.stringify(cun)
-    // Fetch country name based on the country id
-    useEffect(() => {
-        if (presentAddress.country_id) {
-            fetchCountriesName(presentAddress.country_id);
-        }
-    }, [presentAddress.country_id]);
-
-    useEffect(() => {
-        if (locationsapi.countries) {
-            setCun(locationsapi.countries); // Set countries data once fetched
-            // alert(typeof JSON.stringify(locationsapi.countries))
-        }
-    }, [locationsapi.countries]);
-
-    useEffect(() => {
-        if (typeof presentAddress.state_id == 'number') {
-            fetchStates(presentAddress.state_id)
-        }
-    }, [presentAddress.state_id])
+    // const { locationsapi, fetchStates, fetchCities, fetchCountriesName } = useLocationData();
+    const presentAddress = employeeData.find(contacts => contacts.address_type === "Present") || {};
+    const permanentAddress = employeeData.find(contacts => contacts.address_type === "Permanent") || {};
+    console.log('presentAddress', presentAddress);
+    console.log('permanentAddress', permanentAddress);
 
     return (
         <div>
@@ -39,50 +19,46 @@ const Contacts = ({ employeeData }) => {
                 {/* Present Address Card */}
                 <div className="card">
                     <div className='top_head'><h3><span></span>Present Address</h3></div>
-                    <div className='contentInformation'>
-                        <div>
-                            <h4>Country</h4>
-                            {countriesname &&
-                                <>
-                                    <p>
-                                        {countriesname}
-                                    </p>
-                                </>
-                            }
+                    {presentAddress && (
+                        <div className='contentInformation'>
+                            <div>
+                                <h4>Country</h4>
+                                <p>{presentAddress?.country?.name || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>State</h4>
+                                <p>{presentAddress?.state?.name || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>City</h4>
+                                <p>{presentAddress?.city?.name || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Street 1</h4>
+                                <p>{presentAddress?.street_1 || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Street 2</h4>
+                                <p>{presentAddress?.street_2 || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Zip Code</h4>
+                                <p>{presentAddress?.zip_code || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Personal Contact</h4>
+                                <p>{presentAddress?.personal_contact_no || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Emergency Contact</h4>
+                                <p>{presentAddress?.emergency_contact_no || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Personal Email</h4>
+                                <p>{presentAddress?.personal_email_id || '-'}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h4>State</h4>
-                            <p>{presentAddress.state_id || '-'}</p>
-                        </div>
-                        <div>
-                            <h4>City</h4>
-                            <p>{presentAddress.city_id || '-'}</p>
-                        </div>
-                        <div>
-                            <h4>Street 1</h4>
-                            <p>{presentAddress.street_1 || '-'}</p>
-                        </div>
-                        <div>
-                            <h4>Street 2</h4>
-                            <p>{presentAddress.street_2 || '-'}</p>
-                        </div>
-                        <div>
-                            <h4>Zip Code</h4>
-                            <p>{presentAddress.zip_code || '-'}</p>
-                        </div>
-                        <div>
-                            <h4>Personal Contact</h4>
-                            <p>{presentAddress.personal_contact_no || '-'}</p>
-                        </div>
-                        <div>
-                            <h4>Emergency Contact</h4>
-                            <p>{presentAddress.emergency_contact_no || '-'}</p>
-                        </div>
-                        <div>
-                            <h4>Personal Email</h4>
-                            <p>{presentAddress.personal_email_id || '-'}</p>
-                        </div>
-                    </div>
+                    )}
                 </div>
 
                 {/* Permanent Address Card */}
@@ -91,44 +67,42 @@ const Contacts = ({ employeeData }) => {
                     <div className='contentInformation'>
                         <div>
                             <h4>Country</h4>
-                            <p>{permanentAddress.country_id || '-'}</p>
+                            <p>{permanentAddress?.country?.name || '-'}</p>
                         </div>
                         <div>
                             <h4>State</h4>
-                            <p>{permanentAddress.state_id || '-'}</p>
+                            <p>{permanentAddress?.state?.name || '-'}</p>
                         </div>
                         <div>
                             <h4>City</h4>
-                            <p>{permanentAddress.city_id || '-'}</p>
+                            <p>{permanentAddress?.city?.name || '-'}</p>
                         </div>
                         <div>
                             <h4>Street 1</h4>
-                            <p>{permanentAddress.street_1 || '-'}</p>
+                            <p>{permanentAddress?.street_1 || '-'}</p>
                         </div>
                         <div>
                             <h4>Street 2</h4>
-                            <p>{permanentAddress.street_2 || '-'}</p>
+                            <p>{permanentAddress?.street_2 || '-'}</p>
                         </div>
                         <div>
                             <h4>Zip Code</h4>
-                            <p>{permanentAddress.zip_code || '-'}</p>
+                            <p>{permanentAddress?.zip_code || '-'}</p>
                         </div>
                         <div>
                             <h4>Personal Contact</h4>
-                            <p>{permanentAddress.personal_contact_no || '-'}</p>
+                            <p>{permanentAddress?.personal_contact_no || '-'}</p>
                         </div>
                         <div>
                             <h4>Emergency Contact</h4>
-                            <p>{permanentAddress.emergency_contact_no || '-'}</p>
+                            <p>{permanentAddress?.emergency_contact_no || '-'}</p>
                         </div>
                         <div>
                             <h4>Personal Email</h4>
-                            <p>{permanentAddress.personal_email_id || '-'}</p>
+                            <p>{permanentAddress?.personal_email_id || '-'}</p>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     );
