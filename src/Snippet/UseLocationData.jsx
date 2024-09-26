@@ -6,25 +6,10 @@ const useLocationData = () => {
         countries: [],
         states: [],
         cities: [],
-        countryName:[]
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const fetchCountriesName = async (id) => {
-        try {
-            const response = await axios.post('https://devstronauts.com/public/api/getcountryname', {
-                country_id:id
-            });
-            const countryDataName = response.data.country[0].name;
-            console.log('countryDataName', countryDataName)
-            setLocationsapi((prev) => ({
-                ...prev,
-                countries: countryDataName,
-            }));
-        } catch (err) {
-            setError('Failed to fetch countries');
-        }
-    };
+   
     const fetchCountries = async () => {
         try {
             const response = await axios.post('https://devstronauts.com/public/api/getcountry',);
@@ -42,7 +27,7 @@ const useLocationData = () => {
     const fetchStates = async (id) => {
         try {
             const response = await axios.post('https://devstronauts.com/public/api/getstate', {
-                country_id: 11,
+                country_id: id,
             });
             // console.log('response', response)
             const stateData = response.data.country;
@@ -75,7 +60,6 @@ const useLocationData = () => {
             await fetchCountries();
             await fetchStates()
             await fetchCities()
-            await fetchCountriesName()
             setLoading(false);
         };
         loadData();
@@ -87,7 +71,6 @@ const useLocationData = () => {
         fetchCities,
         loading,
         error,
-        fetchCountriesName
     };
 };
 

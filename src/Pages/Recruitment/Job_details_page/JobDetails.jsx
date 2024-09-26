@@ -148,7 +148,7 @@ const JobDetails = () => {
                         <div className="about_user">
                             <h3>{jobData.job_title}</h3>
                             <p>{jobData.department}</p>
-                            <div><h4></h4> <h5>{jobData.job_status}</h5></div>
+                            <div><h4></h4><h5>{jobData.job_status}</h5></div>
 
                         </div>
                     </div>

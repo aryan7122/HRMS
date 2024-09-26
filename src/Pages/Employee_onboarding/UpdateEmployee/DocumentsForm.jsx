@@ -14,7 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from 'react-router-dom';
 
-const DocumentsForm = ({ onSubmit, }) => {
+const DocumentsForm = ({ onSubmit, update }) => {
     const [educationForms, setEducationForms] = useState([
         {
             documentType: '',
@@ -46,19 +46,18 @@ const DocumentsForm = ({ onSubmit, }) => {
             })
                 .then(response => {
                     const data = response.data.result.documents;
-
                     console.log('documents data', data);
-
-                    if (data && data.length > 0) {
-                        setAllDocumentsData({
-                            documents: data.map(doc => ({
-                                document_name: doc.document_name || '',
-                                document_id: doc.document_id || '',
-                                attachment_1: doc.attachment_1 || '',
-                                attachment_2: doc.attachment_2 || ''
-                            }))
-                        });
-                    }
+                    
+                    // if (data && data.length > 0) {
+                    //     setAllDocumentsData({
+                        //         documents: data.map(doc => ({
+                            //             document_name: doc.document_name || '',
+                            //             document_id: doc.document_id || '',
+                            //             attachment_1: doc.attachment_1 || '',
+                    //             attachment_2: doc.attachment_2 || ''
+                    //         }))
+                    //     });
+                    // }
                 })
                 .catch(error => {
                     console.error("Error fetching documents:", error);
@@ -73,9 +72,10 @@ const DocumentsForm = ({ onSubmit, }) => {
                         theme: "light",
                     });
                 });
-        }
-    }, [id, token]);
-
+            }
+        }, [id, token]);
+        
+        // update(allDocumentsData)
     // select
     const [selectedDocuments, setSelectedDocuments] = useState([]);
     // console.log('selectedDocuments', selectedDocuments)

@@ -381,7 +381,7 @@ const DesignationDetails = () => {
                         </span>Designation Information</h3></div>
                         <div className='contentInformation'>
                             <div>
-                                <h4>description</h4>
+                                <h4>Designation</h4>
                                 <p>{designationDetails.designation_name}</p>
                             </div>
 

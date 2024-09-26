@@ -43,7 +43,36 @@ const Department = () => {
     ]);
     const token = localStorage.getItem('access_token');
 
+// 
+    const [departmentHead, setDepartmentHead] = useState([]);
+    console.log('departmentHead❗', departmentHead)
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/employee/list', {
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                const employees = response.data.result; // API se result array
 
+                // Department heads ko extract karo
+                const departmentHeads = employees
+                    .map(emp => `${emp.first_name} ${emp.last_name}`); // Full name bana rahe hain
+
+                setDepartmentHead(departmentHeads); // Department heads ko store kar rahe hain
+                console.log('Department Heads:❗', employees);
+
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                setLoading(false);
+            });
+    }, []);
+
+    
+// 
 
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
@@ -55,7 +84,6 @@ const Department = () => {
     const [isOpen, setIsOpen] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const [selectedDepartmentDetails, setSelectedDepartmentDetails] = useState(null);
-
     console.log(selectedDepartment)
     const navigate = useNavigate();
     const handleHidImport = () => {
@@ -696,7 +724,7 @@ const Department = () => {
                                                         onChange={handleSearchQueryChangeDepartment2}
                                                     />
                                                     <div className="dropdown_I">
-                                                        {['Arman Singh', 'Akash Shinde', 'Rajat Munde', 'Priya Patel', 'Niharika Rao'].filter(option =>
+                                                        {departmentHead.filter(option =>
                                                             option.toLowerCase().includes(searchQueryDepartment2.toLowerCase())
                                                         ).map(option => (
                                                             <div className="dropdown-item" onClick={() => selectOption('departmentHead_2', option)} key={option}>

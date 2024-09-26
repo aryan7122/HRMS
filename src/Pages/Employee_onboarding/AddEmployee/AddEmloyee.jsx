@@ -36,7 +36,8 @@ const AddEmployee = () => {
             employment_type: formData.employmentType || '',
             employee_status: formData.employeeStatus || '',
             source_of_hire: formData.sourceOfHire || '',
-            image: formData.photo || '',
+            image: formData.photo || '', //
+            experience: formData.employeeId || '',
             contacts: [
                 {
                     address_type: "Present",

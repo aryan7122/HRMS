@@ -25,9 +25,33 @@ const EmployeeDetails = () => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [rotationAngle, setRotationAngle] = useState(0); // Starting angle 10
 
     const [employeeData, setEmployeeData] = useState(null); // To store the employee details from API
     const [employeeData2, setEmployeeData2] = useState(null); // To store the employee details from API
+    console.log('experience employeeData', employeeData)
+    useEffect(() => {
+        // const totalFields = Object.keys(employeeData).length; // Total fields count
+        // const filledFields = Object.values(employeeData).filter(value => value !== null && value !== '').length; // Filled fields count
+
+        // // Calculate percentage
+        // const filledPercentage = (filledFields / totalFields) * 100;
+        // setRotationAngle(filledPercentage)
+        // console.log(`Filled fields 🗑️: ${filledFields}/${totalFields}, Percentage: ${filledPercentage.toFixed(2)}%`);
+
+    }, [employeeData])
+    useEffect(() => {
+        if (employeeData && Object.keys(employeeData).length > 0) {
+            // Check if employeeData exists and is not empty
+            const totalFields = Object.keys(employeeData).length; // Total fields count
+            const filledFields = Object.values(employeeData).filter(value => value !== null && value !== '').length; // Filled fields count
+
+            // Calculate percentage
+            const filledPercentage = (filledFields / totalFields) * 100;
+            setRotationAngle(filledPercentage+15);
+            console.log(`Filled fields: ${filledFields}/${totalFields}, Percentage: ${filledPercentage.toFixed(2)}%`);
+        }
+    }, [employeeData]);
 
     useEffect(() => {
         setLoading(true)
@@ -42,8 +66,11 @@ const EmployeeDetails = () => {
                 .then(response => {
                     setEmployeeData(response.data.result.employee[0]); // Store API data
                     setEmployeeData2(response.data.result); // Store API data
+                    // Calculate filled fields percentage
 
-                    console.log('response', response)
+                    
+                    console.log('response ....', response)
+
                     // toast.success(response.data.message, {
                     //     position: "top-right",
                     //     autoClose: 3000,
@@ -143,6 +170,10 @@ const EmployeeDetails = () => {
         return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
     }
 
+
+    // if (employeeData) {
+       
+    // }
     return (
         <div className="profile-page">
             <ToastContainer
@@ -186,13 +217,13 @@ const EmployeeDetails = () => {
                 </div>
                 <div className="profile_card">
                     <div className="img_card">
-                        <div className="progress-circle" >
+                        <div className="progress-circle" style={{ "--angle": `${rotationAngle}%` }}>
                             <img src="https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg" alt="" />
                         </div>
                         <div className="about_user">
                             <h3>{employeeData.first_name + ' ' + employeeData.last_name || ''}</h3>
                             <p>Web Developer / Full-Time</p>
-                            <div><h4></h4> <h5>{employeeData.employee_status}</h5></div>
+                            <div><h4></h4><h5>{employeeData.employee_status}</h5></div>
                         </div>
                     </div>
                     <div className="action_card">

@@ -283,7 +283,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Contact Number</label>
+                            <label className='starred'>Contact Number</label>
                             <input
                                 type="text"
                                 placeholder="Enter contact number"

@@ -62,7 +62,7 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
                     // console.log('data', data.employee[0])
 
                     setFormData({
-                        employeeId: data.employee[0].employee_id || '',
+                        employeeId: data.employee[0].experience || '',
                         firstName: data.first_name || '',
                         lastName: data.last_name || '',
                         photo: data.employee[0].image || '',
@@ -102,7 +102,7 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
         }
         update(formData)
     }, [id, token]);  // token and id dependancy
-
+    
     const [searchQuery_2, setSearchQuery_2] = useState('');
     const handleSearchQueryChange_2 = (event) => {
         setSearchQuery_2(event.target.value);
@@ -285,7 +285,7 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Contact Number</label>
+                            <label className='starred'>Contact Number</label>
                             <input
                                 type="number"
                                 placeholder="Enter contact number"
