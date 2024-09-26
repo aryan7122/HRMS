@@ -50,7 +50,7 @@ const DocumentsForm = ({ onSubmit, update }) => {
             }
         ]
     });
-    console.log('allDocumentsData', allDocumentsData)
+    console.log('educationForms', educationForms)
     const { id } = useParams();
     const token = localStorage.getItem('access_token');
     useEffect(() => {
@@ -64,7 +64,7 @@ const DocumentsForm = ({ onSubmit, update }) => {
             })
                 .then(response => {
                     const data = response.data.result.documents;
-                    console.log('documents data', data);
+                    // console.log('documents data', data);
 
                     if (data && data.length > 0) {
                         setAllDocumentsData({
@@ -75,6 +75,14 @@ const DocumentsForm = ({ onSubmit, update }) => {
                                 attachment_2: doc.attachment_2 || ''
                             }))
                         });
+                        if (data && data.length > 0) {
+                            setEducationForms(data.map(doc => ({
+                                documentType: doc.document_name || '',
+                                number: doc.document_id || '',
+                                attachmentFront: doc.attachment_1 || '',
+                                attachmentBack: doc.attachment_2 || ''
+                            })));
+                        }
                     }
                 })
                 .catch(error => {
@@ -242,7 +250,7 @@ const DocumentsForm = ({ onSubmit, update }) => {
                         <div className="from1">
                             {form.documentType === '' && (
                                 <>
-
+                                    {console.log('form form: ', form)}
                                     <div className="form-group">
                                         <label> Document Name </label>
                                         <div className="dropdown">
@@ -585,7 +593,6 @@ const DocumentsForm = ({ onSubmit, update }) => {
                                     </div>
                                 </>
                             )}
-
                         </div>
                     </div>
                 ))}

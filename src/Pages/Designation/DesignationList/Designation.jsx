@@ -564,6 +564,16 @@ const Designation = () => {
                             <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
                         </div> // Show loading text or spinner when data is being fetched
                     ) : ('')}
+                    {employees == '' ? (
+                        <div id="">
+                            {/* <img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /> */}
+                            <div className="not-found-container">
+                                <img src="https://cdn.dribbble.com/userupload/11708150/file/original-825be68b3517931ad747e0180a4116d3.png?resize=1200x900" alt="" />
+                                <h1 className="grey-text">Data Not Found</h1>
+                                <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
+                            </div>
+                        </div>
+                    ) : ('')}
                     {showPopup && (
                         <div className="popup-overlay">
                             <div className="popup-content">

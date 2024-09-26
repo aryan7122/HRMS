@@ -28,6 +28,8 @@ const AllEmployeeList = () => {
     // const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick4();
     // 
+    const [error, setError] = useState(false);
+
     const [loading, setLoading] = useState(true);
     const [sms, setSms] = useState('')
     const [statusId, setStatusId] = useState('')
@@ -51,6 +53,7 @@ const AllEmployeeList = () => {
         // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "manish.jain@example.com", phone: "+917555639758", department: "HSEQ", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
         // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "neha.patel@example.com", phone: "+919655516575", department: "IT", dateOfJoining: "16-May-2024", status: "Notice Period", isChecked: false }
     ]);
+    console.log('employees', employees)
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -212,7 +215,7 @@ const AllEmployeeList = () => {
     // 
     const [employmentType, setEmploymentType] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
-    
+
     const handleDateChange = (event) => {
         const date = new Date(event.target.value);
         // Format the date as yyyy/MM/dd
@@ -256,10 +259,11 @@ const AllEmployeeList = () => {
                 // setDepartmentdetails2(response.data.result.department_id)
                 setLoading(false);
                 // setSms()
+                setError(false)
             })
             .catch(error => {
                 console.error("Error fetching data: ", error);
-
+                setError(true)
 
             });
     }, [statusId, statusNew, token, sms, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId]);
@@ -350,6 +354,14 @@ const AllEmployeeList = () => {
         setIsOpen(null);
         setSms('')
     };
+
+
+
+
+    if (error || !employees) {
+        // return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
+    }
+
 
     return (
         <div id='allEmp'>
@@ -745,6 +757,13 @@ const AllEmployeeList = () => {
                         <div id='Loading'>
                             <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
                         </div> // Show loading text or spinner when data is being fetched
+                    ) : ('')}
+                    {employees == '' ? (
+                        <div className="not-found-container">
+                            <img src="https://cdn.dribbble.com/userupload/11708150/file/original-825be68b3517931ad747e0180a4116d3.png?resize=1200x900" alt="" />
+                            <h1 className="grey-text">Data Not Found</h1>
+                            <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
+                        </div>
                     ) : ('')}
                 </div>
                 <div className="pagination">
