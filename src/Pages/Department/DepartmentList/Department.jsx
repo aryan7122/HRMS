@@ -696,7 +696,7 @@ const Department = () => {
                                                         onChange={handleSearchQueryChangeDepartment}
                                                     />
                                                     <div className="dropdown_I">
-                                                        {['Management', 'Development', 'HR', 'Sales', 'Finance'].filter(option =>
+                                                        {['Management','HR', 'Sales', 'IT'].filter(option =>
                                                             option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
                                                         ).map(option => (
                                                             <div className="dropdown-item" onClick={() => selectOption('parentDepartment_2', option)} key={option}>

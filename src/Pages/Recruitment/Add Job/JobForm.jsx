@@ -230,9 +230,11 @@ const JobForm = ({ onSubmit }) => {
     const employmentTypeOptions = [
       'Permanent', 'On Contract', 'Intern', 'Trainee'
     ];
+
+    // skill
     const requiredSkillsOptions = [
         'Communication Skills', 'Software Development', 'Leadership Skills', 'Team Collaboration',
-        'Problem Solving', 'Project Management', 'Data Analysis', 'PHP', 'Java', 'Laravel',
+        'Project Management', 'Data Analysis', 'PHP', 'Java', 'Laravel',
         'JavaScript', 'React.js', 'Node.js', 'Python', 'Machine Learning', 'Artificial Intelligence',
         'DevOps', 'Cloud Computing', 'AWS', 'Azure', 'Docker', 'Kubernetes', 'MySQL', 'MongoDB',
         'HTML', 'CSS', 'TypeScript', 'REST API', 'GraphQL', 'Version Control', 'Git', 'Agile Methodology',
@@ -242,7 +244,7 @@ const JobForm = ({ onSubmit }) => {
         'SQL', 'NoSQL', 'Blockchain', 'Web3', 'Mobile Development', 'Flutter', 'Android Development',
         'iOS Development', 'Swift', 'Kotlin', 'Automation', 'Pandas', 'NumPy', 'TensorFlow', 'PyTorch',
         'Database Management', 'Backend Development', 'Frontend Development', 'API Integration', 'Microservices',
-        'Problem Solving', 'Team Leadership', 'Public Speaking', 'Conflict Resolution', 'Strategic Thinking'
+         'Team Leadership', 'Public Speaking', 'Conflict Resolution', 'Strategic Thinking'
     ];
 
 
@@ -255,22 +257,15 @@ const JobForm = ({ onSubmit }) => {
     const removeSkill = (skillToRemove) => {
         setSelectedSkills(prevState => prevState.filter(skill => skill !== skillToRemove));
     };
-   
-   
-
-   
-
-    // const selectOption = (skill) => {
-    //     if (!selectedSkills.includes(skill)) {
-    //         setSelectedSkills(prevState => [...prevState, skill]);
-    //     }
-    //     setRequiredSkillsOpen(false);
-    //     setSearchQueryRequiredSkills('');  // Clear search query after selecting
-    // };
-
-   
-    // filter search
-
+    //    
+    const addNewSkill = () => {
+        const newSkill = searchQueryRequiredSkills.trim();
+        if (newSkill && !selectedSkills.includes(newSkill) && !requiredSkillsOptions.includes(newSkill)) {
+            setSelectedSkills(prevState => [...prevState, newSkill]);
+            setSearchQueryRequiredSkills(''); // Clear the input after adding
+        }
+    };
+// skill
     return (
         <>
             <div className="" onSubmit={onSubmit}>
@@ -538,10 +533,9 @@ const JobForm = ({ onSubmit }) => {
                                     ))} */}
                                 </div>
 
-                                <div className="dropdown">
+                                {/* <div className="dropdown">
                                     <div id='dropdown_buttonSkill' className="dropdown-button" ref={requiredSkillsButtonRef} onClick={toggleRequiredSkills}>
                                         <div id='requiredSkillsSelect'>
-                                            {/* Show selected skills or placeholder */}
                                             {selectedSkills.length > 0 ? (
                                                 selectedSkills.map((skill, index) => (
                                                     <div key={skill + index}  className="skill-chip">
@@ -581,7 +575,62 @@ const JobForm = ({ onSubmit }) => {
                                             </div>
                                         </div>
                                     )}
+                                </div> */}
+                                
+
+
+
+                                <div className="dropdown">
+                                    <div id='dropdown_buttonSkill' className="dropdown-button" ref={requiredSkillsButtonRef} onClick={toggleRequiredSkills}>
+                                        <div id='requiredSkillsSelect'>
+                                            {selectedSkills.length > 0 ? (
+                                                selectedSkills.map((skill, index) => (
+                                                    <div key={skill + index} className="skill-chip">
+                                                        <span onClick={() => removeSkill(skill)}>×</span> {skill}
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                "Select Required Skills"
+                                            )}
+                                        </div>
+                                        <span id='toggle_selectIcon'>
+                                            {!isRequiredSkills ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                        </span>
+                                    </div>
+
+                                    {isRequiredSkills && (
+                                        <div className="dropdown-menu" ref={requiredSkillsRef}>
+                                            <input
+                                                type="search"
+                                                className='search22'
+                                                id='searchDepartmentHead'
+                                                placeholder="Search skills"
+                                                value={searchQueryRequiredSkills}
+                                                onChange={handleSearchQueryChangeRequiredSkills}
+                                            />
+                                            <div className="dropdown_I">
+                                                {filteredRequiredSkillsOptions.map(option => (
+                                                    <div
+                                                        key={option}
+                                                        className="dropdown-item"
+                                                        onClick={() => handleSkillSelection('requiredSkills', option)}
+                                                    >
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                                {/* If no skills match, show an option to add a new skill */}
+                                                {filteredRequiredSkillsOptions.length === 0 && searchQueryRequiredSkills && (
+                                                    <div className="dropdown-item add-new-skill" onClick={addNewSkill}>
+                                                        +  "{searchQueryRequiredSkills}"
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
+
+
+
                             </div>
                         </div>
                         <div id='Description' className='DescriptionJob'>
