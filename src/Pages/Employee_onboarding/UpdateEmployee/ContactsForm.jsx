@@ -77,9 +77,12 @@ const ContactsForm = ({ onSubmit, next, update }) => {
                     setNumberInput(false)
                     setFormData({
                         // Present Address Data
-                        country: presentAddress.country.name || '',
-                        state: presentAddress.state.name || '',
-                        city: presentAddress.city.name || '',
+                        countryId: presentAddress.country_id || '',
+                        country: presentAddress?.country?.name || '',
+                        stateId: presentAddress.state_id || '',
+                        state: presentAddress?.state?.name || '',
+                        cityId: presentAddress.city_id || '',
+                        city: presentAddress?.city?.name || '',
                         street1: presentAddress.street_1 || '',
                         street2: presentAddress.street_2 || '',
                         zipCode: presentAddress.zip_code || '',
@@ -88,9 +91,12 @@ const ContactsForm = ({ onSubmit, next, update }) => {
                         personalEmail: presentAddress.personal_email_id || '',
 
                         // Permanent Address Data
-                        permanentCountry: permanentAddress.country.name || '',
-                        permanentState: permanentAddress.state.name || '',
-                        permanentCity: permanentAddress.city.name || '',
+                        p_countryId: permanentAddress.country_id || '',
+                        p_stateId: permanentAddress.state_id || '',
+                        p_cityId: permanentAddress.city_id || '',
+                        permanentCountry: permanentAddress?.country?.name || '',
+                        permanentState: permanentAddress?.state?.name || '',
+                        permanentCity: permanentAddress?.city?.name || '',
                         permanentStreet1: permanentAddress.street_1 || '',
                         permanentStreet2: permanentAddress.street_2 || '',
                         permanentZipCode: permanentAddress.zip_code || '',
@@ -115,7 +121,7 @@ const ContactsForm = ({ onSubmit, next, update }) => {
                     });
                 });
         }
-    },[id, token]);
+    }, [id, token]);
    
 
     console.log('locationsapi', locationsapi)

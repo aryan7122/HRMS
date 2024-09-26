@@ -59,9 +59,9 @@ const UpdateEmployee = () => {
                     street_1: formData.permanentStreet1 || '',
                     street_2: formData.permanentStreet2 || '',
                     zip_code: formData.permanentZipCode || '',
-                    city_id: formData.p_stateId || '',
+                    city_id: formData.p_cityId || '',
                     state_id: formData.p_stateId || '',
-                    country_id: formData.p_cityId || '',
+                    country_id: formData.p_countryId || '',
                     personal_contact_no: formData.permanentPersonalContactNumber || '',
                     emergency_contact_no: formData.permanentEmergencyContactNumber || '',
                     personal_email_id: formData.permanentPersonalEmail || '',
@@ -87,6 +87,9 @@ const UpdateEmployee = () => {
         setFormData(updatedData); // Update state
         formDataRef.current = updatedData; // Keep ref in sync
         // 
+        const formDataApi = prepareFormData(updatedData);
+        console.log('formDataApi❗', formDataApi);
+
         const currentForm = formNames[activeFormIndex];
         setFilledForms((prevState) => ({
             ...prevState,
@@ -95,14 +98,14 @@ const UpdateEmployee = () => {
         setActiveFormIndex(activeFormIndex + 1);
 
     };
-
+    
     const handleFormData = async (newData) => {
         const updatedData = { ...formDataRef.current, ...newData };
         setFormData(updatedData);
         formDataRef.current = updatedData;
-
+        
         const formDataApi = prepareFormData(updatedData);
-        // console.log('formDataApi❗', formDataApi);
+        console.log('formDataApi❗', formDataApi);
 
         setLoading(true);
 
@@ -113,7 +116,7 @@ const UpdateEmployee = () => {
         if (id && token && formDataApi) {
             try {
                 // console.log("Request URL: ", url);
-                console.log("Request Body: ", formDataApi);
+                // console.log("Request Body: ", formDataApi);
 
                 const response = await axios.post('https://devstronauts.com/public/api/employee/create/update',
                     formDataApi
