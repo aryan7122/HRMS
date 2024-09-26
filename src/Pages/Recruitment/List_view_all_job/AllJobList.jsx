@@ -237,6 +237,7 @@ const AllJobList = () => {
         setRowsPerPage(10);
         setSelectedDate(null)
         setSelectedFilter(null)
+        setSelectedDepartmentId(null)
     };
     // 
     const [showFilter, setShowFilter] = useState(false);
@@ -295,6 +296,13 @@ const AllJobList = () => {
         const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
         setSelectedDate(formattedDate);
     };
+
+
+    const [selectedDepartmentId, setSelectedDepartmentId] = useState(''); // State to store selected department
+
+    const handleDepartmentChange = (event) => {
+        setSelectedDepartmentId(event.target.value); // Update state on radio button change
+    };
     // H
 
     // console.log('updateId', statusId)
@@ -312,6 +320,7 @@ const AllJobList = () => {
             search: searchQuery,
             job_status: selectedFilter,
             employee_type: employmentType,
+            department_id: selectedDepartmentId,
             custom_date: selectedDate,
         }, {
             headers: {
@@ -331,8 +340,8 @@ const AllJobList = () => {
                 console.error("Error fetching data: ", error);
 
 
+            }, [statusId, statusNew, token, sms, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId]);
             });
-    }, [statusId, statusNew, token, sms, searchQuery, selectedFilter, employmentType, selectedDate]);
     // update status
 
 
@@ -627,26 +636,62 @@ const AllJobList = () => {
                                             <div className="dropdown-content">
                                                 <ul>
                                                     <li>
-                                                        <input type="radio" id="all-department" name="department" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="all-department"
+                                                            name="department"
+                                                            value=" " // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
                                                         <label htmlFor="all-department">All Department</label>
                                                     </li>
                                                     <li>
-                                                        <input type="radio" id="it" name="department" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="it"
+                                                            name="department"
+                                                            value="IT" // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
                                                         <label htmlFor="it">IT</label>
                                                     </li>
                                                     <li>
-                                                        <input type="radio" id="hr" name="department" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="hr"
+                                                            name="department"
+                                                            value="HR" // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
                                                         <label htmlFor="hr">HR</label>
                                                     </li>
                                                     <li>
-                                                        <input type="radio" id="sales" name="department" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="sales"
+                                                            name="department"
+                                                            value="Sales" // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
                                                         <label htmlFor="sales">Sales</label>
                                                     </li>
                                                     <li>
-                                                        <input type="radio" id="management" name="department" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="management"
+                                                            name="department"
+                                                            value="Management" // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
                                                         <label htmlFor="management">Management</label>
                                                     </li>
                                                 </ul>
+
                                             </div>
                                         )}
                                     </div>

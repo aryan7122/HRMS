@@ -308,7 +308,13 @@ const JobUpdateForm = ({ onSubmit }) => {
         setSelectedSkills(prevState => prevState.filter(skill => skill !== skillToRemove));
     };
 
-
+    const addNewSkill = () => {
+        const newSkill = searchQueryRequiredSkills.trim();
+        if (newSkill && !selectedSkills.includes(newSkill) && !requiredSkillsOptions.includes(newSkill)) {
+            setSelectedSkills(prevState => [...prevState, newSkill]);
+            setSearchQueryRequiredSkills(''); // Clear the input after adding
+        }
+    };
     // filter search
 
     return (
@@ -574,32 +580,22 @@ const JobUpdateForm = ({ onSubmit }) => {
                                     ))} */}
                                 </div>
 
+
+
+
                                 <div className="dropdown">
                                     <div id='dropdown_buttonSkill' className="dropdown-button" ref={requiredSkillsButtonRef} onClick={toggleRequiredSkills}>
                                         <div id='requiredSkillsSelect'>
-                                            {/* Show selected skills or placeholder */}
-                                            {
-                                                formData.requiredSkills.length > 0 ?
-                                                    selectedSkills.map((skill, index) => (
-                                                        <div key={skill + index} className="skill-chip">
-                                                            <span onClick={() => removeSkill(skill)}>×</span>  {skill}
-                                                        </div>
-                                                    ))
-                                                    :
-                                                    <>
-                                                        {selectedSkills.length > 0 ? (
-                                                            selectedSkills.map((skill, index) => (
-                                                                <div key={skill + index} className="skill-chip">
-                                                                    <span onClick={() => removeSkill(skill)}>×</span>  {skill}
-                                                                </div>
-                                                            ))
-                                                        ) : (
-                                                            "Select Required Skills"
-                                                        )}
-                                                    </>
-                                            }
+                                            {selectedSkills.length > 0 ? (
+                                                selectedSkills.map((skill, index) => (
+                                                    <div key={skill + index} className="skill-chip">
+                                                        <span onClick={() => removeSkill(skill)}>×</span> {skill}
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                "Select Required Skills"
+                                            )}
                                         </div>
-
                                         <span id='toggle_selectIcon'>
                                             {!isRequiredSkills ? <IoIosArrowDown /> : <IoIosArrowUp />}
                                         </span>
@@ -625,10 +621,17 @@ const JobUpdateForm = ({ onSubmit }) => {
                                                         {option}
                                                     </div>
                                                 ))}
+                                                {/* If no skills match, show an option to add a new skill */}
+                                                {filteredRequiredSkillsOptions.length === 0 && searchQueryRequiredSkills && (
+                                                    <div className="dropdown-item add-new-skill" onClick={addNewSkill}>
+                                                        +  "{searchQueryRequiredSkills}"
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     )}
                                 </div>
+
                             </div>
 
                         </div>

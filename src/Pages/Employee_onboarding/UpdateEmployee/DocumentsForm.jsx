@@ -15,6 +15,23 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from 'react-router-dom';
 
 const DocumentsForm = ({ onSubmit, update }) => {
+    const [selectedDocuments, setSelectedDocuments] = useState([]);
+    // console.log('selectedDocuments', selectedDocuments)
+    const [fileName, setFileName] = useState('');
+
+    const { isOpen: isEmploymentTypeOpen, ref: employmentTypeRef, buttonRef: employmentTypeButtonRef, handleToggle: toggleEmploymentType, setIsOpen: setEmploymentTypeOpen } = OutsideClick();
+    const { isOpen: isEmploymentTypeOpen2, ref: employmentTypeRef2, buttonRef: employmentTypeButtonRef2, handleToggle: toggleEmploymentType2, setIsOpen: setEmploymentTypeOpen2 } = OutsideClick();
+    const { isOpen: isEmploymentTypeOpen1, ref: employmentTypeRef1, buttonRef: employmentTypeButtonRef1, handleToggle: toggleEmploymentType1, setIsOpen: setEmploymentTypeOpen1 } = OutsideClick();
+
+    const { isOpen: isEmploymentTypeOpen3, ref: employmentTypeRef3, buttonRef: employmentTypeButtonRef3, handleToggle: toggleEmploymentType3, setIsOpen: setEmploymentTypeOpen3 } = OutsideClick();
+    const { isOpen: isEmploymentTypeOpen4, ref: employmentTypeRef4, buttonRef: employmentTypeButtonRef4, handleToggle: toggleEmploymentType4, setIsOpen: setEmploymentTypeOpen4 } = OutsideClick();
+    const { isOpen: isEmploymentTypeOpen5, ref: employmentTypeRef5, buttonRef: employmentTypeButtonRef5, handleToggle: toggleEmploymentType5, setIsOpen: setEmploymentTypeOpen5 } = OutsideClick();
+
+    const [isUploaded, setIsUploaded] = useState(false);
+
+    const [searchQueryEmploymentType, setSearchQueryEmploymentType] = useState('');
+    const handleSearchQueryChangeEmploymentType = (e) => setSearchQueryEmploymentType(e.target.value);
+    // 
     const [educationForms, setEducationForms] = useState([
         {
             documentType: '',
@@ -33,6 +50,7 @@ const DocumentsForm = ({ onSubmit, update }) => {
             }
         ]
     });
+    console.log('allDocumentsData', allDocumentsData)
     const { id } = useParams();
     const token = localStorage.getItem('access_token');
     useEffect(() => {
@@ -47,17 +65,17 @@ const DocumentsForm = ({ onSubmit, update }) => {
                 .then(response => {
                     const data = response.data.result.documents;
                     console.log('documents data', data);
-                    
-                    // if (data && data.length > 0) {
-                    //     setAllDocumentsData({
-                        //         documents: data.map(doc => ({
-                            //             document_name: doc.document_name || '',
-                            //             document_id: doc.document_id || '',
-                            //             attachment_1: doc.attachment_1 || '',
-                    //             attachment_2: doc.attachment_2 || ''
-                    //         }))
-                    //     });
-                    // }
+
+                    if (data && data.length > 0) {
+                        setAllDocumentsData({
+                            documents: data.map(doc => ({
+                                document_name: doc.document_name || '',
+                                document_id: doc.document_id || '',
+                                attachment_1: doc.attachment_1 || '',
+                                attachment_2: doc.attachment_2 || ''
+                            }))
+                        });
+                    }
                 })
                 .catch(error => {
                     console.error("Error fetching documents:", error);
@@ -72,28 +90,13 @@ const DocumentsForm = ({ onSubmit, update }) => {
                         theme: "light",
                     });
                 });
-            }
-        }, [id, token]);
-        
-        // update(allDocumentsData)
+        }
+    }, [id, token]);
+
+    // update(allDocumentsData)
     // select
-    const [selectedDocuments, setSelectedDocuments] = useState([]);
-    // console.log('selectedDocuments', selectedDocuments)
-    const [fileName, setFileName] = useState('');
-
-    const { isOpen: isEmploymentTypeOpen, ref: employmentTypeRef, buttonRef: employmentTypeButtonRef, handleToggle: toggleEmploymentType, setIsOpen: setEmploymentTypeOpen } = OutsideClick();
-    const { isOpen: isEmploymentTypeOpen2, ref: employmentTypeRef2, buttonRef: employmentTypeButtonRef2, handleToggle: toggleEmploymentType2, setIsOpen: setEmploymentTypeOpen2 } = OutsideClick();
-    const { isOpen: isEmploymentTypeOpen1, ref: employmentTypeRef1, buttonRef: employmentTypeButtonRef1, handleToggle: toggleEmploymentType1, setIsOpen: setEmploymentTypeOpen1 } = OutsideClick();
-
-    const { isOpen: isEmploymentTypeOpen3, ref: employmentTypeRef3, buttonRef: employmentTypeButtonRef3, handleToggle: toggleEmploymentType3, setIsOpen: setEmploymentTypeOpen3 } = OutsideClick();
-    const { isOpen: isEmploymentTypeOpen4, ref: employmentTypeRef4, buttonRef: employmentTypeButtonRef4, handleToggle: toggleEmploymentType4, setIsOpen: setEmploymentTypeOpen4 } = OutsideClick();
-    const { isOpen: isEmploymentTypeOpen5, ref: employmentTypeRef5, buttonRef: employmentTypeButtonRef5, handleToggle: toggleEmploymentType5, setIsOpen: setEmploymentTypeOpen5 } = OutsideClick();
-
-    const [searchQueryEmploymentType, setSearchQueryEmploymentType] = useState('');
-    const handleSearchQueryChangeEmploymentType = (e) => setSearchQueryEmploymentType(e.target.value);
-    // 
+ 
     // img
-    const [isUploaded, setIsUploaded] = useState(false);
     const handleFileChange = (index, event, type) => {
         const file = event.target.files[0];
         if (file) {
@@ -195,11 +198,15 @@ const DocumentsForm = ({ onSubmit, update }) => {
 
     // 
 
+
     const documentOptions = ['Aadhaar', 'PAN', 'UAN', 'Other'];
-    
+
     return (
         <div id="Education_form">
             <form onSubmit={handleSubmit}>
+                {/*  */}
+                
+                {/*  */}
                 {educationForms.map((form, index) => (
                     <div key={index} id='form'>
                         <div className='div_heading add_exp'>
@@ -302,7 +309,6 @@ const DocumentsForm = ({ onSubmit, update }) => {
                                     </div>
                                 </>
                             )}
-
                             {form.documentType === 'Aadhaar' && (
                                 <>
                                     <div className="form-group">
@@ -384,7 +390,6 @@ const DocumentsForm = ({ onSubmit, update }) => {
                                     </div>
                                 </>
                             )}
-
                             {form.documentType === 'PAN' && (
                                 <>
                                     <div className="form-group">
