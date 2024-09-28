@@ -237,26 +237,37 @@ const AllJobList = () => {
         setSelectedDate(null)
         setSelectedFilter(null)
         setSelectedDepartmentId(null)
+        setFromDate(null)
+        setToDate(null)
     };
     // 
     const [showFilter, setShowFilter] = useState(false);
     const [showCustomDate, setShowCustomDate] = useState(false);
     const [showEmploymentType, setShowEmploymentType] = useState(false);
     const [showDepartment, setShowDepartment] = useState(false);
+    const [showDateRange, setShowDateRange] = useState(false)
 
     const showFilterHandle = () => {
         setShowFilter(!showFilter)
+    }
+
+    const handleDateRangeClick = () => {
+        setShowDateRange(!showDateRange)
+        setShowCustomDate(false);
+        setShowEmploymentType(false)
     }
     const handleCustomDateClick = () => {
         setShowCustomDate(!showCustomDate);
         setShowEmploymentType(false);
         setShowDepartment(false);
+        setShowDateRange(false)
     };
 
     const handleEmploymentTypeClick = () => {
         setShowEmploymentType(!showEmploymentType);
         setShowCustomDate(false);
         setShowDepartment(false);
+        setShowDateRange(false)
     };
 
     const handleDepartmentClick = () => {
@@ -315,6 +326,25 @@ const AllJobList = () => {
         console.log('Selected Employment Type:', event.target.value); // Debugging purpose
         // toggleFilter()
     };
+
+
+    const [fromDate, setFromDate] = useState(null);
+    const [toDate, setToDate] = useState(null);
+
+    // Function to handle the date change and format it to yyyy/mm/dd
+    const handleFromDateChange = (event) => {
+
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setFromDate(formattedDate);
+    };
+    const handleToDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setToDate(formattedDate);
+    };
     // api get6 list
     const token = localStorage.getItem('access_token');
 
@@ -324,6 +354,8 @@ const AllJobList = () => {
             job_status: selectedFilter,
             employee_type: employmentType,
             custom_date: selectedDate,
+            fromDate: fromDate,
+            toDate: toDate
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -344,7 +376,7 @@ const AllJobList = () => {
 
             },
                 );
-    }, [statusId, statusNew, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId,sms]);
+    }, [statusId, statusNew, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId, sms, fromDate, toDate]);
 
     let isRequestInProgress = false;
 
@@ -648,69 +680,24 @@ const AllJobList = () => {
                                         )}
                                     </div>
                                     <div className="filter-option">
-                                        <p onClick={handleDepartmentClick}>Department {!showDepartment ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
-                                        {showDepartment && (
-                                            <div className="dropdown-content">
-                                                <ul>
-                                                    <li>
-                                                        <input
-                                                            type="radio"
-                                                            id="all-department"
-                                                            name="department"
-                                                            value=" " // Value to be stored
-                                                            className="custom-radio"
-                                                            onChange={handleDepartmentChange}
-                                                        />
-                                                        <label htmlFor="all-department">All Department</label>
-                                                    </li>
-                                                    <li>
-                                                        <input
-                                                            type="radio"
-                                                            id="it"
-                                                            name="department"
-                                                            value="IT" // Value to be stored
-                                                            className="custom-radio"
-                                                            onChange={handleDepartmentChange}
-                                                        />
-                                                        <label htmlFor="it">IT</label>
-                                                    </li>
-                                                    <li>
-                                                        <input
-                                                            type="radio"
-                                                            id="hr"
-                                                            name="department"
-                                                            value="HR" // Value to be stored
-                                                            className="custom-radio"
-                                                            onChange={handleDepartmentChange}
-                                                        />
-                                                        <label htmlFor="hr">HR</label>
-                                                    </li>
-                                                    <li>
-                                                        <input
-                                                            type="radio"
-                                                            id="sales"
-                                                            name="department"
-                                                            value="Sales" // Value to be stored
-                                                            className="custom-radio"
-                                                            onChange={handleDepartmentChange}
-                                                        />
-                                                        <label htmlFor="sales">Sales</label>
-                                                    </li>
-                                                    <li>
-                                                        <input
-                                                            type="radio"
-                                                            id="management"
-                                                            name="department"
-                                                            value="Management" // Value to be stored
-                                                            className="custom-radio"
-                                                            onChange={handleDepartmentChange}
-                                                        />
-                                                        <label htmlFor="management">Management</label>
-                                                    </li>
-                                                </ul>
-
+                                        <p onClick={handleDateRangeClick}>Date Range  {!showDateRange ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                        {showDateRange && (
+                                            <div >
+                                                <label id='daterange-contener'>From</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!fromDate ? 'Select Custom date' : fromDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleFromDateChange} />
+                                                </div>
+                                                <label id='daterange-contener'>To</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!toDate ? 'Select Custom date' : toDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleToDateChange} />
+                                                </div>
                                             </div>
                                         )}
+
                                     </div>
                                 </div>
                             </div>
