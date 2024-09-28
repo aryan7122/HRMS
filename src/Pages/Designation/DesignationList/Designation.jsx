@@ -374,7 +374,7 @@ const Designation = () => {
             .catch(error => {
                 console.error("Error fetching data: ", error);
             });
-    }, [searchQuery, selectedDate, fromDate, toDate, handleSubmitForm_3]);
+    }, [searchQuery, selectedDate, fromDate, toDate]);
 
     const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
 

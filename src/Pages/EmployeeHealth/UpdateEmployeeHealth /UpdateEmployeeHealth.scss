@@ -49,12 +49,11 @@
       align-items: center;
       justify-content: center;
       margin-top: 15px;
+      cursor: pointer !important;
+      z-index: 1;
       // overflow: hidden;
 
-    }
-    .close_nav:hover{
-      border: 1px solid red !important;
-      color: red !important;
+      // border: 1px solid red;
     }
     div {
       overflow: hidden;
@@ -295,15 +294,10 @@
     // border :1px solid red;
     // height: fit-content;
   }
-.titleForm_h3{
-      font-size: 17px ;
-      color: #2A2A2A;
-      margin-bottom: 10px;
-      // border: 1px solid red ;
-    }
+
   @media (max-width: 1215px) {
     form {
-      width: 100% !important;
+      width: 99% !important;
     }
   }
   @media (max-width: 1024px) {
@@ -321,8 +315,8 @@
       width: 100% !important;
     }
   }
-  form .FormDiv .from1 {
-    border: 1px solid red !important;
+  form .from1 {
+    // border: 1px solid red !important;
     // z-index: 1;
     // height: fit-content !important;
     // min-height: 210px;
@@ -336,7 +330,6 @@
     // gap: 5px;
     margin: 20px;
     // padding-right: 270px;
-    
     @media (max-width: 1250px) {
       padding-right: 0px;
     }
@@ -411,7 +404,6 @@
       //     }
 
       .custom-file-upload {
-        height: 20px !important;
         // border: 1px solid red;
         display: inline-block;
         padding: 6px 12px;
@@ -535,7 +527,7 @@
       // cursor: pointer;
     }
   }
-  form .FormDiv  .form2{
+  form  .form2{
   // border: 1px solid red !important;
   // height: 210px;
   // padding-bottom: 50px;
@@ -675,27 +667,36 @@
         display: none !important;
       }
 }
+input[type="checkbox"]:checked {
+    background-color: #400F6F !important;
+}
 
-.starred{
-  color:  red !important;
+.DescriptionJob{
+  width: 100%;
+  .form-group{
+    textarea{
+      height: 100px !important;
+    }
+  }
 }
 
 
-.input-container {
-    position: relative; /* Necessary for positioning the unit label */
-}
-
-.weight-input {
-    padding-right: 40px; /* Ensure enough space for 'KG' text */
-    width: 100%; /* Make input take the full width */
-}
-
-.unit-label {
-    // position: absolute;
-    // right: 10px; /* Adjust this value to set distance from the right */
-    // top: 50%; /* Center it vertically */
-    // transform: translateY(-50%); /* Center the label vertically */
-    color: #848383; /* Color of the label */
-    // pointer-events: none; /* Prevent clicks on the label */
-    margin-left: -30px;
+#checkbox{
+  // border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    input{
+      margin-right: 5px;
+    }
+    label{
+      margin-top: 5px;
+    }
+  }
+  
 }

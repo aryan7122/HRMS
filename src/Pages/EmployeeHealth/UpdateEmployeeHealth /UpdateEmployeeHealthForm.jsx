@@ -6,7 +6,7 @@ import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import './AddEmployeeHealthForm.scss'
+import './UpdateEmployeeHealthForm.scss'
 // import { useState } from 'react';
 import '../../Employee_onboarding/AddEmployee/NavbarForm.scss';
 // import { GrCloudUpload } from "react-icons/gr";
@@ -14,12 +14,12 @@ import '../../Employee_onboarding/AddEmployee/NavbarForm.scss';
 // import { CiCircleChevRight } from 'react-icons/ci'; // Ensure you have this icon
 import axios from 'axios';
 
-import './AddEmployeeHealthForm.scss'; // Update with the correct path if necessary
+// import './AddEmployeeHealthForm.scss'; // Update with the correct path if necessary
 import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const AddEmployeeHealthForm = ({ onSubmit }) => {
+const UpdateEmployeeHealthForm = ({ onSubmit }) => {
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick();
     const { isOpen: isGenderOpen, ref: genderRef, buttonRef: genderButtonRef, handleToggle: toggleGender, setIsOpen: setGenderOpen } = OutsideClick();
     const { isOpen: isBloodGroupOpen, ref: bloodGroupRef, buttonRef: bloodGroupButtonRef, handleToggle: toggleBloodGroup, setIsOpen: setBloodGroupOpen } = OutsideClick();
@@ -28,6 +28,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
     const { isOpen: isVaccinationStatusOpen, ref: VaccinationStatusRef, buttonRef: VaccinationStatusButtonRef, handleToggle: toggleVaccinationStatus, setIsOpen: setVaccinationStatusOpen } = OutsideClick();
     const { isOpen: isEmployeeNameOpen, ref: EmployeeNameRef, buttonRef: EmployeeNameButtonRef, handleToggle: toggleEmployeeName, setIsOpen: setEmployeeNameOpen } = OutsideClick();
 
+    const { id } = useParams();
 
 
 
@@ -119,6 +120,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const payload = {
+            id:id,
             user_id: formData.user_id, // user_id from formData
             employee_name: formData.employeeName, // employee name
             department_head: formData.department, // department head id
@@ -207,7 +209,52 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
 
     };
     console.log('formData', formData);
+    // detail
+    useEffect(() => {
+        // API call to fetch employee health details
+        const fetchHealthDetails = async () => {
+            try {
+                const response = await axios.post('https://devstronauts.com/public/api/employee/health/details', {
+                    id:id
+                },{
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // If needed, provide the token here
+                        // 'Content-Type': 'application/json'
+                    }
+                });
+                if (response.data.success) {
+                    const result = response.data.result;
 
+                    // Update the formData state with fetched data
+                    setFormData({
+                        employeeName: result.employee_name,
+                        emergencyContactNumber: result.mobile_no,
+                        emergencyContactName: result.contact_name,
+                        bloodGroup: result.blood_group,
+                        weight: result.weight,
+                        height: result.height,
+                        allergies: result.allergies,
+                        chronicConditions: result.chronic_condition,
+                        currentMedications: result.current_medications,
+                        lastHealthCheckupDate: result.last_checkup_date,
+                        nextHealthCheckupDate: result.next_checkup_date,
+                        healthCheckResults: result.checkup_result,
+                        covidAffected: result.covid_affected,
+                        covidVaccinationStatus: result.covid_status,
+                        profilePicture: result.attachment,
+                        user_id: result.user_id,
+                        notes: result.notes
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching health details:", error);
+            }
+        };
+
+        fetchHealthDetails();
+    }, []);
+
+    // details
     const toggleDropdown = (dropdown) => {
         // setDropdowns(prevState => ({
         //     ...prevState,
@@ -696,4 +743,4 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
         </>
     );
 };
-export default AddEmployeeHealthForm;
+export default UpdateEmployeeHealthForm;

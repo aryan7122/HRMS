@@ -347,7 +347,7 @@ const JobForm = ({ onSubmit }) => {
                                                 onChange={handleSearchQueryChangeDepartment}
                                             />
                                             <div className="dropdown_I">
-                                                {['Management', 'Development', 'HR'].filter(option =>
+                                                {['Management', 'Sales', 'HR','IT'].filter(option =>
                                                     option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
                                                 ).map(option => (
                                                     <div className="dropdown-item" onClick={() => selectOption('department', option)} key={option}>

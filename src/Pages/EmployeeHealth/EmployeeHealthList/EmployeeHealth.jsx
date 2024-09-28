@@ -13,27 +13,41 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-// import './EmployeeHealth.scss';
+import './EmployeeHealth.scss';
 import { OutsideClick } from '../../../components/OutSideClick';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const EmployeeHealth = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+    const [isOpen, setIsOpen] = useState(null);
+    const statuses = ['Fully Vaccinated ', 'Partially Vaccinated','Not Vaccinated'];
+    const [statusId, setStatusId] = useState('')
+    const [statusNew, setStatusNew] = useState('')
 
     const [hidImport, setHidImport] = useState(true);
+
     const [employees, setEmployees] = useState([
-        { deptName: "Hillery Moses", deptHead: "HSEQ", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Soy", chorninc: "Lorem ipsum dolor sit amet c..." },
-        { deptName: "Nandan Raikwar", deptHead: "Operations", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Milk", chorninc: "Lorem ipsum dolor sit amet c" },
-        { deptName: "Vishwas Patel", deptHead: "Operations", parentDept: "14-Apr-2024", overall: "UnHealthy", allerig: "Pollen", chorninc: "Lorem ipsum dolor sit amet c" },
-        { deptName: "Paartho Ghosh", deptHead: "Engineering", parentDept: "14-Apr-2024", overall: "UnHealthy", allerig: "Latex", chorninc: "Lorem ipsum dolor sit amet c" },
-        { deptName: "Vikas Tiwari", deptHead: "Maintenance", parentDept: "14-Apr-2024", overall: "UnHealthy", allerig: "Insect stings (e.g., bee stings)", chorninc: "Lorem ipsum dolor sit amet c" },
-        { deptName: "Lalita Thakur", deptHead: "HSEQ", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Penicillin", chorninc: "Lorem ipsum dolor sit amet c" },
-        { deptName: "Mamta Lodhi", deptHead: "Shalini Jain", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Sulfa drugs", chorninc: "Lorem ipsum dolor sit amet c" },
-        { deptName: "M. S. Subramaniam", deptHead: "Human Resources", parentDept: "14-Apr-2024T", overall: "Healthy", allerig: "Pet dander", chorninc: "Lorem ipsum dolor sit amet c" },
-        { deptName: "Amardeep Singh", deptHead: "IT", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Grass", chorninc: "Lorem ipsum dolor sit amet c" },
-        { deptName: "Shalini Jain", deptHead: "IT", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Cockroach allergens", chorninc: "Lorem ipsum dolor sit amet c" },
-
-
+        // { deptName: "Hillery Moses", deptHead: "HSEQ", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Soy", chorninc: "Lorem ipsum dolor sit amet c...", status:'status' },
+        // { deptName: "Nandan Raikwar", deptHead: "Operations", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Milk", chorninc: "Lorem ipsum dolor sit amet c", status: 'status' },
+        // { deptName: "Vishwas Patel", deptHead: "Operations", parentDept: "14-Apr-2024", overall: "UnHealthy", allerig: "Pollen", chorninc: "Lorem ipsum dolor sit amet c", status: 'status' },
+        // { deptName: "Paartho Ghosh", deptHead: "Engineering", parentDept: "14-Apr-2024", overall: "UnHealthy", allerig: "Latex", chorninc: "Lorem ipsum dolor sit amet c", status: 'status' },
+        // { deptName: "Vikas Tiwari", deptHead: "Maintenance", parentDept: "14-Apr-2024", overall: "UnHealthy", allerig: "Insect stings (e.g., bee stings)", chorninc: "Lorem ipsum dolor sit amet c", status: 'status' },
+        // { deptName: "Lalita Thakur", deptHead: "HSEQ", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Penicillin", chorninc: "Lorem ipsum dolor sit amet c", status: '-' },
+        // { deptName: "Mamta Lodhi", deptHead: "Shalini Jain", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Sulfa drugs", chorninc: "Lorem ipsum dolor sit amet c", status: '-' },
+        // { deptName: "M. S. Subramaniam", deptHead: "Human Resources", parentDept: "14-Apr-2024T", overall: "Healthy", allerig: "Pet dander", chorninc: "Lorem ipsum dolor sit amet c", status: 'status' },
+        // { deptName: "Amardeep Singh", deptHead: "IT", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Grass", chorninc: "Lorem ipsum dolor sit amet c", status: '-' },
+        // { deptName: "Shalini Jain", deptHead: "IT", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Cockroach allergens", chorninc: "Lorem ipsum dolor sit amet c", status: 'status' },
     ]);
+
+
+
+
+    const [loading, setLoading] = useState(true);
+    const [sms, setSms] = useState('')
+
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -41,11 +55,11 @@ const EmployeeHealth = () => {
     const [selectAll, setSelectAll] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [isOpen, setIsOpen] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     // const [SelectedHealthDetails, setSelectedHealthDetails] = useState(null);
     console.log(selectedDepartment)
     const navigate = useNavigate();
+    const [selectedFilter, setSelectedFilter] = useState(null);
 
 
     const handleHidImport = () => {
@@ -113,36 +127,55 @@ const EmployeeHealth = () => {
     const handleRefresh = () => {
         setFilteredEmployees(employees);
         setSearchQuery('');
-        setSelectedDepartment('All');
-        setSelectedStatus('All');
+        setSelectedDepartment('');
+        setSelectedStatus('');
         setCurrentPage(1);
         setRowsPerPage(10);
+        setSelectedDate(null)
+        // setSelectedFilter(null)
+        setSelectedDepartmentId(null)
+        setFromDate(null)
+        setToDate(null)
     };
     // 
     const [showFilter, setShowFilter] = useState(false);
     const [showCustomDate, setShowCustomDate] = useState(false);
     const [showEmploymentType, setShowEmploymentType] = useState(false);
     const [showDepartment, setShowDepartment] = useState(false);
+    const [showDateRange, setShowDateRange] = useState(false)
 
     const showFilterHandle = () => {
         setShowFilter(!showFilter)
+    }
+    const handleDateRangeClick = () => {
+        setShowDateRange(!showDateRange)
+        setShowCustomDate(false);
+        setShowEmploymentType(false)
+        setShowDepartment(false)
     }
     const handleCustomDateClick = () => {
         setShowCustomDate(!showCustomDate);
         setShowEmploymentType(false);
         setShowDepartment(false);
+        setShowDateRange(false)
+
     };
 
     const handleEmploymentTypeClick = () => {
         setShowEmploymentType(!showEmploymentType);
         setShowCustomDate(false);
         setShowDepartment(false);
+        setShowDateRange(false)
+
     };
 
     const handleDepartmentClick = () => {
         setShowDepartment(!showDepartment);
         setShowCustomDate(false);
         setShowEmploymentType(false);
+        setShowDateRange(false)
+
+
     };
 
     const EmpHDetailsPage = () => {
@@ -153,8 +186,170 @@ const EmployeeHealth = () => {
     const AddEmployeeHealth = () => {
         navigate('/addemployeehealth');
     }
+
+    // status
+    const filter_leftClose = (filterName) => {
+        setSelectedFilter(filterName);
+        setToggleLeft(false)
+        toggleFilter2()
+    };
+    const toggleDropdown = (i) => {
+        setIsOpen(prev => (prev == i ? null : i));
+    };
+    const UpdateStatusHndle = (id) => {
+        setStatusId(id)
+    }
+
+
+    const handleStatusChange = (index, newStatus) => {
+        setStatusNew(newStatus)
+        // console.log('status chenge:::', newStatus)
+        const updatedEmployees = [...filteredEmployees];
+        updatedEmployees[index].status = newStatus;
+        setFilteredEmployees(updatedEmployees);
+        setIsOpen(null);
+       
+        setSms('')
+    };
+
+    // status
+    const [selectedDepartmentId, setSelectedDepartmentId] = useState(''); // State to store selected department
+
+
+    const [selectedDate, setSelectedDate] = useState(null);
+    console.log('selectedDate', selectedDate)
+    const handleDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setSelectedDate(formattedDate);
+    };
+
+    const handleDepartmentChange = (event) => {
+        setSelectedDepartmentId(event.target.value); // Update state on radio button change
+    };
+
+
+
+
+    const [fromDate, setFromDate] = useState(null);
+    const [toDate, setToDate] = useState(null);
+
+    // Function to handle the date change and format it to yyyy/mm/dd
+    const handleFromDateChange = (event) => {
+
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setFromDate(formattedDate);
+    };
+    const handleToDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setToDate(formattedDate);
+    };
+
+
+    // list api
+    const token = localStorage.getItem('access_token');
+
+    useEffect(() => {
+        setLoading(true)
+        axios.post('https://devstronauts.com/public/api/employee/health/list', {
+            search: searchQuery,
+            department_head: selectedDepartmentId,
+            custom_date: selectedDate,
+            fromDate: fromDate,
+            toDate: toDate
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+
+                setLoading(false)
+                setEmployees(response.data.result);
+                setFilteredEmployees(response.data.result); // filteredEmployees ko bhi sync karo
+                console.log('response 🥳', response.data.result);
+                // setLoading(false);
+                // setSms()
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                setLoading(false)
+
+            })
+    }, [searchQuery, selectedDepartmentId, selectedDate, toDate, fromDate, statusNew,sms]);
+// list api
+
+    // status update
+    useEffect(() => {
+        if (statusId && statusNew) {
+            axios.post('https://devstronauts.com/public/api/employee/health/status/update', {
+                id: statusId,
+                covid_status: statusNew
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // setUpdatingEmpId(statusId);
+                    setSms(`Status update successfully`)
+                    toast.success('Status update successfully.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    if (response.data.success === true) {
+                        // setShowAlert(true)
+                        // setTimeout(() => {
+                        //     setShowAlert(false)
+                        // }, 4000);
+                    }
+                })
+                .catch(error => {
+                    // setSms('Status update Failed')
+                    // alert(error)
+                    toast.error('Status update Failed.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    // setShowAlertError(true)
+                    // setTimeout(() => {
+                    //     setShowAlertError(false)
+                    // }, 4000);
+
+                    console.error("Error fetching data: ", error);
+                });
+        }
+    }, [statusNew]);
+    // status update
+
     return (
         <div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
@@ -220,66 +415,99 @@ const EmployeeHealth = () => {
                         {isFilterOpen2 && (
                             <div className="filter-container" ref={filterRef2}>
                                 <div className="filter-options">
-                                    <div className="filter-option" onClick={handleCustomDateClick}>
-                                        <p>Custom Date </p>
+                                    <div className="filter-option" >
+                                        <p onClick={handleCustomDateClick}>Custom Date {!showCustomDate ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showCustomDate && (
                                             <div className="dropdown-content date-h">
-                                                <div><MdDateRange /> Select Custom date</div>
-                                                <input type="date" />
+                                                <div><span><MdDateRange /></span>{!selectedDate ? 'Select Custom date' : selectedDate} </div>
+                                                {/* <br /> */}
+                                                <input type="date" name="date" id="" onChange={handleDateChange} />
                                             </div>
                                         )}
                                     </div>
                                     <div className="filter-option">
-                                        <p onClick={handleEmploymentTypeClick}>Employment Type</p>
-                                        {showEmploymentType && (
-                                            <div className="dropdown-content">
-                                                <ul>
-                                                    <li>
-                                                        <input type="radio" id="permanent" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="permanent">Permanent</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="contract" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="contract">On Contract</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="intern" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="intern">Intern</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="trainee" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="trainee">Trainee</label>
-                                                    </li>
-                                                </ul>
+                                        <p onClick={handleDateRangeClick}>Date Range  {!showDateRange ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                        {showDateRange && (
+                                            <div >
+                                                <label id='daterange-contener'>From</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!fromDate ? 'Select Custom date' : fromDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleFromDateChange} />
+                                                </div>
+                                                <label id='daterange-contener'>To</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!toDate ? 'Select Custom date' : toDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleToDateChange} />
+                                                </div>
                                             </div>
                                         )}
+
                                     </div>
+                                  
                                     <div className="filter-option">
-                                        <p onClick={handleDepartmentClick}>Department</p>
+                                        <p onClick={handleDepartmentClick}>Department {!showDepartment ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showDepartment && (
                                             <div className="dropdown-content">
                                                 <ul>
                                                     <li>
-                                                        <input type="radio" id="all-department" name="department" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="all-department"
+                                                            name="department"
+                                                            value=" " // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
                                                         <label htmlFor="all-department">All Department</label>
                                                     </li>
                                                     <li>
-                                                        <input type="radio" id="it" name="department" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="it"
+                                                            name="department"
+                                                            value="IT" // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
                                                         <label htmlFor="it">IT</label>
                                                     </li>
                                                     <li>
-                                                        <input type="radio" id="hr" name="department" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="hr"
+                                                            name="department"
+                                                            value="HR" // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
                                                         <label htmlFor="hr">HR</label>
                                                     </li>
                                                     <li>
-                                                        <input type="radio" id="sales" name="department" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="sales"
+                                                            name="department"
+                                                            value="Sales" // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
                                                         <label htmlFor="sales">Sales</label>
                                                     </li>
                                                     <li>
-                                                        <input type="radio" id="management" name="department" className="custom-radio" />
+                                                        <input
+                                                            type="radio"
+                                                            id="management"
+                                                            name="department"
+                                                            value="Management" // Value to be stored
+                                                            className="custom-radio"
+                                                            onChange={handleDepartmentChange}
+                                                        />
                                                         <label htmlFor="management">Management</label>
                                                     </li>
                                                 </ul>
+
                                             </div>
                                         )}
                                     </div>
@@ -302,9 +530,10 @@ const EmployeeHealth = () => {
                                 <th> <div>Employee Name<span><TiArrowUnsorted /></span></div></th>
                                 <th>Department Head</th>
                                 <th>Last Health Check Date</th>
-                                <th>Overall Health Status</th>
+                                <th>Health Check Results</th>
                                 <th>Allergies</th>
-                                <th>Chronic Conditions</th>
+                                {/* <th>Chronic Conditions</th> */}
+                                <th>Status</th>
 
                             </tr>
                         </thead>
@@ -312,45 +541,75 @@ const EmployeeHealth = () => {
                             {currentEmployees.map((emp, index) => (
                                 <tr key={index} >
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
-                                    <td onClick={EmpHDetailsPage}>{emp.deptName}</td>
-                                    <td onClick={EmpHDetailsPage}>{emp.deptHead}</td>
-                                    <td onClick={EmpHDetailsPage}>{emp.parentDept}</td>
-                                    <td onClick={EmpHDetailsPage}>{emp.overall}</td>
-                                    <td onClick={EmpHDetailsPage}>{emp.allerig}</td>
-                                    <td onClick={EmpHDetailsPage}>{emp.chorninc}</td>
+                                    <td onClick={() => navigate(`/employeehealthdetails/${emp.id}`)}>{emp.employee_name || '-'}{ console.log('emp',emp)}</td>
+                                    <td onClick={() => navigate(`/employeehealthdetails/${emp.id}`)}>{emp.department_head || '-'}</td>
+                                    <td onClick={() => navigate(`/employeehealthdetails/${emp.id}`)}>{emp.last_checkup_date || '-'}</td>
+                                    <td onClick={() => navigate(`/employeehealthdetails/${emp.id}`)}>{emp.checkup_result}</td>
+                                    <td onClick={() => navigate(`/employeehealthdetails/${emp.id}`)}>{emp.allergies || '-'}</td>
+                                    {/* <td onClick={EmpHDetailsPage}>{emp.chorninc}</td> */}
+                                    <td>
+                                        <div className="status-dropdown" >
+                                            <div key={index} className="status-container" >
+                                                <div
+                                                    className={`status-display  ${emp.covid_status ? emp.covid_status.toLowerCase().replace(' ', '-') : ''}`}
+                                                    onClick={() => toggleDropdown(index)}
+                                                >
+                                                    {/* {console.log(`status-display ${emp.covid_status ? emp.covid_status.toLowerCase().replace(' ', '-') : ''}`)} */}
+                                                    <span className={`left_dot  ${emp.covid_status ? emp.covid_status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                    <div onClick={() => {
+                                                        UpdateStatusHndle(emp.id);
+                                                    }}>
+                                                        <div
+
+                                                        >
+                                                            {emp.covid_status}
+                                                        </div>
+                                                        <div className="^wdown">
+                                                            <MdOutlineKeyboardArrowDown />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {isOpen === index && (
+                                                    <div>
+                                                        <div className="status-options" >
+                                                            {
+                                                                statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => {
+                                                                            handleStatusChange(index, status)
+                                                                        }
+                                                                        }
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))
+                                                            }
+                                                        </div>
+
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                    {/* {showPopup && (
-                        <div className="popup-overlay">
-                            <div className="popup">
-                                <div className="popup-header">
-                                    <h3>Add New Department</h3>
-                                    <button onClick={closePopup}><IoIosCloseCircleOutline /></button>
-                                </div>
-                                <div className="popup-body">
-                                    <form className='upfom'>
-                                        <label className='redcolor'>Department Name*</label>
-                                        <input type="text" placeholder="Enter Department Name" />
-                                        <label className='blackcolor1'>Department Head</label>
-                                        <input type="text" placeholder="Enter Department Head" />
-                                        <label className='blackcolor2'>Parent Department</label>
-                                        <select>
-                                            <option value="">Choose or search head</option>
-                                            <option value="department1">Department 1</option>
-                                            <option value="department2">Department 2</option>
-                                        
-                                        </select>
-                                        <div className='popupbtn'>
-                                            <button type="submit">Submit</button>
-                                        </div>
-
-                                    </form>
-                                </div>
-                            </div>
+                    {loading ? (
+                        <div id='Loading'>
+                            <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
+                        </div> // Show loading text or spinner when data is being fetched
+                    ) : ('')}
+                    {loading ? '' : employees == '' ? (
+                        <div className="not-found-container">
+                            <img src="https://cdn.dribbble.com/userupload/11708150/file/original-825be68b3517931ad747e0180a4116d3.png?resize=1200x900" alt="" />
+                            <h1 className="grey-text">No matching records found</h1>
+                            <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
                         </div>
-                    )} */}
+                    ) : ('')}
+                   
                 </div>
                 <div className="pagination">
                     <div className="rows-per-page">

@@ -57,6 +57,7 @@ import DepartmentDetails from './Pages/Department/DepartmentDetails/DepartmentDe
 import DesignationDetails from './Pages/Designation/DesignationDetail/DesignationDetails.jsx';
 import EmployeeHealthDetails from './Pages/EmployeeHealth/EmployeeHealthDetails/EmployeeHealthDetails.jsx';
 
+import UpdateEmployeeHealth from './Pages/EmployeeHealth/UpdateEmployeeHealth /UpdateEmployeeHealth.jsx';
 // import EditUiDesignation from './Pages/Designation/EditDesignation/EditUiDesignation.jsx';
 
 
@@ -148,7 +149,9 @@ const App = () => {
                   <Route path="/addemployeehealth" element={<AddEmployeeHealth />} />
                   <Route path="/departmentdetails/:id" element={<DepartmentDetails />} />
                   <Route path="/designationdeatils/:id" element={<DesignationDetails />} />
-                  <Route path="/employeehealthdetails" element={<EmployeeHealthDetails />} />
+                    <Route path="/employeehealthdetails/:id" element={<EmployeeHealthDetails />} />
+                    <Route path="/update-employee-health/:id" element={<UpdateEmployeeHealth />} />
+
                   <Route path="/birthday" element={<BirthdayList />} />
                     {/* {All_leaves_List } */}
                     <Route path="/leave-master" element={<All_leaves_List />} />

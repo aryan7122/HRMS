@@ -1,4 +1,4 @@
-import './AddEmployeeHealth.scss';
+import './UpdateEmployeeHealth.scss';
 
 // import '../../Employee onboarding/AddEmployee/NavbarForm.scss';
 import { useState } from 'react';
@@ -6,13 +6,14 @@ import { useState } from 'react';
 import { HiUserPlus } from "react-icons/hi2";
 import { TfiClose } from "react-icons/tfi";
 import Confetti from 'react-confetti';
-import AddEmployeeHealthForm from './AddEmployeeHealthForm.jsx';
-import { useNavigate } from 'react-router-dom';
+import AddEmployeeHealthForm from './UpdateEmployeeHealthForm.jsx';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
-const AddEmployeeHealth = () => {
+const UpdateEmployeeHealth = () => {
 
     const navigate = useNavigate()
+    const { id } = useParams();
 
 
     const [showAlert, setShowAlert] = useState(false);
@@ -48,8 +49,8 @@ const AddEmployeeHealth = () => {
         }, 4300);
     };
 
-    const JobList = () => {
-        navigate('/health')
+    const details = () => {
+        navigate(`/employeehealthdetails/${id}`)
     }
 
     return (
@@ -57,8 +58,8 @@ const AddEmployeeHealth = () => {
             {/* {showAlert ? <div><Confetti /> <div id='showAlert'><p>Form Submit Successfully</p></div> </div> : ''} */}
             <div className="employee-form">
                 <div className="top-bar">
-                    <h2><div className='span'><HiUserPlus /></div>Add Employee Health</h2>
-                    <span className="close_nav" onClick={JobList}><TfiClose /></span>
+                    <h2><div className='span'><HiUserPlus /></div>Update Employee Health</h2>
+                    <span className="close_nav" onClick={details}><TfiClose /></span>
                     <div className="">
                         <span className="1"></span>
                         <span className="2"></span>
@@ -80,7 +81,7 @@ const AddEmployeeHealth = () => {
     );
 };
 
-export default AddEmployeeHealth;
+export default UpdateEmployeeHealth;
 
 
 // 

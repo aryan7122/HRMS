@@ -1,21 +1,22 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import './EmployeeHealthDetails.scss';
 import iconEdu from '../../../assets/icons/edu.png'
 import img_emp1 from '../../../assets/emp1.png'
+import axios from 'axios';
 
 import { IoMdCloseCircleOutline } from "react-icons/io";
 // import Img_user from '../../../assets/user.png'
 import { MdWorkHistory } from "react-icons/md";
 import { RxReload } from "react-icons/rx";
 import { BiEditAlt } from "react-icons/bi";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { MdDeleteOutline } from "react-icons/md";
 
 const EmployeeHealthDetails = () => {
     const [activeTab, setActiveTab] = useState('experience');
     const navigate = useNavigate()
-
+    const { id } = useParams();
     const renderContent = () => {
         switch (activeTab) {
             case 'experience':
@@ -73,15 +74,60 @@ const EmployeeHealthDetails = () => {
         }
     ];
     const [employees, setEmployees] = useState([
-        { name: "Akash Shinde", Roll: "Lead Design", email: "Akashhrms@gmail.com", phone: "+918555031082", Image: img_emp1, DOB: '2024-08-12' },
-        { name: "Ravi Kumar", Roll: "Developer", email: "ravikumar@gmail.com", phone: "+918888888881", Image: img_emp1, DOB: '2023-07-11' },
-        { name: "Sita Sharma", Roll: "Designer", email: "sitasharma@gmail.com", phone: "+918888888882", Image: img_emp1, DOB: '2024-08-12' },
-        { name: "Mohan Verma", Roll: "Tester", email: "mohanverma@gmail.com", phone: "+918888888883", Image: img_emp1, DOB: '2024-06-15' },
+        // { name: "Akash Shinde", Roll: "Lead Design", email: "Akashhrms@gmail.com", phone: "+918555031082", Image: img_emp1, DOB: '2024-08-12' },
+        // { name: "Ravi Kumar", Roll: "Developer", email: "ravikumar@gmail.com", phone: "+918888888881", Image: img_emp1, DOB: '2023-07-11' },
+        // { name: "Sita Sharma", Roll: "Designer", email: "sitasharma@gmail.com", phone: "+918888888882", Image: img_emp1, DOB: '2024-08-12' },
+        // { name: "Mohan Verma", Roll: "Tester", email: "mohanverma@gmail.com", phone: "+918888888883", Image: img_emp1, DOB: '2024-06-15' },
         // { name: "New Employee 1", Roll: "HR", email: "newemp1@gmail.com", phone: "+918888888884", Image: img_emp1, DOB: '2024-08-10' },
         // { name: "New Employee 2", Roll: "Manager", email: "newemp2@gmail.com", phone: "+918888888885", Image: img_emp1, DOB: '2024-08-12' },
         // { name: "New Employee 3", Roll: "Support", email: "newemp3@gmail.com", phone: "+918888888886", Image: img_emp1, DOB: '2024-08-18' },
         // { name: "New Employee 4", Roll: "Developer", email: "newemp4@gmail.com", phone: "+918888888887", Image: img_emp1, DOB: '2024-08-13' },
     ]);
+
+
+    const [loading, setLoading] = useState(true);
+    const token = localStorage.getItem('access_token');
+
+    console.log('employees', employees)
+    useEffect(() => {
+        setLoading(true)
+        axios.post('https://devstronauts.com/public/api/employee/health/details', {
+           id:id
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+
+                setLoading(false)
+                setEmployees(response.data.result);
+                // setFilteredEmployees(response.data.result); // filteredEmployees ko bhi sync karo
+                console.log('response 🥳', response.data.result);
+                // setLoading(false);
+                // setSms()
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                setLoading(false)
+
+            })
+    }, []);
+    // list api
+
+    // Fetch  details based 
+  
+    if (loading) {
+        return <div id='notFounPageID'><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" /></div>; // Loading state
+    }
+
+    if (!employees) {
+        return <div id='notFounPageID'><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif?cid=82a1493bn9krc5evd3vjd2zev16nlay9tbow8jarm2nx3rf7&ep=v1_gifs_related&rid=200w.gif&ct=g" alt="" /></div>; // Error handling if job not found
+    }
+
+    const Update = () => {
+        navigate(`/update-employee-health/${id}`)
+    }
 
     return (
         <div className="profile-page">
@@ -101,14 +147,14 @@ const EmployeeHealthDetails = () => {
                             <img src="https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg" alt="" />
                         </div>
                         <div className="about_user">
-                            <h3>Ramesh Gupta</h3>
-                            <p>Web Developer / Full-Time</p>
-                            <div><h4></h4> <h5>Active</h5></div>
+                            <h3>{employees.employee_name || '-'}</h3>
+                            <p>{employees.department_head || '-'}</p>
+                            <div><h4></h4> <h5>{employees.covid_status || '-'}</h5></div>
                         </div>
                     </div>
                     <div className="action_card">
                         <div><RxReload /></div>
-                        <div><BiEditAlt /></div>
+                        <div onClick={Update}><BiEditAlt /></div>
                         <div><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
@@ -124,35 +170,34 @@ const EmployeeHealthDetails = () => {
                         <div className='contentInformation'>
                             <div>
                                 <h4>Department </h4>
-                                <p>Research & Development</p>
+                                <p>{employees.department_head || '-'}</p>
+                            </div>
+                        
+                            <div>
+                                <h4>Mobile no.</h4>
+                                <p>{employees.mobile_no || '-'}</p>
                             </div>
                             <div>
-                                <h4>Overall Health Status</h4>
-                                <p>Excellent</p>
+                                <h4>Gender</h4>
+                                <p>{employees.gender || '-'}</p>
                             </div>
                             <div>
-                                <h4>Last Health Check Date</h4>
-                                <p>08-Mar-2024</p>
+                                <h4>Weight</h4>
+                                <p>{employees.weight + ' kg' || '-'}</p>
                             </div>
                             <div>
-                                <h4>Next Health Check Date</h4>
-                                <p>25-Mar-2024</p>
+                                <h4>Height</h4>
+                                <p>{employees.height + ' cm' || '-'}</p>
                             </div>
                             <div>
-                                <h4>Allergies</h4>
-                                <p>-</p>
-                            </div>
-                            <div>
-                                <h4>Chronic Conditions</h4>
-                                <p>-</p>
+                                <h4>Blood group</h4>
+                                <p>{employees.blood_group || '-'}</p>
                             </div>
 
                         </div>
                         <div id='DescriptionJOB'>
                             <h4>Notes</h4>
-                            <p className='paragra'>Lorem ipsum dolor sit amet consectetur. Ultrices nunc at sollicitudin leo nunc
-
-                            </p>
+                            <p className='paragra'>{employees.notes || '-'}</p>
                         </div>
                     </div>
                     <div className="card">
@@ -163,7 +208,7 @@ const EmployeeHealthDetails = () => {
                             </svg>
                         </span>Health Information</h3></div>
                         <div className='Health_Information'>
-                            <div>
+                            {/* <div>
                                 <h4>Record Date : </h4>
                                 <p>08-Mar-2024</p>
                             </div>
@@ -182,6 +227,34 @@ const EmployeeHealthDetails = () => {
                             <div>
                                 <h4>Hospitalizations :</h4>
                                 <p>Not Yet</p>
+                            </div> */}
+                            <div>
+                                <h4>Overall Health Status</h4>
+                                <p>{employees.checkup_result || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Last Health Check Date</h4>
+                                <p>{employees.last_checkup_date}</p>
+                            </div>
+                            <div>
+                                <h4>Next Health Check Date</h4>
+                                <p>{employees.next_checkup_date}</p>
+                            </div>
+                            <div>
+                                <h4>Allergies</h4>
+                                <p>{employees.allergies || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Chronic Conditions</h4>
+                                <p>{employees.chronic_condition || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Covid affected :</h4>
+                                <p>{employees.covid_affected || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Emergency Contact Name</h4>
+                                <p>{employees.contact_name || '-'}</p>
                             </div>
 
                         </div>

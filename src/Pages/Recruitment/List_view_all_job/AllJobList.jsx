@@ -87,7 +87,6 @@ const AllJobList = () => {
         // { JobTitle: "Database Administrator", Department: "UX", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Filled", isChecked: false },
         // { JobTitle: "Network Administrator", Department: "Finance", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
         // { JobTitle: "QA Engineer", Department: "Sales", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
-
     ]);
     const [employees2, setEmployees2] = useState();
 
@@ -340,10 +339,9 @@ const AllJobList = () => {
                 console.error("Error fetching data: ", error);
 
 
-            }, [statusId, statusNew, token, sms, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId]);
-            });
-    // update status
-
+            },
+                [statusId, statusNew, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId]);
+    },[]);
 
     useEffect(() => {
         if (statusId && statusNew) {
@@ -558,10 +556,10 @@ const AllJobList = () => {
                         </div>
 
                         {isFilterOpen && (
-                            
+
                             <div className="filter-container" ref={filterRef}>
                                 <div className="filter-options">
-                                    
+
                                     <div className="filter-option" >
                                         <p onClick={handleCustomDateClick}>Custom Date {!showCustomDate ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showCustomDate && (
@@ -572,7 +570,7 @@ const AllJobList = () => {
                                             </div>
                                         )}
                                     </div>
-                                 
+
                                     <div className="filter-option">
                                         <p onClick={handleEmploymentTypeClick}>Experience Level {!showEmploymentType ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showEmploymentType && (
@@ -755,51 +753,7 @@ const AllJobList = () => {
                                     <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.experience}</td>
                                     <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.skills}</td>
                                     <td >
-                                        {/* <div className="status-dropdown" >
 
-                                            <div key={index} className="status-container">
-                                                <div
-                                                    className={`status-display ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
-                                                    onClick={() => toggleDropdown(index)}
-                                                >
-                                                    <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}></span>
-                                                    <div onClick={() => {
-                                                        UpdateStatusHndle(emp.id);
-                                                    }}>
-                                                        <div
-
-
-                                                        >
-                                                            {emp.job_status}
-                                                        </div>
-                                                        <div className="^wdown">
-                                                            <MdOutlineKeyboardArrowDown />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {isOpen === index && (
-                                                    <div>
-                                                        <div className="status-options" >
-                                                            {
-                                                                statuses.map(status => (
-                                                                    <div
-                                                                        key={status}
-                                                                        className="status-option"
-                                                                        onClick={() => {
-                                                                            handleStatusChange(index, status)
-                                                                        }
-                                                                        }
-                                                                    >
-                                                                        {status}
-                                                                    </div>
-                                                                ))
-                                                            }
-                                                        </div>
-
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div> */}
 
 
                                         <div className="status-dropdown" >
@@ -857,7 +811,7 @@ const AllJobList = () => {
                             <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
                         </div> // Show loading text or spinner when data is being fetched
                     ) : ('')}
-                    {loading ? '' :  employees == '' ? (
+                    {loading ? '' : employees == '' ? (
                         <div className="not-found-container">
                             <img src="https://cdn.dribbble.com/userupload/11708150/file/original-825be68b3517931ad747e0180a4116d3.png?resize=1200x900" alt="" />
                             <h1 className="grey-text">No matching records found</h1>

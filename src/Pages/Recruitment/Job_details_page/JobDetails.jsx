@@ -21,7 +21,7 @@ const JobDetails = () => {
     const navigate = useNavigate();
     console.log('byUser', jobData2)
 
-    // Fetch job details based on job ID
+    // Fetch  details based 
     useEffect(() => {
         axios.post('https://devstronauts.com/public/api/jobopening/list', {}, {
             headers: {
