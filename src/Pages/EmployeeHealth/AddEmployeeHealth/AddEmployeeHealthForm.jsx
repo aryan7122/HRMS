@@ -462,7 +462,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
                         <div></div>
                         {/* Department Dropdown */}
                         <div className="form-group">
-                            <label className='starred'>Blood Group*</label>
+                            <label className='starred'>Blood Group</label>
                             <div className="dropdown">
                                 <div className="dropdown-button" onClick={toggleBloodGroup} ref={bloodGroupButtonRef}>
                                     <div>{formData.bloodGroup || "Select Blood Group"}</div>
@@ -476,7 +476,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
                                         <input
                                             type="search"
                                             className='search22'
-                                            placeholder="Search department"
+                                                placeholder="Search Blood Group"
                                             value={searchQueryBloodGroup}
                                             id='searchDepartmentHead'
                                             onChange={handleSearchQueryChangeBloodGroup}
