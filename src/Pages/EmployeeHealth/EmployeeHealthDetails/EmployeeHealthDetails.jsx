@@ -17,25 +17,12 @@ const EmployeeHealthDetails = () => {
     const [activeTab, setActiveTab] = useState('experience');
     const navigate = useNavigate()
     const { id } = useParams();
-    const renderContent = () => {
-        switch (activeTab) {
-            case 'experience':
-                return <Experience />;
-            case 'education':
-                return <Education />;
-            case 'documents':
-                return <Documents />;
-            default:
-                return <Experience />;
-        }
-    };
+    
 
     const AllEmp = () => {
         navigate('/health')
     }
-    const AllEmpPage = () => {
-        navigate('/department')
-    }
+   
     const projects = [
         {
             name: "E-commerce Website Redesign",
@@ -108,6 +95,7 @@ const EmployeeHealthDetails = () => {
                 // setSms()
             })
             .catch(error => {
+                setEmployees('')
                 console.error("Error fetching data: ", error);
                 setLoading(false)
 
@@ -122,7 +110,11 @@ const EmployeeHealthDetails = () => {
     }
 
     if (!employees) {
-        return <div id='notFounPageID'><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif?cid=82a1493bn9krc5evd3vjd2zev16nlay9tbow8jarm2nx3rf7&ep=v1_gifs_related&rid=200w.gif&ct=g" alt="" /></div>; // Error handling if job not found
+        return <div className="not-found-container">
+            <img src="https://cdn.dribbble.com/userupload/11708150/file/original-825be68b3517931ad747e0180a4116d3.png?resize=1200x900" alt="" />
+            <h1 className="grey-text">No matching records found</h1>
+            <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
+        </div>// Error handling if job not found
     }
 
     const Update = () => {

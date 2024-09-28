@@ -283,21 +283,26 @@ const EmployeeHealth = () => {
             })
     }, [searchQuery, selectedDepartmentId, selectedDate, toDate, fromDate, statusNew,sms]);
 // list api
-
     // status update
+    let isRequestInProgress = false;
+
     useEffect(() => {
-        if (statusId && statusNew) {
-            axios.post('https://devstronauts.com/public/api/employee/health/status/update', {
-                id: statusId,
-                covid_status: statusNew
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-                .then(response => {
-                    // setUpdatingEmpId(statusId);
-                    setSms(`Status update successfully`)
+        if (statusId && statusNew && !isRequestInProgress) {
+            isRequestInProgress = true; // Request start hone par flag true ho jaye
+
+            const updateStatus = async () => {
+                try {
+                    const response = await axios.post('https://devstronauts.com/public/api/employee/health/status/update', {
+                        id: statusId,
+                        covid_status: statusNew
+                    }, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    // Success handling
+                    setSms(`Status update successfully`);
                     toast.success('Status update successfully.', {
                         position: "top-right",
                         autoClose: 3000,
@@ -308,16 +313,16 @@ const EmployeeHealth = () => {
                         progress: undefined,
                         theme: "light",
                     });
+
                     if (response.data.success === true) {
-                        // setShowAlert(true)
+                        // Aap apne hisaab se alert ya koi action le sakte hain
+                        // setShowAlert(true);
                         // setTimeout(() => {
-                        //     setShowAlert(false)
+                        //     setShowAlert(false);
                         // }, 4000);
                     }
-                })
-                .catch(error => {
-                    // setSms('Status update Failed')
-                    // alert(error)
+                } catch (error) {
+                    // Error handling
                     toast.error('Status update Failed.', {
                         position: "top-right",
                         autoClose: 3000,
@@ -328,15 +333,21 @@ const EmployeeHealth = () => {
                         progress: undefined,
                         theme: "light",
                     });
-                    // setShowAlertError(true)
-                    // setTimeout(() => {
-                    //     setShowAlertError(false)
-                    // }, 4000);
-
                     console.error("Error fetching data: ", error);
-                });
+
+                    // Optionally, you can setSms with an error message if needed
+                    // setSms('Status update Failed');
+                } finally {
+                    // Request complete hone ke baad flag reset hoga
+                    isRequestInProgress = false;
+                }
+            };
+
+            // Call the async function
+            updateStatus();
         }
-    }, [statusNew]);
+    }, [statusNew]); // Make sure to include all dependencies
+
     // status update
 
     return (

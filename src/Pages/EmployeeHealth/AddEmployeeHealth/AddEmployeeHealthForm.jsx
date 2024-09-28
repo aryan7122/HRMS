@@ -359,7 +359,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
                                         <input
                                             type="search"
                                             className="search22"
-                                            placeholder="Search head of Department"
+                                            placeholder="Search Employee Name"
                                             value={searchQueryEmployeeName}
                                             id="searchDepartmentHead"
                                             onChange={handleSearchQueryChangeEmployeeName}
