@@ -340,8 +340,8 @@ const AllJobList = () => {
 
 
             },
-                [statusId, statusNew, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId]);
-    },[]);
+                );
+    }, [statusId, statusNew, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId,sms]);
 
     useEffect(() => {
         if (statusId && statusNew) {
