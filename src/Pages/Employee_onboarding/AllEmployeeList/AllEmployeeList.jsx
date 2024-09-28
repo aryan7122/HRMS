@@ -159,6 +159,7 @@ const AllEmployeeList = () => {
         setSelectedDepartmentId(null)
         setSelectedDate(null)
         setSelectedFilter(null)
+        setEmploymentType(null)
     };
     // 
     const [showFilter, setShowFilter] = useState(false);

@@ -285,7 +285,7 @@ const JobUpdateForm = ({ onSubmit }) => {
 
     const requiredSkillsOptions = [
         'Communication Skills', 'Software Development', 'Leadership Skills', 'Team Collaboration',
-        'Problem Solving', 'Project Management', 'Data Analysis', 'PHP', 'Java', 'Laravel',
+         'Project Management', 'Data Analysis', 'PHP', 'Java', 'Laravel',
         'JavaScript', 'React.js', 'Node.js', 'Python', 'Machine Learning', 'Artificial Intelligence',
         'DevOps', 'Cloud Computing', 'AWS', 'Azure', 'Docker', 'Kubernetes', 'MySQL', 'MongoDB',
         'HTML', 'CSS', 'TypeScript', 'REST API', 'GraphQL', 'Version Control', 'Git', 'Agile Methodology',
@@ -397,7 +397,7 @@ const JobUpdateForm = ({ onSubmit }) => {
                                                 onChange={handleSearchQueryChangeDepartment}
                                             />
                                             <div className="dropdown_I">
-                                                {['Management', 'Development', 'HR'].filter(option =>
+                                                {['Management', 'Sales', 'HR','IT'].filter(option =>
                                                     option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
                                                 ).map(option => (
                                                     <div className="dropdown-item" onClick={() => selectOption('department', option)} key={option}>

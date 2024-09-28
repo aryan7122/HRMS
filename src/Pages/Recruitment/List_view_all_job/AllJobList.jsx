@@ -310,7 +310,11 @@ const AllJobList = () => {
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
     }
-
+    const handleEmploymentTypeChange = (event) => {
+        setEmploymentType(event.target.value);
+        console.log('Selected Employment Type:', event.target.value); // Debugging purpose
+        // toggleFilter()
+    };
     // api get6 list
     const token = localStorage.getItem('access_token');
 
@@ -319,7 +323,6 @@ const AllJobList = () => {
             search: searchQuery,
             job_status: selectedFilter,
             employee_type: employmentType,
-            department_id: selectedDepartmentId,
             custom_date: selectedDate,
         }, {
             headers: {
@@ -343,8 +346,11 @@ const AllJobList = () => {
                 );
     }, [statusId, statusNew, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId,sms]);
 
+    let isRequestInProgress = false;
+
     useEffect(() => {
-        if (statusId && statusNew) {
+        if (statusId && statusNew && !isRequestInProgress) {
+            isRequestInProgress = true;  // Request start hone par flag true
             axios.post('https://devstronauts.com/public/api/jobopening/status/update', {
                 job_id: statusId,
                 job_status: statusNew
@@ -354,8 +360,8 @@ const AllJobList = () => {
                 }
             })
                 .then(response => {
-                    // setUpdatingEmpId(statusId);
-                    setSms(`Status update successfully`)
+                    // Success handling
+                    setSms(`Status update successfully`);
                     toast.success('Status update successfully.', {
                         position: "top-right",
                         autoClose: 3000,
@@ -366,16 +372,16 @@ const AllJobList = () => {
                         progress: undefined,
                         theme: "light",
                     });
+
                     if (response.data.success === true) {
-                        // setShowAlert(true)
+                        // setShowAlert(true);
                         // setTimeout(() => {
-                        //     setShowAlert(false)
+                        //     setShowAlert(false);
                         // }, 4000);
                     }
                 })
                 .catch(error => {
-                    // setSms('Status update Failed')
-                    // alert(error)
+                    // Error handling
                     toast.error('Status update Failed.', {
                         position: "top-right",
                         autoClose: 3000,
@@ -386,15 +392,16 @@ const AllJobList = () => {
                         progress: undefined,
                         theme: "light",
                     });
-                    // setShowAlertError(true)
-                    // setTimeout(() => {
-                    //     setShowAlertError(false)
-                    // }, 4000);
 
                     console.error("Error fetching data: ", error);
+                })
+                .finally(() => {
+                    // Request complete hone ke baad flag reset hoga
+                    isRequestInProgress = false;
                 });
         }
-    }, [statusNew]);
+    }, [statusNew]); // Ensure all dependencies are added
+
 
 
     const handleStatusChange = (index, newStatus) => {
@@ -572,60 +579,72 @@ const AllJobList = () => {
                                     </div>
 
                                     <div className="filter-option">
-                                        <p onClick={handleEmploymentTypeClick}>Experience Level {!showEmploymentType ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                        <p onClick={handleEmploymentTypeClick}>Employment Type {!showEmploymentType ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showEmploymentType && (
                                             <div className="dropdown-content">
                                                 <ul>
                                                     <li>
                                                         <input
                                                             type="radio"
-                                                            id="all"
+                                                            id="All"
                                                             name="employmentType"
-                                                            value=""
                                                             className="custom-radio"
-                                                            checked={employmentType === ""}
-                                                            onChange={handleEmploymentChange}
+                                                            value=" "
+                                                            onChange={handleEmploymentTypeChange}
                                                         />
-                                                        <label htmlFor="all">All</label>
+                                                        <label htmlFor="All">All</label>
                                                     </li>
                                                     <li>
                                                         <input
                                                             type="radio"
                                                             id="permanent"
                                                             name="employmentType"
-                                                            value="Entry level"
                                                             className="custom-radio"
-                                                            checked={employmentType === "Entry level"}
-                                                            onChange={handleEmploymentChange}
+                                                            value="Permanent"
+                                                            onChange={handleEmploymentTypeChange}
                                                         />
-                                                        <label htmlFor="permanent">Entry level</label>
+                                                        <label htmlFor="permanent">Permanent</label>
                                                     </li>
                                                     <li>
                                                         <input
                                                             type="radio"
                                                             id="contract"
                                                             name="employmentType"
-                                                            value="Mid level"
                                                             className="custom-radio"
-                                                            checked={employmentType === "Mid level"}
-                                                            onChange={handleEmploymentChange}
+                                                            value="Contract"
+                                                            onChange={handleEmploymentTypeChange}
                                                         />
-                                                        <label htmlFor="contract">Mid level</label>
+                                                        <label htmlFor="contract">On Contract</label>
                                                     </li>
                                                     <li>
                                                         <input
                                                             type="radio"
                                                             id="intern"
                                                             name="employmentType"
-                                                            value="Senior"
                                                             className="custom-radio"
-                                                            checked={employmentType === "Senior"}
-                                                            onChange={handleEmploymentChange}
+                                                            value="Intern"
+                                                            onChange={handleEmploymentTypeChange}
                                                         />
-                                                        <label htmlFor="intern">Senior</label>
+                                                        <label htmlFor="intern">Intern</label>
                                                     </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="trainee"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value="Trainee"
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label htmlFor="trainee">Trainee</label>
+                                                    </li>
+
                                                 </ul>
+                                                {/* <p>Selected Employment Type: {employmentType}</p> Displaying selected value */}
                                             </div>
+
+
+
                                         )}
                                     </div>
                                     <div className="filter-option">
