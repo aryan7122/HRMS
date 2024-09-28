@@ -31,6 +31,7 @@ const UpdateEmployeeHealthForm = ({ onSubmit }) => {
     const { id } = useParams();
 
 
+    const navigate = useNavigate()
 
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
@@ -165,6 +166,7 @@ const UpdateEmployeeHealthForm = ({ onSubmit }) => {
                 // Handle success response (e.g., show a success message)
                 // Reset form fields
                 if (response.status === 200) {
+                    navigate(`/employeehealthdetails/${id}`)
 
                     setFormData({
                         employeeName: '',
@@ -396,7 +398,7 @@ const UpdateEmployeeHealthForm = ({ onSubmit }) => {
                             <label className='starred'>Employee Name*</label>
                             <div className="dropdown">
                                 <div className="dropdown-button" ref={EmployeeNameButtonRef} onClick={toggleEmployeeName}>
-                                    <div className='divselect'>{formData.employeeName || "Select department head"}</div>
+                                    <div className='divselect'>{formData.employeeName || "Select Employee Name"}</div>
                                     <span id="toggle_selectIcon">
                                         {!isEmployeeNameOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
                                     </span>
@@ -690,7 +692,7 @@ const UpdateEmployeeHealthForm = ({ onSubmit }) => {
                             </div>
                         </div>
                         <div className="form-group">
-                            <label>Upload Profile Picture</label>
+                                <label>Attachment</label>
                             <div className="file-upload">
                                 <input
                                     type="file"
@@ -702,7 +704,7 @@ const UpdateEmployeeHealthForm = ({ onSubmit }) => {
                                 />
                                 <label htmlFor="file" className="custom-file-upload">
                                     {!isUploaded && <GrCloudUpload size={20} />}
-                                    <span>{isUploaded ? fileName : 'Upload photo'}</span>
+                                        <span>{isUploaded ? fileName : 'Attachment'}</span>
                                 </label>
                             </div>
                         </div>

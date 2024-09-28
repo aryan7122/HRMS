@@ -349,7 +349,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
                             <label className='starred'>Employee Name*</label>
                             <div className="dropdown">
                                 <div className="dropdown-button" ref={EmployeeNameButtonRef} onClick={toggleEmployeeName}>
-                                    <div className='divselect'>{formData.employeeName || "Select department head"}</div>
+                                    <div className='divselect'>{formData.employeeName || "Select Employee Name"}</div>
                                     <span id="toggle_selectIcon">
                                         {!isEmployeeNameOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
                                     </span>
@@ -643,7 +643,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
                             </div>
                         </div>
                         <div className="form-group">
-                            <label>Upload Profile Picture</label>
+                                <label>Attachment</label>
                             <div className="file-upload">
                                 <input
                                     type="file"
@@ -655,7 +655,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
                                 />
                                 <label htmlFor="file" className="custom-file-upload">
                                     {!isUploaded && <GrCloudUpload size={20} />}
-                                    <span>{isUploaded ? fileName : 'Upload photo'}</span>
+                                        <span>{isUploaded ? fileName : 'Attachment'}</span>
                                 </label>
                             </div>
                         </div>
