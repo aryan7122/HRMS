@@ -73,7 +73,7 @@ const Applicant_detail = () => {
                     // setDepartmentdetails2(response.data.department.enteredbyid)
                     console.log('⚠️ delete ❗', response)
                     // setLoading(false);
-                    navigate('/all-job-list')
+                    navigate('/all-applicant-list')
 
                 })
                 .catch(error => {
