@@ -32,7 +32,6 @@ import { OutsideClickStatus } from './OutsideClickStatus.jsx'; // Adjust import 
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs';
 
 const AllJobList = () => {
 
@@ -234,9 +233,9 @@ const AllJobList = () => {
         setSelectedStatus('All');
         setCurrentPage(1);
         setRowsPerPage(10);
-        setSelectedDate(null)
         setSelectedFilter(null)
         setSelectedDepartmentId(null)
+        setSelectedDate(null)
         setFromDate(null)
         setToDate(null)
     };
@@ -455,6 +454,7 @@ const AllJobList = () => {
         // });
         setSms('')
     };
+
     const [activeFilter, setActiveFilter] = useState(null); // Track the active filter
     // const filterRef2 = useRef(null);
 
@@ -611,6 +611,28 @@ const AllJobList = () => {
                                     </div>
 
                                     <div className="filter-option">
+                                        <p onClick={handleDateRangeClick}>Date Range  {!showDateRange ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                        {showDateRange && (
+                                            <div >
+                                                <label id='daterange-contener'>From</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!fromDate ? 'Select Custom date' : fromDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleFromDateChange} />
+                                                </div>
+                                                <label id='daterange-contener'>To</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!toDate ? 'Select Custom date' : toDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleToDateChange} />
+                                                </div>
+                                            </div>
+                                        )}
+
+                                    </div>
+
+
+                                    <div className="filter-option">
                                         <p onClick={handleEmploymentTypeClick}>Employment Type {!showEmploymentType ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showEmploymentType && (
                                             <div className="dropdown-content">
@@ -679,26 +701,7 @@ const AllJobList = () => {
 
                                         )}
                                     </div>
-                                    <div className="filter-option">
-                                        <p onClick={handleDateRangeClick}>Date Range  {!showDateRange ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
-                                        {showDateRange && (
-                                            <div >
-                                                <label id='daterange-contener'>From</label>
-                                                <div className="dropdown-content date-h">
-                                                    <div><span><MdDateRange /></span>{!fromDate ? 'Select Custom date' : fromDate} </div>
-                                                    {/* <br /> */}
-                                                    <input type="date" name="date" id="" onChange={handleFromDateChange} />
-                                                </div>
-                                                <label id='daterange-contener'>To</label>
-                                                <div className="dropdown-content date-h">
-                                                    <div><span><MdDateRange /></span>{!toDate ? 'Select Custom date' : toDate} </div>
-                                                    {/* <br /> */}
-                                                    <input type="date" name="date" id="" onChange={handleToDateChange} />
-                                                </div>
-                                            </div>
-                                        )}
-
-                                    </div>
+                                  
                                 </div>
                             </div>
                         )}
@@ -710,7 +713,6 @@ const AllJobList = () => {
                 {/* <div className="head">
                 </div> */}
                 <div className="employee-table">
-
                     <table>
                         <thead>
                             <tr>
@@ -737,7 +739,6 @@ const AllJobList = () => {
                             </tr>
                         </thead>
                         <tbody>
-
                             {currentEmployees.map((emp, index) => (
                                 <tr key={index}  >
                                     <td>
@@ -759,9 +760,6 @@ const AllJobList = () => {
                                     <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.experience}</td>
                                     <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.skills}</td>
                                     <td >
-
-
-
                                         <div className="status-dropdown" >
                                             <div key={index} className="status-container" >
                                                 <div

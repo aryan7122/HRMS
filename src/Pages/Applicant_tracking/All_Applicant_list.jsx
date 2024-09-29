@@ -1,4 +1,4 @@
-import { useState, } from 'react';
+import { useState, useEffect } from 'react';
 import { HiUserPlus } from "react-icons/hi2";
 import { CiMenuKebab } from "react-icons/ci";
 import { AiOutlineCloudUpload } from "react-icons/ai";
@@ -18,10 +18,15 @@ import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
 import './All_Applicant_list.scss';
 // 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { GiBackstab, GiNotebook } from "react-icons/gi";
 import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
 import { OutsideClick } from '../../components/OutSideClick';
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const All_Applicant_list = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
@@ -40,28 +45,30 @@ const All_Applicant_list = () => {
     const [hidImport, setHidImport] = useState(true);
     const navigate = useNavigate()
     const [employees, setEmployees] = useState([
-        { ApplicantName: "Ramesh Gupta", Email: "kavita.agarwal@example.com", MobileNumber: "9876543201", JobOpening: "IT coordinator", Source: "Website", SourceName: "-", status: "New", isChecked: false },
-        { ApplicantName: "M. S. Subramaniam", Email: "rahul.mishra@example.com", MobileNumber: "9876543201", JobOpening: "Data quality manager", Source: "Walk in", SourceName: "-", status: "New", isChecked: false },
-        { ApplicantName: "Vishwas Patel", Email: "priya.sharma@example.com", MobileNumber: "9876543206", JobOpening: "Help desk technician", Source: "Campaign", SourceName: "-", status: "New", isChecked: false },
-        { ApplicantName: "Sunil Bhadouriya", Email: "rahul.gupta@example.com", MobileNumber: "9876543210", JobOpening: "Support specialist", Source: "Employ Referral", SourceName: "HR-EMP-001", status: "New", isChecked: false },
-        { ApplicantName: "Vikas Tiwari", Email: "raj.malhotra@example.com", MobileNumber: "9876543208", JobOpening: "Database administrator", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
-        { ApplicantName: "Paartho Ghosh", Email: "amit.kumar@example.com", MobileNumber: "9876543205", JobOpening: "IT technician", Source: "Website", SourceName: "-", status: "New", isChecked: false },
-        { ApplicantName: "Bhavna Goyal", Email: "aarti.pandey@example.com", MobileNumber: "9876543202", JobOpening: "Web developer", Source: "Website", SourceName: "-", status: "New", isChecked: false },
-        { ApplicantName: "Navjot Kaur", Email: "anjali.rao@example.com", MobileNumber: "9876543209", JobOpening: "Cloud system engineer", Source: "Website", SourceName: "-", status: "On Hold", isChecked: false },
-        { ApplicantName: "Hillery Moses", Email: "manish.jain@example.com", MobileNumber: "9876543203", JobOpening: "Web administrator", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
-        { ApplicantName: "Jayshri Tiwari", Email: "amar.singh@example.com", MobileNumber: "9876543207", JobOpening: "Applications engineer", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
-        { ApplicantName: "Shalini Jain", Email: "meera.verma@example.com", MobileNumber: "9876543204", JobOpening: "Network engineer", Source: "Website", SourceName: "-", status: "Hired", isChecked: false },
-        { ApplicantName: "Bhavna Goyal", Email: "aarti.pandey@example.com", MobileNumber: "9876543202", JobOpening: "Web developer", Source: "Website", SourceName: "-", status: "New", isChecked: false },
-        { ApplicantName: "Navjot Kaur", Email: "anjali.rao@example.com", MobileNumber: "9876543209", JobOpening: "Cloud system engineer", Source: "Website", SourceName: "-", status: "On Hold", isChecked: false },
-        { ApplicantName: "Hillery Moses", Email: "manish.jain@example.com", MobileNumber: "9876543203", JobOpening: "Web administrator", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
-        { ApplicantName: "Jayshri Tiwari", Email: "amar.singh@example.com", MobileNumber: "9876543207", JobOpening: "Applications engineer", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
-        { ApplicantName: "Shalini Jain", Email: "meera.verma@example.com", MobileNumber: "9876543204", JobOpening: "Network engineer", Source: "Website", SourceName: "-", status: "Hired", isChecked: false },
-        { ApplicantName: "Bhavna Goyal", Email: "aarti.pandey@example.com", MobileNumber: "9876543202", JobOpening: "Web developer", Source: "Website", SourceName: "-", status: "New", isChecked: false },
-        { ApplicantName: "Navjot Kaur", Email: "anjali.rao@example.com", MobileNumber: "9876543209", JobOpening: "Cloud system engineer", Source: "Website", SourceName: "-", status: "On Hold", isChecked: false },
-        { ApplicantName: "Hillery Moses", Email: "manish.jain@example.com", MobileNumber: "9876543203", JobOpening: "Web administrator", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
-        { ApplicantName: "Jayshri Tiwari", Email: "amar.singh@example.com", MobileNumber: "9876543207", JobOpening: "Applications engineer", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
-        { ApplicantName: "Shalini Jain", Email: "meera.verma@example.com", MobileNumber: "9876543204", JobOpening: "Network engineer", Source: "Website", SourceName: "-", status: "Hired", isChecked: false },
+        // { ApplicantName: "Ramesh Gupta", Email: "kavita.agarwal@example.com", MobileNumber: "9876543201", JobOpening: "IT coordinator", Source: "Website", SourceName: "-", status: "New", isChecked: false },
+        // { ApplicantName: "M. S. Subramaniam", Email: "rahul.mishra@example.com", MobileNumber: "9876543201", JobOpening: "Data quality manager", Source: "Walk in", SourceName: "-", status: "New", isChecked: false },
+        // { ApplicantName: "Vishwas Patel", Email: "priya.sharma@example.com", MobileNumber: "9876543206", JobOpening: "Help desk technician", Source: "Campaign", SourceName: "-", status: "New", isChecked: false },
+        // { ApplicantName: "Sunil Bhadouriya", Email: "rahul.gupta@example.com", MobileNumber: "9876543210", JobOpening: "Support specialist", Source: "Employ Referral", SourceName: "HR-EMP-001", status: "New", isChecked: false },
+        // { ApplicantName: "Vikas Tiwari", Email: "raj.malhotra@example.com", MobileNumber: "9876543208", JobOpening: "Database administrator", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
+        // { ApplicantName: "Paartho Ghosh", Email: "amit.kumar@example.com", MobileNumber: "9876543205", JobOpening: "IT technician", Source: "Website", SourceName: "-", status: "New", isChecked: false },
+        // { ApplicantName: "Bhavna Goyal", Email: "aarti.pandey@example.com", MobileNumber: "9876543202", JobOpening: "Web developer", Source: "Website", SourceName: "-", status: "New", isChecked: false },
+        // { ApplicantName: "Navjot Kaur", Email: "anjali.rao@example.com", MobileNumber: "9876543209", JobOpening: "Cloud system engineer", Source: "Website", SourceName: "-", status: "On Hold", isChecked: false },
+        // { ApplicantName: "Hillery Moses", Email: "manish.jain@example.com", MobileNumber: "9876543203", JobOpening: "Web administrator", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
+        // { ApplicantName: "Jayshri Tiwari", Email: "amar.singh@example.com", MobileNumber: "9876543207", JobOpening: "Applications engineer", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
+        // { ApplicantName: "Shalini Jain", Email: "meera.verma@example.com", MobileNumber: "9876543204", JobOpening: "Network engineer", Source: "Website", SourceName: "-", status: "Hired", isChecked: false },
+        // { ApplicantName: "Bhavna Goyal", Email: "aarti.pandey@example.com", MobileNumber: "9876543202", JobOpening: "Web developer", Source: "Website", SourceName: "-", status: "New", isChecked: false },
+        // { ApplicantName: "Navjot Kaur", Email: "anjali.rao@example.com", MobileNumber: "9876543209", JobOpening: "Cloud system engineer", Source: "Website", SourceName: "-", status: "On Hold", isChecked: false },
+        // { ApplicantName: "Hillery Moses", Email: "manish.jain@example.com", MobileNumber: "9876543203", JobOpening: "Web administrator", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
+        // { ApplicantName: "Jayshri Tiwari", Email: "amar.singh@example.com", MobileNumber: "9876543207", JobOpening: "Applications engineer", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
+        // { ApplicantName: "Shalini Jain", Email: "meera.verma@example.com", MobileNumber: "9876543204", JobOpening: "Network engineer", Source: "Website", SourceName: "-", status: "Hired", isChecked: false },
+        // { ApplicantName: "Bhavna Goyal", Email: "aarti.pandey@example.com", MobileNumber: "9876543202", JobOpening: "Web developer", Source: "Website", SourceName: "-", status: "New", isChecked: false },
+        // { ApplicantName: "Navjot Kaur", Email: "anjali.rao@example.com", MobileNumber: "9876543209", JobOpening: "Cloud system engineer", Source: "Website", SourceName: "-", status: "On Hold", isChecked: false },
+        // { ApplicantName: "Hillery Moses", Email: "manish.jain@example.com", MobileNumber: "9876543203", JobOpening: "Web administrator", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
+        // { ApplicantName: "Jayshri Tiwari", Email: "amar.singh@example.com", MobileNumber: "9876543207", JobOpening: "Applications engineer", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
+        // { ApplicantName: "Shalini Jain", Email: "meera.verma@example.com", MobileNumber: "9876543204", JobOpening: "Network engineer", Source: "Website", SourceName: "-", status: "Hired", isChecked: false },
     ]);
+    const [statusId, setStatusId] = useState('')
+    const [statusNew, setStatusNew] = useState('')
 
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
@@ -113,12 +120,17 @@ const All_Applicant_list = () => {
     const statuses = ['New', 'Schedule', 'Interviewed', 'Hired', 'On Hold', 'Rejected'];
     // const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
     // const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
-
+    const UpdateStatusHndle = (id) => {
+        setStatusId(id)
+    }
     const handleStatusChange = (index, newStatus) => {
+        setStatusNew(newStatus)
+
         const updatedEmployees = [...filteredEmployees];
         updatedEmployees[index].status = newStatus;
         setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
+        setSms('')
     };
 
     const handleSearchChange = (e) => {
@@ -157,33 +169,45 @@ const All_Applicant_list = () => {
         setSelectedStatus('All');
         setCurrentPage(1);
         setRowsPerPage(10);
+        setSelectedDate(null)
+        setFromDate(null)
+        setToDate(null)
     };
     // 
-    const [showFilter, setShowFilter] = useState(false);
+    // const [showFilter, setShowFilter] = useState(false);
+    // const [showCustomDate, setShowCustomDate] = useState(false);
+    // const [showEmploymentType, setShowEmploymentType] = useState(false);
+    // const [showDepartment, setShowDepartment] = useState(false);
+    const [showDateRange, setShowDateRange] = useState(false)
     const [showCustomDate, setShowCustomDate] = useState(false);
-    const [showEmploymentType, setShowEmploymentType] = useState(false);
-    const [showDepartment, setShowDepartment] = useState(false);
 
-    const showFilterHandle = () => {
-        setShowFilter(!showFilter)
+    // const showFilterHandle = () => {
+    //     setShowFilter(!showFilter)
+    // }
+
+    const handleDateRangeClick = () => {
+        setShowDateRange(!showDateRange)
+        setShowCustomDate(false);
+        // setShowEmploymentType(false)
     }
     const handleCustomDateClick = () => {
         setShowCustomDate(!showCustomDate);
-        setShowEmploymentType(false);
-        setShowDepartment(false);
-    };
+        // setShowEmploymentType(false);
+        // setShowDepartment(false);
+        setShowDateRange(false)
+    }
 
-    const handleEmploymentTypeClick = () => {
-        setShowEmploymentType(!showEmploymentType);
-        setShowCustomDate(false);
-        setShowDepartment(false);
-    };
+    // const handleEmploymentTypeClick = () => {
+    //     setShowEmploymentType(!showEmploymentType);
+    //     setShowCustomDate(false);
+    //     setShowDepartment(false);
+    // };
 
-    const handleDepartmentClick = () => {
-        setShowDepartment(!showDepartment);
-        setShowCustomDate(false);
-        setShowEmploymentType(false);
-    };
+    // const handleDepartmentClick = () => {
+    //     setShowDepartment(!showDepartment);
+    //     setShowCustomDate(false);
+    //     setShowEmploymentType(false);
+    // };
 
     const JobDetailsPage = () => {
         navigate('/applicant-details')
@@ -206,8 +230,149 @@ const All_Applicant_list = () => {
             setFileName(file.name); // Set the file name in the state
         }
     };
+    const [sms, setSms] = useState('')
+
+    const [activeFilter, setActiveFilter] = useState(' ');
+
+    const handleFilterClick = (filterName) => {
+        setActiveFilter(filterName); // Save filter name in state
+        filter_leftClose(); // Close the filter (if this is your close function)
+    };
+    const [fromDate, setFromDate] = useState(null);
+    const [toDate, setToDate] = useState(null);
+
+    // Function to handle the date change and format it to yyyy/mm/dd
+
+
+    const [selectedDate, setSelectedDate] = useState(null);
+    console.log('selectedDate', selectedDate)
+    const handleDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setSelectedDate(formattedDate);
+    };
+
+
+    const handleFromDateChange = (event) => {
+
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setFromDate(formattedDate);
+    };
+    const handleToDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setToDate(formattedDate);
+    };
+    // list
+    const token = localStorage.getItem('access_token');
+    const [loading, setLoading] = useState(true);
+
+    console.log('employees', employees)
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/applicant/list', {
+            search: searchQuery,
+            status: activeFilter,
+            custom_date: selectedDate,
+            fromDate: fromDate,
+            toDate: toDate
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+
+
+                setEmployees(response.data.result);
+                setFilteredEmployees(response.data.result); // filteredEmployees ko bhi sync karo
+                console.log('response 🥳', response.data.result);
+                setLoading(false);
+                // setSms()
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+
+
+            },
+            );
+    }, [statusNew, sms, , searchQuery, activeFilter, selectedDate, fromDate, toDate]);
+
+    // list
+
+    // status
+
+    let isRequestInProgress = false;
+
+    useEffect(() => {
+        if (statusId && statusNew && !isRequestInProgress) {
+            isRequestInProgress = true;  // Request start hone par flag true
+            axios.post('https://devstronauts.com/public/api/applicant/status/update', {
+                id: statusId,
+                status: statusNew
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // Success handling
+                    setSms(`Status update successfully`);
+                    toast.success('Status update successfully.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+
+                    if (response.data.success === true) {
+                        // setShowAlert(true);
+                        // setTimeout(() => {
+                        //     setShowAlert(false);
+                        // }, 4000);
+                    }
+                })
+                .catch(error => {
+                    // Error handling
+                    toast.error('Status update Failed.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+
+                    console.error("Error fetching data: ", error);
+                })
+                .finally(() => {
+                    // Request complete hone ke baad flag reset hoga
+                    isRequestInProgress = false;
+                });
+        }
+    }, [statusNew]); // Ensure all dependencies are added
+
+    // status
     return (
         <div id='allEmp'>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
@@ -252,43 +417,45 @@ const All_Applicant_list = () => {
                         <path d="M16 15L15.7 15.4C15.1111 16.1851 14.8167 16.5777 14.3944 16.7889C13.9721 17 13.4814 17 12.5 17H11.5C10.5186 17 10.0279 17 9.60557 16.7889C9.18328 16.5777 8.88885 16.1851 8.3 15.4L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
+
                 <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose filterLeftCloseJOB'}`} ref={filterRef2}>
                     <div className="all">
-                        <div className='listActive' onClick={filter_leftClose}>
+                        <div className={activeFilter === ' ' ? ' listActiveStatus' : ''} onClick={() => handleFilterClick(' ')}>
                             <span> <FaList /></span>All
                         </div>
                     </div>
-                    <div className="active" onClick={filter_leftClose}>
-                        <div>
+                    <div className="active" onClick={() => handleFilterClick('New')}>
+                        <div className={activeFilter === 'New' ? 'listActiveStatus' : ''}>
                             <span><PiCheckSquare /></span>New
                         </div>
                     </div>
-                    <div className="inactive" onClick={filter_leftClose}>
-                        <div>
+                    <div className="inactive" onClick={() => handleFilterClick('Schedule')}>
+                        <div className={activeFilter === 'Schedule' ? 'listActiveStatus' : ''}>
                             <span> <MdDateRange /> </span>Schedule
                         </div>
                     </div>
-                    <div className="resigned" onClick={filter_leftClose}>
-                        <div>
+                    <div className="resigned" onClick={() => handleFilterClick('Interviewed')}>
+                        <div className={activeFilter === 'Interviewed' ? 'listActiveStatus' : ''}>
                             <span> <MdWork /> </span>Interviewed
                         </div>
                     </div>
-                    <div className="terminated" onClick={filter_leftClose}>
-                        <div>
+                    <div className="terminated" onClick={() => handleFilterClick('On hold')}>
+                        <div className={activeFilter === 'On hold' ? 'listActiveStatus' : ''}>
                             <span><FaRegClock /></span>On hold
                         </div>
                     </div>
-                    <div className="notice_period" onClick={filter_leftClose}>
-                        <div>
+                    <div className="notice_period" onClick={() => handleFilterClick('Hired')}>
+                        <div className={activeFilter === 'Hired' ? 'listActiveStatus' : ''}>
                             <span><GiNotebook /></span>Hired
                         </div>
                     </div>
-                    <div className="notice_period" onClick={filter_leftClose}>
-                        <div>
+                    <div className="notice_period" onClick={() => handleFilterClick('Rejected')}>
+                        <div className={activeFilter === 'Rejected' ? 'listActiveStatus' : ''}>
                             <span><IoMdCloseCircleOutline /></span>Rejected
                         </div>
                     </div>
                 </div>
+
                 <div className="right">
                     <div className="refresh divRight" onClick={handleRefresh}>
                         <div className='div_box'>
@@ -315,17 +482,41 @@ const All_Applicant_list = () => {
 
                         {isFilterOpen && (
                             <div className="filter-container" ref={filterRef}>
+                                
                                 <div className="filter-options">
-                                    {/* <div className="filter-option" onClick={handleCustomDateClick}>
-                                        <p>Custom Date </p>
+                                    <div className="filter-option" >
+                                        <p onClick={handleCustomDateClick}>Custom Date {!showCustomDate ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showCustomDate && (
                                             <div className="dropdown-content date-h">
-                                                <div><MdDateRange /> Select Custom date</div>
-                                                <input type="date" />
+                                                <div><span><MdDateRange /></span>{!selectedDate ? 'Select Custom date' : selectedDate} </div>
+                                                {/* <br /> */}
+                                                <input type="date" name="date" id="" onChange={handleDateChange} />
                                             </div>
                                         )}
-                                    </div> */}
+                                    </div>
+
                                     <div className="filter-option">
+                                        <p onClick={handleDateRangeClick}>Date Range  {!showDateRange ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                        {showDateRange && (
+                                            <div >
+                                                <label id='daterange-contener'>From</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!fromDate ? 'Select Custom date' : fromDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleFromDateChange} />
+                                                </div>
+                                                <label id='daterange-contener'>To</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!toDate ? 'Select Custom date' : toDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleToDateChange} />
+                                                </div>
+                                            </div>
+                                        )}
+
+                                    </div>
+
+                                    {/* <div className="filter-option">
                                         <p onClick={handleEmploymentTypeClick}>Experience Level</p>
                                         {showEmploymentType && (
                                             <div className="dropdown-content">
@@ -375,15 +566,11 @@ const All_Applicant_list = () => {
                                                 </ul>
                                             </div>
                                         )}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
 
-
-
-
                         )}
-
                     </div>
                 </div>
             </div>
@@ -392,7 +579,6 @@ const All_Applicant_list = () => {
                 {/* <div className="head">
                 </div> */}
                 <div className="employee-table">
-
                     <table>
                         <thead>
                             <tr>
@@ -434,12 +620,12 @@ const All_Applicant_list = () => {
                                             </span>
                                         } */}
                                     </td>
-                                    <td className='td' onClick={JobDetailsPage}>{emp.ApplicantName}</td>
-                                    <td className='td' onClick={JobDetailsPage}>{emp.Email}</td>
-                                    <td className='td' onClick={JobDetailsPage}>{emp.MobileNumber}</td>
-                                    <td className='td' onClick={JobDetailsPage}>{emp.JobOpening}</td>
-                                    <td className='td'  onClick={JobDetailsPage}>{emp.Source}</td>
-                                    <td className='td'  onClick={JobDetailsPage}>{emp.SourceName}</td>
+                                    <td className='td' onClick={() => navigate(`/applicant-details/${emp.id}`)}>{emp.name || '-'}</td>
+                                    <td className='td' onClick={() => navigate(`/applicant-details/${emp.id}`)}>{emp.email || '-'}</td>
+                                    <td className='td' onClick={() => navigate(`/applicant-details/${emp.id}`)}>{emp.mobile_no || '-'}</td>
+                                    <td className='td' onClick={() => navigate(`/applicant-details/${emp.id}`)}>{emp.job_opening_id}</td>
+                                    <td className='td' onClick={() => navigate(`/applicant-details/${emp.id}`)}>{emp.source || '-'}</td>
+                                    <td className='td' onClick={() => navigate(`/applicant-details/${emp.id}`)}>{emp.SourceName || '-'}</td>
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
@@ -448,7 +634,9 @@ const All_Applicant_list = () => {
                                                     onClick={() => setIsOpen(isOpen === index ? null : index)}
                                                 >
                                                     <span className={`left_dot ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}></span>
-                                                    <div>
+                                                    <div onClick={() => {
+                                                        UpdateStatusHndle(emp.id);
+                                                    }}>
                                                         <div className="">
                                                             {emp.status || 'Unknown Status'} {/* Optional: Fallback text */}
                                                         </div>
@@ -480,6 +668,18 @@ const All_Applicant_list = () => {
                             ))}
                         </tbody>
                     </table>
+                    {loading ? (
+                        <div id='Loading'>
+                            <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
+                        </div> // Show loading text or spinner when data is being fetched
+                    ) : ('')}
+                    {loading ? '' : employees == '' ? (
+                        <div className="not-found-container">
+                            <img src="https://cdn.dribbble.com/userupload/11708150/file/original-825be68b3517931ad747e0180a4116d3.png?resize=1200x900" alt="" />
+                            <h1 className="grey-text">No matching records found</h1>
+                            <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
+                        </div>
+                    ) : ('')}
                 </div>
                 <div className="pagination">
                     <div className="rows-per-page">
@@ -497,10 +697,11 @@ const All_Applicant_list = () => {
                             {[...Array(totalPages)].map((_, pageIndex) => (
                                 <button
                                     key={pageIndex + 1}
-                                    className={currentPage === pageIndex + 1 ? 'active' : ''}
+                                    className={currentPage === pageIndex + 1 ? 'activePageIndex' : ''}
                                     onClick={() => handlePageChange(pageIndex + 1)}
                                 >
                                     {pageIndex + 1}
+                                    {/* {console.log('currentPage', pageIndex + 1)} */}
                                 </button>
                             ))}
                         </div>

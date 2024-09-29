@@ -137,7 +137,7 @@ const App = () => {
                   {/* { } */}
                   <Route path="/all-applicant-list" element={<All_Applicant_list />} />
                   <Route path="/add-applicant" element={<Add_applicant />} />
-                  <Route path="/applicant-details" element={<Applicant_detail />} />
+                  <Route path="/applicant-details/:id" element={<Applicant_detail />} />
                   {/* {AllAttendanceList } */}
                   <Route path="/all-attendance-list" element={<AllAttendanceList />} />
                   <Route path="/attendance-details" element={<AttendanceDetails />} />

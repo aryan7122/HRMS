@@ -16,6 +16,7 @@ const ContactsForm = ({ onSubmit, next }) => {
     const { isOpen: isCountryOpen, ref: countryRef, buttonRef: countryButtonRef, handleToggle: toggleCountry, setIsOpen: setCountryOpen } = OutsideClick();
     const { isOpen: isStateOpen, ref: stateRef, buttonRef: stateButtonRef, handleToggle: toggleState, setIsOpen: setStateOpen } = OutsideClick();
     const { isOpen: isCityOpen, ref: cityRef, buttonRef: cityButtonRef, handleToggle: toggleCity, setIsOpen: setCityOpen } = OutsideClick();
+    
     const { isOpen: isPermanentCountryOpen, ref: permanentCountryRef, buttonRef: permanentCountryButtonRef, handleToggle: togglePermanentCountry, setIsOpen: setPermanentCountryOpen } = OutsideClick();
     const { isOpen: isPermanentStateOpen, ref: permanentStateRef, buttonRef: permanentStateButtonRef, handleToggle: togglePermanentState, setIsOpen: setPermanentStateOpen } = OutsideClick();
     const { isOpen: isPermanentCityOpen, ref: permanentCityRef, buttonRef: permanentCityButtonRef, handleToggle: togglePermanentCity, setIsOpen: setPermanentCityOpen } = OutsideClick();

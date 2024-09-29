@@ -1,4 +1,4 @@
-// import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../../Employee_onboarding/EmployeeDetail /EmployeeDetails.scss';
 
 import { IoMdCloseCircleOutline } from "react-icons/io";
@@ -6,19 +6,117 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdWorkHistory } from "react-icons/md";
 import { RxReload } from "react-icons/rx";
 import { BiEditAlt } from "react-icons/bi";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import { MdDeleteOutline } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 
 const Applicant_detail = () => {
+    const { id } = useParams(); // Get the job ID from the URL
+    const [employees, setEmployees] = useState([])
+
+    const [loading, setLoading] = useState(true);
+    const token = localStorage.getItem('access_token');
     const navigate = useNavigate()
     const JobList = () => {
         navigate('/all-applicant-list')
     }
 
+    console.log('employee', employees)
+    // details
+    useEffect(() => {
+        setLoading(true)
+        axios.post('https://devstronauts.com/public/api/applicant/details', {
+            id: id
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+
+                setLoading(false)
+                setEmployees(response.data.result);
+                // setFilteredEmployees(response.data.result); // filteredEmployees ko bhi sync karo
+                console.log('response 🥳', response.data);
+                // setLoading(false);
+                // setSms()
+            })
+            .catch(error => {
+                setEmployees('')
+                console.error("Error fetching data: ", error);
+                setLoading(false)
+
+            })
+    }, []);
+    // details
+
+    // delete
+    const [open, setOpen] = useState(false);
+
+    const HandleDelete = () => {
+        // confirm()
+        setOpen(true)
+
+    }
+    const DelteConform = () => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/applicant/delete', { id }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // setDepartmentdetails(response.data.department);
+                    // setDepartmentdetails2(response.data.department.enteredbyid)
+                    console.log('⚠️ delete ❗', response)
+                    // setLoading(false);
+                    navigate('/all-job-list')
+
+                })
+                .catch(error => {
+                    setLoading(false);
+                    // setError(true);
+                    console.error("Error fetching designation details:", error);
+                });
+        }
+    }
+
+    // delete
+
+    if (loading) {
+        return <div id='notFounPageID'><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" /></div>; // Loading state
+    }
+
+    if (!employees) {
+        return <div id='notFounPageID'><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif?cid=82a1493bn9krc5evd3vjd2zev16nlay9tbow8jarm2nx3rf7&ep=v1_gifs_related&rid=200w.gif&ct=g" alt="" /></div>; // Error handling if job not found
+    }
+
 
     return (
         <div className="profile-page">
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                backdrop={<div className="backdrop" />}
+                className="dialog"
+            >
+                <DialogHeading className="heading">Are you sure?</DialogHeading>
+                <p className="description">
+                    You want to delete this Job Detail
+                </p>
+                <div className="buttons">
+                    <div onClick={DelteConform}>
+                        <Button className="button" onClick={() => toast("Hello!")}>
+                            Delete
+                        </Button>
+                    </div>
+                    <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                </div>
+            </Dialog>
             <div className="details">
                 <div className="title_top">
                     <h2>Applicant Details</h2>
@@ -35,15 +133,15 @@ const Applicant_detail = () => {
                             <img src="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" />
                         </div>
                         <div className="about_user">
-                            <h3>Ramesh Gupta</h3>
-                            {/* <p>Web Developer / Full-Time</p> */}
-                            <div className=''><h4></h4> <h5>On Hold</h5></div>
+                            <h3>{employees.name || '-'}</h3>
+                            {/* <p>Web Developer | Full-Time</p> */}
+                            <div className=''><h4></h4> <h5>{employees.status || '-' }</h5></div>
                         </div>
                     </div>
                     <div className="action_card">
                         {/* <div><RxReload /></div> */}
                         <div><BiEditAlt /></div>
-                        <div><span><MdDeleteOutline /></span>Delete</div>
+                        <div onClick={HandleDelete}><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
                 <div className="info-cards" style={{ paddingBottom: '30px' }}>
@@ -62,49 +160,49 @@ const Applicant_detail = () => {
                         <div className='contentInformation'>
                             <div>
                                 <h4>Email ID</h4>
-                                <p>ramesh25@gmail.com</p>
+                                <p>{employees.email || '-'}</p>
                             </div>
                             <div>
                                 <h4>Contact Number</h4>
-                                <p>+91 80173 65995</p>
+                                <p>{employees.mobile_no || '-'}</p>
                             </div>
                             <div>
                                 <h4>Country</h4>
-                                <p>India</p>
+                                <p>{employees.country_id || '-'}</p>
                             </div>
                             <div>
                                 <h4>State</h4>
-                                <p>Maharashtra</p>
+                                <p>{employees.state_id || '-'}</p>
                             </div>
                             <div>
                                 <h4>City</h4>
-                                <p>Pune</p>
+                                <p>{employees.city_id || '-'}</p>
                             </div>
                             <div>
                                 <h4>Zip code</h4>
-                                <p>415002</p>
+                                <p>{employees.zip_code || '-'}</p>
                             </div>
                             <div>
                                 <h4>Resume</h4>
                                 <span className='privew'>
-                                    <p>My resume.PDF </p>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" color="#7f7f7f" fill="none">
-                                        <path d="M21.544 11.045C21.848 11.4713 22 11.6845 22 12C22 12.3155 21.848 12.5287 21.544 12.955C20.1779 14.8706 16.6892 19 12 19C7.31078 19 3.8221 14.8706 2.45604 12.955C2.15201 12.5287 2 12.3155 2 12C2 11.6845 2.15201 11.4713 2.45604 11.045C3.8221 9.12944 7.31078 5 12 5C16.6892 5 20.1779 9.12944 21.544 11.045Z" stroke="currentColor" stroke-width="1.5" />
-                                        <path d="M15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12Z" stroke="currentColor" stroke-width="1.5" />
-                                    </svg>
-                               </span>
-                            </div>
-                            <div>
-                                <h4>Cover Letter</h4>
-                                <span className='privew'>
-                                    <p>My resume.PDF </p>
+                                    <p>{employees.resume || '-'} </p>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" color="#7f7f7f" fill="none">
                                         <path d="M21.544 11.045C21.848 11.4713 22 11.6845 22 12C22 12.3155 21.848 12.5287 21.544 12.955C20.1779 14.8706 16.6892 19 12 19C7.31078 19 3.8221 14.8706 2.45604 12.955C2.15201 12.5287 2 12.3155 2 12C2 11.6845 2.15201 11.4713 2.45604 11.045C3.8221 9.12944 7.31078 5 12 5C16.6892 5 20.1779 9.12944 21.544 11.045Z" stroke="currentColor" stroke-width="1.5" />
                                         <path d="M15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12Z" stroke="currentColor" stroke-width="1.5" />
                                     </svg>
                                 </span>
                             </div>
-                           
+                            <div>
+                                <h4>Cover Letter</h4>
+                                <span className='privew'>
+                                    <p>{employees.cover_letter || '-'}</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17" height="17" color="#7f7f7f" fill="none">
+                                        <path d="M21.544 11.045C21.848 11.4713 22 11.6845 22 12C22 12.3155 21.848 12.5287 21.544 12.955C20.1779 14.8706 16.6892 19 12 19C7.31078 19 3.8221 14.8706 2.45604 12.955C2.15201 12.5287 2 12.3155 2 12C2 11.6845 2.15201 11.4713 2.45604 11.045C3.8221 9.12944 7.31078 5 12 5C16.6892 5 20.1779 9.12944 21.544 11.045Z" stroke="currentColor" stroke-width="1.5" />
+                                        <path d="M15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12Z" stroke="currentColor" stroke-width="1.5" />
+                                    </svg>
+                                </span>
+                            </div>
+
                         </div>
                     </div>
                     <div className="card">
@@ -125,23 +223,23 @@ const Applicant_detail = () => {
                             </div>
                             <div>
                                 <h4>Source</h4>
-                                <p>Employee Referral</p>
+                                <p>{ employees.source  || '-'}</p>
                             </div>
                             <div>
                                 <h4>Referral Employee</h4>
-                                <p>EMP-001</p>
+                                <p>{employees.referred_by || '-'}</p>
                             </div>
                             <div>
                                 <h4>Availability Date</h4>
-                                <p>25-Apr-2024</p>
+                                <p>{employees.availability_date || '-'}</p>
                             </div>
                             <div>
                                 <h4>Expected Salary</h4>
-                                <p>$25000</p>
+                                <p>{employees.expected_salary || '-'}</p>
                             </div>
                             <div>
                                 <h4>Created at</h4>
-                                <p>25-Apr-2024</p>
+                                <p>{employees.created_at || '-'}</p>
                             </div>
                             <div>
                                 <h4>Created By</h4>

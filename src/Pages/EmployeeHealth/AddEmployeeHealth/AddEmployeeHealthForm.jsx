@@ -18,6 +18,7 @@ import './AddEmployeeHealthForm.scss'; // Update with the correct path if necess
 import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
+import { MultiImageUpload } from '../../../components/MultiImageUpload';
 
 const AddEmployeeHealthForm = ({ onSubmit }) => {
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick();
@@ -58,9 +59,9 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
         healthCheckResults: '',
         covidAffected: '',
         covidVaccinationStatus: '',
-        profilePicture: '',
+        attachment: [],
         user_id: '',
-        notes:''
+        notes: ''
     });
 
     const [dropdowns, setDropdowns] = useState({
@@ -78,7 +79,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
             setIsUploaded(true);
             setFormData(prevState => ({
                 ...prevState,
-                profilePicture: file
+                attachment: file
             }));
         }
     };
@@ -144,7 +145,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
         axios.post('https://devstronauts.com/public/api/employee/health/create/update', payload, {
             headers: {
                 'Authorization': `Bearer ${token}`, // If needed, provide the token here
-                // 'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             }
         })
             .then(response => {
@@ -164,25 +165,25 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
                 // Reset form fields
                 if (response.status === 200) {
 
-                    setFormData({
-                        employeeName: '',
-                        emergencyContactNumber: '',
-                        emergencyContactName: '',
-                        bloodGroup: '',
-                        weight: '',
-                        height: '',
-                        allergies: '',
-                        chronicConditions: '',
-                        currentMedications: '',
-                        lastHealthCheckupDate: '',
-                        nextHealthCheckupDate: '',
-                        healthCheckResults: '',
-                        covidAffected: '',
-                        covidVaccinationStatus: '',
-                        profilePicture: '',
-                        notes: '',
-                        user_id:''
-                    });
+                    // setFormData({
+                    //     employeeName: '',
+                    //     emergencyContactNumber: '',
+                    //     emergencyContactName: '',
+                    //     bloodGroup: '',
+                    //     weight: '',
+                    //     height: '',
+                    //     allergies: '',
+                    //     chronicConditions: '',
+                    //     currentMedications: '',
+                    //     lastHealthCheckupDate: '',
+                    //     nextHealthCheckupDate: '',
+                    //     healthCheckResults: '',
+                    //     covidAffected: '',
+                    //     covidVaccinationStatus: '',
+                    //     attachment: [],
+                    //     notes: '',
+                    //     user_id: ''
+                    // });
                     // navigator('/health')
                 }
                 // setFileName('');
@@ -294,8 +295,6 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
     }, []);
 
     // api emp list
-
-
 
     return (
         <>
@@ -454,138 +453,138 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
                         </div>
                     </div>
                     <div id='form'>
-                        
-                               
-                    <div className="from1 form2">
-                        <h3 className='titleForm_h3'>Health Information</h3>
-                        <div></div>
-                        <div></div>
-                        {/* Department Dropdown */}
-                        <div className="form-group">
-                            <label className='starred'>Blood Group</label>
-                            <div className="dropdown">
-                                <div className="dropdown-button" onClick={toggleBloodGroup} ref={bloodGroupButtonRef}>
-                                    <div>{formData.bloodGroup || "Select Blood Group"}</div>
-                                    <span id='toggle_selectIcon'>
-                                        {!dropdowns.bloodGroup ? <IoIosArrowDown /> : <IoIosArrowUp />}
-                                    </span>
-                                </div>
-                                {isBloodGroupOpen && (
-                                    <div className="dropdown-menu" ref={bloodGroupRef}>
 
-                                        <input
-                                            type="search"
-                                            className='search22'
-                                                placeholder="Search Blood Group"
-                                            value={searchQueryBloodGroup}
-                                            id='searchDepartmentHead'
-                                            onChange={handleSearchQueryChangeBloodGroup}
-                                        />
-                                        <div className="dropdown_I">
-                                            {['A+', 'A-', 'B+', ' B-', 'O+', 'O-', 'AB+', 'AB-'].filter(option =>
-                                                option.toLowerCase().includes(searchQueryBloodGroup.toLowerCase())
-                                            ).map(option => (
-                                                <div className="dropdown-item" onClick={() => selectOption('bloodGroup', option)} key={option}>
-                                                    {option}
-                                                </div>
-                                            ))}
-                                        </div>
+
+                        <div className="from1 form2">
+                            <h3 className='titleForm_h3'>Health Information</h3>
+                            <div></div>
+                            <div></div>
+                            {/* Department Dropdown */}
+                            <div className="form-group">
+                                <label className='starred'>Blood Group</label>
+                                <div className="dropdown">
+                                    <div className="dropdown-button" onClick={toggleBloodGroup} ref={bloodGroupButtonRef}>
+                                        <div>{formData.bloodGroup || "Select Blood Group"}</div>
+                                        <span id='toggle_selectIcon'>
+                                            {!dropdowns.bloodGroup ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                        </span>
                                     </div>
-                                )}
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label>Weight</label>
-                            <input
-                                type="text"
-                                placeholder="Enter Weight"
-                                name="weight"
-                                value={formData.weight}
-                                onChange={handleChange2}
-                                className='weight-input'
-                            />
-                            <span className="unit-label">kg</span>
-                        </div>
-                        <div className="form-group">
-                            <label>Height</label>
-                            <input
-                                type="text"
-                                placeholder="Enter Height"
-                                name="height"
-                                value={formData.height}
-                                onChange={handleChange2}
-                                className='weight-input'
+                                    {isBloodGroupOpen && (
+                                        <div className="dropdown-menu" ref={bloodGroupRef}>
 
-                            />
-                            <span className="unit-label">cm</span>
-
-                        </div>
-                        <div className="form-group">
-                            <label>Allergies</label>
-                            <input
-                                type="text"
-                                placeholder="Enter Allergies"
-                                name="allergies"
-                                className='In_inputRightTitle'
-
-                                value={formData.allergies}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Chronic Conditions</label>
-                            <input
-                                type="text"
-                                placeholder="Enter Chronic Conditions"
-                                name="chronicConditions"
-                                value={formData.chronicConditions}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Current Medications</label>
-                            <input
-                                type="text"
-                                placeholder="Enter Current Medications"
-                                name="currentMedications"
-                                value={formData.currentMedications}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Last Health Checkup Date</label>
-                            <input
-                                type="date"
-                                name="lastHealthCheckupDate"
-                                value={formData.lastHealthCheckupDate}
-                                onChange={handleChange}
-
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Next Scheduled Check-Up Date</label>
-                            <input
-                                type="date"
-                                name="nextHealthCheckupDate"
-                                value={formData.nextHealthCheckupDate}
-                                onChange={handleChange}
-
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Health Check Results</label>
-                            <div className="dropdown">
-                                <div className="dropdown-button" onClick={toggleHealthCheckResults} ref={healthCheckResultsButtonRef}>
-                                    <div>{formData.healthCheckResults || "Select Results"}</div>
-                                    <span id='toggle_selectIcon'>
-                                        {!dropdowns.healthCheckResults ? <IoIosArrowDown /> : <IoIosArrowUp />}
-                                    </span>
+                                            <input
+                                                type="search"
+                                                className='search22'
+                                                placeholder="Search Blood Group"
+                                                value={searchQueryBloodGroup}
+                                                id='searchDepartmentHead'
+                                                onChange={handleSearchQueryChangeBloodGroup}
+                                            />
+                                            <div className="dropdown_I">
+                                                {['A+', 'A-', 'B+', ' B-', 'O+', 'O-', 'AB+', 'AB-'].filter(option =>
+                                                    option.toLowerCase().includes(searchQueryBloodGroup.toLowerCase())
+                                                ).map(option => (
+                                                    <div className="dropdown-item" onClick={() => selectOption('bloodGroup', option)} key={option}>
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
-                                {isHealthCheckResultsOpen && (
-                                    <div className="dropdown-menu" ref={healthCheckResultsRef}>
-                                        {/* <div className="dropdown-item" onClick={() => selectOption('healthCheckResults', 'Normal')}>Normal</div>
+                            </div>
+                            <div className="form-group">
+                                <label>Weight</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter Weight"
+                                    name="weight"
+                                    value={formData.weight}
+                                    onChange={handleChange2}
+                                    className='weight-input'
+                                />
+                                <span className="unit-label">kg</span>
+                            </div>
+                            <div className="form-group">
+                                <label>Height</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter Height"
+                                    name="height"
+                                    value={formData.height}
+                                    onChange={handleChange2}
+                                    className='weight-input'
+
+                                />
+                                <span className="unit-label">cm</span>
+
+                            </div>
+                            <div className="form-group">
+                                <label>Allergies</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter Allergies"
+                                    name="allergies"
+                                    className='In_inputRightTitle'
+
+                                    value={formData.allergies}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Chronic Conditions</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter Chronic Conditions"
+                                    name="chronicConditions"
+                                    value={formData.chronicConditions}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Current Medications</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter Current Medications"
+                                    name="currentMedications"
+                                    value={formData.currentMedications}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Last Health Checkup Date</label>
+                                <input
+                                    type="date"
+                                    name="lastHealthCheckupDate"
+                                    value={formData.lastHealthCheckupDate}
+                                    onChange={handleChange}
+
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Next Scheduled Check-Up Date</label>
+                                <input
+                                    type="date"
+                                    name="nextHealthCheckupDate"
+                                    value={formData.nextHealthCheckupDate}
+                                    onChange={handleChange}
+
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Health Check Results</label>
+                                <div className="dropdown">
+                                    <div className="dropdown-button" onClick={toggleHealthCheckResults} ref={healthCheckResultsButtonRef}>
+                                        <div>{formData.healthCheckResults || "Select Results"}</div>
+                                        <span id='toggle_selectIcon'>
+                                            {!dropdowns.healthCheckResults ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                        </span>
+                                    </div>
+                                    {isHealthCheckResultsOpen && (
+                                        <div className="dropdown-menu" ref={healthCheckResultsRef}>
+                                            {/* <div className="dropdown-item" onClick={() => selectOption('healthCheckResults', 'Normal')}>Normal</div>
                                         <div className="dropdown-item" onClick={() => selectOption('healthCheckResults', 'Requires Attention')}>Requires Attention</div> */}
-                                        {/* <input
+                                            {/* <input
                                             type="search"
                                             className='search22'
                                             placeholder="Search department"
@@ -593,57 +592,57 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
                                             id='searchDepartmentHead'
                                             onChange={handleSearchQueryChangeHealthCheckResults}
                                         /> */}
-                                        <div className="dropdown_I">
-                                            {['Healthy', 'UnHealthy'].filter(option =>
-                                                option.toLowerCase().includes(searchQueryHealthCheckResults.toLowerCase())
-                                            ).map(option => (
-                                                <div className="dropdown-item" onClick={() => selectOption('healthCheckResults', option)} key={option}>
-                                                    {option}
-                                                </div>
-                                            ))}
+                                            <div className="dropdown_I">
+                                                {['Healthy', 'UnHealthy'].filter(option =>
+                                                    option.toLowerCase().includes(searchQueryHealthCheckResults.toLowerCase())
+                                                ).map(option => (
+                                                    <div className="dropdown-item" onClick={() => selectOption('healthCheckResults', option)} key={option}>
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label className='starred'>COVID Affected*</label>
-                            <div className="dropdown">
-                                <div className="dropdown-button" onClick={toggleCOVIDAffected} ref={COVIDAffectedButtonRef}>
-                                    <div>{formData.covidAffected || "Select Status"}</div>
-                                    <span id='toggle_selectIcon'>
-                                        {!dropdowns.covidAffected ? <IoIosArrowDown /> : <IoIosArrowUp />}
-                                    </span>
+                                    )}
                                 </div>
-                                {isCOVIDAffectedOpen && (
-                                    <div className="dropdown-menu" ref={COVIDAffectedRef}>
-                                        <div className="dropdown-item" onClick={() => selectOption('covidAffected', 'Yes')}>Yes</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('covidAffected', 'No')}>No</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('covidAffected', 'Not Sure')}>Not Sure</div>
-                                    </div>
-                                )}
                             </div>
-                        </div>
-                        <div className="form-group">
-                            <label className='starred'>COVID Vaccination Status*</label>
-                            <div className="dropdown">
-                                <div className="dropdown-button" onClick={toggleVaccinationStatus} ref={VaccinationStatusButtonRef}>
-                                    <div>{formData.covidVaccinationStatus || "Select Status"}</div>
-                                    <span id='toggle_selectIcon'>
-                                        {!dropdowns.covidVaccinationStatus ? <IoIosArrowDown /> : <IoIosArrowUp />}
-                                    </span>
+                            <div className="form-group">
+                                <label className='starred'>COVID Affected*</label>
+                                <div className="dropdown">
+                                    <div className="dropdown-button" onClick={toggleCOVIDAffected} ref={COVIDAffectedButtonRef}>
+                                        <div>{formData.covidAffected || "Select Status"}</div>
+                                        <span id='toggle_selectIcon'>
+                                            {!dropdowns.covidAffected ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                        </span>
+                                    </div>
+                                    {isCOVIDAffectedOpen && (
+                                        <div className="dropdown-menu" ref={COVIDAffectedRef}>
+                                            <div className="dropdown-item" onClick={() => selectOption('covidAffected', 'Yes')}>Yes</div>
+                                            <div className="dropdown-item" onClick={() => selectOption('covidAffected', 'No')}>No</div>
+                                            <div className="dropdown-item" onClick={() => selectOption('covidAffected', 'Not Sure')}>Not Sure</div>
+                                        </div>
+                                    )}
                                 </div>
-                                {isVaccinationStatusOpen && (
-                                    <div className="dropdown-menu" ref={VaccinationStatusRef}>
-                                        <div className="dropdown-item" onClick={() => selectOption('covidVaccinationStatus', 'Fully Vaccinated')}>Fully Vaccinated</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('covidVaccinationStatus', 'Partially Vaccinated')}>Partially Vaccinated</div>
-                                        <div className="dropdown-item" onClick={() => selectOption('covidVaccinationStatus', 'Not Vaccinated')}>Not Vaccinated</div>
-                                    </div>
-                                )}
                             </div>
-                        </div>
-                        <div className="form-group">
-                                <label>Attachment</label>
+                            <div className="form-group">
+                                <label className='starred'>COVID Vaccination Status*</label>
+                                <div className="dropdown">
+                                    <div className="dropdown-button" onClick={toggleVaccinationStatus} ref={VaccinationStatusButtonRef}>
+                                        <div>{formData.covidVaccinationStatus || "Select Status"}</div>
+                                        <span id='toggle_selectIcon'>
+                                            {!dropdowns.covidVaccinationStatus ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                        </span>
+                                    </div>
+                                    {isVaccinationStatusOpen && (
+                                        <div className="dropdown-menu" ref={VaccinationStatusRef}>
+                                            <div className="dropdown-item" onClick={() => selectOption('covidVaccinationStatus', 'Fully Vaccinated')}>Fully Vaccinated</div>
+                                            <div className="dropdown-item" onClick={() => selectOption('covidVaccinationStatus', 'Partially Vaccinated')}>Partially Vaccinated</div>
+                                            <div className="dropdown-item" onClick={() => selectOption('covidVaccinationStatus', 'Not Vaccinated')}>Not Vaccinated</div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            {/* <div className="form-group">
+                            <label>Attachment</label>
                             <div className="file-upload">
                                 <input
                                     type="file"
@@ -655,22 +654,27 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
                                 />
                                 <label htmlFor="file" className="custom-file-upload">
                                     {!isUploaded && <GrCloudUpload size={20} />}
-                                        <span>{isUploaded ? fileName : 'Attachment'}</span>
+                                    <span>{isUploaded ? fileName : 'Attachment'}</span>
                                 </label>
                             </div>
+                        </div> */}
+                            <div className="form-group">
+                                <MultiImageUpload
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                />
+                            </div>
                         </div>
-                    </div>
+                        <div id='Description' className='DescriptionJob'>
+                            <div className="form-group">
+                                <label>Notes</label>
+                                <textarea
+                                    placeholder="Enter Notes"
+                                    name="notes"
+                                    value={formData.notes}
+                                    onChange={handleChange}
 
-                    <div id='Description' className='DescriptionJob'>
-                        <div className="form-group">
-                            <label>Notes</label>
-                            <textarea
-                                placeholder="Enter Notes"
-                                name="notes"
-                                value={formData.notes}
-                                onChange={handleChange}
-
-                            />
+                                />
                             </div>
                         </div>
                     </div>

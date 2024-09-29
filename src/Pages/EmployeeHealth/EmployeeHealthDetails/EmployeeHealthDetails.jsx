@@ -12,7 +12,9 @@ import { BiEditAlt } from "react-icons/bi";
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { MdDeleteOutline } from "react-icons/md";
-
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const EmployeeHealthDetails = () => {
     const [activeTab, setActiveTab] = useState('experience');
     const navigate = useNavigate()
@@ -103,6 +105,38 @@ const EmployeeHealthDetails = () => {
     }, []);
     // list api
 
+
+    // delete
+    const [open, setOpen] = useState(false);
+
+    const HandleDelete = () => {
+        // confirm()
+        setOpen(true)
+
+    }
+    const DelteConform = () => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/employee/health/delete', { id }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // setDepartmentdetails(response.data.department);
+                    // setDepartmentdetails2(response.data.department.enteredbyid)
+                    console.log('⚠️ delete ❗', response)
+                    // setLoading(false);
+                    navigate('/health')
+
+                })
+                .catch(error => {
+                    setLoading(false);
+                    setError(true);
+                    console.error("Error fetching designation details:", error);
+                });
+        }
+    }
+    // delete
     // Fetch  details based 
   
     if (loading) {
@@ -123,6 +157,36 @@ const EmployeeHealthDetails = () => {
 
     return (
         <div className="profile-page">
+
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                backdrop={<div className="backdrop" />}
+                className="dialog"
+            >
+                <DialogHeading className="heading">Are you sure?</DialogHeading>
+                <p className="description">
+                    You want to delete this Department Detail
+                </p>
+                <div className="buttons">
+                    <div onClick={DelteConform}>
+                        <Button className="button" onClick={() => toast("Deleted!")}>
+                            Delete
+                        </Button>
+                    </div>
+                    <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                </div>
+            </Dialog>
             <div className="details">
                 <div className="title_top">
                     <h2>Employee Health  Detail</h2>
@@ -147,7 +211,7 @@ const EmployeeHealthDetails = () => {
                     <div className="action_card">
                         <div><RxReload /></div>
                         <div onClick={Update}><BiEditAlt /></div>
-                        <div><span><MdDeleteOutline /></span>Delete</div>
+                        <div onClick={HandleDelete}><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
                 <div className="info-cards">
