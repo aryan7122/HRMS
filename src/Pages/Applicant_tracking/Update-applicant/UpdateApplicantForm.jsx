@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import '../../Employee_onboarding/AddEmployee/AddEmloyee.scss';
 import '../../Employee_onboarding/AddEmployee/NavbarForm.scss';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -12,14 +12,16 @@ import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MultiImageUpload } from '../../../components/MultiImageUpload.jsx';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const ApplicantForm = ({ onSubmit }) => {
+const UpdateApplicantForm = ({ onSubmit }) => {
     const { isOpen: isCountryOpen, ref: countryRef, buttonRef: countryButtonRef, handleToggle: toggleCountry, setIsOpen: setCountryOpen } = OutsideClick();
     const { isOpen: isStateOpen, ref: stateRef, buttonRef: stateButtonRef, handleToggle: toggleState, setIsOpen: setStateOpen } = OutsideClick();
     const { isOpen: isCityOpen, ref: cityRef, buttonRef: cityButtonRef, handleToggle: toggleCity, setIsOpen: setCityOpen } = OutsideClick();
     const { isOpen: isSourceOpen, ref: sourceRef, buttonRef: sourceButtonRef, handleToggle: toggleCSource, setIsOpen: setSourceOpen } = OutsideClick();
 
-    
+    const { id } = useParams();
     const { locationsapi, fetchStates, fetchCities } = useLocationData();
     console.log('locationsapi🌐', locationsapi)
 
@@ -41,7 +43,9 @@ const ApplicantForm = ({ onSubmit }) => {
         source: '',
         availabilityDate: '',
         expectedSalary: '',
-        referredPerson: ''
+        referredPerson: '',
+        attachment: [],
+        attachment2: [],
     });
 
     console.log('formData', formData)
@@ -72,7 +76,7 @@ const ApplicantForm = ({ onSubmit }) => {
 
         // Map the formData fields to the expected JSON format
         const requestData = {
-            // id: 1,  // This ID can be dynamic if needed
+            id: id,  // This ID can be dynamic if needed
             name: formData.fullName,
             email: formData.email,
             mobile_no: formData.contactNumber,
@@ -196,6 +200,52 @@ const ApplicantForm = ({ onSubmit }) => {
     };
     const handleSearchQueryChange = (e) => setSearchQuery(e.target.value);
 
+
+    // detail set
+    useEffect(() => {
+        // API se data fetch karo
+        const fetchApplicantDetails = async () => {
+            try {
+                const response = await axios.post(`https://devstronauts.com/public/api/applicant/details`, {id}, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (response.data.success) {
+                    const data = response.data.result;
+                    console.log('data', response)
+                    // Jo API se data mila, use formData me set karo
+                    setFormData({
+                        fullName: data.name || '',
+                        email: data.email || '',
+                        contactNumber: data.mobile_no || '',
+                        jobOpening: data.job_opening_id || '',
+                        resume: data.resume || '',
+                        coverLetter: data.cover_letter || '',
+                        country: data.country_id || '',
+                        state: data.state_id || '',
+                        city: data.city_id || '',
+                        zipCode: data.zip_code || '',
+                        source: data.source || '',
+                        availabilityDate: data.availability_date || '',
+                        expectedSalary: data.expected_salary || '',
+                        referredPerson: data.referred_by || '',
+                        attachment: [], // Assuming you are not handling this from API response
+                        attachment2: [], // Assuming you are not handling this from API response
+                    });
+                } else {
+                    console.log('Error fetching data', response.data.message);
+                }
+            } catch (error) {
+                console.log('API Error:', error);
+            }
+        };
+
+        fetchApplicantDetails();
+    }, []);
+    // detail set
+
     return (
         <>
             <ToastContainer
@@ -255,7 +305,7 @@ const ApplicantForm = ({ onSubmit }) => {
                                     required
                                 />
                             </div>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label className='starred'>Resume*</label>
                                 <div className="file-upload">
                                     <input
@@ -270,8 +320,8 @@ const ApplicantForm = ({ onSubmit }) => {
                                         <span>{formData.resume || 'Upload Doc'}</span>
                                     </label>
                                 </div>
-                            </div>
-                            <div className="form-group">
+                            </div> */}
+                            {/* <div className="form-group">
                                 <label >Cover Letter</label>
                                 <div className="file-upload">
                                     <input
@@ -281,11 +331,33 @@ const ApplicantForm = ({ onSubmit }) => {
                                         onChange={handleFileChange}
                                     />
                                     <label htmlFor="file" className="custom-file-upload">
-                                        {!formData.coverLetter && <GrCloudUpload size={20} />}
-                                        <span>{formData.coverLetter || 'Upload Doc'}</span>
+                                        {!formData.resume && <GrCloudUpload size={20} />}
+                                        <span>{formData.resume || 'Upload Doc'}</span>
                                     </label>
                                 </div>
+                            </div> */}
+
+                            <div className="form-group">
+                                <label className='starred'>Resume*</label>
+                                <MultiImageUpload
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                />
                             </div>
+                            <div className="form-group">
+                                <label >Cover Letter</label>
+                                <MultiImageUpload
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                />
+                            </div>
+
+                            {/* <div className="form-group">
+                                <MultiImageUpload
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                />
+                            </div> */}
 
                             {/* <div className="form-group">
                                 <label className='starred'>Country/Region</label>
@@ -484,7 +556,7 @@ const ApplicantForm = ({ onSubmit }) => {
                     <div id='submitBtn_next_main'>
                         <div id='submitBtn' >
                             <div className='div'>
-                                <button type="submit" >Submit </button>
+                                <button type="submit" >Update </button>
                                 <span><CiCircleChevRight /></span>
                             </div>
                             <div className="lineBar"></div>
@@ -504,4 +576,4 @@ const ApplicantForm = ({ onSubmit }) => {
     );
 };
 
-export default ApplicantForm;
+export default UpdateApplicantForm;

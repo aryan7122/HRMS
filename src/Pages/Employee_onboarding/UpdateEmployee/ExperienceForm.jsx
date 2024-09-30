@@ -10,8 +10,9 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from 'react-router-dom';
+import { MultiImageUploaders } from '../../../components/MultiImageUpload.jsx';
 
-const ExperienceForm = ({ onSubmit, next,update }) => {
+const ExperienceForm = ({ onSubmit, next, update }) => {
     // Using the 'experiences' key inside the state as per your suggestion
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
@@ -25,10 +26,53 @@ const ExperienceForm = ({ onSubmit, next,update }) => {
                 from_date: "",
                 to_date: "",
                 description: "",
-                photo: ''  // Added photo field
+                experience_letter: [],
             }
         ]
     });
+
+    const [formData, setFormData] = useState({
+    });
+    console.log('formData 👋', formData)
+    console.log('❗', experienceForms)
+    useEffect(() => {
+        // Loop through formData and update experienceForms based on index
+        Object.keys(formData).forEach((key) => {
+            if (key.startsWith('experience_letter_')) {
+                const index = parseInt(key.split('_')[2]); // Extract index from key (experience_letter_X)
+                const newForms = [...experienceForms.experiences];
+
+                // Set the experience_letter for the specific form
+                newForms[index].experience_letter = formData[key];
+
+                setExperienceForms({ experiences: newForms });
+            }
+        });
+    }, [formData]);
+    // 
+    // Sample data structure for testing
+    // attacment in update img
+
+    useEffect(() => {
+        const updatedFormData = {};
+
+        // Loop through each experience in experienceForms
+        experienceForms.experiences.forEach((experience, index) => {
+            const experienceLetterKey = `experience_letter_${index}`;
+
+            // Set experience letter directly if it exists
+            updatedFormData[experienceLetterKey] = experience.experience_letter || {};
+        });
+
+        setFormData(updatedFormData); 
+    }, [next]); 
+    // attacment in update img
+
+
+    console.log('Updated formData:', formData);
+
+
+    // 
     const { id } = useParams();
     const token = localStorage.getItem('access_token');
 
@@ -44,7 +88,7 @@ const ExperienceForm = ({ onSubmit, next,update }) => {
                 .then(response => {
                     const data = response.data.result.experiences;
 
-                    console.log('data', data);
+                    console.log('data👉', data);
 
                     if (data && data.length > 0) {
                         setExperienceForms({
@@ -56,9 +100,25 @@ const ExperienceForm = ({ onSubmit, next,update }) => {
                                 from_date: exp.from_date || "",
                                 to_date: exp.to_date || "",
                                 description: exp.description || "",
-                                photo: exp.photo || ''  // Assuming photo field exists
-                            }))
+                                experience_letter: exp.experience_letter
+                                    ? JSON.parse(exp.experience_letter).map(item => ({
+                                        name: item.name, // Image name
+                                        url: item.url   // Image URL
+                                    }))
+                                    : []
+                            }))  // Assuming photo field exists
+
                         });
+                        // setFormData({
+                        //     experiences: data.map((exp, index) => ({
+                        //         experience_letter: exp.experience_letter
+                        //             ? JSON.parse(exp.experience_letter).map(item => ({
+                        //                 name: item.name, // Image name
+                        //                 url: item.url    // Image URL
+                        //             }))
+                        //             : [] // Default to empty array if no experience_letter
+                        //     }))
+                        // });
                         update(experienceForms)
                     }
                 })
@@ -254,7 +314,7 @@ const ExperienceForm = ({ onSubmit, next,update }) => {
                                     />
                                 </div>
                             </div>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label>Experience Letter</label>
                                 <div className="file-upload">
                                     <input
@@ -268,6 +328,14 @@ const ExperienceForm = ({ onSubmit, next,update }) => {
                                         {isUploaded ? fileName : 'Upload Doc'}
                                     </label>
                                 </div>
+                            </div> */}
+                            <div className="form-group">
+                                <label className=''>Experience Letter</label>
+                                <MultiImageUploaders
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                    fieldName={`experience_letter_${index}`}
+                                />
                             </div>
                         </div>
                         <div id='Description'>

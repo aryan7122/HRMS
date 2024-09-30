@@ -18,7 +18,6 @@ import '../src/styles/EffectSroll.scss'
 
 import './styles/App.scss';
 
-
 // 
 // import SignUp from './Views/SignUp/SignUp.jsx';
 import ForgotPassword from './Views/ForgotPassword/ForgotPassword.jsx';
@@ -65,6 +64,7 @@ import UpdateEmployeeHealth from './Pages/EmployeeHealth/UpdateEmployeeHealth /U
 import { useSelector } from 'react-redux';
 import All_leaves_List from './Pages/LeaveManagement/All_leaves_List/All_leaves_List.jsx';
 import UpdateEmloyee from './Pages/Employee_onboarding/UpdateEmployee/UpdateEmloyee.jsx';
+import Update_applicant from './Pages/Applicant_tracking/Update-applicant/Update_applicant.jsx';
 
 
 const App = () => {
@@ -123,21 +123,23 @@ const App = () => {
                   <Route path="/admin-profile" element={<AdminProfile />} />
                   <Route path="/Employee-profile" element={<EmployeeProfile />} />
                   <Route path="/all-employee-list" element={<AllEmployeeList />} />
-                    <Route path="/add-employee" element={<AddEmloyee />} />
+                  <Route path="/add-employee" element={<AddEmloyee />} />
                   <Route path="/employee-details/:id" element={<EmployeeDetails />} />
-                    <Route path="/UpdateEmloyee/:id" element={<UpdateEmloyee />} />
+                  <Route path="/UpdateEmloyee/:id" element={<UpdateEmloyee />} />
 
                   {/* recruitment */}
                   <Route path="/all-job-list" element={<AllJobList />} />
                   <Route path="/add-job" element={<AddNewJob />} />
                   <Route path="/job-details/:id" element={<JobDetails />} />
 
-                    <Route path="/job-update/:id" element={<UpdateJob />} />
+                  <Route path="/job-update/:id" element={<UpdateJob />} />
 
-                  {/* { } */}
+                  {/* {Update_applicant } */}
                   <Route path="/all-applicant-list" element={<All_Applicant_list />} />
                   <Route path="/add-applicant" element={<Add_applicant />} />
                   <Route path="/applicant-details/:id" element={<Applicant_detail />} />
+                  <Route path="/update-applicant/:id" element={<Update_applicant />} />
+
                   {/* {AllAttendanceList } */}
                   <Route path="/all-attendance-list" element={<AllAttendanceList />} />
                   <Route path="/attendance-details" element={<AttendanceDetails />} />
@@ -149,12 +151,12 @@ const App = () => {
                   <Route path="/addemployeehealth" element={<AddEmployeeHealth />} />
                   <Route path="/departmentdetails/:id" element={<DepartmentDetails />} />
                   <Route path="/designationdeatils/:id" element={<DesignationDetails />} />
-                    <Route path="/employeehealthdetails/:id" element={<EmployeeHealthDetails />} />
-                    <Route path="/update-employee-health/:id" element={<UpdateEmployeeHealth />} />
+                  <Route path="/employeehealthdetails/:id" element={<EmployeeHealthDetails />} />
+                  <Route path="/update-employee-health/:id" element={<UpdateEmployeeHealth />} />
 
                   <Route path="/birthday" element={<BirthdayList />} />
-                    {/* {All_leaves_List } */}
-                    <Route path="/leave-master" element={<All_leaves_List />} />
+                  {/* {All_leaves_List } */}
+                  <Route path="/leave-master" element={<All_leaves_List />} />
 
 
                 </Routes>

@@ -9,16 +9,48 @@ import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { OutsideClick } from './OutsideClick.jsx';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { number } from 'prop-types';
+import { MultiImageUploaders } from '../../../components/MultiImageUpload';
 
 const DocumentsForm = ({ onSubmit,next }) => {
     const [educationForms, setEducationForms] = useState([
         {
             documentType: '',
             number: '',
-            attachmentFront: '',
-            attachmentBack: '',
+            attachmentFront: [],
+            attachmentBack: [],
         }
     ]);
+    const [formData, setFormData] = useState({});
+    useEffect(() => {
+        Object.keys(formData).forEach((key) => {
+            const index = parseInt(key.split('_')[2]); // Extract index from key
+            const newForms = [...educationForms];
+
+            // Check if it's front or back attachment
+            if (key.startsWith('front_attachment_')) {
+                // If it's front attachment
+                newForms[index].attachmentFront = formData[key];
+            } else if (key.startsWith('back_attachment_')) {
+                // If it's back attachment
+                newForms[index].attachmentBack = formData[key];
+            }
+            else if (key.startsWith('pan_attachment_')) {
+                newForms[index].attachmentFront = formData[key];
+            }
+            else if (key.startsWith('uan_attachment_')) {
+                newForms[index].attachmentFront = formData[key];
+            }
+            else if (key.startsWith('other_attachment_')) {
+                newForms[index].attachmentFront = formData[key];
+            }
+
+            // Update the educationForms state with new attachments  
+            setEducationForms(newForms);
+        });
+    }, [formData]);
+
+    console.log('formData ', formData);
+    console.log('educationForms :::', educationForms);
 
     // const [allDocumentsData, setAllDocumentsData] = useState({
     //     aadhaar: {
@@ -402,7 +434,7 @@ const DocumentsForm = ({ onSubmit,next }) => {
                                             placeholder="Enter Document Number"
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    {/* <div className="form-group">
                                         <label>Front  Attachment</label>
                                         <div className="file-upload">
                                             <input
@@ -417,8 +449,24 @@ const DocumentsForm = ({ onSubmit,next }) => {
                                                 {isUploaded ? fileName : `${form.documentType} Attachment`}
                                             </label>
                                         </div>
+                                    </div> */}
+                                    <div className="form-group">
+                                        <label>Front  Attachment</label>
+                                        <MultiImageUploaders
+                                            formData={formData}
+                                            setFormData={setFormData}
+                                            fieldName={`front_attachment_${index}`}
+                                        />
                                     </div>
                                     <div className="form-group">
+                                        <label>Back  Attachment</label>
+                                        <MultiImageUploaders
+                                            formData={formData}
+                                            setFormData={setFormData}
+                                            fieldName={`back_attachment_${index}`}
+                                        />
+                                    </div>
+                                    {/* <div className="form-group">
                                         <label>Back Attachment</label>
                                         <div className="file-upload">
                                             <input
@@ -433,7 +481,7 @@ const DocumentsForm = ({ onSubmit,next }) => {
                                                 {isUploaded ? fileName : `${form.documentType} Attachment`}
                                             </label>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </>
                             )}
 
@@ -484,7 +532,7 @@ const DocumentsForm = ({ onSubmit,next }) => {
                                             placeholder="Enter Document Number"
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    {/* <div className="form-group">
                                         <label> Attachment</label>
                                         <div className="file-upload">
                                             <input
@@ -499,6 +547,14 @@ const DocumentsForm = ({ onSubmit,next }) => {
                                                 {isUploaded ? fileName : `${form.documentType} Attachment`}
                                             </label>
                                         </div>
+                                    </div> */}
+                                    <div className="form-group">
+                                        <label> Attachment</label>
+                                        <MultiImageUploaders
+                                            formData={formData}
+                                            setFormData={setFormData}
+                                            fieldName={`pan_attachment_${index}`}
+                                        />
                                     </div>
                                 </>
                             )}
@@ -549,7 +605,7 @@ const DocumentsForm = ({ onSubmit,next }) => {
                                             placeholder="Enter Document Number"
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    {/* <div className="form-group">
                                         <label> Attachment</label>
                                         <div className="file-upload">
                                             <input
@@ -564,6 +620,14 @@ const DocumentsForm = ({ onSubmit,next }) => {
                                                 {isUploaded ? fileName : `${form.documentType} Attachment`}
                                             </label>
                                         </div>
+                                    </div> */}
+                                    <div className="form-group">
+                                        <label> Attachment</label>
+                                        <MultiImageUploaders
+                                            formData={formData}
+                                            setFormData={setFormData}
+                                            fieldName={`uan_attachment_${index}`}
+                                        />
                                     </div>
                                 </>
                             )}
@@ -614,7 +678,7 @@ const DocumentsForm = ({ onSubmit,next }) => {
                                             placeholder="Enter other Document Number"
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    {/* <div className="form-group">
                                         <label> Attachment</label>
                                         <div className="file-upload">
                                             <input
@@ -629,6 +693,14 @@ const DocumentsForm = ({ onSubmit,next }) => {
                                                 {isUploaded ? fileName : `${form.documentType} Attachment`}
                                             </label>
                                         </div>
+                                    </div> */}
+                                    <div className="form-group">
+                                        <label> Attachment</label>
+                                        <MultiImageUploaders
+                                            formData={formData}
+                                            setFormData={setFormData}
+                                            fieldName={`other_attachment_${index}`}
+                                        />
                                     </div>
                                 </>
                             )}

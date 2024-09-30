@@ -12,6 +12,7 @@ import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MultiImageUploaders } from '../../../components/MultiImageUpload.jsx';
 
 const ApplicantForm = ({ onSubmit }) => {
     const { isOpen: isCountryOpen, ref: countryRef, buttonRef: countryButtonRef, handleToggle: toggleCountry, setIsOpen: setCountryOpen } = OutsideClick();
@@ -32,8 +33,8 @@ const ApplicantForm = ({ onSubmit }) => {
         email: '',
         contactNumber: '',
         jobOpening: '',
-        resume: '',
-        coverLetter: '',
+        resume: [],
+        coverLetter: [],
         country: '',
         state: '',
         city: '',
@@ -41,7 +42,7 @@ const ApplicantForm = ({ onSubmit }) => {
         source: '',
         availabilityDate: '',
         expectedSalary: '',
-        referredPerson: ''
+        referredPerson: '',
     });
 
     console.log('formData', formData)
@@ -78,7 +79,7 @@ const ApplicantForm = ({ onSubmit }) => {
             mobile_no: formData.contactNumber,
             job_opening_id: formData.jobOpening,
             resume: formData.resume, // Make sure it's a file path or a proper file object
-            cover_letter: formData.resume, // Same as resume
+            cover_letter: formData.coverLetter, // Same as resume
             country_id: formData.cityId,
             state_id: formData.stateId,
             city_id: formData.cityId,
@@ -255,7 +256,7 @@ const ApplicantForm = ({ onSubmit }) => {
                                     required
                                 />
                             </div>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label className='starred'>Resume*</label>
                                 <div className="file-upload">
                                     <input
@@ -270,8 +271,8 @@ const ApplicantForm = ({ onSubmit }) => {
                                         <span>{formData.resume || 'Upload Doc'}</span>
                                     </label>
                                 </div>
-                            </div>
-                            <div className="form-group">
+                            </div> */}
+                            {/* <div className="form-group">
                                 <label >Cover Letter</label>
                                 <div className="file-upload">
                                     <input
@@ -281,11 +282,35 @@ const ApplicantForm = ({ onSubmit }) => {
                                         onChange={handleFileChange}
                                     />
                                     <label htmlFor="file" className="custom-file-upload">
-                                        {!formData.coverLetter && <GrCloudUpload size={20} />}
-                                        <span>{formData.coverLetter || 'Upload Doc'}</span>
+                                        {!formData.resume && <GrCloudUpload size={20} />}
+                                        <span>{formData.resume || 'Upload Doc'}</span>
                                     </label>
                                 </div>
+                            </div> */}
+
+                            <div className="form-group">
+                                <label className='starred'>Resume*</label>
+                                <MultiImageUploaders
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                    fieldName="resume"  // Unique field for resume
+                                />
                             </div>
+
+                            <div className="form-group">
+                                <label>Cover Letter</label>
+                                <MultiImageUploaders
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                    fieldName="coverLetter"  // Unique field for cover letter
+                                />
+                            </div>
+                            {/* <div className="form-group">
+                                <MultiImageUpload
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                />
+                            </div> */}
 
                             {/* <div className="form-group">
                                 <label className='starred'>Country/Region</label>

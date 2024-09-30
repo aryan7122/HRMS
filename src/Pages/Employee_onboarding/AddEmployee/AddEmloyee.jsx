@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-
 const AddEmployee = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -36,7 +35,7 @@ const AddEmployee = () => {
             employment_type: formData.employmentType || '',
             employee_status: formData.employeeStatus || '',
             source_of_hire: formData.sourceOfHire || '',
-            image: formData.photo || '', //
+            image: formData.attachment || '', //
             experience: formData.employeeId || '',
             contacts: [
                 {
@@ -76,6 +75,8 @@ const AddEmployee = () => {
     const token = localStorage.getItem('access_token');
     const formDataApi = prepareFormData({ ...clonedFormData });
     console.log('formDataApi❗', formDataApi)
+    console.log('formData❗', formData)
+
     console.log('clonedFormData', clonedFormData)
 
     const handleFormData = async (newData) => {
@@ -155,6 +156,8 @@ const AddEmployee = () => {
     });
 
     const handleNext = (newData) => {
+        console.log('formDataApi❗', formDataApi)
+
         setFormData((prevData) => ({
             ...prevData,
             ...newData,

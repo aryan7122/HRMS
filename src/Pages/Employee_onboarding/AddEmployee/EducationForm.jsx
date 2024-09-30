@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import './AddEmloyee.scss';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
@@ -6,6 +6,7 @@ import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoMdAddCircleOutline, IoMdCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import { MultiImageUploaders } from '../../../components/MultiImageUpload';
 
 const EducationForm = ({ onSubmit, next }) => {
     const [fileName, setFileName] = useState('');
@@ -18,13 +19,31 @@ const EducationForm = ({ onSubmit, next }) => {
                 institute_name: "",
                 degree: "",
                 specialization: "",
-                attachment: "",
+                attachment: [],
                 date_of_completion: "",
                 from_date: "",
                 to_date: ""
             }
         ]
     });
+    const [formData, setFormData] = useState({
+    });
+    console.log('formData educationForms', formData)
+    console.log('educationForms :::', educationForms)
+    useEffect(() => {
+        // Loop through formData and update experienceForms based on index
+        Object.keys(formData).forEach((key) => {
+            if (key.startsWith('attachment_')) {
+                const index = parseInt(key.split('_')[1]); // Extract index from key (experience_letter_X)
+                const newForms = [...educationForms.educations];
+
+                // Set the experience_letter for the specific form
+                newForms[index].attachment = formData[key];
+
+                setEducationForms({ educations: newForms });
+            }
+        });
+    }, [formData]);
 
     // Handle file change
     const handleFileChange = (index, event) => {
@@ -54,7 +73,7 @@ const EducationForm = ({ onSubmit, next }) => {
                 institute_name: "",
                 degree: "",
                 specialization: "",
-                attachment: "",
+                attachment: [],
                 date_of_completion: "",
                 from_date: "",
                 to_date: ""
@@ -151,7 +170,7 @@ const EducationForm = ({ onSubmit, next }) => {
                                 />
                             </div>
 
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label>Attachment</label>
                                 <div className="file-upload">
                                     <input
@@ -166,6 +185,14 @@ const EducationForm = ({ onSubmit, next }) => {
                                         {isUploaded ? fileName : 'Upload Document'}
                                     </label>
                                 </div>
+                            </div> */}
+                            <div className="form-group">
+                                <label>Attachment</label>
+                                <MultiImageUploaders
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                    fieldName={`attachment_${index}`}
+                                />
                             </div>
                             <div className="form-group">
                                 <label>Date of Completion</label>

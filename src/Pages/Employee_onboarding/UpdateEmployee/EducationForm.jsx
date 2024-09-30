@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './UpdateEmloyee.scss';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
@@ -10,6 +10,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from 'react-router-dom';
+import { MultiImageUploaders } from '../../../components/MultiImageUpload';
 
 const EducationForm = ({ onSubmit, next, update }) => {
     const [fileName, setFileName] = useState('');
@@ -22,13 +23,49 @@ const EducationForm = ({ onSubmit, next, update }) => {
                 institute_name: "",
                 degree: "",
                 specialization: "",
-                attachment: "",
+                attachment: [],
                 date_of_completion: "",
                 from_date: "",
                 to_date: ""
             }
         ]
     });
+    const [formData, setFormData] = useState({
+    });
+    console.log('formData educationForms', formData)
+    console.log('educationForms :::', educationForms)
+    useEffect(() => {
+        // Loop through formData and update experienceForms based on index
+        Object.keys(formData).forEach((key) => {
+            if (key.startsWith('attachment_')) {
+                const index = parseInt(key.split('_')[1]); // Extract index from key (experience_letter_X)
+                const newForms = [...educationForms.educations];
+
+                // Set the experience_letter for the specific form
+                newForms[index].attachment = formData[key];
+
+                setEducationForms({ educations: newForms });
+            }
+        });
+    }, [formData]);
+    // attacment in update img
+
+    useEffect(() => {
+        // Loop through each education in educationForms
+        const updatedFormData = {};
+
+        educationForms.educations.forEach((education, index) => {
+            const attachmentKey = `attachment_${index}`;
+
+            // Set attachment directly if it exists
+            updatedFormData[attachmentKey] = education.attachment || [];
+        });
+
+        // Update formData with attachments
+        setFormData(updatedFormData);
+    }, [next]);
+
+    // attacment in update img
     const { id } = useParams();
     const token = localStorage.getItem('access_token');
 
@@ -53,10 +90,16 @@ const EducationForm = ({ onSubmit, next, update }) => {
                                 institute_name: edu.institute_name || "",
                                 degree: edu.degree || "",
                                 specialization: edu.specialization || "",
-                                attachment: edu.attachment || "",
+                                // attachment: edu.attachment || "",
                                 date_of_completion: edu.date_of_completion || "",
                                 from_date: edu.from_date || "",
-                                to_date: edu.to_date || ""
+                                to_date: edu.to_date || "",
+                                attachment: edu.attachment
+                                    ? JSON.parse(edu.attachment).map(item => ({
+                                        name: item.name, // Image name
+                                        url: item.url   // Image URL
+                                    }))
+                                    : []
                             }))
                         });
                         update(educationForms)
@@ -205,20 +248,13 @@ const EducationForm = ({ onSubmit, next, update }) => {
 
                             <div className="form-group">
                                 <label>Attachment</label>
-                                <div className="file-upload">
-                                    <input
-                                        type="file"
-                                        name='attachment'
-                                        accept="image/*"
-                                        id="file"
-                                        onChange={(e) => handleFileChange(index, e)}
-                                    />
-                                    <label htmlFor="file" className="custom-file-upload">
-                                        {!isUploaded && <GrCloudUpload className="upload-icon" />}
-                                        {isUploaded ? fileName : 'Upload Document'}
-                                    </label>
-                                </div>
+                                <MultiImageUploaders
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                    fieldName={`attachment_${index}`}
+                                />
                             </div>
+
                             <div className="form-group">
                                 <label>Date of Completion</label>
                                 <input

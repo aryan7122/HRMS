@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './AddEmloyee.scss';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
@@ -6,6 +6,7 @@ import { TfiClose } from "react-icons/tfi";
 import { GrCloudUpload } from "react-icons/gr";
 import { IoMdAddCircleOutline, IoMdCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
+import { MultiImageUploaders } from '../../../components/MultiImageUpload.jsx';
 
 const ExperienceForm = ({ onSubmit, next }) => {
     // Using the 'experiences' key inside the state as per your suggestion
@@ -21,11 +22,31 @@ const ExperienceForm = ({ onSubmit, next }) => {
                 from_date: "",
                 to_date: "",
                 description: "",
-                photo: ''  // Added photo field
+                experience_letter: [],
             }
         ]
     });
+    const [formData, setFormData] = useState({
+    });
+    console.log('formData 👋', formData)
+    console.log('experienceForms :::', experienceForms)
+    useEffect(() => {
+        // Loop through formData and update experienceForms based on index
+        Object.keys(formData).forEach((key) => {
+            if (key.startsWith('experience_letter_')) {
+                const index = parseInt(key.split('_')[2]); // Extract index from key (experience_letter_X)
+                const newForms = [...experienceForms.experiences];
 
+                // Set the experience_letter for the specific form
+                newForms[index].experience_letter = formData[key];
+
+                setExperienceForms({ experiences: newForms });
+            }
+        });
+    }, [formData]);
+
+    
+    console.log('experienceForms', experienceForms)
     const handleFileChange = (index, event) => {
         const file = event.target.files[0];
         if (file) {
@@ -203,7 +224,7 @@ const ExperienceForm = ({ onSubmit, next }) => {
                                     />
                                 </div>
                             </div>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label>Experience Letter</label>
                                 <div className="file-upload">
                                     <input
@@ -217,6 +238,14 @@ const ExperienceForm = ({ onSubmit, next }) => {
                                         {isUploaded ? fileName : 'Upload Doc'}
                                     </label>
                                 </div>
+                            </div> */}
+                            <div className="form-group">
+                                <label className=''>Experience Letter</label>
+                                <MultiImageUploaders
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                    fieldName={`experience_letter_${index}`} 
+                                    />
                             </div>
                         </div>
                         <div id='Description'>
@@ -255,5 +284,4 @@ const ExperienceForm = ({ onSubmit, next }) => {
         </div>
     );
 };
-
 export default ExperienceForm;

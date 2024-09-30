@@ -13,6 +13,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from 'react-router-dom';
+import { MultiImageUploaders } from '../../../components/MultiImageUpload.jsx';
 
 const DocumentsForm = ({ onSubmit, update }) => {
     const [selectedDocuments, setSelectedDocuments] = useState([]);
@@ -36,10 +37,12 @@ const DocumentsForm = ({ onSubmit, update }) => {
         {
             documentType: '',
             number: '',
-            attachmentFront: '',
-            attachmentBack: '',
+            attachmentFront: [],
+            attachmentBack: [],
         }
     ]);
+
+    
     const [allDocumentsData, setAllDocumentsData] = useState({
         documents: [
             {
@@ -50,6 +53,43 @@ const DocumentsForm = ({ onSubmit, update }) => {
             }
         ]
     });
+
+
+    // 
+
+    const [formData, setFormData] = useState({});
+    useEffect(() => {
+        Object.keys(formData).forEach((key) => {
+            const index = parseInt(key.split('_')[2]); // Extract index from key
+            const newForms = [...educationForms];
+
+            // Check if it's front or back attachment
+            if (key.startsWith('front_attachment_')) {
+                // If it's front attachment
+                newForms[index].attachmentFront = formData[key];
+            } else if (key.startsWith('back_attachment_')) {
+                // If it's back attachment
+                newForms[index].attachmentBack = formData[key];
+            }
+            else if (key.startsWith('pan_attachment_')) {
+                newForms[index].attachmentFront = formData[key];
+            }
+            else if (key.startsWith('uan_attachment_')) {
+                newForms[index].attachmentFront = formData[key];
+            }
+            else if (key.startsWith('other_attachment_')) {
+                newForms[index].attachmentFront = formData[key];
+            }
+
+            // Update the educationForms state with new attachments  
+            setEducationForms(newForms);
+        });
+    }, [formData]);
+
+    console.log('formData ', formData);
+    console.log('educationForms :::', educationForms);
+
+    // 
     console.log('educationForms', educationForms)
     const { id } = useParams();
     const token = localStorage.getItem('access_token');
@@ -64,7 +104,7 @@ const DocumentsForm = ({ onSubmit, update }) => {
             })
                 .then(response => {
                     const data = response.data.result.documents;
-                    // console.log('documents data', data);
+                    console.log('documents data❗', response);
 
                     if (data && data.length > 0) {
                         setAllDocumentsData({
@@ -366,35 +406,19 @@ const DocumentsForm = ({ onSubmit, update }) => {
                                     </div>
                                     <div className="form-group">
                                         <label>Front  Attachment</label>
-                                        <div className="file-upload">
-                                            <input
-                                                type="file"
-                                                name='attachment'
-                                                id="file"
-                                                onChange={(e) => handleFileChange(index, e)}
-
-                                            />
-                                            <label htmlFor="file" className="custom-file-upload">
-                                                {!isUploaded && <GrCloudUpload className="upload-icon" />}
-                                                {isUploaded ? fileName : `${form.documentType} Attachment`}
-                                            </label>
-                                        </div>
+                                        <MultiImageUploaders
+                                            formData={formData}
+                                            setFormData={setFormData}
+                                            fieldName={`front_attachment_${index}`}
+                                        />
                                     </div>
                                     <div className="form-group">
-                                        <label>Back Attachment</label>
-                                        <div className="file-upload">
-                                            <input
-                                                type="file"
-                                                name='attachment'
-                                                id="file"
-                                                onChange={(e) => handleFileChange(index, e)}
-
-                                            />
-                                            <label htmlFor="file" className="custom-file-upload">
-                                                {!isUploaded && <GrCloudUpload className="upload-icon" />}
-                                                {isUploaded ? fileName : `${form.documentType} Attachment`}
-                                            </label>
-                                        </div>
+                                        <label>Back  Attachment</label>
+                                        <MultiImageUploaders
+                                            formData={formData}
+                                            setFormData={setFormData}
+                                            fieldName={`back_attachment_${index}`}
+                                        />
                                     </div>
                                 </>
                             )}
@@ -447,19 +471,11 @@ const DocumentsForm = ({ onSubmit, update }) => {
                                     </div>
                                     <div className="form-group">
                                         <label> Attachment</label>
-                                        <div className="file-upload">
-                                            <input
-                                                type="file"
-                                                name='attachment'
-                                                id="file"
-                                                onChange={(e) => handleFileChange(index, e)}
-
-                                            />
-                                            <label htmlFor="file" className="custom-file-upload">
-                                                {!isUploaded && <GrCloudUpload className="upload-icon" />}
-                                                {isUploaded ? fileName : `${form.documentType} Attachment`}
-                                            </label>
-                                        </div>
+                                        <MultiImageUploaders
+                                            formData={formData}
+                                            setFormData={setFormData}
+                                            fieldName={`pan_attachment_${index}`}
+                                        />
                                     </div>
                                 </>
                             )}
@@ -512,19 +528,11 @@ const DocumentsForm = ({ onSubmit, update }) => {
                                     </div>
                                     <div className="form-group">
                                         <label> Attachment</label>
-                                        <div className="file-upload">
-                                            <input
-                                                type="file"
-                                                name='attachment'
-                                                id="file"
-                                                onChange={(e) => handleFileChange(index, e)}
-
-                                            />
-                                            <label htmlFor="file" className="custom-file-upload">
-                                                {!isUploaded && <GrCloudUpload className="upload-icon" />}
-                                                {isUploaded ? fileName : `${form.documentType} Attachment`}
-                                            </label>
-                                        </div>
+                                        <MultiImageUploaders
+                                            formData={formData}
+                                            setFormData={setFormData}
+                                            fieldName={`uan_attachment_${index}`}
+                                        />
                                     </div>
                                 </>
                             )}
@@ -577,19 +585,11 @@ const DocumentsForm = ({ onSubmit, update }) => {
                                     </div>
                                     <div className="form-group">
                                         <label> Attachment</label>
-                                        <div className="file-upload">
-                                            <input
-                                                type="file"
-                                                name='attachment'
-                                                id="file"
-                                                onChange={(e) => handleFileChange(index, e)}
-
-                                            />
-                                            <label htmlFor="file" className="custom-file-upload">
-                                                {!isUploaded && <GrCloudUpload className="upload-icon" />}
-                                                {isUploaded ? fileName : `${form.documentType} Attachment`}
-                                            </label>
-                                        </div>
+                                        <MultiImageUploaders
+                                            formData={formData}
+                                            setFormData={setFormData}
+                                            fieldName={`other_attachment_${index}`}
+                                        />
                                     </div>
                                 </>
                             )}

@@ -1,4 +1,4 @@
-import './Add_applicant.scss';
+import './Update_applicant.scss';
 
 // import '../../Employee onboarding/AddEmployee/NavbarForm.scss';
 import { useState } from 'react';
@@ -6,11 +6,11 @@ import { useState } from 'react';
 import { HiUserPlus } from "react-icons/hi2";
 import { TfiClose } from "react-icons/tfi";
 import Confetti from 'react-confetti';
-import JobForm from './ApplicantForm.jsx';
+import JobForm from './UpdateApplicantForm.jsx';
 import { useNavigate } from 'react-router-dom';
 
 
-const Add_applicant = () => {
+const Update_applicant = () => {
 
     const navigate = useNavigate()
 
@@ -57,7 +57,7 @@ const Add_applicant = () => {
             {showAlert ? <div><Confetti /> <div id='showAlert'><p>Form Submit Successfully</p></div> </div> : ''}
             <div className="employee-form">
                 <div className="top-bar">
-                    <h2><div className='span'><HiUserPlus /></div>Add New Applicant</h2>
+                    <h2><div className='span'><HiUserPlus /></div>Update Applicant</h2>
                     <span className="close_nav" onClick={JobList}><TfiClose /></span>
                     <div className="">
                         <span className="1"></span>
@@ -80,7 +80,7 @@ const Add_applicant = () => {
     );
 };
 
-export default Add_applicant;
+export default Update_applicant;
 
 
 // 

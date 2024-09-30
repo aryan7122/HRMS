@@ -93,8 +93,10 @@ const Applicant_detail = () => {
     if (!employees) {
         return <div id='notFounPageID'><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif?cid=82a1493bn9krc5evd3vjd2zev16nlay9tbow8jarm2nx3rf7&ep=v1_gifs_related&rid=200w.gif&ct=g" alt="" /></div>; // Error handling if job not found
     }
-
-
+    
+    const Updateapplicant = () => {
+        navigate(`/update-applicant/${id}`);
+    }
     return (
         <div className="profile-page">
             <Dialog
@@ -140,7 +142,7 @@ const Applicant_detail = () => {
                     </div>
                     <div className="action_card">
                         {/* <div><RxReload /></div> */}
-                        <div><BiEditAlt /></div>
+                        <div onClick={Updateapplicant}><BiEditAlt /></div>
                         <div onClick={HandleDelete}><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>

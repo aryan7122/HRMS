@@ -9,6 +9,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 // import { OutsideClick } from '../../../components/OutSideClick';
 import { OutsideClick } from './OutsideClick.jsx'
 import axios from 'axios';
+import { MultiImageUpload } from '../../../components/MultiImageUpload.jsx';
 
 const BasicDetailsForm = ({ onSubmit, next }) => {
     
@@ -42,7 +43,8 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
         doe: '',
         employmentType: '',
         employeeStatus: '',
-        sourceOfHire: ''
+        sourceOfHire: '',
+        attachment:[]
     });
 
     const [searchQuery_2, setSearchQuery_2] = useState('');
@@ -227,7 +229,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
             <div className="" onSubmit={handleSubmit}>
                 <form >
                     <div className="from1">
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label>Profile Picture</label>
                             <div className="file-upload">
                                 <input
@@ -248,6 +250,13 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                     <span>{isUploaded ? fileName : 'Profile Picture'}</span>
                                 </label>
                             </div>
+                        </div> */}
+                        <div className="form-group">
+                            <label className='starred'>Profile Picture*</label>
+                            <MultiImageUpload
+                                formData={formData}
+                                setFormData={setFormData}
+                            />
                         </div>
                         <div className="form-group">
                             <label className='starred'>First Name*</label>
