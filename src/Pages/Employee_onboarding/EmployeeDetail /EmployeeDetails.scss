@@ -551,3 +551,21 @@
     object-fit: cover;
   }
 }
+
+
+.toggle-buttons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 1px;
+  z-index: 99;
+  button{
+    border: none;
+    background: #706f6f;
+    color: #fff;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+}

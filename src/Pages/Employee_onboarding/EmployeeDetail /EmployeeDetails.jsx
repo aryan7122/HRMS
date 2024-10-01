@@ -29,7 +29,7 @@ const EmployeeDetails = () => {
 
     const [employeeData, setEmployeeData] = useState(null); // To store the employee details from API
     const [employeeData2, setEmployeeData2] = useState(null); // To store the employee details from API
-    console.log('experience employeeData', employeeData)
+    console.log('experience employeeData 👉', employeeData)
     useEffect(() => {
         // const totalFields = Object.keys(employeeData).length; // Total fields count
         // const filledFields = Object.values(employeeData).filter(value => value !== null && value !== '').length; // Filled fields count
@@ -48,7 +48,7 @@ const EmployeeDetails = () => {
 
             // Calculate percentage
             const filledPercentage = (filledFields / totalFields) * 100;
-            setRotationAngle(filledPercentage+15);
+            setRotationAngle(filledPercentage + 15);
             console.log(`Filled fields: ${filledFields}/${totalFields}, Percentage: ${filledPercentage.toFixed(2)}%`);
         }
     }, [employeeData]);
@@ -68,7 +68,7 @@ const EmployeeDetails = () => {
                     setEmployeeData2(response.data.result); // Store API data
                     // Calculate filled fields percentage
 
-                    
+
                     console.log('response ....', response)
 
                     // toast.success(response.data.message, {
@@ -132,7 +132,7 @@ const EmployeeDetails = () => {
     const handleRefresh = () => {
         setRefresh(!refresh)
     };
-    console.log('employeeData 🧭', employeeData2)
+    // console.log('employeeData 🧭', employeeData2)
 
 
     const HandleDelete = () => {
@@ -170,9 +170,19 @@ const EmployeeDetails = () => {
         return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
     }
 
+    let EmployeeProfilePic = JSON.parse(employeeData.image);
+    console.log('EmployeeProfilePic: ', EmployeeProfilePic);
+    let picurl = ''
+    // For logging each item in the parsed array
+    EmployeeProfilePic.forEach(pic => {
+        picurl = pic.name
+        console.log('Image Name: ', pic.name);
+        console.log('Image URL: ', pic.url);
+    });
+    const dummyImageUrl = "https://www.pngitem.com/pimgs/m/80-800194_transparent-users-icon-png-flat-user-icon-png.png"; // Dummy user icon ka URL
 
     // if (employeeData) {
-       
+
     // }
     return (
         <div className="profile-page">
@@ -218,7 +228,9 @@ const EmployeeDetails = () => {
                 <div className="profile_card">
                     <div className="img_card">
                         <div className="progress-circle" style={{ "--angle": `${rotationAngle}%` }}>
-                            <img src="https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg" alt="" />
+                            {EmployeeProfilePic.map((pic, index) => (
+                                <img key={index} src={pic.url || dummyImageUrl} alt={pic.name} />
+                            ))}
                         </div>
                         <div className="about_user">
                             <h3>{employeeData.first_name + ' ' + employeeData.last_name || ''}</h3>
