@@ -12,7 +12,7 @@ import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { MultiImageUpload } from '../../../components/MultiImageUpload.jsx';
+import { MultiImageUploaders } from '../../../components/MultiImageUpload.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const UpdateApplicantForm = ({ onSubmit }) => {
@@ -34,8 +34,8 @@ const UpdateApplicantForm = ({ onSubmit }) => {
         email: '',
         contactNumber: '',
         jobOpening: '',
-        resume: '',
-        coverLetter: '',
+        resume: [],
+        coverLetter: [],
         country: '',
         state: '',
         city: '',
@@ -44,11 +44,10 @@ const UpdateApplicantForm = ({ onSubmit }) => {
         availabilityDate: '',
         expectedSalary: '',
         referredPerson: '',
-        attachment: [],
-        attachment2: [],
+       
     });
 
-    console.log('formData', formData)
+    console.log('formData🥳', formData)
     
     const handleFileChange = (event) => {
         const { name, files } = event.target;
@@ -214,25 +213,46 @@ const UpdateApplicantForm = ({ onSubmit }) => {
 
                 if (response.data.success) {
                     const data = response.data.result;
-                    console.log('data', response)
+                    console.log('data❗', response)
                     // Jo API se data mila, use formData me set karo
                     setFormData({
                         fullName: data.name || '',
                         email: data.email || '',
                         contactNumber: data.mobile_no || '',
                         jobOpening: data.job_opening_id || '',
-                        resume: data.resume || '',
-                        coverLetter: data.cover_letter || '',
-                        country: data.country_id || '',
-                        state: data.state_id || '',
-                        city: data.city_id || '',
+                        // resume: data.resume || '',
+                        // coverLetter: data.cover_letter || '',
+                        // country: data.country_id || '',
+                        // state: data.state_id || '',
+                        // city: data.city_id || '',
+                        // country: data.country_id || '',
+                        // state: data.state_id || '',
+                        // city: data.city_id || '',
+                        countryId: data.country_id || '',
+                        country: data?.country?.name || '',
+                        stateId: data.state_id || '',
+                        state: data?.state?.name || '',
+                        cityId: data.city_id || '',
+                        city: data?.city?.name || '',
                         zipCode: data.zip_code || '',
                         source: data.source || '',
                         availabilityDate: data.availability_date || '',
                         expectedSalary: data.expected_salary || '',
                         referredPerson: data.referred_by || '',
-                        attachment: [], // Assuming you are not handling this from API response
-                        attachment2: [], // Assuming you are not handling this from API response
+                        // attachment: [], // Assuming you are not handling this from API response
+                        // attachment2: [], // Assuming you are not handling this from API response
+                        resume: data.resume[0].image
+                            ? JSON.parse(data.employee[0].image).map(item => ({
+                                name: item.name, // Image name
+                                url: item.url   // Image URL
+                            }))
+                            : [],
+                        coverLetter: data.cover_letter[0].image
+                            ? JSON.parse(data.employee[0].image).map(item => ({
+                                name: item.name, // Image name
+                                url: item.url   // Image URL
+                            }))
+                            : []
                     });
                 } else {
                     console.log('Error fetching data', response.data.message);
@@ -339,16 +359,19 @@ const UpdateApplicantForm = ({ onSubmit }) => {
 
                             <div className="form-group">
                                 <label className='starred'>Resume*</label>
-                                <MultiImageUpload
+                                <MultiImageUploaders
                                     formData={formData}
                                     setFormData={setFormData}
+                                    fieldName="resume"  // Unique field for resume
                                 />
                             </div>
+
                             <div className="form-group">
-                                <label >Cover Letter</label>
-                                <MultiImageUpload
+                                <label>Cover Letter</label>
+                                <MultiImageUploaders
                                     formData={formData}
                                     setFormData={setFormData}
+                                    fieldName="coverLetter"  // Unique field for cover letter
                                 />
                             </div>
 
