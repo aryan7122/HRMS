@@ -37,60 +37,87 @@ const DocumentsForm = ({ onSubmit, update }) => {
         {
             documentType: '',
             number: '',
-            attachmentFront: [],
-            attachmentBack: [],
+            attachmentFront: '',
+            attachmentBack: '',
         }
     ]);
 
-    
+
     const [allDocumentsData, setAllDocumentsData] = useState({
         documents: [
             {
                 document_name: '',
                 document_id: '',
-                attachment_1: '',
-                attachment_2: ''
+                attachment_1: [],
+                attachment_2: []
             }
         ]
     });
 
-
     // 
 
     const [formData, setFormData] = useState({});
+    
     useEffect(() => {
+        // Make sure to create a copy of the documents array
+        const newDocuments = [...allDocumentsData.documents];
+        console.log('newDocuments', newDocuments)
         Object.keys(formData).forEach((key) => {
             const index = parseInt(key.split('_')[2]); // Extract index from key
-            const newForms = [...educationForms];
 
-            // Check if it's front or back attachment
-            if (key.startsWith('front_attachment_')) {
-                // If it's front attachment
-                newForms[index].attachmentFront = formData[key];
-            } else if (key.startsWith('back_attachment_')) {
-                // If it's back attachment
-                newForms[index].attachmentBack = formData[key];
+            // Check if index is valid
+            if (index >= 0 && index < newDocuments.length) {
+                // Check if it's front or back attachment
+                if (key.startsWith('front_attachment_')) {
+                    newDocuments[index].attachment_1 = formData[key];
+                } else if (key.startsWith('back_attachment_')) {
+                    newDocuments[index].attachment_2 = formData[key];
+                } else if (key.startsWith('pan_attachment_')) {
+                    newDocuments[index].attachment_1 = formData[key];
+                } else if (key.startsWith('uan_attachment_')) {
+                    newDocuments[index].attachment_1 = formData[key];
+                } else if (key.startsWith('other_attachment_')) {
+                    newDocuments[index].attachment_1 = formData[key];
+                }
             }
-            else if (key.startsWith('pan_attachment_')) {
-                newForms[index].attachmentFront = formData[key];
-            }
-            else if (key.startsWith('uan_attachment_')) {
-                newForms[index].attachmentFront = formData[key];
-            }
-            else if (key.startsWith('other_attachment_')) {
-                newForms[index].attachmentFront = formData[key];
-            }
-
-            // Update the educationForms state with new attachments  
-            setEducationForms(newForms);
         });
+
+        // Update the allDocumentsData state with the modified documents
+        setAllDocumentsData({ documents: newDocuments });
     }, [formData]);
+// 
+    useEffect(() => {
+        // Create a new object to store the updated formData
+        const updatedFormData = {};
+
+        // Loop through each document in allDocumentsData
+        allDocumentsData.documents.forEach((document, index) => {
+            // Set formData keys for each type of attachment
+            updatedFormData[`front_attachment_${index}`] = document.attachment_1 || [];
+            updatedFormData[`back_attachment_${index}`] = document.attachment_2 || [];
+
+            // If PAN, UAN, or other attachments are stored in attachment_1
+            updatedFormData[`pan_attachment_${index}`] = document.attachment_1 || [];
+            updatedFormData[`uan_attachment_${index}`] = document.attachment_1 || [];
+            updatedFormData[`other_attachment_${index}`] = document.attachment_1 || [];
+        });
+
+        // Only update formData if the new data is different from the current formData
+        if (JSON.stringify(formData) !== JSON.stringify(updatedFormData)) {
+            setFormData(updatedFormData);  // Update formData only if it's different
+            console.log('Updated formData:', updatedFormData); // Check the updated formData in the console
+        }
+    }, [allDocumentsData]); // Run only when allDocumentsData changes
+
+
+
+
 
     console.log('formData ', formData);
-    console.log('educationForms :::', educationForms);
+    console.log('❗🗑️❗', allDocumentsData);
 
     // 
-    console.log('educationForms', educationForms)
+    // console.log('educationForms', educationForms)
     const { id } = useParams();
     const token = localStorage.getItem('access_token');
     useEffect(() => {
@@ -102,6 +129,29 @@ const DocumentsForm = ({ onSubmit, update }) => {
                     'Authorization': `Bearer ${token}`
                 }
             })
+                // .then(response => {
+                //     const data = response.data.result.documents;
+                //     console.log('documents data❗', response);
+
+                //     if (data && data.length > 0) {
+                //         setAllDocumentsData({
+                //             documents: data.map(doc => ({
+                //                 document_name: doc.document_name || '',
+                //                 document_id: doc.document_id || '',
+                //                 attachment_1: doc.attachment_1 || '',
+                //                 attachment_2: doc.attachment_2 || ''
+                //             }))
+                //         });
+                //         if (data && data.length > 0) {
+                //             setEducationForms(data.map(doc => ({
+                //                 documentType: doc.document_name || '',
+                //                 number: doc.document_id || '',
+                //                 attachment_1: doc.attachment_1 || '',
+                //                 attachment_2: doc.attachment_2 || ''
+                //             })));
+                //         }
+                //     }
+                // })
                 .then(response => {
                     const data = response.data.result.documents;
                     console.log('documents data❗', response);
@@ -111,20 +161,42 @@ const DocumentsForm = ({ onSubmit, update }) => {
                             documents: data.map(doc => ({
                                 document_name: doc.document_name || '',
                                 document_id: doc.document_id || '',
-                                attachment_1: doc.attachment_1 || '',
-                                attachment_2: doc.attachment_2 || ''
+                                attachment_1: doc.attachment_1
+                                    ? JSON.parse(doc.attachment_1).map(item => ({
+                                        name: item.name, // Image name
+                                        url: item.url   // Image URL
+                                    }))
+                                    : [],
+                                attachment_2: doc.attachment_2
+                                    ? JSON.parse(doc.attachment_2).map(item => ({
+                                        name: item.name, // Image name
+                                        url: item.url   // Image URL
+                                    }))
+                                    : []
                             }))
                         });
+
                         if (data && data.length > 0) {
                             setEducationForms(data.map(doc => ({
                                 documentType: doc.document_name || '',
                                 number: doc.document_id || '',
-                                attachmentFront: doc.attachment_1 || '',
-                                attachmentBack: doc.attachment_2 || ''
+                                attachment_1: doc.attachment_1
+                                    ? JSON.parse(doc.attachment_1).map(item => ({
+                                        name: item.name, // Image name
+                                        url: item.url   // Image URL
+                                    }))
+                                    : [],
+                                attachment_2: doc.attachment_2
+                                    ? JSON.parse(doc.attachment_2).map(item => ({
+                                        name: item.name, // Image name
+                                        url: item.url   // Image URL
+                                    }))
+                                    : []
                             })));
                         }
                     }
                 })
+
                 .catch(error => {
                     console.error("Error fetching documents:", error);
                     toast.error('Failed to fetch documents.', {
@@ -143,16 +215,16 @@ const DocumentsForm = ({ onSubmit, update }) => {
 
     // update(allDocumentsData)
     // select
- 
+
     // img
     const handleFileChange = (index, event, type) => {
         const file = event.target.files[0];
         if (file) {
             const newForms = [...educationForms];
             if (type === 'front') {
-                newForms[index].attachmentFront = file;
+                newForms[index].attachment_1 = file;
             } else if (type === 'back') {
-                newForms[index].attachmentBack = file;
+                newForms[index].attachment_2 = file;
             }
             setEducationForms(newForms);
             setFileName(file.name);
@@ -253,7 +325,7 @@ const DocumentsForm = ({ onSubmit, update }) => {
         <div id="Education_form">
             <form onSubmit={handleSubmit}>
                 {/*  */}
-                
+
                 {/*  */}
                 {educationForms.map((form, index) => (
                     <div key={index} id='form'>

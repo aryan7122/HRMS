@@ -61,13 +61,13 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
             })
                 .then(response => {
                     const data = response.data.result;
-                    // console.log('data', data.employee[0])
+                    console.log('data🗑️', data.employee[0])
 
                     setFormData({
                         employeeId: data.employee[0].experience || '',
                         firstName: data.first_name || '',
                         lastName: data.last_name || '',
-                        photo: data.employee[0].image || '',
+                        // photo: data.employee[0].image || '',
                         dob: data.employee[0].date_of_birth || '',
                         age: data.employee[0].age || '',
                         gender: data.employee[0].gender || '',
@@ -88,6 +88,7 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
                                 url: item.url   // Image URL
                             }))
                             : []
+
                     });
 
                     console.log('response❗', response.data.result);

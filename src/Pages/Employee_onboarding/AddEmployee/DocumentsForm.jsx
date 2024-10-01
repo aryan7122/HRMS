@@ -20,37 +20,72 @@ const DocumentsForm = ({ onSubmit,next }) => {
             attachmentBack: [],
         }
     ]);
+    const [allDocumentsData, setAllDocumentsData] = useState({
+        documents: [
+            {
+                document_name: '',
+                document_id: '',
+                attachment_1: [],
+                attachment_2: []
+            }
+        ]
+    });
     const [formData, setFormData] = useState({});
+    // useEffect(() => {
+    //     Object.keys(formData).forEach((key) => {
+    //         const index = parseInt(key.split('_')[2]); // Extract index from key
+    //         const newForms = [...allDocumentsData];
+    //         // Check if it's front or back attachment
+    //         if (key.startsWith('front_attachment_')) {
+    //             // If it's front attachment
+    //             newForms[index].attachment_1 = formData[key];
+    //         } else if (key.startsWith('back_attachment_')) {
+    //             // If it's back attachment
+    //             newForms[index].attachment_2 = formData[key];
+    //         }
+    //         else if (key.startsWith('pan_attachment_')) {
+    //             newForms[index].attachment_1 = formData[key];
+    //         }
+    //         else if (key.startsWith('uan_attachment_')) {
+    //             newForms[index].attachment_1 = formData[key];
+    //         }
+    //         else if (key.startsWith('other_attachment_')) {
+    //             newForms[index].attachment_1 = formData[key];
+    //         }
+
+    //         // Update the educationForms state with new attachments  
+    //         setAllDocumentsData(newForms);
+    //     });
+    // }, [formData]);
     useEffect(() => {
+        // Make sure to create a copy of the documents array
+        const newDocuments = [...allDocumentsData.documents];
+        console.log('newDocuments', newDocuments)
         Object.keys(formData).forEach((key) => {
             const index = parseInt(key.split('_')[2]); // Extract index from key
-            const newForms = [...educationForms];
 
-            // Check if it's front or back attachment
-            if (key.startsWith('front_attachment_')) {
-                // If it's front attachment
-                newForms[index].attachmentFront = formData[key];
-            } else if (key.startsWith('back_attachment_')) {
-                // If it's back attachment
-                newForms[index].attachmentBack = formData[key];
+            // Check if index is valid
+            if (index >= 0 && index < newDocuments.length) {
+                // Check if it's front or back attachment
+                if (key.startsWith('front_attachment_')) {
+                    newDocuments[index].attachment_1 = formData[key];
+                } else if (key.startsWith('back_attachment_')) {
+                    newDocuments[index].attachment_2 = formData[key];
+                } else if (key.startsWith('pan_attachment_')) {
+                    newDocuments[index].attachment_1 = formData[key];
+                } else if (key.startsWith('uan_attachment_')) {
+                    newDocuments[index].attachment_1 = formData[key];
+                } else if (key.startsWith('other_attachment_')) {
+                    newDocuments[index].attachment_1 = formData[key];
+                }
             }
-            else if (key.startsWith('pan_attachment_')) {
-                newForms[index].attachmentFront = formData[key];
-            }
-            else if (key.startsWith('uan_attachment_')) {
-                newForms[index].attachmentFront = formData[key];
-            }
-            else if (key.startsWith('other_attachment_')) {
-                newForms[index].attachmentFront = formData[key];
-            }
-
-            // Update the educationForms state with new attachments  
-            setEducationForms(newForms);
         });
-    }, [formData]);
 
-    console.log('formData ', formData);
-    console.log('educationForms :::', educationForms);
+        // Update the allDocumentsData state with the modified documents
+        setAllDocumentsData({ documents: newDocuments });
+    }, [formData]);
+    console.log('formData; ', formData);
+    console.log('educationForms :::,,', allDocumentsData);
 
     // const [allDocumentsData, setAllDocumentsData] = useState({
     //     aadhaar: {
@@ -71,16 +106,7 @@ const DocumentsForm = ({ onSubmit,next }) => {
     //         attachment: '',
     //     }
     // });
-    const [allDocumentsData, setAllDocumentsData] = useState({
-        documents: [
-            {
-                document_name: '',
-                document_id: '',
-                attachment_1: '',
-                attachment_2: ''
-            }
-        ]
-    });
+  
 
     // useEffect(() => {
     //     if (id) {
@@ -151,9 +177,9 @@ const DocumentsForm = ({ onSubmit,next }) => {
         if (file) {
             const newForms = [...educationForms];
             if (type === 'front') {
-                newForms[index].attachmentFront = file;
+                newForms[index].attachment_1 = file;
             } else if (type === 'back') {
-                newForms[index].attachmentBack = file;
+                newForms[index].attachment_2 = file;
             }
             setEducationForms(newForms);
             setFileName(file.name);
@@ -204,8 +230,8 @@ const DocumentsForm = ({ onSubmit,next }) => {
             {
                 documentType: '',
                 number: '',
-                attachmentFront: '',
-                attachmentBack: '',
+                attachment_1: '',
+                attachment_2: '',
             }
         ]);
     };

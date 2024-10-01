@@ -39,7 +39,7 @@ const UpdateEmployee = () => {
             employment_type: formData.employmentType || '',
             employee_status: formData.employeeStatus || '',
             source_of_hire: formData.sourceOfHire || '',
-            image: formData.photo || '',
+            image: formData.attachment || '',
             experience: formData.employeeId || '',
             contacts: [
                 {
