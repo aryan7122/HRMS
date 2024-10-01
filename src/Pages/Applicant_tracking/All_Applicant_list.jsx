@@ -127,7 +127,7 @@ const All_Applicant_list = () => {
         setStatusNew(newStatus)
 
         const updatedEmployees = [...filteredEmployees];
-        updatedEmployees[index].status = newStatus;
+        // updatedEmployees[index].status = newStatus;
         setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
         setSms('')
@@ -351,7 +351,6 @@ const All_Applicant_list = () => {
                         progress: undefined,
                         theme: "light",
                     });
-
                     console.error("Error fetching data: ", error);
                 })
                 .finally(() => {

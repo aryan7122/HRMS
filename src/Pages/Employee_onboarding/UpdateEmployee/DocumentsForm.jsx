@@ -107,7 +107,7 @@ const DocumentsForm = ({ onSubmit, update }) => {
             setFormData(updatedFormData);  // Update formData only if it's different
             console.log('Updated formData:', updatedFormData); // Check the updated formData in the console
         }
-    }, [allDocumentsData]); // Run only when allDocumentsData changes
+    }, []); // Run only when allDocumentsData changes
 
 
 

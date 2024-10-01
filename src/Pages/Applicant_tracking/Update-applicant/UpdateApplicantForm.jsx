@@ -241,14 +241,14 @@ const UpdateApplicantForm = ({ onSubmit }) => {
                         referredPerson: data.referred_by || '',
                         // attachment: [], // Assuming you are not handling this from API response
                         // attachment2: [], // Assuming you are not handling this from API response
-                        resume: data.resume[0].image
-                            ? JSON.parse(data.employee[0].image).map(item => ({
+                        resume: data.resume
+                            ? JSON.parse(data.resume).map(item => ({
                                 name: item.name, // Image name
                                 url: item.url   // Image URL
                             }))
                             : [],
-                        coverLetter: data.cover_letter[0].image
-                            ? JSON.parse(data.employee[0].image).map(item => ({
+                        coverLetter: data.cover_letter
+                            ? JSON.parse(data.cover_letter).map(item => ({
                                 name: item.name, // Image name
                                 url: item.url   // Image URL
                             }))
