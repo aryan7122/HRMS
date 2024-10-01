@@ -19,7 +19,8 @@ import { useNavigate } from 'react-router-dom';
 import './All_leaves_List.scss';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import axios from 'axios';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { IoIosCloseCircleOutline } from "react-icons/io";
 // import { GiBackstab, GiNotebook } from "react-icons/gi";
 // import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
@@ -40,7 +41,6 @@ const All_leaves_List = (ClosePop) => {
     const [thisDel, setThisDel] = useState(false)
     const [toggleLeft, setToggleLeft] = useState(false)
     const [togglNewAdd, setTogglNewAdd] = useState(false)
-    const aa = '0'
     const DelThis = () => {
         setThisDel(!thisDel);
 
@@ -49,16 +49,18 @@ const All_leaves_List = (ClosePop) => {
     const [hidImport, setHidImport] = useState(true);
     const navigate = useNavigate()
     const [employees, setEmployees] = useState([
-        { EmployeeName: "Hillery Moses", Date: aa, Shift: "General", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
-        { EmployeeName: "Nandan Raikwar", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
-        { EmployeeName: "Vishwas Patel", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
-        { EmployeeName: "Paartho Ghosh", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Half day", isChecked: false },
-        { EmployeeName: "Bhavna Goyal", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
-        { EmployeeName: "Jayshri Tiwari", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
-        { EmployeeName: "Amardeep Singh", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
-        { EmployeeName: "Ramesh Gupta", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
-        { EmployeeName: "Rahul Choudhary", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
+        // { EmployeeName: "Hillery Moses", Date: 'aa', Shift: "General", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
+        // { EmployeeName: "Nandan Raikwar", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
+        // { EmployeeName: "Vishwas Patel", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
+        // { EmployeeName: "Paartho Ghosh", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Half day", isChecked: false },
+        // { EmployeeName: "Bhavna Goyal", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
+        // { EmployeeName: "Jayshri Tiwari", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
+        // { EmployeeName: "Amardeep Singh", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
+        // { EmployeeName: "Ramesh Gupta", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
+        // { EmployeeName: "Rahul Choudhary", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
     ]);
+
+
 
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
@@ -68,6 +70,8 @@ const All_leaves_List = (ClosePop) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isOpen, setIsOpen] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
 
     // console.log(selectedDepartment)
@@ -106,17 +110,23 @@ const All_leaves_List = (ClosePop) => {
         setRowsPerPage(Number(e.target.value));
         setCurrentPage(1);
     };
+    const [statusId, setStatusId] = useState('')
 
-    const statuses = ['Present', 'Absent', 'Half day'];
+    const statuses = ['Pending', 'Approved', 'Declined'];
     const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
     const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
+    const [statusNew, setStatusNew] = useState('')
+
     const handleStatusChange = (index, newStatus) => {
+        setStatusNew(newStatus)
         const updatedEmployees = [...filteredEmployees];
         updatedEmployees[index].status = newStatus;
         setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
     };
-
+    const UpdateStatusHndle = (id) => {
+        setStatusId(id)
+    }
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
@@ -150,39 +160,16 @@ const All_leaves_List = (ClosePop) => {
         setSelectedStatus('All');
         setCurrentPage(1);
         setRowsPerPage(10);
+        setSelectedFilter(null)
+        // setSelectedDepartmentId(null)
+        setSelectedDate(null)
+        setFromDate(null)
+        setToDate(null)
     };
     // 
-    const [showFilter, setShowFilter] = useState(false);
-    const [showCustomDate, setShowCustomDate] = useState(false);
-    const [showEmploymentType, setShowEmploymentType] = useState(false);
-    const [showDepartment, setShowDepartment] = useState(false);
 
-    const showFilterHandle = () => {
-        setShowFilter(!showFilter)
-    }
-    const handleCustomDateClick = () => {
-        setShowCustomDate(!showCustomDate);
-        setShowEmploymentType(false);
-        setShowDepartment(false);
-    };
-
-    const handleEmploymentTypeClick = () => {
-        setShowEmploymentType(!showEmploymentType);
-        setShowCustomDate(false);
-        setShowDepartment(false);
-    };
-
-    const handleDepartmentClick = () => {
-        setShowDepartment(!showDepartment);
-        setShowCustomDate(false);
-        setShowEmploymentType(false);
-    };
-
-    const AttendanceDetailsPage = () => {
-        navigate('/attendance-details')
-    }
-    const NewAttendanceClick = () => {
-        setTogglNewAdd(true)
+    const NewLeaveMaster = () => {
+        navigate('/new-leave-master')
     }
     const NewAttendanceClosePop = () => {
         setTogglNewAdd(false);
@@ -190,10 +177,7 @@ const All_leaves_List = (ClosePop) => {
     const filter_left = () => {
         setToggleLeft(!toggleLeft)
     }
-    const filter_leftClose = () => {
-        setToggleLeft(false)
-        toggleFilter2()
-    }
+
     const DateDropdowns = () => {
         setDropdowns(!dropdowns)
     }
@@ -205,51 +189,166 @@ const All_leaves_List = (ClosePop) => {
             setFileName(file.name); // Set the file name in the state
         }
     };
-
     // 
+    const [showCustomDate, setShowCustomDate] = useState(false);
+   
+    const [showDateRange, setShowDateRange] = useState(false)
 
-    const [loading, setLoading] = useState(true);
-    const [AttendanceData, setJobJsonData] = useState([]);
-
-    // const BIN_ID = '66dad0faad19ca34f8a0c6dd';
-    // const MASTER_KEY = '$2a$10$/rHkEpcXQ78/XRNvCpPl4ehBkySOH2T6teIVgZEumbX/if6UWLRly';
-    // const getEmpJson = async () => {
-    //     try {
-    //         const response = await axios.get(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-    //             headers: {
-    //                 'X-Master-Key': MASTER_KEY
-    //             }
-    //         });
-    //         // Response data
-    //         setJobJsonData(response.data.record || []);
-    //         setLoading(false);
-    //         console.log('object:::', response.data);
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //         setLoading(false);
-    //     }
-    // };
-
-    // Call the function to fetch data
-    // useEffect(() => {
-    //     getEmpJson();
-
-    // }, [])
-    // const formattedData = AttendanceData.map(emp => ({
-    //     date: emp.date,
-    //     employeeName: emp.employeeName,
-    //     punchIn: emp.punchIn,
-    //     punchOut: emp.punchOut
-    // }));
-
-    // console.log('AttendanceData ✅🎂', AttendanceData)
-    const JobDetailsPage = () => {
-        navigate('/attendance-details')
+    const handleDateRangeClick = () => {
+        setShowDateRange(!showDateRange)
+        setShowCustomDate(false);
     }
-
+    const handleCustomDateClick = () => {
+        setShowCustomDate(!showCustomDate);
+      
+        setShowDateRange(false)
+    };
+   
+    const [selectedDate, setSelectedDate] = useState(null);
+    console.log('selectedDate', selectedDate)
+    const handleDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setSelectedDate(formattedDate);
+    }; //
     // 
+    const [fromDate, setFromDate] = useState(null);
+    const [toDate, setToDate] = useState(null);
+
+    // Function to handle the date change and format it to yyyy/mm/dd
+    const handleFromDateChange = (event) => {
+
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setFromDate(formattedDate);
+    };
+    const handleToDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setToDate(formattedDate);
+    };
+    // 
+    const JobDetailsPage = () => {
+        navigate('/leave-details')
+    }
+    console.log('currentEmployees', employees)
+    // 
+    const token = localStorage.getItem('access_token');
+
+    const [selectedFilter, setSelectedFilter] = useState(null);
+    // alert(selectedFilter)
+    console.log('states', selectedFilter)
+
+    const filter_leftClose = (filterName) => {
+        setSelectedFilter(filterName);
+        setToggleLeft(false)
+        toggleFilter2()
+    };
+
+
+    useEffect(() => {
+        const fetchJobOpenings = async () => {
+            setLoading(true); // Data fetching shuru karte waqt loading ko true set karna
+            setError(null);   // Har bar call se pehle error ko reset karna
+
+            try {
+                const response = await axios.post('https://devstronauts.com/public/api/leave/list', {
+                    search: searchQuery,
+                    status: selectedFilter,
+                    custom_date: selectedDate,
+                    fromDate: fromDate,
+                    toDate: toDate
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                // Data ko state me set kar rahe hain
+                console.log('respone❗', response)
+                setEmployees(response.data.result);
+                setFilteredEmployees(response.data.result); // filteredEmployees ko sync kar rahe hain
+            } catch (error) {
+                // Agar error aaye toh usko handle kar rahe hain
+                console.error("Error fetching data: ", error);
+                setError("Data fetching failed!");
+            } finally {
+                // Loading ko false set karna
+                setLoading(false);
+            }
+        };
+
+        fetchJobOpenings();
+    }, [searchQuery, selectedFilter, selectedDate, fromDate, toDate]);
+    let isRequestInProgress = false;
+
+    useEffect(() => {
+        if (statusId && statusNew && !isRequestInProgress) {
+            isRequestInProgress = true;  // Request start hone par flag true
+            axios.post('https://devstronauts.com/public/api/leave/status/update', {
+                id: statusId,
+                status: statusNew
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // Success handling
+                    toast.success('Status update successfully.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+
+                    if (response.data.success === true) {
+                        // setShowAlert(true);
+                        // setTimeout(() => {
+                        //     setShowAlert(false);
+                        // }, 4000);
+                    }
+                })
+                .catch(error => {
+                    // Error handling
+                    toast.error(error.message || 'Status update Failed.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+
+                    console.error("Error fetching data: ", error);
+                })
+                .finally(() => {
+                    // Request complete hone ke baad flag reset hoga
+                    isRequestInProgress = false;
+                });
+        }
+    }, [statusNew]);
+
     return (
         <div id='allEmp'>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
             {togglNewAdd && <NewAttendance ClosePop={NewAttendanceClosePop} />}
 
             <div className="EmpOn_main_container">
@@ -257,10 +356,10 @@ const All_leaves_List = (ClosePop) => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Leaves list <p>102 total</p>
+                            All Leaves list <p>{employees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
-                            <div className="addEmp" onClick={NewAttendanceClick}>
+                            <div className="addEmp" onClick={NewLeaveMaster}>
                                 <p><span><IoMdAdd /></span> Add New Leave</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
@@ -306,7 +405,7 @@ const All_leaves_List = (ClosePop) => {
                             <h3>28</h3>
                             {/* <p>TOTAL EMPLOYEE</p> */}
                         </div>
-                      
+
                     </div>
                     <div className="Overview_box">
                         <div className="Overview_Top">
@@ -371,42 +470,42 @@ const All_leaves_List = (ClosePop) => {
                         <path d="M16 15L15.7 15.4C15.1111 16.1851 14.8167 16.5777 14.3944 16.7889C13.9721 17 13.4814 17 12.5 17H11.5C10.5186 17 10.0279 17 9.60557 16.7889C9.18328 16.5777 8.88885 16.1851 8.3 15.4L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose filterLeftCloseAtt'}`} ref={filterRef2} >
+                <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}>
                     <div className="all">
-                        <div className='listActive' onClick={filter_leftClose}>
-                            <span> <FaList /></span>All
+                        <div
+                            className={selectedFilter == null ? 'listActiveStatus' : ''}
+                            onClick={() => filter_leftClose(null)}
+                        >
+                            <span className=''><FaList /></span>All
                         </div>
                     </div>
-                    <div className="active" onClick={filter_leftClose}>
-                        <div>
-                            <span><PiCheckSquare /></span>Present
+                    <div
+                        onClick={() => filter_leftClose('Pending')}
+                    >
+                        <div
+                            className={`active ${selectedFilter === 'Pending' ? 'listActiveStatus' : ''}`}
+                        >
+                            <span><PiCheckSquare /></span>Pending
                         </div>
                     </div>
-
-                    <div className="resigned" onClick={filter_leftClose}>
-                        <div>
-                            <span> <FaRegClock /> </span>Half day
+                    <div
+                        onClick={() => filter_leftClose('Approved')}
+                    >
+                        <div className={`inactive ${selectedFilter === 'Approved' ? 'listActive' : ''}`}
+                        >
+                            <span><MdWork /></span>Approved
                         </div>
                     </div>
-                    <div className="notice_period" onClick={filter_leftClose}>
-                        <div>
-                            <span><IoIosCloseCircleOutline /></span>Absent
+                    <div
+                        onClick={() => filter_leftClose('Declined')}
+                    >
+                        <div className={`resigned ${selectedFilter === 'Declined' ? 'listActive' : ''}`}
+                        >
+                            <span><FaRegClock /></span>Declined
                         </div>
                     </div>
                 </div>
                 <div className="right">
-                    <div className="toggle_selectIcon divRight" onClick={toggleFilter4} ref={filterButtonRef4}>
-                        <div className='div_box' >
-                            <span id='toggle_selectIcon'>Select Date {!isFilterOpen4 ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-                        </div>
-                        {isFilterOpen4 &&
-                            <div id='DateDropdowns' ref={filterRef4}>
-                                <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                    <DateCalendar />
-                                </LocalizationProvider>
-                            </div>
-                        }
-                    </div>
                     <div className="refresh divRight" onClick={handleRefresh}>
                         <div className='div_box'>
                             <span><BiRevision /></span>
@@ -450,73 +549,46 @@ const All_leaves_List = (ClosePop) => {
 
                             </span>
                         </div>
-
                         {isFilterOpen && (
+
                             <div className="filter-container" ref={filterRef}>
                                 <div className="filter-options">
-                                    {/* <div className="filter-option" onClick={handleCustomDateClick}>
-                                        <p>Custom Date </p>
+
+                                    <div className="filter-option" >
+                                        <p onClick={handleCustomDateClick}>Custom Date {!showCustomDate ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showCustomDate && (
                                             <div className="dropdown-content date-h">
-                                                <div><MdDateRange /> Select Custom date</div>
-                                                <input type="date" />
-                                            </div>
-                                        )}
-                                    </div> */}
-                                    <div className="filter-option">
-                                        <p onClick={handleDepartmentClick}>Department</p>
-                                        {showDepartment && (
-                                            <div className="dropdown-content">
-                                                <ul>
-                                                    <li>
-                                                        <input type="radio" id="all-department" name="department" className="custom-radio" />
-                                                        <label htmlFor="all-department">All</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="it" name="department" className="custom-radio" />
-                                                        <label htmlFor="it">IT</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="hr" name="department" className="custom-radio" />
-                                                        <label htmlFor="hr">HR</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="sales" name="department" className="custom-radio" />
-                                                        <label htmlFor="sales">Sales</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="management" name="department" className="custom-radio" />
-                                                        <label htmlFor="management">Management</label>
-                                                    </li>
-                                                </ul>
+                                                <div><span><MdDateRange /></span>{!selectedDate ? 'Select Custom date' : selectedDate} </div>
+                                                {/* <br /> */}
+                                                <input type="date" name="date" id="" onChange={handleDateChange} />
                                             </div>
                                         )}
                                     </div>
+
                                     <div className="filter-option">
-                                        <p onClick={handleEmploymentTypeClick}>Shift</p>
-                                        {showEmploymentType && (
-                                            <div className="dropdown-content">
-                                                <ul>
-                                                    <li>
-                                                        <input type="radio" id="all" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="all">All </label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="general" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="general">General</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="night" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="night">Night</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="second" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="second">Second</label>
-                                                    </li>
-                                                </ul>
+                                        <p onClick={handleDateRangeClick}>Date Range  {!showDateRange ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                        {showDateRange && (
+                                            <div >
+                                                <label id='daterange-contener'>From</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!fromDate ? 'Select Custom date' : fromDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleFromDateChange} />
+                                                </div>
+                                                <label id='daterange-contener'>To</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!toDate ? 'Select Custom date' : toDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleToDateChange} />
+                                                </div>
                                             </div>
                                         )}
+
                                     </div>
+
+
+
+
                                 </div>
                             </div>
                         )}
@@ -534,24 +606,13 @@ const All_leaves_List = (ClosePop) => {
                             <tr>
                                 <th>
                                     <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
-                                    {/* {!allDel &&
-                                        <span id='deleteAll'>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ff0000" fill="none">
-                                                <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                <path d="M9 11.7349H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                <path d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                            </svg>
-                                        </span>
-                                    } */}
                                 </th>
                                 <th> <div>Employee Name<span><TiArrowUnsorted /></span></div></th>
-                                <th>Date</th>
-                                <th>Shift</th>
-                                <th>Punch in</th>
-                                <th>Punch out</th>
-                                <th>Total Hours Worked</th>
-                                <th>Overtime</th>
+                                <th>Leave Type</th>
+                                <th>Type</th>
+                                <th>Leave Period</th>
+                                <th>No of Days</th>
+                                <th>Date of Request</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -562,15 +623,12 @@ const All_leaves_List = (ClosePop) => {
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} onClick={DelThis} />
 
                                     </td>
-                                    <td onClick={JobDetailsPage}>{emp.EmployeeName}</td>
-                                    <td onClick={JobDetailsPage}>{emp.Date}</td>
-                                    <td onClick={JobDetailsPage}>{emp.Shift}</td>
-                                    <td onClick={JobDetailsPage}>{emp.PunchIn}</td>
-                                    <td onClick={JobDetailsPage}>{emp.PunchOut}</td>
-                                    <td onClick={JobDetailsPage}>{emp.TotalHoursWorked}</td>
-                                    <td onClick={JobDetailsPage}>{emp.Overtime}</td>
-
-
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.name}</td>
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.leave_type_name}</td>
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.leave_type_id}</td>
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.to_date + '-|-' + emp.from_date}</td>
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.PunchOut}</td>
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.TotalHoursWorked}</td>
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
@@ -581,7 +639,9 @@ const All_leaves_List = (ClosePop) => {
                                                     {console.log(emp.status.toLowerCase().replace(' ', '-'))}
                                                     <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}
                                                     ></span>
-                                                    <div>
+                                                    <div onClick={() => {
+                                                        UpdateStatusHndle(emp.id);
+                                                    }}>
                                                         <div className="">
                                                             {emp.status}
                                                         </div>

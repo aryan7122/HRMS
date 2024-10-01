@@ -65,6 +65,9 @@ import { useSelector } from 'react-redux';
 import All_leaves_List from './Pages/LeaveManagement/All_leaves_List/All_leaves_List.jsx';
 import UpdateEmloyee from './Pages/Employee_onboarding/UpdateEmployee/UpdateEmloyee.jsx';
 import Update_applicant from './Pages/Applicant_tracking/Update-applicant/Update_applicant.jsx';
+import AddNewLeave from './Pages/LeaveManagement/Add_Leave/AddNewLeave.jsx';
+import LeaveDetails from './Pages/LeaveManagement/LeaveDetails/LeaveDetails.jsx';
+import UpdateLeave from './Pages/LeaveManagement/Update_Leave/UpdateLeave.jsx';
 
 
 const App = () => {
@@ -157,7 +160,12 @@ const App = () => {
                   <Route path="/birthday" element={<BirthdayList />} />
                   {/* {All_leaves_List } */}
                   <Route path="/leave-master" element={<All_leaves_List />} />
+                    <Route path="/new-leave-master" element={<AddNewLeave />} />
+                    <Route path="/leave-details/:id" element={<LeaveDetails />} />
+                    <Route path="/update-leave/:id" element={<UpdateLeave />} />
 
+                    
+                    
 
                 </Routes>
 

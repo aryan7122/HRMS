@@ -141,7 +141,7 @@ const NewAttendance = ({ ClosePop }) => {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="button">
+                            <div className="buttons">
                                 <button type="submit" className="submit-btn">Submit</button>
                                 {/* <button type="submit">Submit</button> */}
                             </div>
