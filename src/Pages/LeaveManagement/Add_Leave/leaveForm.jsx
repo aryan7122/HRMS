@@ -48,7 +48,7 @@ const JobForm = ({ onSubmit }) => {
     console.log("Submitted form data:", formData);
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setLoading(true); // Show loading indicator
+        // setLoading(true); // Show loading indicator
 
         // Prepare request data
         const requestData = {
@@ -73,9 +73,28 @@ const JobForm = ({ onSubmit }) => {
 
             if (response.status === 200) {
                 console.log('response', response)
-                toast.success("Form submitted successfully!"); // Show success message
+                toast.success(response.data.message || 'Create Leave successfully.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             }
         } catch (error) {
+            toast.error(error.message, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
             console.error('Error submitting form:', error);
             toast.error("Error submitting form. Please try again."); // Show error message
         } finally {

@@ -68,6 +68,7 @@ import Update_applicant from './Pages/Applicant_tracking/Update-applicant/Update
 import AddNewLeave from './Pages/LeaveManagement/Add_Leave/AddNewLeave.jsx';
 import LeaveDetails from './Pages/LeaveManagement/LeaveDetails/LeaveDetails.jsx';
 import UpdateLeave from './Pages/LeaveManagement/Update_Leave/UpdateLeave.jsx';
+import All_leaves_List_Type from './Pages/LeaveManagement/All_leaves_List_Type/All_leaves_List_Type.jsx';
 
 
 const App = () => {
@@ -163,6 +164,7 @@ const App = () => {
                     <Route path="/new-leave-master" element={<AddNewLeave />} />
                     <Route path="/leave-details/:id" element={<LeaveDetails />} />
                     <Route path="/update-leave/:id" element={<UpdateLeave />} />
+                    <Route path="/leave-type" element={<All_leaves_List_Type />} />
 
                     
                     

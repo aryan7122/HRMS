@@ -16,7 +16,7 @@ import { MdWork } from "react-icons/md";
 import { FaRegClock } from "react-icons/fa";
 import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
-import './All_leaves_List.scss';
+import './All_leaves_List_Type.scss';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -28,10 +28,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
-import NewAttendance from '../../Attedance_tracking/addNewAttendance/NewAttendance.jsx';
+import NewAttendance from './addNewAttendance/NewAttendance.jsx';
 import { OutsideClick } from '../../../components/OutSideClick.jsx';
 
-const All_leaves_List = (ClosePop) => {
+const All_leaves_List_Type = (ClosePop) => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
@@ -171,9 +171,7 @@ const All_leaves_List = (ClosePop) => {
     const NewLeaveMaster = () => {
         navigate('/new-leave-master')
     }
-    const NewAttendanceClosePop = () => {
-        setTogglNewAdd(false);
-    };
+   
     const filter_left = () => {
         setToggleLeft(!toggleLeft)
     }
@@ -193,7 +191,12 @@ const All_leaves_List = (ClosePop) => {
     const [showCustomDate, setShowCustomDate] = useState(false);
    
     const [showDateRange, setShowDateRange] = useState(false)
-
+    const NewAttendanceClick = () => {
+        setTogglNewAdd(true)
+    }
+    const NewAttendanceClosePop = () => {
+        setTogglNewAdd(false);
+    };
     const handleDateRangeClick = () => {
         setShowDateRange(!showDateRange)
         setShowCustomDate(false);
@@ -247,6 +250,8 @@ const All_leaves_List = (ClosePop) => {
         setToggleLeft(false)
         toggleFilter2()
     };
+    const [updateStatus, setUpdateStatus] = useState(null)
+
 
 
     useEffect(() => {
@@ -255,12 +260,12 @@ const All_leaves_List = (ClosePop) => {
             setError(null);   // Har bar call se pehle error ko reset karna
 
             try {
-                const response = await axios.post('https://devstronauts.com/public/api/leave/list', {
-                    search: searchQuery,
-                    status: selectedFilter,
-                    custom_date: selectedDate,
-                    fromDate: fromDate,
-                    toDate: toDate
+                const response = await axios.post('https://devstronauts.com/public/api/leave/master/list', {
+                    // search: searchQuery,
+                    // status: selectedFilter,
+                    // custom_date: selectedDate,
+                    // fromDate: fromDate,
+                    // toDate: toDate
                 }, {
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -268,7 +273,7 @@ const All_leaves_List = (ClosePop) => {
                 });
 
                 // Data ko state me set kar rahe hain
-                console.log('respone❗', response)
+                console.log('respone❗❗', response)
                 setEmployees(response.data.result);
                 setFilteredEmployees(response.data.result); // filteredEmployees ko sync kar rahe hain
             } catch (error) {
@@ -282,61 +287,69 @@ const All_leaves_List = (ClosePop) => {
         };
 
         fetchJobOpenings();
-    }, [searchQuery, selectedFilter, selectedDate, fromDate, toDate]);
-    let isRequestInProgress = false;
+    }, [token, updateStatus, togglNewAdd]);
 
-    useEffect(() => {
-        if (statusId && statusNew && !isRequestInProgress) {
-            isRequestInProgress = true;  // Request start hone par flag true
-            axios.post('https://devstronauts.com/public/api/leave/status/update', {
-                id: statusId,
-                status: statusNew
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
+    // Initialize local state from currentEmployees
+    // const [employees, setEmployees] = useState(currentEmployees);
+
+    // Toggle the status (real-time)
+    const handleStatusToggle = async (id, currentStatus, index) => {
+        const newStatus = currentStatus === '0' ? '1' : '0'; // Toggle between 'Active' (0) and 'Inactive' (1)
+
+        try {
+            // Send the API request to update status
+            const response = await axios.post(
+                'https://devstronauts.com/public/api/leave/master/status/update',
+                {
+                    id,
+                    status: newStatus,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
                 }
-            })
-                .then(response => {
-                    // Success handling
-                    toast.success('Status update successfully.', {
-                        position: "top-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+            );
 
-                    if (response.data.success === true) {
-                        // setShowAlert(true);
-                        // setTimeout(() => {
-                        //     setShowAlert(false);
-                        // }, 4000);
-                    }
-                })
-                .catch(error => {
-                    // Error handling
-                    toast.error(error.message || 'Status update Failed.', {
-                        position: "top-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-
-                    console.error("Error fetching data: ", error);
-                })
-                .finally(() => {
-                    // Request complete hone ke baad flag reset hoga
-                    isRequestInProgress = false;
+            if (response.status === 200) {
+                // Update local state after successful API response
+                setEmployees((prevEmployees) => {
+                    const updatedEmployees = [...prevEmployees];
+                    updatedEmployees[index].status = newStatus;
+                    return updatedEmployees;
                 });
+                toast.success('Status update successfully.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+
+                console.log('Status updated:', response.data);
+            } else {
+                console.error('Failed to update status');
+            }
+        } catch (error) {
+            console.error('Error updating status:', error);
+            toast.error(error.message || 'Status update Failed.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         }
-    }, [statusNew]);
+    };
+
+   
 
     return (
         <div id='allEmp'>
@@ -359,7 +372,7 @@ const All_leaves_List = (ClosePop) => {
                             All Leaves list <p>{employees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
-                            <div className="addEmp" onClick={NewLeaveMaster}>
+                            <div className="addEmp" onClick={NewAttendanceClick}>
                                 <p><span><IoMdAdd /></span> Add New Leave</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
@@ -607,12 +620,10 @@ const All_leaves_List = (ClosePop) => {
                                 <th>
                                     <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
                                 </th>
-                                <th> <div>Employee Name<span><TiArrowUnsorted /></span></div></th>
-                                <th>Leave Type</th>
-                                <th>Type</th>
-                                <th>Leave Period</th>
-                                <th>No of Days</th>
-                                <th>Date of Request</th>
+                                <th> <div>Leave Type<span><TiArrowUnsorted /></span></div></th>
+                                <th> Type</th>
+                                <th>Available</th>
+                                <th>Description</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -623,121 +634,23 @@ const All_leaves_List = (ClosePop) => {
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} onClick={DelThis} />
 
                                     </td>
-                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.name}</td>
-                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.leave_type_name}</td>
-                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.leave_type_id}</td>
-                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.to_date + '-|-' + emp.from_date}</td>
-                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.PunchOut}</td>
-                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.TotalHoursWorked}</td>
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.leave_type}</td>
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.type_of_leave}</td>
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.available_days}</td>
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.description}</td>
                                     <td>
-                                        <div className="status-dropdown">
-                                            <div key={index} className="status-container">
-                                                <div
-                                                    className={`status-display ${emp.status.toLowerCase().replace(' ', '-')}`}
-                                                    onClick={() => setIsOpen(isOpen === index ? null : index)}
-                                                >
-                                                    {console.log(emp.status.toLowerCase().replace(' ', '-'))}
-                                                    <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}
-                                                    ></span>
-                                                    <div onClick={() => {
-                                                        UpdateStatusHndle(emp.id);
-                                                    }}>
-                                                        <div className="">
-                                                            {emp.status}
-                                                        </div>
-                                                        <div className="^wdown">
-                                                            <MdOutlineKeyboardArrowDown />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {isOpen === index && (
-                                                    <div className="status-options">
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
+                                        <label className="switch">
+                                            <input
+                                                type="checkbox"
+                                                checked={emp.status === '1'}
+                                                onChange={() => handleStatusToggle(emp.id, emp.status, index)}
+                                            />
+                                            <span className="slider"></span>
+                                        </label>
                                     </td>
-
-
                                 </tr>
                             ))}
-                            {/* <>
-                                {AttendanceData.map((data, index) => {
-                                    const punchInTime = new Date(`1970-01-01T${data.punchIn}:00`);
-                                    const punchOutTime = new Date(`1970-01-01T${data.punchOut}:00`);
-
-                                    // Total time in milliseconds
-                                    const totalMilliseconds = punchOutTime - punchInTime;
-
-                                    // Convert milliseconds to hours and minutes
-                                    const totalHours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
-                                    const totalMinutes = Math.floor((totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
-
-                                    // Format as "HH:MM"
-                                    const totalTimeWorked = `${totalHours}h ${totalMinutes}m`;
-
-                                    return (
-                                        <tr key={index}>
-                                            <td>
-                                                <input type="checkbox" checked={data.isChecked} onChange={() => handleCheckboxChange(index)} />
-                                            </td>
-                                            <td onClick={AttendanceDetailsPage}>{data.employeeName}</td>
-                                            <td onClick={AttendanceDetailsPage}>{data.date}</td>
-                                            <td onClick={AttendanceDetailsPage}>{data.shift}</td>
-                                            <td onClick={AttendanceDetailsPage}>{data.punchIn}</td>
-                                            <td onClick={AttendanceDetailsPage}>{data.punchOut}</td>
-                                            <td>{totalHours > 0 ? totalTimeWorked : '-'}</td>
-                                            <td onClick={AttendanceDetailsPage}>{data.overtime}</td>
-                                            <td>
-                                                <div className="status-dropdown">
-                                                    <div key={index} className="status-container">
-                                                        <div
-                                                            className={`status-display ${data.status ? data.status.toLowerCase().replace(' ', '-') : ''}`}
-                                                            onClick={() => setIsOpen(isOpen === index ? null : index)}
-                                                        >
-                                                            {data.status && (
-                                                                <>
-                                                                    <span className={`left_dot ${data.status.toLowerCase().replace(' ', '-')}`}></span>
-                                                                    <div>
-                                                                        <div className="">
-                                                                            {data.status}
-                                                                        </div>
-                                                                        <div className="^wdown">
-                                                                            <MdOutlineKeyboardArrowDown />
-                                                                        </div>
-                                                                    </div>
-                                                                </>
-                                                            )}
-                                                        </div>
-                                                        {isOpen === index && (
-                                                            <div className="status-options">
-                                                                {statuses.map(status => (
-                                                                    <div
-                                                                        key={status}
-                                                                        className="status-option"
-                                                                        onClick={() => handleStatusChange(index, status)}
-                                                                    >
-                                                                        {status}
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </> */}
+         
 
                         </tbody>
                     </table>
@@ -788,5 +701,5 @@ const All_leaves_List = (ClosePop) => {
     );
 };
 
-export default All_leaves_List;
+export default All_leaves_List_Type;
 // 
