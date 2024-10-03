@@ -28,7 +28,8 @@ const JobForm = ({ onSubmit }) => {
         totalDays: '',
         type: '',
         leaveReason: '',
-        user_id:''
+        user_id: '',
+        leave_type_id:''
     });
 
     const [loading, setLoading] = useState(false);
@@ -45,7 +46,7 @@ const JobForm = ({ onSubmit }) => {
         }));
     };
 
-    console.log("Submitted form data:", formData);
+    console.log("Submitted form data:❗", formData);
     const handleSubmit = async (event) => {
         event.preventDefault();
         // setLoading(true); // Show loading indicator
@@ -54,13 +55,13 @@ const JobForm = ({ onSubmit }) => {
         const requestData = {
             user_id: formData.user_id,
             name: formData.employeeName,
-            leave_type_id: formData.user_id,
+            leave_type_id: formData.leave_type_id,
             leave_type_name: formData.leaveType,
             from_date: formData.fromDate,
             to_date: formData.toDate,
             type_of_leave: formData.type,
-            days: formData.days,
-            resion: formData.reason,
+            days: formData.totalDays,
+            resion: formData.leaveReason,
         };
 
         try {
@@ -83,6 +84,9 @@ const JobForm = ({ onSubmit }) => {
                     progress: undefined,
                     theme: "light",
                 });
+                setTimeout(() => {
+                    navigate(`/leave-master`)
+                }, 2000);
             }
         } catch (error) {
             toast.error(error.message, {
@@ -108,11 +112,11 @@ const JobForm = ({ onSubmit }) => {
             ...prevState,
             [dropdown]: value
         }));
-        if (dropdown === 'leaveType') {
-            setLeaveTypeOpen(false);
-        } else {
-            setTypeOpen(false);
-        }
+        setLeaveTypeOpen(false);
+        setTypeOpen(false);
+        // if (dropdown === 'leaveType') {
+        // } else {
+        // }
         if (dropdown === 'employeeName') {
             // Full name ko store karo aur user_id ko bhi alag se store karo
             setFormData(prevState => ({
@@ -121,11 +125,21 @@ const JobForm = ({ onSubmit }) => {
                 user_id: value.user_id // user_id ko alag se store karo
             }));
         }
+        if (dropdown === 'leaveType') {
+            // Full name ko store karo aur user_id ko bhi alag se store karo
+            setFormData(prevState => ({
+                ...prevState,
+                leaveType: `${value.leave_type}`, // Full name
+                leave_type_id: value.id // user_id ko alag se store karo
+            }));
+        }
         setEmployeeNameOpen(false)
     };
     // api emp list
     const [departmentHead, setDepartmentHead] = useState([]);
-    // console.log('departmentHead❗',)
+    const [leaveTypeData, setLeaveTypeData] = useState([]);
+
+    console.log('leaveTypeData', leaveTypeData)
 
     useEffect(() => {
         if (departmentHead.length > 0) {
@@ -139,8 +153,30 @@ const JobForm = ({ onSubmit }) => {
         })
             .then(response => {
                 const employees = response.data.result;
-                setDepartmentHead(employees); 
-                console.log('employees❗ ', employees)
+                setDepartmentHead(employees);
+                // console.log('employees❗ ', employees)
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                setLoading(false);
+            });
+    }, []);
+
+    useEffect(() => {
+        if (leaveTypeData.length > 0) {
+            return
+        }
+        axios.post('https://devstronauts.com/public/api/leave/master/list', {
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                const employees = response.data.result;
+                setLeaveTypeData(employees);
+                console.log('leaveTypeData ⚠️❤️👋 ', employees)
                 setLoading(false);
             })
             .catch(error => {
@@ -174,7 +210,7 @@ const JobForm = ({ onSubmit }) => {
                 <form onSubmit={handleSubmit}>
                     <div id='form'>
                         <div className="from1">
-                          
+
                             <div className="form-group">
                                 <label className='starred'>Employee Name*</label>
                                 <div className="dropdown">
@@ -231,11 +267,15 @@ const JobForm = ({ onSubmit }) => {
                                                 onChange={handleSearchQueryChangeLeaveType}
                                             />
                                             <div className="dropdown_I">
-                                                {['Sick', 'Casual', 'Earned'].filter(option =>
-                                                    option.toLowerCase().includes(searchQueryLeaveType.toLowerCase())
+                                                {leaveTypeData.filter(option =>
+                                                    (`${option.leave_type} ${option.leave_type}`).toLowerCase().includes(searchQueryLeaveType.toLowerCase())
                                                 ).map(option => (
-                                                    <div className="dropdown-item" onClick={() => selectOption('leaveType', option)} key={option}>
-                                                        {option}
+                                                    <div
+                                                        className="dropdown-item"
+                                                        onClick={() => selectOption('leaveType', option)}
+                                                        key={option.id}
+                                                    >
+                                                        {option.leave_type} 
                                                     </div>
                                                 ))}
                                             </div>
