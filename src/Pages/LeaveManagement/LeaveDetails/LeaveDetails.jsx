@@ -31,41 +31,41 @@ const LeaveDetails = () => {
     // const [activeTab, setActiveTab] = useState('experience');
     const [leavedetails, setLeavedetails] = useState(null);
     const projects = [
-        {
-            name: "E-commerce Website Redesign",
-            manager: "Abha Patel",
-            contact: "919555502041",
-            createdDate: "12/06/2020",
-            status: "Completed"
-        },
-        {
-            name: "Learning Platform Development",
-            manager: "Adarsh Pal",
-            contact: "919555502041",
-            createdDate: "12/06/2020",
-            status: "Completed"
-        },
-        {
-            name: "Marketing Campaign",
-            manager: "Akanksha Tewatia",
-            contact: "919555502041",
-            createdDate: "12/06/2020",
-            status: "Completed"
-        },
-        {
-            name: "User Interface Improvements",
-            manager: "Abishek Tiwari",
-            contact: "919555502041",
-            createdDate: "12/06/2020",
-            status: "Completed"
-        },
-        {
-            name: "User Interface Improvements",
-            manager: "Adri Green",
-            contact: "919555502041",
-            createdDate: "12/06/2020",
-            status: "Pending"
-        }
+        // {
+        //     name: "E-commerce Website Redesign",
+        //     manager: "Abha Patel",
+        //     contact: "919555502041",
+        //     createdDate: "12/06/2020",
+        //     status: "Completed"
+        // },
+        // {
+        //     name: "Learning Platform Development",
+        //     manager: "Adarsh Pal",
+        //     contact: "919555502041",
+        //     createdDate: "12/06/2020",
+        //     status: "Completed"
+        // },
+        // {
+        //     name: "Marketing Campaign",
+        //     manager: "Akanksha Tewatia",
+        //     contact: "919555502041",
+        //     createdDate: "12/06/2020",
+        //     status: "Completed"
+        // },
+        // {
+        //     name: "User Interface Improvements",
+        //     manager: "Abishek Tiwari",
+        //     contact: "919555502041",
+        //     createdDate: "12/06/2020",
+        //     status: "Completed"
+        // },
+        // {
+        //     name: "User Interface Improvements",
+        //     manager: "Adri Green",
+        //     contact: "919555502041",
+        //     createdDate: "12/06/2020",
+        //     status: "Pending"
+        // }
     ];
     // popup
     // popup
@@ -115,7 +115,7 @@ const LeaveDetails = () => {
     }
     const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/departmenpt/delete', { id }, {
+            axios.post('https://devstronauts.com/public/api/leave/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -124,8 +124,20 @@ const LeaveDetails = () => {
                     // setDepartmentdetails(response.data.department);
                     // setDepartmentdetails2(response.data.department.enteredbyid)
                     console.log('⚠️ delete ❗', response)
+                    toast.success('Deleted  successfully.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
                     // setLoading(false);
-                    navigate('/department')
+                    setTimeout(() => {
+                        navigate('/leave-master')
+                    }, 2000);
 
                 })
                 .catch(error => {
@@ -135,8 +147,8 @@ const LeaveDetails = () => {
                 });
         }
     }
-    
-  
+
+
 
     const closePage = () => {
         navigate('/leave-master')
@@ -144,7 +156,7 @@ const LeaveDetails = () => {
     const UpdateLeave = () => {
         navigate(`/update-leave/${id}`)
     }
-    
+
     if (loading) {
         return <div id="notFounPageID"><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="Loading..." /></div>;
     }
@@ -153,7 +165,7 @@ const LeaveDetails = () => {
         return <div id="notFounPageID"><img src="https://miro.medium.com/v2/resize:fit:996/1*C5oq4FeTlcpNXrXfnPpxTQ.gif" alt="Error loading data" /></div>;
     }
 
-   
+
 
     // const EmployeeSlider = ({ employees }) => {
     // Helper function to chunk the employees array
@@ -168,7 +180,7 @@ const LeaveDetails = () => {
     return (
         <div className="profile-page">
             <div className="">
-                
+
                 <ToastContainer
                     position="top-right"
                     autoClose={5000}
@@ -191,9 +203,9 @@ const LeaveDetails = () => {
                     </p>
                     <div className="buttons">
                         <div onClick={DelteConform}>
-                        <Button className="button" onClick={() => toast("Deleted!")}>
-                            Delete
-                        </Button>
+                            <Button className="button">
+                                Delete
+                            </Button>
                         </div>
                         <DialogDismiss className="button secondary">Cancel</DialogDismiss>
                     </div>
@@ -202,7 +214,7 @@ const LeaveDetails = () => {
             {/* <ToastContainer className="toast-container" /> */}
             <div className="details">
                 <div className="title_top">
-                    <h2>Department Detail</h2>
+                    <h2>Employee Leave Details</h2>
                     <div className='close_btn' onClick={closePage}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#7f7f7f" fill="none">
                             <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -216,9 +228,9 @@ const LeaveDetails = () => {
                             <img src="https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg" alt="" />
                         </div>
                         <div className="about_user">
-                            <h3>{leavedetails.department_name || '-'}</h3>
-                            <p>{leavedetails.parent_department || '-'}</p>
-                            <div><h4></h4> <h5>Active</h5></div>
+                            <h3>{leavedetails.name || '-'}</h3>
+                            <p>{leavedetails.leave_type_name || '-'}</p>
+                            <div><h4></h4> <h5>{leavedetails.status}</h5></div>
                         </div>
                     </div>
                     <div className="action_card">
@@ -240,15 +252,15 @@ const LeaveDetails = () => {
                                 <path d="M16 14H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M16.5 22V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                        </span>Department Information</h3></div>
+                        </span> Leave Details</h3></div>
                         <div className='contentInformation'>
                             <div>
-                                <h4> Department</h4>
-                                <p>{leavedetails.department_name || '-'}</p>
+                                <h4> Leave Start Date</h4>
+                                <p>{leavedetails.from_date || '-'}</p>
                             </div>
                             <div>
-                                <h4> Leave Start Date</h4>
-                                <p>{leavedetails.department_name || '-'}</p>
+                                <h4> Leave End Date</h4>
+                                <p>{leavedetails.to_date || '-'}</p>
                             </div>
                             <div>
                                 <h4>Created At</h4>
@@ -257,8 +269,32 @@ const LeaveDetails = () => {
                                 </p>
 
                             </div>
+                            <div>
+                                <h4> No of Days Requested</h4>
+                                <p>{leavedetails.days || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Leave Status</h4>
+                                <p>{leavedetails.status || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Leave Type</h4>
+                                <p>{leavedetails.leave_type_name || '-'}</p>
+                            </div>
+                            <div>
+                                <h4> Type of Leave</h4>
+                                <p>{leavedetails.type_of_leave || '-'}</p>
+                            </div>
+
                         </div>
-                      
+                        <div id='DescriptionJOB'>
+                            <div>
+                                <h4 style={{marginLeft:'-15px'}}> Resion</h4>
+                                <p>{leavedetails.resion || '-'}</p>
+                            </div>
+                        </div>
+
+
                     </div>
                     <div className="card4" >
                         <div className='top_head4'> <h3> <span>
@@ -272,10 +308,21 @@ const LeaveDetails = () => {
                                 <path d="M16 14H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M16.5 22V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                        </span>Employees in Department</h3></div>
+                        </span>Leave Summary</h3></div>
 
                         <div className="Emp4">
-                                   
+                            <div className='Leave_Summary'>
+                                <p>Total Leave Balance</p>
+                                <h2>29</h2>
+                            </div>
+                            <div className='Leave_Summary'>
+                                <p>Total Leave Balance</p>
+                                <h2>29</h2>
+                            </div>
+                            <div className='Leave_Summary'>
+                                <p>Total Leave Balance</p>
+                                <h2>29</h2>
+                            </div>
                         </div>
                         {/* Personal information content */}
                     </div>
@@ -298,10 +345,10 @@ const LeaveDetails = () => {
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>PROJECT NAME</th>
-                                        <th>PROJECT MANAGER</th>
-                                        <th>CONTACT</th>
-                                        <th>CREATED DATE</th>
+                                        <th>Leave Type</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Reason</th>
                                         <th>STATUS</th>
                                     </tr>
                                 </thead>

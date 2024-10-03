@@ -3,6 +3,8 @@ import './EmployeeDetails.scss';
 import Experience from './Experience.jsx';
 import Education from './Education.jsx';
 import Documents from './Documents.jsx';
+import Health from './Health.jsx';
+
 import { IoMdCloseCircleOutline } from "react-icons/io";
 // import Img_user from '../../../assets/user.png'
 import { MdWorkHistory } from "react-icons/md";
@@ -29,7 +31,7 @@ const EmployeeDetails = () => {
 
     const [employeeData, setEmployeeData] = useState(null); // To store the employee details from API
     const [employeeData2, setEmployeeData2] = useState(null); // To store the employee details from API
-    console.log('experience employeeData 👉', employeeData)
+    // console.log('experience employeeData 👉', employeeData.user_id)
     useEffect(() => {
         // const totalFields = Object.keys(employeeData).length; // Total fields count
         // const filledFields = Object.values(employeeData).filter(value => value !== null && value !== '').length; // Filled fields count
@@ -114,6 +116,8 @@ const EmployeeDetails = () => {
                 return <Documents employeeData={employeeData2.documents} />;
             case 'contacts':
                 return <Contacts employeeData={employeeData2.contacts} />;
+            case 'health':
+                return <Health employeeData={employeeData.user_id} />;
             default:
                 return <Experience />;
         }
@@ -132,7 +136,6 @@ const EmployeeDetails = () => {
     const handleRefresh = () => {
         setRefresh(!refresh)
     };
-    // console.log('employeeData 🧭', employeeData2)
 
 
     const HandleDelete = () => {
@@ -170,16 +173,34 @@ const EmployeeDetails = () => {
         return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
     }
 
-    let EmployeeProfilePic = JSON.parse(employeeData.image);
-    console.log('EmployeeProfilePic: ', EmployeeProfilePic);
-    let picurl = ''
-    // For logging each item in the parsed array
-    EmployeeProfilePic.forEach(pic => {
-        picurl = pic.name
-        console.log('Image Name: ', pic.name);
-        console.log('Image URL: ', pic.url);
-    });
-    const dummyImageUrl = "https://www.pngitem.com/pimgs/m/80-800194_transparent-users-icon-png-flat-user-icon-png.png"; // Dummy user icon ka URL
+    // Check if employeeData.image is valid before parsing
+    let EmployeeProfilePic;
+    if (employeeData && employeeData.image) {
+
+        try {
+            EmployeeProfilePic = JSON.parse(employeeData.image);
+
+            // If the parsed data is an array, use forEach
+            if (Array.isArray(EmployeeProfilePic)) {
+                EmployeeProfilePic.forEach(pic => {
+                    let picurl = pic.name; // You can use pic.name here
+                    console.log('Image Name: ', pic.name);
+                    console.log('Image URL: ', pic.url);
+                });
+            } else {
+                console.error("Parsed data is not an array");
+            }
+        } catch (error) {
+            console.error("Error parsing JSON: ", error);
+        }
+    } else {
+        console.error("employeeData.image is null or undefined");
+    }
+
+
+    const dummyImageUrl = "https://www.pngitem.com/pimgs/m/80-800194_transparent-users-icon-png-flat-user-icon-png.png";
+
+    // Dummy user icon ka URL
 
     // if (employeeData) {
 
@@ -228,9 +249,15 @@ const EmployeeDetails = () => {
                 <div className="profile_card">
                     <div className="img_card">
                         <div className="progress-circle" style={{ "--angle": `${rotationAngle}%` }}>
-                            {EmployeeProfilePic.map((pic, index) => (
-                                <img key={index} src={pic.url || dummyImageUrl} alt={pic.name} />
-                            ))}
+                            <>
+                                {Array.isArray(EmployeeProfilePic) && EmployeeProfilePic.length > 0 && (
+                                    <>
+                                        {EmployeeProfilePic.map((pic, index) => (
+                                            <img key={index} src={pic.url || dummyImageUrl} alt={pic.name} />
+                                        ))}
+                                    </>
+                                )}
+                            </>
                         </div>
                         <div className="about_user">
                             <h3>{employeeData.first_name + ' ' + employeeData.last_name || ''}</h3>
@@ -328,28 +355,34 @@ const EmployeeDetails = () => {
 
                 <div className="nav-bar">
                     <button
-                        className={activeTab === 'experience' ? 'active' : ''}
+                        className={activeTab === 'experience' ? 'activeEmp' : ''}
                         onClick={() => setActiveTab('experience')}
                     >
                         Experience
                     </button>
                     <button
-                        className={activeTab === 'education' ? 'active' : ''}
+                        className={activeTab === 'education' ? 'activeEmp' : ''}
                         onClick={() => setActiveTab('education')}
                     >
                         Education
                     </button>
                     <button
-                        className={activeTab === 'documents' ? 'active' : ''}
+                        className={activeTab === 'documents' ? 'activeEmp' : ''}
                         onClick={() => setActiveTab('documents')}
                     >
                         Documents
                     </button>
                     <button
-                        className={activeTab === 'contacts' ? 'active' : ''}
+                        className={activeTab === 'contacts' ? 'activeEmp' : ''}
                         onClick={() => setActiveTab('contacts')}
                     >
                         Contacts
+                    </button>
+                    <button
+                        className={activeTab === 'health' ? 'activeEmp' : ''}
+                        onClick={() => setActiveTab('health')}
+                    >
+                        Health
                     </button>
                 </div>
 

@@ -16,8 +16,10 @@ import { useNavigate } from 'react-router-dom';
 import './EmployeeHealth.scss';
 import { OutsideClick } from '../../../components/OutSideClick';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const EmployeeHealth = () => {
@@ -28,6 +30,8 @@ const EmployeeHealth = () => {
     const [statusNew, setStatusNew] = useState('')
 
     const [hidImport, setHidImport] = useState(true);
+    const [conformStatus, setConformStatus] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const [employees, setEmployees] = useState([
         // { deptName: "Hillery Moses", deptHead: "HSEQ", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Soy", chorninc: "Lorem ipsum dolor sit amet c...", status:'status' },
@@ -204,11 +208,11 @@ const EmployeeHealth = () => {
     const handleStatusChange = (index, newStatus) => {
         setStatusNew(newStatus)
         // console.log('status chenge:::', newStatus)
-        const updatedEmployees = [...filteredEmployees];
-        updatedEmployees[index].status = newStatus;
-        setFilteredEmployees(updatedEmployees);
+        // const updatedEmployees = [...filteredEmployees];
+        // updatedEmployees[index].status = newStatus;
+        // setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
-       
+       setOpen(true)
         setSms('')
     };
 
@@ -281,12 +285,15 @@ const EmployeeHealth = () => {
                 setLoading(false)
 
             })
-    }, [searchQuery, selectedDepartmentId, selectedDate, toDate, fromDate, statusNew,sms]);
+    }, [searchQuery, selectedDepartmentId, selectedDate, toDate, fromDate, statusNew,sms,open]);
 // list api
     // status update
     let isRequestInProgress = false;
 
-    useEffect(() => {
+    const ConformOk = () => {
+        setTimeout(() => {
+            setOpen(false)
+        }, 400);
         if (statusId && statusNew && !isRequestInProgress) {
             isRequestInProgress = true; // Request start hone par flag true ho jaye
 
@@ -346,8 +353,7 @@ const EmployeeHealth = () => {
             // Call the async function
             updateStatus();
         }
-    }, [statusNew]); // Make sure to include all dependencies
-
+    }
     // status update
 
     return (
@@ -361,6 +367,26 @@ const EmployeeHealth = () => {
                 draggable
                 theme="error"
             />
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                backdrop={<div className="backdrop" />}
+                className="dialog"
+            >
+                <DialogHeading className="heading">Are you sure?</DialogHeading>
+                <p className="description">
+                    You want to Update this Status
+                </p>
+                <div className="buttons">
+                    <div onClick={ConformOk}>
+                        <Button className="button">
+                            Update
+                        </Button>
+                    </div>
+                    <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                </div>
+            </Dialog>
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">

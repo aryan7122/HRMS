@@ -280,6 +280,24 @@
               }
             }
           }
+          .Leave_Summary{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(155, 151, 151, 0.489);
+            margin: 15px 20px;
+            padding: 10px;
+            border-radius: 11px;
+            p{
+              color: #2a2a2a;
+              opacity: 0.8;
+              font-size: 14px;
+            }
+            h2{
+              color: #400F6F;
+              font-size: 32px;
+            }
+          }
         }
       }
       @media (max-width: 1111px) {

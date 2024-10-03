@@ -15,11 +15,13 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { OutsideClick } from '../../../components/OutSideClick';
 import OutsideClick4 from './OutSideClick4.jsx';
-import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 import './AllEmployeeList.scss';
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AllEmployeeList = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
@@ -38,7 +40,11 @@ const AllEmployeeList = () => {
     const [hidImport, setHidImport] = useState(true);
     const [allDel, setAllDel] = useState(false);
     const [toggleLeft, setToggleLeft] = useState(false)
+// 
 
+    const [conformStatus, setConformStatus] = useState(false);
+    const [open, setOpen] = useState(false);
+// 
     const navigate = useNavigate()
     const [employees, setEmployees] = useState([
         // { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "ananya.singh@example.com", phone: "+918555031082", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
@@ -267,7 +273,7 @@ const AllEmployeeList = () => {
                 setError(true)
 
             });
-    }, [statusId, statusNew, token, sms, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId]);
+    }, [statusId, statusNew, token, sms, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId,open]);
     //  
     const [departmentdetails3, setDepartmentdetails3] = useState('');
     const [departmentdetails2, setDepartmentdetails2] = useState('');
@@ -292,7 +298,10 @@ const AllEmployeeList = () => {
         // }
     }, [token]);
     // 
-    useEffect(() => {
+    const ConformOk = () => {
+        setTimeout(() => {
+            setOpen(false)
+        }, 400);
         if (statusId && statusNew) {
 
             axios.post('https://devstronauts.com/public/api/employee/status/update', {
@@ -345,7 +354,7 @@ const AllEmployeeList = () => {
                     console.error("Error fetching data: ", error);
                 });
         }
-    }, [statusNew]);
+    }
     // 
     const handleStatusChange = (index, newStatus) => {
         setStatusNew(newStatus)
@@ -354,6 +363,8 @@ const AllEmployeeList = () => {
         setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
         setSms('')
+        setOpen(true)
+
     };
 
 
@@ -375,6 +386,26 @@ const AllEmployeeList = () => {
                 draggable
                 theme="error"
             />
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                backdrop={<div className="backdrop" />}
+                className="dialog"
+            >
+                <DialogHeading className="heading">Are you sure?</DialogHeading>
+                <p className="description">
+                    You want to Update this Status
+                </p>
+                <div className="buttons">
+                    <div onClick={ConformOk}>
+                        <Button className="button">
+                            Update
+                        </Button>
+                    </div>
+                    <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                </div>
+            </Dialog>
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">

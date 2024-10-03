@@ -19,8 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import './All_leaves_List.scss';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import { IoIosCloseCircleOutline } from "react-icons/io";
 // import { GiBackstab, GiNotebook } from "react-icons/gi";
 // import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
@@ -30,6 +29,10 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 import NewAttendance from '../../Attedance_tracking/addNewAttendance/NewAttendance.jsx';
 import { OutsideClick } from '../../../components/OutSideClick.jsx';
+
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const All_leaves_List = (ClosePop) => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
@@ -41,6 +44,10 @@ const All_leaves_List = (ClosePop) => {
     const [thisDel, setThisDel] = useState(false)
     const [toggleLeft, setToggleLeft] = useState(false)
     const [togglNewAdd, setTogglNewAdd] = useState(false)
+
+    const [conformStatus, setConformStatus] = useState(false);
+    const [open, setOpen] = useState(false);
+
     const DelThis = () => {
         setThisDel(!thisDel);
 
@@ -60,8 +67,7 @@ const All_leaves_List = (ClosePop) => {
         // { EmployeeName: "Rahul Choudhary", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
     ]);
 
-
-
+   
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -117,16 +123,7 @@ const All_leaves_List = (ClosePop) => {
     const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
     const [statusNew, setStatusNew] = useState('')
 
-    const handleStatusChange = (index, newStatus) => {
-        setStatusNew(newStatus)
-        const updatedEmployees = [...filteredEmployees];
-        updatedEmployees[index].status = newStatus;
-        setFilteredEmployees(updatedEmployees);
-        setIsOpen(null);
-    };
-    const UpdateStatusHndle = (id) => {
-        setStatusId(id)
-    }
+
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
@@ -154,12 +151,12 @@ const All_leaves_List = (ClosePop) => {
     };
 
     const handleRefresh = () => {
-        setFilteredEmployees(employees);
+        // setFilteredEmployees(employees);
         setSearchQuery('');
-        setSelectedDepartment('All');
-        setSelectedStatus('All');
-        setCurrentPage(1);
-        setRowsPerPage(10);
+        // setSelectedDepartment('');
+        setSelectedStatus(' ');
+        // setCurrentPage(1);
+        // setRowsPerPage(10);
         setSelectedFilter(null)
         // setSelectedDepartmentId(null)
         setSelectedDate(null)
@@ -191,7 +188,7 @@ const All_leaves_List = (ClosePop) => {
     };
     // 
     const [showCustomDate, setShowCustomDate] = useState(false);
-   
+
     const [showDateRange, setShowDateRange] = useState(false)
 
     const handleDateRangeClick = () => {
@@ -200,10 +197,10 @@ const All_leaves_List = (ClosePop) => {
     }
     const handleCustomDateClick = () => {
         setShowCustomDate(!showCustomDate);
-      
+
         setShowDateRange(false)
     };
-   
+
     const [selectedDate, setSelectedDate] = useState(null);
     console.log('selectedDate', selectedDate)
     const handleDateChange = (event) => {
@@ -269,7 +266,7 @@ const All_leaves_List = (ClosePop) => {
 
                 // Data ko state me set kar rahe hain
                 console.log('respone❗', response)
-                setEmployees(response.data.result);
+                setEmployees(response.data);
                 setFilteredEmployees(response.data.result); // filteredEmployees ko sync kar rahe hain
             } catch (error) {
                 // Agar error aaye toh usko handle kar rahe hain
@@ -282,10 +279,30 @@ const All_leaves_List = (ClosePop) => {
         };
 
         fetchJobOpenings();
-    }, [searchQuery, selectedFilter, selectedDate, fromDate, toDate]);
+    }, [searchQuery, selectedFilter, selectedDate, fromDate, toDate,open]);
     let isRequestInProgress = false;
 
-    useEffect(() => {
+
+
+    const handleStatusChange = (index, newStatus) => {
+        // if (conformStatus) {
+        // setConformStatus(!conformStatus)
+        setStatusNew(newStatus)
+        // const updatedEmployees = [...filteredEmployees];
+        // updatedEmployees[index].status = newStatus;
+        // setFilteredEmployees(updatedEmployees);
+        setIsOpen(null);
+        // }
+        setOpen(true)
+    };
+    const UpdateStatusHndle = (id) => {
+        setStatusId(id)
+    }
+
+    const ConformOk = () => {
+        setTimeout(() => {
+            setOpen(false)
+        }, 400);
         if (statusId && statusNew && !isRequestInProgress) {
             isRequestInProgress = true;  // Request start hone par flag true
             axios.post('https://devstronauts.com/public/api/leave/status/update', {
@@ -297,7 +314,8 @@ const All_leaves_List = (ClosePop) => {
                 }
             })
                 .then(response => {
-                    // Success handling
+                    // Success handling'      
+                    setConformStatus(false)
                     toast.success('Status update successfully.', {
                         position: "top-right",
                         autoClose: 3000,
@@ -310,6 +328,7 @@ const All_leaves_List = (ClosePop) => {
                     });
 
                     if (response.data.success === true) {
+
                         // setShowAlert(true);
                         // setTimeout(() => {
                         //     setShowAlert(false);
@@ -336,7 +355,7 @@ const All_leaves_List = (ClosePop) => {
                     isRequestInProgress = false;
                 });
         }
-    }, [statusNew]);
+    }
 
     return (
         <div id='allEmp'>
@@ -349,6 +368,27 @@ const All_leaves_List = (ClosePop) => {
                 draggable
                 theme="error"
             />
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                backdrop={<div className="backdrop" />}
+                className="dialog"
+            >
+                <DialogHeading className="heading">Are you sure?</DialogHeading>
+                <p className="description">
+                    You want to Update this Status
+                </p>
+                <div className="buttons">
+                    <div onClick={ConformOk}>
+                        <Button className="button">
+                            Update
+                        </Button>
+                    </div>
+                    <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                </div>
+            </Dialog>
+
             {togglNewAdd && <NewAttendance ClosePop={NewAttendanceClosePop} />}
 
             <div className="EmpOn_main_container">
@@ -356,7 +396,7 @@ const All_leaves_List = (ClosePop) => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Leaves list <p>{employees.length} total</p>
+                            All Leaves list <p>{currentEmployees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={NewLeaveMaster}>
@@ -402,7 +442,7 @@ const All_leaves_List = (ClosePop) => {
                             </span>
                         </div>
                         <div className="Overview_Bottom">
-                            <h3>28</h3>
+                            <h3>{employees.today_present_count}</h3>
                             {/* <p>TOTAL EMPLOYEE</p> */}
                         </div>
 
@@ -418,7 +458,7 @@ const All_leaves_List = (ClosePop) => {
                             </span>
                         </div>
                         <div className="Overview_Bottom">
-                            <h3>08</h3>
+                            <h3>{employees.planned_leaves_count}</h3>
                             <p>Today</p>
                         </div>
 
@@ -434,7 +474,7 @@ const All_leaves_List = (ClosePop) => {
                             </span>
                         </div>
                         <div className="Overview_Bottom">
-                            <h3>05</h3>
+                            <h3>{employees.unplanned_leaves_count}</h3>
                             <p>Today</p>
                         </div>
 
@@ -453,7 +493,7 @@ const All_leaves_List = (ClosePop) => {
                             </span>
                         </div>
                         <div className="Overview_Bottom">
-                            <h3>06</h3>
+                            <h3>{employees.pending_leaves_count}</h3>
                             <p>Today</p>
                         </div>
 
@@ -741,7 +781,7 @@ const All_leaves_List = (ClosePop) => {
 
                         </tbody>
                     </table>
-                  {loading ? (
+                    {loading ? (
                         <div id='Loading'>
                             <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
                         </div> // Show loading text or spinner when data is being fetched

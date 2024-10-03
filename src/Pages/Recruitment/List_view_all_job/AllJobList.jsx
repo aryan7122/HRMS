@@ -17,8 +17,7 @@ import { FaRegClock } from "react-icons/fa";
 import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
 import './AllJobList.scss';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -32,7 +31,9 @@ import { OutsideClickStatus } from './OutsideClickStatus.jsx'; // Adjust import 
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AllJobList = () => {
 
     const jobs = useSelector((state) => state.job.jobs);
@@ -41,6 +42,8 @@ const AllJobList = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
     // const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatusDropdown } = OutsideClickStatus();
+    const [conformStatus, setConformStatus] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const [selectedFilter, setSelectedFilter] = useState(null);
     // alert(selectedFilter)
@@ -375,11 +378,14 @@ const AllJobList = () => {
 
             },
                 );
-    }, [statusId, statusNew, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId, sms, fromDate, toDate]);
+    }, [statusId, statusNew, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId, sms, fromDate, toDate,open]);
 
     let isRequestInProgress = false;
 
-    useEffect(() => {
+    const ConformOk = () => {
+        setTimeout(() => {
+            setOpen(false)
+        }, 400);
         if (statusId && statusNew && !isRequestInProgress) {
             isRequestInProgress = true;  // Request start hone par flag true
             axios.post('https://devstronauts.com/public/api/jobopening/status/update', {
@@ -431,16 +437,17 @@ const AllJobList = () => {
                     isRequestInProgress = false;
                 });
         }
-    }, [statusNew]); // Ensure all dependencies are added
+    }
+    // Ensure all dependencies are added
 
 
 
     const handleStatusChange = (index, newStatus) => {
         setStatusNew(newStatus)
         // console.log('status chenge:::', newStatus)
-        const updatedEmployees = [...filteredEmployees];
-        updatedEmployees[index].status = newStatus;
-        setFilteredEmployees(updatedEmployees);
+        // const updatedEmployees = [...filteredEmployees];
+        // updatedEmployees[index].status = newStatus;
+        // setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
         // toast.info('Please Wait Status Updating...', {
         //     position: "top-right",
@@ -453,6 +460,7 @@ const AllJobList = () => {
         //     theme: "light",
         // });
         setSms('')
+        setOpen(true)
     };
 
     const [activeFilter, setActiveFilter] = useState(null); // Track the active filter
@@ -473,6 +481,26 @@ const AllJobList = () => {
                 draggable
                 theme="error"
             />
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                backdrop={<div className="backdrop" />}
+                className="dialog"
+            >
+                <DialogHeading className="heading">Are you sure?</DialogHeading>
+                <p className="description">
+                    You want to Update this Status
+                </p>
+                <div className="buttons">
+                    <div onClick={ConformOk}>
+                        <Button className="button">
+                            Update
+                        </Button>
+                    </div>
+                    <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                </div>
+            </Dialog>
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">

@@ -18,8 +18,10 @@ import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
 import './All_Applicant_list.scss';
 // 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import axios from 'axios';
 
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -41,6 +43,9 @@ const All_Applicant_list = () => {
         setThisDel(!thisDel);
 
     }
+
+    const [conformStatus, setConformStatus] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const [hidImport, setHidImport] = useState(true);
     const navigate = useNavigate()
@@ -125,10 +130,10 @@ const All_Applicant_list = () => {
     }
     const handleStatusChange = (index, newStatus) => {
         setStatusNew(newStatus)
-
-        const updatedEmployees = [...filteredEmployees];
-        // updatedEmployees[index].status = newStatus;
-        setFilteredEmployees(updatedEmployees);
+        setOpen(true)
+        // const updatedEmployees = [...filteredEmployees];
+        // // updatedEmployees[index].status = newStatus;
+        // setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
         setSms('')
     };
@@ -299,7 +304,7 @@ const All_Applicant_list = () => {
 
             },
             );
-    }, [statusNew, sms, , searchQuery, activeFilter, selectedDate, fromDate, toDate]);
+    }, [statusNew, sms, , searchQuery, activeFilter, selectedDate, fromDate, toDate,open]);
 
     // list
 
@@ -307,7 +312,10 @@ const All_Applicant_list = () => {
 
     let isRequestInProgress = false;
 
-    useEffect(() => {
+    const ConformOk = () => {
+        setTimeout(() => {
+            setOpen(false)
+        }, 400);
         if (statusId && statusNew && !isRequestInProgress) {
             isRequestInProgress = true;  // Request start hone par flag true
             axios.post('https://devstronauts.com/public/api/applicant/status/update', {
@@ -358,7 +366,7 @@ const All_Applicant_list = () => {
                     isRequestInProgress = false;
                 });
         }
-    }, [statusNew]); // Ensure all dependencies are added
+    }
 
     // status
     return (
@@ -372,6 +380,26 @@ const All_Applicant_list = () => {
                 draggable
                 theme="error"
             />
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                backdrop={<div className="backdrop" />}
+                className="dialog"
+            >
+                <DialogHeading className="heading">Are you sure?</DialogHeading>
+                <p className="description">
+                    You want to Update this Status
+                </p>
+                <div className="buttons">
+                    <div onClick={ConformOk}>
+                        <Button className="button">
+                            Update
+                        </Button>
+                    </div>
+                    <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                </div>
+            </Dialog>
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">

@@ -369,7 +369,7 @@ const All_leaves_List_Type = (ClosePop) => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Leaves list <p>{employees.length} total</p>
+                           All Leave Type list <p>{employees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={NewAttendanceClick}>
@@ -483,7 +483,7 @@ const All_leaves_List_Type = (ClosePop) => {
                         <path d="M16 15L15.7 15.4C15.1111 16.1851 14.8167 16.5777 14.3944 16.7889C13.9721 17 13.4814 17 12.5 17H11.5C10.5186 17 10.0279 17 9.60557 16.7889C9.18328 16.5777 8.88885 16.1851 8.3 15.4L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}>
+                {/* <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}>
                     <div className="all">
                         <div
                             className={selectedFilter == null ? 'listActiveStatus' : ''}
@@ -517,8 +517,8 @@ const All_leaves_List_Type = (ClosePop) => {
                             <span><FaRegClock /></span>Declined
                         </div>
                     </div>
-                </div>
-                <div className="right">
+                </div> */}
+                {/* <div className="right">
                     <div className="refresh divRight" onClick={handleRefresh}>
                         <div className='div_box'>
                             <span><BiRevision /></span>
@@ -572,7 +572,6 @@ const All_leaves_List_Type = (ClosePop) => {
                                         {showCustomDate && (
                                             <div className="dropdown-content date-h">
                                                 <div><span><MdDateRange /></span>{!selectedDate ? 'Select Custom date' : selectedDate} </div>
-                                                {/* <br /> */}
                                                 <input type="date" name="date" id="" onChange={handleDateChange} />
                                             </div>
                                         )}
@@ -585,13 +584,11 @@ const All_leaves_List_Type = (ClosePop) => {
                                                 <label id='daterange-contener'>From</label>
                                                 <div className="dropdown-content date-h">
                                                     <div><span><MdDateRange /></span>{!fromDate ? 'Select Custom date' : fromDate} </div>
-                                                    {/* <br /> */}
                                                     <input type="date" name="date" id="" onChange={handleFromDateChange} />
                                                 </div>
                                                 <label id='daterange-contener'>To</label>
                                                 <div className="dropdown-content date-h">
                                                     <div><span><MdDateRange /></span>{!toDate ? 'Select Custom date' : toDate} </div>
-                                                    {/* <br /> */}
                                                     <input type="date" name="date" id="" onChange={handleToDateChange} />
                                                 </div>
                                             </div>
@@ -606,7 +603,7 @@ const All_leaves_List_Type = (ClosePop) => {
                             </div>
                         )}
                     </div>
-                </div>
+                </div> */}
             </div>
             {/* All Employee  List*/}
             <div className="allEmployeeList">
