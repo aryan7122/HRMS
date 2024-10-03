@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import '../../Employee_onboarding/AddEmployee/AddEmloyee.scss';
 import '../../Employee_onboarding/AddEmployee/NavbarForm.scss';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -13,12 +13,16 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MultiImageUploaders } from '../../../components/MultiImageUpload.jsx';
+import { useNavigate, } from 'react-router-dom';
 
 const ApplicantForm = ({ onSubmit }) => {
     const { isOpen: isCountryOpen, ref: countryRef, buttonRef: countryButtonRef, handleToggle: toggleCountry, setIsOpen: setCountryOpen } = OutsideClick();
     const { isOpen: isStateOpen, ref: stateRef, buttonRef: stateButtonRef, handleToggle: toggleState, setIsOpen: setStateOpen } = OutsideClick();
     const { isOpen: isCityOpen, ref: cityRef, buttonRef: cityButtonRef, handleToggle: toggleCity, setIsOpen: setCityOpen } = OutsideClick();
     const { isOpen: isSourceOpen, ref: sourceRef, buttonRef: sourceButtonRef, handleToggle: toggleCSource, setIsOpen: setSourceOpen } = OutsideClick();
+    const { isOpen: isJobOpeningOpen, ref: JobOpeningRef, buttonRef: JobOpeningButtonRef, handleToggle: toggleJobOpening, setIsOpen: setJobOpeningOpen } = OutsideClick();
+
+    const navigate = useNavigate()
 
     
     const { locationsapi, fetchStates, fetchCities } = useLocationData();
@@ -27,6 +31,12 @@ const ApplicantForm = ({ onSubmit }) => {
     const [isUploaded, setIsUploaded] = useState(false);
     const [fileName, setFileName] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+    const [searchQueryJobOpening, setSearchQueryJobOpening] = useState('');
+    const handleSearchQueryChangeJobOpening = (e) => setSearchQueryJobOpening(e.target.value);
+    const JobOpeningData = [
+        'Permanent', 'On Contract', 'Intern', 'Trainee'
+    ];
+
 
     const [formData, setFormData] = useState({
         fullName: '',
@@ -43,6 +53,8 @@ const ApplicantForm = ({ onSubmit }) => {
         availabilityDate: '',
         expectedSalary: '',
         referredPerson: '',
+        job_opening_id:'',
+        job_opening_name:''
     });
 
     console.log('formData', formData)
@@ -77,14 +89,15 @@ const ApplicantForm = ({ onSubmit }) => {
             name: formData.fullName,
             email: formData.email,
             mobile_no: formData.contactNumber,
-            job_opening_id: formData.jobOpening,
+            job_opening_id: formData.job_opening_id,
+            job_opening_name:formData.job_opening_name,
             resume: formData.resume, // Make sure it's a file path or a proper file object
             cover_letter: formData.coverLetter, // Same as resume
             country_id: formData.cityId,
             state_id: formData.stateId,
             city_id: formData.cityId,
             zip_code: formData.zipCode,
-            source: formData.source,
+            source: formData.department,
             referred_by: formData.referredPerson,
             expected_salary: formData.expectedSalary,
             availability_date: formData.availabilityDate,
@@ -116,6 +129,9 @@ const ApplicantForm = ({ onSubmit }) => {
                     progress: undefined,
                     theme: "light",
                 });
+                setTimeout(() => {
+                    navigate('/all-applicant-list')
+                }, 2000);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -168,7 +184,21 @@ const ApplicantForm = ({ onSubmit }) => {
         //     ...prevState,
         //     [dropdown]: false
         // }));
+        // setDropdowns(prevState => ({
+        //     ...prevState,
+        //     [dropdown]: false
+        // }));
 
+        if (dropdown === 'JobOpening') {
+            // Full name ko store karo aur user_id ko bhi alag se store karo
+            setFormData(prevState => ({
+                ...prevState,
+                job_opening_name: `${value.job_title}`, // Full name
+                job_opening_id: value.id // user_id ko alag se store karo
+            }));
+        }
+
+        setJobOpeningOpen(false)
         // Set the ID separately based on dropdown
         if (dropdown === 'country') {
             setFormData(prevState => ({
@@ -196,6 +226,44 @@ const ApplicantForm = ({ onSubmit }) => {
 
     };
     const handleSearchQueryChange = (e) => setSearchQuery(e.target.value);
+    const filteredJobOpeningOptions =  JobOpeningData.filter(option =>
+        option.toLowerCase().includes(searchQueryJobOpening.toLowerCase())
+    );
+
+    // api job list
+    const [departmentHead, setDepartmentHead] = useState([]);
+    // console.log('departmentHead❗',)
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (departmentHead.length > 0) {
+            return
+        }
+        axios.post('https://devstronauts.com/public/api/jobopening/list', {
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                const employees = response.data.job_opening;
+
+                // Department heads ko extract karo
+                // const EmpName = employees.map(emp => `${emp.first_name} ${emp.last_name}`); // Full name bana rahe hain
+                // const EmpID = employees.map(emp => `${emp.user_id} `); // Full name bana rahe hain
+                setDepartmentHead(employees); // Department heads ko store kar rahe hain
+                // setDepartmentHead(EmpID)
+                // console.log('❗', EmpID);
+
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                setLoading(false);
+            });
+    }, []);
+
+    // api job list
 
     return (
         <>
@@ -245,7 +313,7 @@ const ApplicantForm = ({ onSubmit }) => {
                                     required
                                 />
                             </div>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label className='starred'>Job Opening*</label>
                                 <input
                                     type="text"
@@ -255,7 +323,44 @@ const ApplicantForm = ({ onSubmit }) => {
                                     onChange={handleChange}
                                     required
                                 />
+                            </div> */}
+                            <div className="form-group">
+                                <label className='starred'>Job Opening*</label>
+                                <div className="dropdown">
+                                    <div className="dropdown-button" ref={JobOpeningButtonRef} onClick={toggleJobOpening}>
+                                        <div>{formData.job_opening_name || "Select job Opening "}</div>
+                                        <span id='toggle_selectIcon'>
+                                            {!isJobOpeningOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                        </span>
+                                    </div>
+                                    {isJobOpeningOpen && (
+                                        <div className="dropdown-menu" ref={JobOpeningRef}>
+                                            <input
+                                                type="search"
+                                                className="search22"
+                                                placeholder="Search Job Opening"
+                                                value={searchQueryJobOpening}
+                                                onChange={handleSearchQueryChangeJobOpening}
+                                                id="searchDepartmentHead"
+                                            />
+                                            <div className="dropdown_I">
+                                                {departmentHead.filter(option =>
+                                                    (`${option.job_title} ${option.job_title}`).toLowerCase().includes(searchQueryJobOpening.toLowerCase())
+                                                ).map(option => (
+                                                    <div
+                                                        className="dropdown-item"
+                                                        onClick={() => selectOption('JobOpening', option)}
+                                                        key={option.id}
+                                                    >
+                                                        {option.job_title}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
+
                             {/* <div className="form-group">
                                 <label className='starred'>Resume*</label>
                                 <div className="file-upload">
@@ -464,10 +569,10 @@ const ApplicantForm = ({ onSubmit }) => {
 
                                     {isSourceOpen && (
                                         <div className="dropdown-menu" ref={sourceRef}>
-                                            <div className="dropdown-item" onClick={() => selectOption('department', 'Data Analysis')}>Data Analysis</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('department', 'Software Architect')}>Software Architect</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('department', 'App Developer')}>App Developer</div>
-                                            <div className="dropdown-item" onClick={() => selectOption('department', 'Web Developer')}>Web Developer</div>
+                                            <div className="dropdown-item" onClick={() => selectOption('department', 'Referral')}>Referral</div>
+                                            <div className="dropdown-item" onClick={() => selectOption('department', 'Direct')}>Direct</div>
+                                            <div className="dropdown-item" onClick={() => selectOption('department', 'Campus')}>Campus</div>
+                                            <div className="dropdown-item" onClick={() => selectOption('department', 'Advertisement')}>Advertisement</div>
                                         </div>
                                     )}
                                 </div>
@@ -493,6 +598,8 @@ const ApplicantForm = ({ onSubmit }) => {
 
                                 />
                             </div>
+                            {formData.department == "Referral" && (
+
                             <div className="form-group">
                                 <label>Referred Person</label>
                                 <input
@@ -501,9 +608,9 @@ const ApplicantForm = ({ onSubmit }) => {
                                     name="referredPerson"
                                     value={formData.referredPerson}
                                     onChange={handleChange}
-
                                 />
                             </div>
+                            )}
                         </div>
                     </div>
                     <div id='submitBtn_next_main'>
