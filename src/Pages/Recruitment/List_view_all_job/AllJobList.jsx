@@ -368,7 +368,7 @@ const AllJobList = () => {
 
                 setEmployees(response.data.job_opening);
                 setFilteredEmployees(response.data.job_opening); // filteredEmployees ko bhi sync karo
-                // console.log('response 🥳', response.data.job_opening);
+                console.log('response 🥳', response.data.job_opening);
                 setLoading(false);
                 // setSms()
             })
@@ -782,11 +782,11 @@ const AllJobList = () => {
                                             </span>
                                         } */}
                                     </td>
-                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.job_title}</td>
+                                    <td className='td' onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.job_title}</td>
                                     <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.department}</td>
-                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.designation}</td>
+                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.no_of_position}</td>
                                     <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.experience}</td>
-                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.skills}</td>
+                                    <td className='td' onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.skills}</td>
                                     <td >
                                         <div className="status-dropdown" >
                                             <div key={index} className="status-container" >

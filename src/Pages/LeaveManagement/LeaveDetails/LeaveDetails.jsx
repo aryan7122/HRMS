@@ -136,11 +136,21 @@ const LeaveDetails = () => {
                     });
                     // setLoading(false);
                     setTimeout(() => {
-                        navigate('/leave-master')
+                        navigate('/all-leave')
                     }, 2000);
 
                 })
                 .catch(error => {
+                    toast.error('Deleted  Failed.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
                     setLoading(false);
                     setError(true);
                     console.error("Error fetching designation details:", error);
@@ -151,7 +161,7 @@ const LeaveDetails = () => {
 
 
     const closePage = () => {
-        navigate('/leave-master')
+        navigate('/all-leave')
     }
     const UpdateLeave = () => {
         navigate(`/update-leave/${id}`)
@@ -199,7 +209,7 @@ const LeaveDetails = () => {
                 >
                     <DialogHeading className="heading">Are you sure?</DialogHeading>
                     <p className="description">
-                        You want to delete this Department Detail
+                        You want to delete this Employee Leave Details
                     </p>
                     <div className="buttons">
                         <div onClick={DelteConform}>
@@ -235,7 +245,12 @@ const LeaveDetails = () => {
                     </div>
                     <div className="action_card">
                         <div onClick={handleRefresh} ><RxReload /></div>
-                        <div onClick={UpdateLeave}><BiEditAlt /></div>
+                        <div onClick={UpdateLeave}><span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#400f6f" fill="none">
+                                <path d="M15.2141 5.98239L16.6158 4.58063C17.39 3.80646 18.6452 3.80646 19.4194 4.58063C20.1935 5.3548 20.1935 6.60998 19.4194 7.38415L18.0176 8.78591M15.2141 5.98239L6.98023 14.2163C5.93493 15.2616 5.41226 15.7842 5.05637 16.4211C4.70047 17.058 4.3424 18.5619 4 20C5.43809 19.6576 6.94199 19.2995 7.57889 18.9436C8.21579 18.5877 8.73844 18.0651 9.78375 17.0198L18.0176 8.78591M15.2141 5.98239L18.0176 8.78591" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M11 20H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            </svg>
+                        </span>Edit</div>
                         <div onClick={HandleDelete}><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>

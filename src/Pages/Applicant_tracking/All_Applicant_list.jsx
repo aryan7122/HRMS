@@ -652,7 +652,7 @@ const All_Applicant_list = () => {
                                     <td className='td' onClick={() => navigate(`/applicant-details/${emp.id}`)}>{emp.mobile_no || '-'}</td>
                                     <td className='td' onClick={() => navigate(`/applicant-details/${emp.id}`)}>{emp.job_opening_id}</td>
                                     <td className='td' onClick={() => navigate(`/applicant-details/${emp.id}`)}>{emp.source || '-'}</td>
-                                    <td className='td' onClick={() => navigate(`/applicant-details/${emp.id}`)}>{emp.SourceName || '-'}</td>
+                                    <td className='td' onClick={() => navigate(`/applicant-details/${emp.id}`)}>{emp.referred_by || '-'}</td>
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">

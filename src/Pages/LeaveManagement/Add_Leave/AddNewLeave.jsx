@@ -49,7 +49,7 @@ const AddNewLeave = () => {
     };
 
     const JobList = () => {
-        navigate('/leave-master')
+        navigate('/all-leave')
     }
 
     return (

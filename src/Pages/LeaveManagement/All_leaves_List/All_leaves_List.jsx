@@ -166,7 +166,7 @@ const All_leaves_List = (ClosePop) => {
     // 
 
     const NewLeaveMaster = () => {
-        navigate('/new-leave-master')
+        navigate('/new-leave')
     }
     const NewAttendanceClosePop = () => {
         setTogglNewAdd(false);

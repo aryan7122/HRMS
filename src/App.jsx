@@ -69,6 +69,7 @@ import AddNewLeave from './Pages/LeaveManagement/Add_Leave/AddNewLeave.jsx';
 import LeaveDetails from './Pages/LeaveManagement/LeaveDetails/LeaveDetails.jsx';
 import UpdateLeave from './Pages/LeaveManagement/Update_Leave/UpdateLeave.jsx';
 import All_leaves_List_Type from './Pages/LeaveManagement/All_leaves_List_Type/All_leaves_List_Type.jsx';
+import AllShiftsList from './Pages/ShiftManagement/AllShiftsList/AllShiftsList.jsx';
 
 
 const App = () => {
@@ -160,14 +161,16 @@ const App = () => {
 
                   <Route path="/birthday" element={<BirthdayList />} />
                   {/* {All_leaves_List } */}
-                  <Route path="/leave-master" element={<All_leaves_List />} />
-                    <Route path="/new-leave-master" element={<AddNewLeave />} />
+                    <Route path="/all-leave" element={<All_leaves_List />} />
+                    <Route path="/new-leave" element={<AddNewLeave />} />
                     <Route path="/leave-details/:id" element={<LeaveDetails />} />
                     <Route path="/update-leave/:id" element={<UpdateLeave />} />
                     <Route path="/leave-type" element={<All_leaves_List_Type />} />
 
+                    {/* shift */}
                     
-                    
+                    <Route path="/shifts-list" element={<AllShiftsList />} />
+
 
                 </Routes>
 

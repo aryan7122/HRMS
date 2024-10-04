@@ -134,8 +134,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 <path d="M12.0078 10.5082C11.1794 10.5082 10.5078 11.1798 10.5078 12.0082C10.5078 12.8366 11.1794 13.5082 12.0078 13.5082C12.8362 13.5082 13.5078 12.8366 13.5078 12.0082C13.5078 11.1798 12.8362 10.5082 12.0078 10.5082ZM12.0078 10.5082V6.99902M15.0147 15.0198L13.0661 13.0712" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>,
             submenu: [
+                // { label: 'All Leave', path: '/all-leave' },
                 { label: 'All Leave', path: '/all-leave' },
-                { label: 'Leave Master', path: '/leave-master' },
                 { label: 'Leave Type', path: '/leave-type' },
                 { label: 'Attendance', path: '/attendance' },
                 { label: 'Holidays', path: '/holidays' },
@@ -152,7 +152,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </svg>,
             submenu: [
                 { label: 'All Attendance List', path: '/all-Attendance-list' },
-                { label: 'Shift Management', path: '/shift-management' },
+                { label: 'Shift Management', path: '/shifts-list' },
             ]
         }
     ];

@@ -85,7 +85,7 @@ const JobForm = ({ onSubmit }) => {
                     theme: "light",
                 });
                 setTimeout(() => {
-                    navigate(`/leave-master`)
+                    navigate(`/all-leave`)
                 }, 2000);
             }
         } catch (error) {
