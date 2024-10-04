@@ -67,7 +67,7 @@ const All_leaves_List = (ClosePop) => {
         // { EmployeeName: "Rahul Choudhary", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
     ]);
 
-   
+
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -279,7 +279,7 @@ const All_leaves_List = (ClosePop) => {
         };
 
         fetchJobOpenings();
-    }, [searchQuery, selectedFilter, selectedDate, fromDate, toDate,open]);
+    }, [searchQuery, selectedFilter, selectedDate, fromDate, toDate, open]);
     let isRequestInProgress = false;
 
 
@@ -665,10 +665,18 @@ const All_leaves_List = (ClosePop) => {
                                     </td>
                                     <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.name}</td>
                                     <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.leave_type_name}</td>
-                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.leave_type_id}</td>
-                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.to_date + '-|-' + emp.from_date}</td>
-                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.PunchOut}</td>
-                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.TotalHoursWorked}</td>
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.type_of_leave}</td>
+                                    {/* <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.to_date + ' - ' + emp.from_date}</td> */}
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>
+                                        {`${new Date(emp.from_date).getDate()}-${new Date(emp.from_date).toLocaleString('en-US', { month: 'short' }).toLowerCase()}-${new Date(emp.from_date).getFullYear()}  - 
+                                        ${new Date(emp.to_date).getDate()}-${new Date(emp.to_date).toLocaleString('en-US', { month: 'short' }).toLowerCase()}-${new Date(emp.to_date).getFullYear()}
+                                        `} 
+                                    </td>
+
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.days}</td>
+                                    <td onClick={() => navigate(`/leave-details/${emp.id}`)}>
+                                        {`${new Date(emp.created_at).getDate()}-${new Date(emp.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(emp.created_at).getFullYear()}`}
+                                    </td>
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">

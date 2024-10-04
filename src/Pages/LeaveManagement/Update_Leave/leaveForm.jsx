@@ -187,6 +187,8 @@ const JobForm = ({ onSubmit }) => {
     };
     // api emp list
     const [departmentHead, setDepartmentHead] = useState([]);
+    const [leaveTypeData, setLeaveTypeData] = useState([]);
+
     // console.log('departmentHead❗',)
 
     useEffect(() => {
@@ -212,6 +214,28 @@ const JobForm = ({ onSubmit }) => {
     }, []);
 
     // api emp list
+
+    useEffect(() => {
+        if (leaveTypeData.length > 0) {
+            return
+        }
+        axios.post('https://devstronauts.com/public/api/leave/master/list', {
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                const employees = response.data.result;
+                setLeaveTypeData(employees);
+                console.log('leaveTypeData ⚠️❤️👋 ', employees)
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                setLoading(false);
+            });
+    }, []);
 
     const handleSearchQueryChangeLeaveType = (e) => setSearchQueryLeaveType(e.target.value);
     const handleSearchQueryChangeType = (e) => setSearchQueryType(e.target.value);

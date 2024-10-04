@@ -21,6 +21,7 @@ const UpdateApplicantForm = ({ onSubmit }) => {
     const { isOpen: isCityOpen, ref: cityRef, buttonRef: cityButtonRef, handleToggle: toggleCity, setIsOpen: setCityOpen } = OutsideClick();
     const { isOpen: isSourceOpen, ref: sourceRef, buttonRef: sourceButtonRef, handleToggle: toggleCSource, setIsOpen: setSourceOpen } = OutsideClick();
     const { isOpen: isJobOpeningOpen, ref: JobOpeningRef, buttonRef: JobOpeningButtonRef, handleToggle: toggleJobOpening, setIsOpen: setJobOpeningOpen } = OutsideClick();
+    const navigate = useNavigate()
 
     const { id } = useParams();
     const { locationsapi, fetchStates, fetchCities } = useLocationData();
@@ -127,6 +128,9 @@ const UpdateApplicantForm = ({ onSubmit }) => {
                     progress: undefined,
                     theme: "light",
                 });
+                setTimeout(() => {
+                    navigate('/all-applicant-list')
+                }, 2000);
             })
             .catch(error => {
                 console.error('Error:', error);

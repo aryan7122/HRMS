@@ -72,6 +72,7 @@ const LeaveDetails = () => {
 
     const [loading, setLoading] = useState(true);
     const [refresh, setRefresh] = useState(false);
+    const [jobData2, setJobData2] = useState('');
 
     const [error, setError] = useState(false);
     const { id } = useParams();
@@ -106,6 +107,25 @@ const LeaveDetails = () => {
         }
     }, [id, token, refresh,]);
     const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        if (leavedetails) {  // Ensure jobData is available before making this call
+            axios.post('https://devstronauts.com/public/api/get-user', {
+                enteredbyid: leavedetails.enteredbyid
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    setJobData2(response.data.created_by);
+                })
+                .catch(error => {
+                    console.error("Error fetching user data: ", error);
+                });
+        }
+        return
+    }, [leavedetails, token]);
 
     // HandleDelete
     const HandleDelete = () => {
@@ -174,7 +194,6 @@ const LeaveDetails = () => {
     if (error || !leavedetails) {
         return <div id="notFounPageID"><img src="https://miro.medium.com/v2/resize:fit:996/1*C5oq4FeTlcpNXrXfnPpxTQ.gif" alt="Error loading data" /></div>;
     }
-
 
 
     // const EmployeeSlider = ({ employees }) => {
@@ -270,12 +289,25 @@ const LeaveDetails = () => {
                         </span> Leave Details</h3></div>
                         <div className='contentInformation'>
                             <div>
+                                <h4> Type of Leave</h4>
+                                <p>{leavedetails.type_of_leave || '-'}</p>
+                            </div>
+                            <div>
                                 <h4> Leave Start Date</h4>
                                 <p>{leavedetails.from_date || '-'}</p>
                             </div>
                             <div>
                                 <h4> Leave End Date</h4>
                                 <p>{leavedetails.to_date || '-'}</p>
+                            </div>
+
+                            <div>
+                                <h4> No of Days</h4>
+                                <p>{leavedetails.days + ' Day' || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Leave Status</h4>
+                                <p>{leavedetails.status || '-'}</p>
                             </div>
                             <div>
                                 <h4>Created At</h4>
@@ -285,26 +317,15 @@ const LeaveDetails = () => {
 
                             </div>
                             <div>
-                                <h4> No of Days Requested</h4>
-                                <p>{leavedetails.days || '-'}</p>
+                                <h4>Created By</h4>
+                                <p>{jobData2}</p> {/* Updated to display created_by */}
                             </div>
-                            <div>
-                                <h4>Leave Status</h4>
-                                <p>{leavedetails.status || '-'}</p>
-                            </div>
-                            <div>
-                                <h4>Leave Type</h4>
-                                <p>{leavedetails.leave_type_name || '-'}</p>
-                            </div>
-                            <div>
-                                <h4> Type of Leave</h4>
-                                <p>{leavedetails.type_of_leave || '-'}</p>
-                            </div>
+
 
                         </div>
                         <div id='DescriptionJOB'>
                             <div>
-                                <h4 style={{marginLeft:'-15px'}}> Resion</h4>
+                                <h4 style={{ marginLeft: '-15px' }}> Resion</h4>
                                 <p>{leavedetails.resion || '-'}</p>
                             </div>
                         </div>
