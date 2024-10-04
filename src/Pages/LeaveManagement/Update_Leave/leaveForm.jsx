@@ -43,6 +43,26 @@ const JobForm = ({ onSubmit }) => {
             ...prevState,
             [name]: value
         }));
+        setFormData((prevData) => {
+            const updatedData = { ...prevData, [name]: value };
+
+            // Calculate totalDays if fromDate and toDate are both set
+            if (updatedData.fromDate && updatedData.toDate) {
+                const fromDate = new Date(updatedData.fromDate);
+                const toDate = new Date(updatedData.toDate);
+
+                // Calculate difference in milliseconds
+                const timeDifference = toDate - fromDate;
+
+                // Convert milliseconds to days
+                const daysDifference = timeDifference / (1000 * 3600 * 24);
+
+                // Update totalDays only if daysDifference is non-negative
+                updatedData.totalDays = daysDifference >= 0 ? daysDifference + 1 : 0; // +1 to include both days
+            }
+
+            return updatedData;
+        });
     };
 
     // console.log("Submitted form data:", formData);
@@ -302,7 +322,7 @@ const JobForm = ({ onSubmit }) => {
 
                             <div className="form-group">
                                 <label>Total Days</label>
-                                <input type="number" name="totalDays" placeholder='Enter total days of leave' value={formData.totalDays} onChange={handleChange} />
+                                <input type="number" name="totalDays" placeholder='Select total days of leave' disabled value={formData.totalDays} onChange={handleChange} />
                             </div>
 
                             {/* Type Dropdown */}

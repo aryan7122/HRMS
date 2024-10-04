@@ -378,7 +378,9 @@
     gap: 20px;
     
     .Overview_box1{
-      // border: 1px solid red !important;
+              // max-width: 100px;
+
+      border: 1px solid red !important;
       gap: 20px;
       height: 100px;
       border-radius: 11px;
@@ -393,7 +395,7 @@
       text-align: center;
       .Overview_Top{
         // border: 1px solid red !important;
-        width: 90%;
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -425,7 +427,62 @@
       }
     }
   }
-
+ .Overview_sl{
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 20px;
+    
+    .Overview_box{
+      // border: 1px solid red !important;
+      // gap: 20px;
+      height: 100px;
+      border-radius: 11px;
+      box-shadow: 0px 0px 4px 0px #00000014;
+      padding: 10px;
+      background: linear-gradient(180deg, #ebe7ee80 0%, #e3d0f180 100%);
+      width: 90% !important; 
+      max-width: 400px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: space-around;
+      text-align: center;
+      .Overview_Top{
+        // border: 1px solid red !important;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .icon{
+          padding: 10px;
+          background: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+        }
+      }
+      .Overview_Bottom{
+        width: 90%;
+        display: flex;
+        align-items: baseline;
+        // justify-content: space-between;
+        p{
+          color: #2A2A2A;
+          font-size: 14px;
+          margin-left: 4px;
+          margin-bottom: 5px;
+        }
+        h3{
+          font-size: 36px;
+          color: #400F6F;
+          font-weight: 500;
+        }
+      }
+    }
+  }
   @media (max-width: 1000px) {
       .Overview4{
         display: grid;
@@ -1093,4 +1150,10 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(26px);
+}
+
+
+.slick-next{
+  // color: #400F6F !important;
+  // background: #000;
 }

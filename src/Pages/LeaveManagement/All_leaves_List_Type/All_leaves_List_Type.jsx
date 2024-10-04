@@ -265,6 +265,13 @@ const All_leaves_List_Type = (ClosePop) => {
         toggleFilter2()
     };
     const [updateStatus, setUpdateStatus] = useState(null)
+    const [filteredEmp, setFilteredEmp] = useState(null);
+    // setFilteredEmp(currentEmployees.filter(emp => emp.status === 1))
+    // Filter employees with status 1
+    const filteredEmploy = currentEmployees.filter(emp => emp.status == 1);
+
+    // Log the filtered employees to the console
+    console.log('Filtered Employees with status 1:', filteredEmploy);
 
 
 
@@ -315,7 +322,7 @@ const All_leaves_List_Type = (ClosePop) => {
 
         axios.post('https://devstronauts.com/public/api/leave/master/status/update', {
             id: statusId,
-            employee_status: statusNew
+            status: statusNew
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -373,7 +380,7 @@ const All_leaves_List_Type = (ClosePop) => {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
-        arrows: false,
+        arrows: true,
         beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex),
         customPaging: (i) => (
             <div
@@ -383,8 +390,8 @@ const All_leaves_List_Type = (ClosePop) => {
                     background: i === currentSlide ? "#400F6F" : "#e3d0f180",
                     borderRadius: "0.7vw",
                     transition: "all 2s ease",
-                    marginTop: i === currentSlide ? "0.9.4vw" : "1vw",
-                   
+                    marginTop: i === currentSlide ? "0.9vw" : "1vw",
+
                 }}
             />
         ),
@@ -416,6 +423,7 @@ const All_leaves_List_Type = (ClosePop) => {
             },
         ],
     };
+
 
 
 
@@ -488,11 +496,53 @@ const All_leaves_List_Type = (ClosePop) => {
                 </div>
             </div>
             <div className="LeavesOverview">
-
                 <h2>Overview</h2>
-                <div className="Overview_slide">
-                    <Slider {...settings}>
-                        <div className="Overview_box1">
+                {currentEmployees.filter(emp => emp.status == 1).length > 3 ? (
+                    <div className="Overview_slide">
+                        <Slider {...settings}>
+                            <div className="Overview_box1">
+                                <div className="Overview_Top">
+                                    <p>Today Presents</p>
+                                    <span className="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                                            <path d="M20.7739 18C21.5232 18 22.1192 17.5285 22.6543 16.8691C23.7498 15.5194 21.9512 14.4408 21.2652 13.9126C20.5679 13.3756 19.7893 13.0714 18.9999 13M17.9999 11C19.3806 11 20.4999 9.88071 20.4999 8.5C20.4999 7.11929 19.3806 6 17.9999 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                            <path d="M3.2259 18C2.47659 18 1.88061 17.5285 1.34548 16.8691C0.250028 15.5194 2.04861 14.4408 2.73458 13.9126C3.43191 13.3756 4.21052 13.0714 4.99994 13M5.49994 11C4.11923 11 2.99994 9.88071 2.99994 8.5C2.99994 7.11929 4.11923 6 5.49994 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                            <path d="M8.08368 15.1112C7.0619 15.743 4.38286 17.0331 6.01458 18.6474C6.81166 19.436 7.6994 20 8.8155 20H15.1843C16.3004 20 17.1881 19.436 17.9852 18.6474C19.6169 17.0331 16.9379 15.743 15.9161 15.1112C13.52 13.6296 10.4797 13.6296 8.08368 15.1112Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M15.4999 7.5C15.4999 9.433 13.9329 11 11.9999 11C10.0669 11 8.49988 9.433 8.49988 7.5C8.49988 5.567 10.0669 4 11.9999 4C13.9329 4 15.4999 5.567 15.4999 7.5Z" stroke="currentColor" stroke-width="1.5" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div className="Overview_Bottom">
+                                    <h3>28</h3>
+                                    <p>TOTAL EMPLOYEE</p>
+                                </div>
+
+                            </div>
+                            {currentEmployees.filter(emp => emp.status == 1).map((emp, index) => (
+
+                                <div className="Overview_box1" key={index}>
+                                    <div className="Overview_Top">
+                                        <p>{emp.leave_type}</p>
+                                        <span className="icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                                                <path d="M3.07818 7.5C2.38865 8.85588 2 10.39 2 12.0148C2 17.5295 6.47715 22 12 22C17.5228 22 22 17.5295 22 12.0148C22 10.39 21.6114 8.85588 20.9218 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M8 15C8.91212 16.2144 10.3643 17 12 17C13.6357 17 15.0879 16.2144 16 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                <ellipse cx="12" cy="4" rx="10" ry="2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M7 10.5C7 9.67154 7.67157 8.99997 8.5 8.99997C9.32843 8.99997 10 9.67154 10 10.5M14 10.4999C14 9.67151 14.6716 8.99994 15.5 8.99994C16.3284 8.99994 17 9.67151 17 10.4999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div className="Overview_Bottom">
+                                        <h3>{emp.available_days}</h3>
+                                        <p>Today</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </Slider>
+                    </div>
+                ) : 
+                    <div className='Overview_sl'>
+                        <div className="Overview_box">
                             <div className="Overview_Top">
                                 <p>Today Presents</p>
                                 <span className="icon">
@@ -510,8 +560,9 @@ const All_leaves_List_Type = (ClosePop) => {
                             </div>
 
                         </div>
-                        {currentEmployees.map((emp, index) => (
-                            <div className="Overview_box1" key={index}>
+                        {currentEmployees.filter(emp => emp.status == 1).map((emp, index) => (
+
+                            <div className="Overview_box" key={index}>
                                 <div className="Overview_Top">
                                     <p>{emp.leave_type}</p>
                                     <span className="icon">
@@ -529,79 +580,8 @@ const All_leaves_List_Type = (ClosePop) => {
                                 </div>
                             </div>
                         ))}
-                    </Slider>
-                    {/* {currentEmployees.map((emp, index) => (
-                        <div className="Overview_box" key={index}>
-                            <div className="Overview_Top">
-                                <p>{emp.leave_type}</p>
-                                <span className="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#417505" fill="none">
-                                        <path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                </span>
-                            </div>
-                            <div className="Overview_Bottom">
-                                <h3>{emp.available_days}</h3>
-                                <p>Today</p>
-                            </div>
-
-                        </div>
-                    ))} */}
-
-                    {/* <div className="Overview_box">
-                        <div className="Overview_Top">
-                            <p>Planned Leaves</p>
-                            <span className="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#417505" fill="none">
-                                    <path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </span>
-                        </div>
-                        <div className="Overview_Bottom">
-                            <h3>08</h3>
-                            <p>Today</p>
-                        </div>
-
                     </div>
-                    <div className="Overview_box">
-                        <div className="Overview_Top">
-                            <p>UNPlanned Leaves</p>
-                            <span className="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#6d0dc1" fill="none">
-                                    <path d="M15.5 12C15.5 13.933 13.933 15.5 12 15.5C10.067 15.5 8.5 13.933 8.5 12C8.5 10.067 10.067 8.5 12 8.5C13.933 8.5 15.5 10.067 15.5 12Z" stroke="currentColor" stroke-width="1.5" />
-                                    <path d="M21.011 14.0965C21.5329 13.9558 21.7939 13.8854 21.8969 13.7508C22 13.6163 22 13.3998 22 12.9669V11.0332C22 10.6003 22 10.3838 21.8969 10.2493C21.7938 10.1147 21.5329 10.0443 21.011 9.90358C19.0606 9.37759 17.8399 7.33851 18.3433 5.40087C18.4817 4.86799 18.5509 4.60156 18.4848 4.44529C18.4187 4.28902 18.2291 4.18134 17.8497 3.96596L16.125 2.98673C15.7528 2.77539 15.5667 2.66972 15.3997 2.69222C15.2326 2.71472 15.0442 2.90273 14.6672 3.27873C13.208 4.73448 10.7936 4.73442 9.33434 3.27864C8.95743 2.90263 8.76898 2.71463 8.60193 2.69212C8.43489 2.66962 8.24877 2.77529 7.87653 2.98663L6.15184 3.96587C5.77253 4.18123 5.58287 4.28891 5.51678 4.44515C5.45068 4.6014 5.51987 4.86787 5.65825 5.4008C6.16137 7.3385 4.93972 9.37763 2.98902 9.9036C2.46712 10.0443 2.20617 10.1147 2.10308 10.2492C2 10.3838 2 10.6003 2 11.0332V12.9669C2 13.3998 2 13.6163 2.10308 13.7508C2.20615 13.8854 2.46711 13.9558 2.98902 14.0965C4.9394 14.6225 6.16008 16.6616 5.65672 18.5992C5.51829 19.1321 5.44907 19.3985 5.51516 19.5548C5.58126 19.7111 5.77092 19.8188 6.15025 20.0341L7.87495 21.0134C8.24721 21.2247 8.43334 21.3304 8.6004 21.3079C8.76746 21.2854 8.95588 21.0973 9.33271 20.7213C10.7927 19.2644 13.2088 19.2643 14.6689 20.7212C15.0457 21.0973 15.2341 21.2853 15.4012 21.3078C15.5682 21.3303 15.7544 21.2246 16.1266 21.0133L17.8513 20.034C18.2307 19.8187 18.4204 19.711 18.4864 19.5547C18.5525 19.3984 18.4833 19.132 18.3448 18.5991C17.8412 16.6616 19.0609 14.6226 21.011 14.0965Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                </svg>
-                            </span>
-                        </div>
-                        <div className="Overview_Bottom">
-                            <h3>05</h3>
-                            <p>Today</p>
-                        </div>
-
-                    </div>
-                    <div className="Overview_box">
-                        <div className="Overview_Top">
-                            <p>Pending Requests</p>
-                            <span className="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#d0021b" fill="none">
-                                    <path d="M18 2V4M6 2V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M11.9955 13H12.0045M11.9955 17H12.0045M15.991 13H16M8 13H8.00897M8 17H8.00897" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M3.5 8H20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M2.5 12.2432C2.5 7.88594 2.5 5.70728 3.75212 4.35364C5.00424 3 7.01949 3 11.05 3H12.95C16.9805 3 18.9958 3 20.2479 4.35364C21.5 5.70728 21.5 7.88594 21.5 12.2432V12.7568C21.5 17.1141 21.5 19.2927 20.2479 20.6464C18.9958 22 16.9805 22 12.95 22H11.05C7.01949 22 5.00424 22 3.75212 20.6464C2.5 19.2927 2.5 17.1141 2.5 12.7568V12.2432Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M3 8H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </span>
-                        </div>
-                        <div className="Overview_Bottom">
-                            <h3>06</h3>
-                            <p>Today</p>
-                        </div>
-
-                    </div> */}
-                </div>
-
+                }
             </div>
             <div className="EmpOn_Second_Head">
                 <div id='filter_left' onClick={toggleFilter2} ref={filterButtonRef2}>
