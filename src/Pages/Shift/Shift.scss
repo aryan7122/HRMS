@@ -1,8 +1,38 @@
 .sift_hours_td{
     // border: 1px dashed rgb(21, 188, 13);
-    padding: 2px;
+    padding: 5px;
     border-radius: 5px;
+    font-size: 12px;
 }
 #DateDropdowns{
     z-index: 99;
+}
+
+.week_TD{
+    min-width: 105px;
+   text-align: center !important;
+}
+
+@media only screen and (max-width: 1333px) {
+.week_sift{
+    overflow-y: auto !important;
+    // padding-left: 50px !important;
+}
+.week_TD{
+    min-width: 130px;
+   text-align: center !important;
+}
+
+    
+}
+
+.week_sift_icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    span{
+        svg{
+            font-size: 30px !important;
+        }
+    }
 }
