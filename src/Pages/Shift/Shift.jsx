@@ -25,6 +25,8 @@ import './Shift.scss';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NewAssignShift from './newAssignShift/NewAssignShift';
+
 // import { TiArrowUnsorted } from "react-icons/ti";
 import dayjs from "dayjs";
 
@@ -48,11 +50,18 @@ const Shift = () => {
     const [allDel, setAllDel] = useState(false);
     const [toggleLeft, setToggleLeft] = useState(false)
     // 
+    const [togglNewAdd, setTogglNewAdd] = useState(false)
 
     const [conformStatus, setConformStatus] = useState(false);
     const [open, setOpen] = useState(false);
     // 
     const navigate = useNavigate()
+    const NewAttendanceClick = () => {
+        setTogglNewAdd(true)
+    }
+    const NewAttendanceClosePop = () => {
+        setTogglNewAdd(false);
+    };
     const [employees, setEmployees] = useState([
         {
             name: "John Doe",
@@ -393,6 +402,7 @@ const Shift = () => {
     // 
     return (
         <div id='allEmp'>
+            {togglNewAdd && <NewAssignShift ClosePop={NewAttendanceClosePop} />}
 
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
@@ -402,7 +412,7 @@ const Shift = () => {
                             All Shifts list <p>{employees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
-                            <div className="addEmp" onClick={NewJobPage}>
+                            <div className="addEmp" onClick={NewAttendanceClick}>
                                 <p><span>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" color="#ffffff" fill="none">
                                         <path d="M5.18007 15.2964C3.92249 16.0335 0.625213 17.5386 2.63348 19.422C3.6145 20.342 4.7071 21 6.08077 21H13.9192C15.2929 21 16.3855 20.342 17.3665 19.422C19.3748 17.5386 16.0775 16.0335 14.8199 15.2964C11.8709 13.5679 8.12906 13.5679 5.18007 15.2964Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -412,7 +422,7 @@ const Shift = () => {
                                 </span> Assign shift</p>
                             </div>
 
-                            <div className="addEmp" onClick={NewJobPage} style={{ marginLeft: '20px' }}>
+                            <div className="addEmp"  style={{ marginLeft: '20px' }}>
                                 <p><span><IoMdAdd /></span> Add New Shift</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
@@ -713,7 +723,7 @@ const Shift = () => {
                                 </th>
                                 {weekDates.map((date, index) => (
                                     <th className='week_TD' key={index} style={{
-                                        backgroundColor: today === date.toLocaleDateString() ? '#730fad57' : '#946fb618',
+                                        backgroundColor: today === date.toLocaleDateString() ? '#730fad3d' : '#946fb618',
                                         color: 'black'
                                     }}>
 
