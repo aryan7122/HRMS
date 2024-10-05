@@ -399,7 +399,7 @@ const Shift = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Shifts list <p>11 total</p>
+                            All Shifts list <p>{employees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={NewJobPage}>
