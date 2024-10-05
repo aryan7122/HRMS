@@ -793,7 +793,7 @@ const Shift = () => {
                                                             >
                                                                 <svg
                                                                     style={{
-                                                                        color: `${cellColor}`
+                                                                        color: `${cellColor}`,
                                                                     }}
                                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
                                                                     <path d="M12 8V16M16 12L8 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
