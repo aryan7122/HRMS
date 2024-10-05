@@ -2,71 +2,99 @@ import { useState, useEffect } from 'react';
 import { HiUserPlus } from "react-icons/hi2";
 import { CiMenuKebab } from "react-icons/ci";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import { IoMdAdd } from "react-icons/io";
+import { IoMdAdd, IoIosCloseCircleOutline } from "react-icons/io";
 import { FaList } from "react-icons/fa6";
 import { PiCheckSquare } from "react-icons/pi";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { GiBackstab, GiNotebook } from "react-icons/gi";
+import { MdWork } from "react-icons/md";
+import { FaRegClock } from "react-icons/fa";
+
+import { FaPersonWalkingArrowLoopLeft, FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { BiRevision } from "react-icons/bi";
 import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import { MdWork } from "react-icons/md";
-import { FaRegClock } from "react-icons/fa";
-import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
-import './All_leaves_List_Type.scss';
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { OutsideClick } from '../../../components/OutSideClick';
+import OutsideClick4 from '../../Employee_onboarding/AllEmployeeList/OutSideClick4';
 import axios from 'axios';
-import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-import { IoIosCloseCircleOutline } from "react-icons/io";
-// import { GiBackstab, GiNotebook } from "react-icons/gi";
-// import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
-import NewAttendance from './addNewAttendance/NewAttendance.jsx';
-import { OutsideClick } from '../../../components/OutSideClick.jsx';
+import './NewShift.scss';
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import NewAssignShift from './newAssignShift/AddShift';
 
-const All_leaves_List_Type = (ClosePop) => {
+// import { TiArrowUnsorted } from "react-icons/ti";
+import dayjs from "dayjs";
+
+const NewShift = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
-    const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
+    // const [filteredEmployees, setFilteredEmployees] = useState(employees);
+    const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick4();
+    // const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
 
-    const [allDel, setAllDel] = useState(true);
-    const [thisDel, setThisDel] = useState(false)
-    const [toggleLeft, setToggleLeft] = useState(false)
-    const [togglNewAdd, setTogglNewAdd] = useState(false)
-    const DelThis = () => {
-        setThisDel(!thisDel);
+    // 
+    const [error, setError] = useState(false);
 
-    }
-    const [dropdowns, setDropdowns] = useState(false)
+    const [loading, setLoading] = useState(true);
+    const [sms, setSms] = useState('')
+    const [statusId, setStatusId] = useState('')
+    const [statusNew, setStatusNew] = useState('')
+    // 
     const [hidImport, setHidImport] = useState(true);
+    const [allDel, setAllDel] = useState(false);
+    const [toggleLeft, setToggleLeft] = useState(false)
+    // 
+    const [togglNewAdd, setTogglNewAdd] = useState(false)
+
+    const [conformStatus, setConformStatus] = useState(false);
+    const [open, setOpen] = useState(false);
+    // 
     const navigate = useNavigate()
-    const [employees, setEmployees] = useState([
-        // { EmployeeName: "Hillery Moses", Date: 'aa', Shift: "General", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
-        // { EmployeeName: "Nandan Raikwar", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
-        // { EmployeeName: "Vishwas Patel", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
-        // { EmployeeName: "Paartho Ghosh", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Half day", isChecked: false },
-        // { EmployeeName: "Bhavna Goyal", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
-        // { EmployeeName: "Jayshri Tiwari", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
-        // { EmployeeName: "Amardeep Singh", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
-        // { EmployeeName: "Ramesh Gupta", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
-        // { EmployeeName: "Rahul Choudhary", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
-    ]);
+    const NewAttendanceClick = () => {
+        setTogglNewAdd(true)
+    }
+    const NewAttendanceClosePop = () => {
+        setTogglNewAdd(false);
+    };
+   const [employees, setEmployees] = useState([
+    {
+        sift_name: "Morning Shift",
+        start_time: "08:00", // 24-hour format
+        end_time: "16:00",   // 24-hour format
+        extra_hours: "60",
+        break_time: "45",
+        status: "Active"
+    },
+    {
+        sift_name: "Evening Shift",
+        start_time: "16:00", // 24-hour format
+        end_time: "00:00",   // 24-hour format
+        extra_hours: "30",
+        break_time: "45",
+        status: "Inactive"
+    },
+    {
+        sift_name: "Night Shift",
+        start_time: "00:00", // 24-hour format
+        end_time: "08:00",   // 24-hour format
+        extra_hours: "0",
+        break_time: "45",
+        status: "Active"
+    }
+]);
 
 
 
+    console.log('employees', employees)
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -75,11 +103,18 @@ const All_leaves_List_Type = (ClosePop) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isOpen, setIsOpen] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    // 
 
-    const [open, setOpen] = useState(false);
+    // 
+    const [selectedFilter, setSelectedFilter] = useState(null);
+    // alert(selectedFilter)
+    console.log('states', selectedFilter)
 
+    const filter_leftClose = (filterName) => {
+        setSelectedFilter(filterName);
+        setToggleLeft(false)
+        toggleFilter2()
+    };
     // console.log(selectedDepartment)
 
     const handleHidImport = () => {
@@ -116,13 +151,11 @@ const All_leaves_List_Type = (ClosePop) => {
         setRowsPerPage(Number(e.target.value));
         setCurrentPage(1);
     };
-    const [statusId, setStatusId] = useState('')
 
-    const statuses = ['Active', 'Inactive'];
-    const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
-    const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
-    const [statusNew, setStatusNew] = useState('')
 
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
     const handleStatusChange = (index, newStatus) => {
         console.log('|||||', newStatus)
         if (newStatus == 'Inactive') {
@@ -141,9 +174,7 @@ const All_leaves_List_Type = (ClosePop) => {
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
     }
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
-    };
+
 
     const handleFilterChange = (e) => {
         setSelectedDepartment(e.target.value);
@@ -167,6 +198,8 @@ const All_leaves_List_Type = (ClosePop) => {
         setFilteredEmployees(updatedEmployees);
     };
 
+
+
     const handleRefresh = () => {
         setFilteredEmployees(employees);
         setSearchQuery('');
@@ -174,25 +207,55 @@ const All_leaves_List_Type = (ClosePop) => {
         setSelectedStatus('All');
         setCurrentPage(1);
         setRowsPerPage(10);
-        setSelectedFilter(null)
         // setSelectedDepartmentId(null)
-        setSelectedDate(null)
-        setFromDate(null)
-        setToDate(null)
+        // setSelectedDate(null)
+        setSelectedFilter(null)
+        setEmploymentType(null)
+        setSelectedDate(new Date());
     };
     // 
+    const [showFilter, setShowFilter] = useState(false);
+    const [showCustomDate, setShowCustomDate] = useState(false);
+    const [showEmploymentType, setShowEmploymentType] = useState(false);
+    const [showDepartment, setShowDepartment] = useState(false);
 
-    const NewLeaveMaster = () => {
-        navigate('/new-leave')
+    const showFilterHandle = () => {
+        setShowFilter(!showFilter)
     }
+    const handleCustomDateClick = () => {
+        setShowCustomDate(!showCustomDate);
+        setShowEmploymentType(false);
+        setShowDepartment(false);
 
+    };
+
+    const handleEmploymentTypeClick = () => {
+        setShowEmploymentType(!showEmploymentType);
+        setShowCustomDate(false);
+        setShowDepartment(false);
+
+    };
+
+    const handleDepartmentClick = () => {
+        setShowDepartment(!showDepartment);
+        setShowCustomDate(false);
+        setShowEmploymentType(false);
+
+    };
+    const NewJobPage = () => {
+        navigate('/add-employee')
+    }
+    const JobDetailsPage = () => {
+        navigate(`/employee-details`)
+    }
     const filter_left = () => {
         setToggleLeft(!toggleLeft)
     }
-
-    const DateDropdowns = () => {
-        setDropdowns(!dropdowns)
-    }
+    // const filter_leftClose = () => {
+    //     setToggleLeft(false)
+    //     toggleFilter2()
+    // }
+    // console.log('toggleLeft', toggleLeft)
     const [fileName, setFileName] = useState('');
 
     const handleFileChange = (event) => {
@@ -201,25 +264,16 @@ const All_leaves_List_Type = (ClosePop) => {
             setFileName(file.name); // Set the file name in the state
         }
     };
+    const token = localStorage.getItem('access_token');
+    const statuses = ['Active', 'Inactive'];
+
     // 
-    const [showCustomDate, setShowCustomDate] = useState(false);
 
     const [showDateRange, setShowDateRange] = useState(false)
     const handleDateRangeClick = () => {
         setShowDateRange(!showDateRange)
         setShowCustomDate(false);
     }
-    const handleCustomDateClick = () => {
-        setShowCustomDate(!showCustomDate);
-
-        setShowDateRange(false)
-    };
-    const NewAttendanceClick = () => {
-        setTogglNewAdd(true)
-    }
-    const NewAttendanceClosePop = () => {
-        setTogglNewAdd(false);
-    };
 
     const [selectedDate, setSelectedDate] = useState(null);
     console.log('selectedDate', selectedDate)
@@ -248,70 +302,7 @@ const All_leaves_List_Type = (ClosePop) => {
         setToDate(formattedDate);
     };
     // 
-    const JobDetailsPage = () => {
-        navigate('/leave-details')
-    }
-    console.log('currentEmployees', currentEmployees)
-    // 
-    const token = localStorage.getItem('access_token');
 
-    const [selectedFilter, setSelectedFilter] = useState(null);
-    // alert(selectedFilter)
-    console.log('states', statusId, ':', statusNew)
-
-    const filter_leftClose = (filterName) => {
-        setSelectedFilter(filterName);
-        setToggleLeft(false)
-        toggleFilter2()
-    };
-    const [updateStatus, setUpdateStatus] = useState(null)
-    const [filteredEmp, setFilteredEmp] = useState(null);
-    // setFilteredEmp(currentEmployees.filter(emp => emp.status === 1))
-    // Filter employees with status 1
-    const filteredEmploy = currentEmployees.filter(emp => emp.status == 1);
-
-    // Log the filtered employees to the console
-    console.log('Filtered Employees with status 1:', filteredEmploy);
-
-
-
-    useEffect(() => {
-        const fetchJobOpenings = async () => {
-            setLoading(true); // Data fetching shuru karte waqt loading ko true set karna
-            setError(null);   // Har bar call se pehle error ko reset karna
-
-            try {
-                const response = await axios.post('https://devstronauts.com/public/api/leave/master/list', {
-                    // search: searchQuery,
-                    // status: selectedFilter,
-                    // custom_date: selectedDate,
-                    // fromDate: fromDate,
-                    // toDate: toDate
-                }, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                // Data ko state me set kar rahe hain
-                // console.log('respone❗❗', response.data.result)
-                setEmployees(response.data.result);
-                setFilteredEmployees(response.data.result); // filteredEmployees ko sync kar rahe hain
-            } catch (error) {
-                // Agar error aaye toh usko handle kar rahe hain
-                console.error("Error fetching data: ", error);
-                setError("Data fetching failed!");
-            } finally {
-                // Loading ko false set karna
-                setLoading(false);
-            }
-        };
-
-        fetchJobOpenings();
-    }, [token, updateStatus, togglNewAdd, open]);
-
-    // Initialize local state from currentEmployees
-    // const [employees, setEmployees] = useState(currentEmployees);
 
     // Toggle the status (real-time)
     const ConformOk = () => {
@@ -371,62 +362,35 @@ const All_leaves_List_Type = (ClosePop) => {
             });
         // }
     }
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4, // Initially 4 boxes shown
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        arrows: true,
-        beforeChange: (oldIndex, newIndex) => setCurrentSlide(newIndex),
-        customPaging: (i) => (
-            <div
-                style={{
-                    width: i === currentSlide ? "1vw" : "1vw",
-                    height: "0.2vw",
-                    background: i === currentSlide ? "#400F6F" : "#e3d0f180",
-                    borderRadius: "0.7vw",
-                    transition: "all 2s ease",
-                    marginTop: i === currentSlide ? "0.9vw" : "1vw",
 
-                }}
-            />
-        ),
-        dotsClass: "slick-dots slick-thumb custom-dots",
-        responsive: [
-            {
-                breakpoint: 1124, // Large screens (1024px and above)
-                settings: {
-                    slidesToShow: 3, // Show 4 boxes
-                },
-            },
-            {
-                breakpoint: 888, // Medium screens (768px - 1024px)
-                settings: {
-                    slidesToShow: 2, // Show 3 boxes
-                },
-            },
-            {
-                breakpoint: 640, // Tablet screens (640px - 768px)
-                settings: {
-                    slidesToShow: 1.5, // Show 2 boxes
-                },
-            },
-            {
-                breakpoint: 480, // Mobile screens (below 640px)
-                settings: {
-                    slidesToShow: 1, // Show 1 box
-                },
-            },
-        ],
+
+
+    console.log('statusNew', statusNew)
+    if (error || !employees) {
+        // return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
+    }
+
+    const convertTo12HourFormat = (time) => {
+        const [hours, minutes] = time.split(":");
+        const period = +hours >= 12 ? 'PM' : 'AM';
+        let newHours = +hours % 12 || 12; // Convert 0 to 12 for midnight
+        return `${newHours}:${minutes} ${period}`;
     };
 
+    const calculateTotalHours = (start, end, extra) => {
+        const startTime = new Date(`1970-01-01T${start}:00`);
+        const endTime = new Date(`1970-01-01T${end}:00`);
 
+        // Adjust for cases where end time is on the next day (e.g., 12 AM to 8 AM)
+        if (endTime < startTime) {
+            endTime.setDate(endTime.getDate() + 1);
+        }
 
+        const totalHours = (endTime - startTime) / (1000 * 60 * 60) + parseInt(extra) / 60; // Convert extra hours to hours
+        return totalHours.toFixed(2); // Return total hours as a string with 2 decimal places
+    };
 
+    // 
     return (
         <div id='allEmp'>
             <ToastContainer
@@ -458,18 +422,29 @@ const All_leaves_List_Type = (ClosePop) => {
                     <DialogDismiss className="button secondary">Cancel</DialogDismiss>
                 </div>
             </Dialog>
-            {togglNewAdd && <NewAttendance ClosePop={NewAttendanceClosePop} />}
+
+            {togglNewAdd && <NewAssignShift ClosePop={NewAttendanceClosePop} />}
 
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Leave Type list <p>{employees.length} total</p>
+                            All Shifts list <p>{employees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
-                            <div className="addEmp" onClick={NewAttendanceClick}>
-                                <p><span><IoMdAdd /></span> Add New Leave</p>
+                            <div className="addEmp" onClick={() => navigate('/shift')}>
+                                <p><span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" color="#ffffff" fill="none">
+                                        <path d="M5.18007 15.2964C3.92249 16.0335 0.625213 17.5386 2.63348 19.422C3.6145 20.342 4.7071 21 6.08077 21H13.9192C15.2929 21 16.3855 20.342 17.3665 19.422C19.3748 17.5386 16.0775 16.0335 14.8199 15.2964C11.8709 13.5679 8.12906 13.5679 5.18007 15.2964Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M14 7C14 9.20914 12.2091 11 10 11C7.79086 11 6 9.20914 6 7C6 4.79086 7.79086 3 10 3C12.2091 3 14 4.79086 14 7Z" stroke="currentColor" stroke-width="1.5" />
+                                        <path d="M17 5.71429C17 5.71429 18 6.23573 18.5 7C18.5 7 20 4 22 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </span> Assign shift</p>
+                            </div>
+
+                            <div className="addEmp" style={{ marginLeft: '20px' }} onClick={NewAttendanceClick}>
+                                <p><span><IoMdAdd /></span> Add New Shift</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
                                 <div className="div_top"><CiMenuKebab /></div>
@@ -495,94 +470,6 @@ const All_leaves_List_Type = (ClosePop) => {
                     </div>
                 </div>
             </div>
-            <div className="LeavesOverview">
-                <h2>Overview</h2>
-                {currentEmployees.filter(emp => emp.status == 1).length > 3 ? (
-                    <div className="Overview_slide">
-                        <Slider {...settings}>
-                            <div className="Overview_box1">
-                                <div className="Overview_Top">
-                                    <p>Today Presents</p>
-                                    <span className="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                            <path d="M20.7739 18C21.5232 18 22.1192 17.5285 22.6543 16.8691C23.7498 15.5194 21.9512 14.4408 21.2652 13.9126C20.5679 13.3756 19.7893 13.0714 18.9999 13M17.9999 11C19.3806 11 20.4999 9.88071 20.4999 8.5C20.4999 7.11929 19.3806 6 17.9999 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                            <path d="M3.2259 18C2.47659 18 1.88061 17.5285 1.34548 16.8691C0.250028 15.5194 2.04861 14.4408 2.73458 13.9126C3.43191 13.3756 4.21052 13.0714 4.99994 13M5.49994 11C4.11923 11 2.99994 9.88071 2.99994 8.5C2.99994 7.11929 4.11923 6 5.49994 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                            <path d="M8.08368 15.1112C7.0619 15.743 4.38286 17.0331 6.01458 18.6474C6.81166 19.436 7.6994 20 8.8155 20H15.1843C16.3004 20 17.1881 19.436 17.9852 18.6474C19.6169 17.0331 16.9379 15.743 15.9161 15.1112C13.52 13.6296 10.4797 13.6296 8.08368 15.1112Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M15.4999 7.5C15.4999 9.433 13.9329 11 11.9999 11C10.0669 11 8.49988 9.433 8.49988 7.5C8.49988 5.567 10.0669 4 11.9999 4C13.9329 4 15.4999 5.567 15.4999 7.5Z" stroke="currentColor" stroke-width="1.5" />
-                                        </svg>
-                                    </span>
-                                </div>
-                                <div className="Overview_Bottom">
-                                    <h3>28</h3>
-                                    <p>TOTAL EMPLOYEE</p>
-                                </div>
-
-                            </div>
-                            {currentEmployees.filter(emp => emp.status == 1).map((emp, index) => (
-
-                                <div className="Overview_box1" key={index}>
-                                    <div className="Overview_Top">
-                                        <p>{emp.leave_type}</p>
-                                        <span className="icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                                <path d="M3.07818 7.5C2.38865 8.85588 2 10.39 2 12.0148C2 17.5295 6.47715 22 12 22C17.5228 22 22 17.5295 22 12.0148C22 10.39 21.6114 8.85588 20.9218 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M8 15C8.91212 16.2144 10.3643 17 12 17C13.6357 17 15.0879 16.2144 16 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <ellipse cx="12" cy="4" rx="10" ry="2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M7 10.5C7 9.67154 7.67157 8.99997 8.5 8.99997C9.32843 8.99997 10 9.67154 10 10.5M14 10.4999C14 9.67151 14.6716 8.99994 15.5 8.99994C16.3284 8.99994 17 9.67151 17 10.4999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div className="Overview_Bottom">
-                                        <h3>{emp.available_days}</h3>
-                                        <p>Today</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </Slider>
-                    </div>
-                ) : 
-                    <div className='Overview_sl'>
-                        <div className="Overview_box">
-                            <div className="Overview_Top">
-                                <p>Today Presents</p>
-                                <span className="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                        <path d="M20.7739 18C21.5232 18 22.1192 17.5285 22.6543 16.8691C23.7498 15.5194 21.9512 14.4408 21.2652 13.9126C20.5679 13.3756 19.7893 13.0714 18.9999 13M17.9999 11C19.3806 11 20.4999 9.88071 20.4999 8.5C20.4999 7.11929 19.3806 6 17.9999 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                        <path d="M3.2259 18C2.47659 18 1.88061 17.5285 1.34548 16.8691C0.250028 15.5194 2.04861 14.4408 2.73458 13.9126C3.43191 13.3756 4.21052 13.0714 4.99994 13M5.49994 11C4.11923 11 2.99994 9.88071 2.99994 8.5C2.99994 7.11929 4.11923 6 5.49994 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                        <path d="M8.08368 15.1112C7.0619 15.743 4.38286 17.0331 6.01458 18.6474C6.81166 19.436 7.6994 20 8.8155 20H15.1843C16.3004 20 17.1881 19.436 17.9852 18.6474C19.6169 17.0331 16.9379 15.743 15.9161 15.1112C13.52 13.6296 10.4797 13.6296 8.08368 15.1112Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M15.4999 7.5C15.4999 9.433 13.9329 11 11.9999 11C10.0669 11 8.49988 9.433 8.49988 7.5C8.49988 5.567 10.0669 4 11.9999 4C13.9329 4 15.4999 5.567 15.4999 7.5Z" stroke="currentColor" stroke-width="1.5" />
-                                    </svg>
-                                </span>
-                            </div>
-                            <div className="Overview_Bottom">
-                                <h3>28</h3>
-                                <p>TOTAL EMPLOYEE</p>
-                            </div>
-
-                        </div>
-                        {currentEmployees.filter(emp => emp.status == 1).map((emp, index) => (
-
-                            <div className="Overview_box" key={index}>
-                                <div className="Overview_Top">
-                                    <p>{emp.leave_type}</p>
-                                    <span className="icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                            <path d="M3.07818 7.5C2.38865 8.85588 2 10.39 2 12.0148C2 17.5295 6.47715 22 12 22C17.5228 22 22 17.5295 22 12.0148C22 10.39 21.6114 8.85588 20.9218 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M8 15C8.91212 16.2144 10.3643 17 12 17C13.6357 17 15.0879 16.2144 16 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            <ellipse cx="12" cy="4" rx="10" ry="2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M7 10.5C7 9.67154 7.67157 8.99997 8.5 8.99997C9.32843 8.99997 10 9.67154 10 10.5M14 10.4999C14 9.67151 14.6716 8.99994 15.5 8.99994C16.3284 8.99994 17 9.67151 17 10.4999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </span>
-                                </div>
-                                <div className="Overview_Bottom">
-                                    <h3>{emp.available_days}</h3>
-                                    <p>Today</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                }
-            </div>
             <div className="EmpOn_Second_Head">
                 <div id='filter_left' onClick={toggleFilter2} ref={filterButtonRef2}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#7f7f7f" fill="none">
@@ -592,7 +479,7 @@ const All_leaves_List_Type = (ClosePop) => {
                         <path d="M16 15L15.7 15.4C15.1111 16.1851 14.8167 16.5777 14.3944 16.7889C13.9721 17 13.4814 17 12.5 17H11.5C10.5186 17 10.0279 17 9.60557 16.7889C9.18328 16.5777 8.88885 16.1851 8.3 15.4L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                {/* <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}>
+                <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}>
                     <div className="all">
                         <div
                             className={selectedFilter == null ? 'listActiveStatus' : ''}
@@ -602,32 +489,25 @@ const All_leaves_List_Type = (ClosePop) => {
                         </div>
                     </div>
                     <div
-                        onClick={() => filter_leftClose('Pending')}
+                        onClick={() => filter_leftClose('Active')}
                     >
                         <div
-                            className={`active ${selectedFilter === 'Pending' ? 'listActiveStatus' : ''}`}
+                            className={`active ${selectedFilter === 'Active' ? 'listActiveStatus' : ''}`}
                         >
-                            <span><PiCheckSquare /></span>Pending
+                            <span><PiCheckSquare /></span>Active
                         </div>
                     </div>
+
                     <div
-                        onClick={() => filter_leftClose('Approved')}
+                        onClick={() => filter_leftClose('Inactive')}
                     >
-                        <div className={`inactive ${selectedFilter === 'Approved' ? 'listActive' : ''}`}
+                        <div className={`resigned ${selectedFilter === 'Inactive' ? 'listActive' : ''}`}
                         >
-                            <span><MdWork /></span>Approved
+                            <span><FaRegClock /></span>Inactive
                         </div>
                     </div>
-                    <div
-                        onClick={() => filter_leftClose('Declined')}
-                    >
-                        <div className={`resigned ${selectedFilter === 'Declined' ? 'listActive' : ''}`}
-                        >
-                            <span><FaRegClock /></span>Declined
-                        </div>
-                    </div>
-                </div> */}
-                {/* <div className="right">
+                </div>
+                <div className="right">
                     <div className="refresh divRight" onClick={handleRefresh}>
                         <div className='div_box'>
                             <span><BiRevision /></span>
@@ -712,13 +592,13 @@ const All_leaves_List_Type = (ClosePop) => {
                             </div>
                         )}
                     </div>
-                </div> */}
+                </div>
             </div>
-            {/* All Employee  List*/}
+            {/* All   List*/}
+
             <div className="allEmployeeList">
-                {/* <div className="head">
-                </div> */}
                 <div className="employee-table">
+
 
                     <table>
                         <thead>
@@ -726,46 +606,39 @@ const All_leaves_List_Type = (ClosePop) => {
                                 <th>
                                     <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
                                 </th>
-                                <th> <div>Leave Type<span><TiArrowUnsorted /></span></div></th>
-                                <th> Type</th>
-                                <th>Available</th>
-                                <th>Description</th>
+                                <th><div>Sift Name<span><TiArrowUnsorted /></span></div></th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Extra Minutes</th>
+                                <th>Total Hours</th>
+                                <th>Break Time</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {currentEmployees.map((emp, index) => (
-                                <tr key={index}  >
+                            {employees.map((emp, index) => (
+                                <tr key={index}>
                                     <td>
-                                        <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} onClick={DelThis} />
-
+                                        <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(index)} />
                                     </td>
-                                    <td>{emp.leave_type}</td>
-                                    <td >{emp.type_of_leave}</td>
-                                    <td >{emp.available_days}</td>
-                                    <td>{emp.description}</td>
+                                    <td>{emp.sift_name}</td>
+                                    <td>{convertTo12HourFormat(emp.start_time)}</td>
+                                    <td>{convertTo12HourFormat(emp.end_time)}</td>
+                                    <td>{emp.extra_hours} mins</td>
+                                    <td>{calculateTotalHours(emp.start_time, emp.end_time, emp.extra_hours)} hours</td>
+                                    <td>{emp.break_time} Minutes</td>
                                     <td>
-                                        {/* <label className="switch">
-                                            <input
-                                                type="checkbox"
-                                                checked={emp.status === '1'}
-                                                onChange={() => handleStatusToggle(emp.id, emp.status, index)}
-                                            />
-                                            <span className="slider"></span>
-                                        </label> */}
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
                                                 <div onClick={toggleFilter4} ref={filterButtonRef4}>
                                                     <div
-                                                        className={`status-display ${emp.status == 1 ? 'active' : 'inactive'}`}
+                                                        className={`status-display ${emp.status === "Active" ? 'active' : 'inactive'}`}
                                                         onClick={() => setIsOpen(isOpen === index ? null : index)}
                                                     >
-                                                        <span className={`left_dot ${emp.status == 1 ? 'active' : 'inactive'}`}></span>
-                                                        <div onClick={() => {
-                                                            UpdateStatusHndle(emp.id);
-                                                        }}>
-                                                            <div className="EmpS" >
-                                                                {emp.status == 1 ? 'Active' : 'Inactive'}
+                                                        <span className={`left_dot ${emp.status === "Active" ? 'active' : 'inactive'}`}></span>
+                                                        <div onClick={() => UpdateStatusHndle(emp.id)}>
+                                                            <div className="EmpS">
+                                                                {emp.status}
                                                             </div>
                                                             <div className="^wdown">
                                                                 <MdOutlineKeyboardArrowDown />
@@ -791,23 +664,16 @@ const All_leaves_List_Type = (ClosePop) => {
                                     </td>
                                 </tr>
                             ))}
-
-
                         </tbody>
                     </table>
-                    {loading ? (
-                        <div id='Loading'>
-                            <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
-                        </div> // Show loading text or spinner when data is being fetched
-                    ) : ('')}
-                    {loading ? '' : employees == '' ? (
-                        <div className="not-found-container">
-                            <img src="https://cdn.dribbble.com/userupload/11708150/file/original-825be68b3517931ad747e0180a4116d3.png?resize=1200x900" alt="" />
-                            <h1 className="grey-text">No matching records found</h1>
-                            <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
-                        </div>
-                    ) : ('')}
                 </div>
+                {loading ? '' : employees == '' ? (
+                    <div className="not-found-container">
+                        <img src="https://cdn.dribbble.com/userupload/11708150/file/original-825be68b3517931ad747e0180a4116d3.png?resize=1200x900" alt="" />
+                        <h1 className="grey-text">No matching records found</h1>
+                        <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
+                    </div>
+                ) : ('')}
                 <div className="pagination">
                     <div className="rows-per-page">
                         <select value={rowsPerPage} onChange={handleRowsPerPageChange}>
@@ -842,5 +708,5 @@ const All_leaves_List_Type = (ClosePop) => {
     );
 };
 
-export default All_leaves_List_Type;
+export default NewShift;
 // 

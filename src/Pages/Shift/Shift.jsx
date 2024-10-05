@@ -409,7 +409,7 @@ const Shift = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Shifts list <p>{employees.length} total</p>
+                            Daily Scheduling list <p>{employees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={NewAttendanceClick}>
@@ -422,7 +422,7 @@ const Shift = () => {
                                 </span> Assign shift</p>
                             </div>
 
-                            <div className="addEmp"  style={{ marginLeft: '20px' }}>
+                            <div className="addEmp" style={{ marginLeft: '20px' }} onClick={() => navigate('/new-shift')}>
                                 <p><span><IoMdAdd /></span> Add New Shift</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
@@ -744,8 +744,13 @@ const Shift = () => {
                                         />
                                     </td>
                                     <td className='td stick'>
-                                        {emp.name} <br />
-                                        {emp.department}
+                                        <div className='pic_flex'>
+                                            <img className='sift_img_pic' src="https://cdn-icons-png.flaticon.com/512/10813/10813372.png" alt="" />
+                                            <div>
+                                                {emp.name} <br />
+                                                {emp.department}
+                                            </div>
+                                       </div>
 
                                     </td>
                                     {weekDates.map((date, dateIndex) => {
@@ -833,7 +838,7 @@ const Shift = () => {
                         </tbody>
 
                     </table>
-                  
+
 
                 </div>
                 {/* {loading ? (

@@ -153,7 +153,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             submenu: [
                 { label: 'All Attendance List', path: '/all-Attendance-list' },
                 { label: 'Shift Management', path: '/shifts-list' },
-                { label: 'Shift ', path: '/shift' },
+                { label: 'Shift ', path: '/shift' }, 
 
             ]
         }

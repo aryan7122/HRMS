@@ -71,6 +71,7 @@ import UpdateLeave from './Pages/LeaveManagement/Update_Leave/UpdateLeave.jsx';
 import All_leaves_List_Type from './Pages/LeaveManagement/All_leaves_List_Type/All_leaves_List_Type.jsx';
 import AllShiftsList from './Pages/ShiftManagement/AllShiftsList/AllShiftsList.jsx';
 import Shift from './Pages/Shift/Shift.jsx';
+import NewShift from './Pages/Shift/NewShift/NewShift.jsx';
 
 
 const App = () => {
@@ -171,8 +172,10 @@ const App = () => {
                     {/* shift */}
                     
                     <Route path="/shifts-list" element={<AllShiftsList />} />
-
+                    
                     <Route path="/shift" element={<Shift />} />
+                    <Route path="/new-shift" element={<NewShift />} />
+
 
                 </Routes>
 

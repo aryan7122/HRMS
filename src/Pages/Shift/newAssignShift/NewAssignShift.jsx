@@ -10,7 +10,9 @@ const NewAssignShift = ({ ClosePop }) => {
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
     const { isOpen: isEmployeeOpen, ref: employeeRef, buttonRef: employeeButtonRef, handleToggle: toggleEmployee, setIsOpen: setEmployeeOpen } = OutsideClick();
     const { isOpen: isShiftOpen, ref: shiftRef, buttonRef: shiftButtonRef, handleToggle: toggleShift, setIsOpen: setShiftOpen } = OutsideClick();
-
+    const [departments, setDepartments] = useState([]); // Store department list from API
+    const [empList, setEmpList] = useState([]);
+    console.log('departments::', departments)
     const [formData, setFormData] = useState({
         departmentName: '',
         departmentId: '',
@@ -20,7 +22,8 @@ const NewAssignShift = ({ ClosePop }) => {
         shift: '',
         startTime: '',
         endTime: '',
-        status: false // Active/Inactive
+        status: false,// Active/Inactive
+        extra_hours: false
     });
     const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
     const [searchQueryEmployee, setSearchQueryEmployee] = useState('');
@@ -37,16 +40,27 @@ const NewAssignShift = ({ ClosePop }) => {
     const selectOption = (dropdown, value, id) => {
         setFormData(prevState => ({
             ...prevState,
-            [dropdown]: value,
-            [`${dropdown}Id`]: id
+            [dropdown]: value
         }));
-        if (dropdown === 'departmentName') {
-            setDepartmentOpen(false);
-        } else if (dropdown === 'employeeName') {
-            setEmployeeOpen(false);
-        } else {
-            setShiftOpen(false);
+        if (dropdown === 'department') {
+            // Full name ko store karo aur user_id ko bhi alag se store karo
+            setFormData(prevState => ({
+                ...prevState,
+                departmentName: `${value.department_name}`, // Full name
+                departmentId: value.id // user_id ko alag se store karo
+            }));
         }
+        if (dropdown === 'employee') {
+            // Full name ko store karo aur user_id ko bhi alag se store karo
+            setFormData(prevState => ({
+                ...prevState,
+                employeeName: `${value.first_name} ${value.last_name}`, // Full name
+                employeeId: value.id // user_id ko alag se store karo
+            }));
+        }
+        setDepartmentOpen(false)
+        setEmployeeOpen(false)
+        setShiftOpen(false)
     };
 
     const token = localStorage.getItem('access_token');
@@ -60,31 +74,64 @@ const NewAssignShift = ({ ClosePop }) => {
             shift: formData.shift,
             start_time: formData.startTime,
             end_time: formData.endTime,
-            status: formData.status ? '0' : '1'
+            status: formData.status ? '0' : '1',
+            extra_hours: formData.extra_hours ? '0' : '1'
+
         };
 
-        try {
-            const response = await axios.post('https://devstronauts.com/public/api/shift/assign', requestData, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            if (response.status === 200) {
-                console.log('Success:', response.data);
-                ClosePop();
-            }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-        }
     };
+    // Fetch departments from API when component mounts
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/department/list', {
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                const data = response.data.department;
+                setDepartments(data);
+                // console.log('setDepartments❗setDepartments', data);
 
+                // setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                // setLoading(false);
+            });
+    }, []);
+
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/employee/list', {
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                const employees = response.data.result;
+
+                // Department heads ko extract karo
+                // const departmentHeads = employees
+                //     .map(emp => `${emp.first_name} ${emp.last_name}`);
+
+                setEmpList(employees);
+                console.log('Department Heads:❗', employees);
+
+                // setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                // setLoading(false);
+            });
+    }, []);
     return (
         <div className='NewAttendance_main'>
             <div className="blurBG"></div>
             <div className="formDivLeave">
                 <div className="popForm">
                     <div className="Attendance_Head">
-                        <h2>Add New Shift</h2>
+                        <h2> New Assign Shift</h2>
                         <div className='close_icon' onClick={ClosePop}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
                                 <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -99,7 +146,7 @@ const NewAssignShift = ({ ClosePop }) => {
                                 {/* Department Dropdown */}
                                 <div className="form-group">
 
-                                    <label>Department *</label>
+                                    <label className='red'>Department *</label>
                                     <div className="dropdown">
                                         <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
                                             <div>{formData.departmentName || "Select department"}</div>
@@ -114,13 +161,18 @@ const NewAssignShift = ({ ClosePop }) => {
                                                     className='search22'
                                                     value={searchQueryDepartment}
                                                     onChange={(e) => setSearchQueryDepartment(e.target.value)}
+                                                    required
                                                 />
                                                 <div className="dropdown_I">
-                                                    {['Management', 'HR', 'Sales', 'IT'].filter(option =>
-                                                        option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
-                                                    ).map((option, id) => (
-                                                        <div className="dropdown-item" onClick={() => selectOption('departmentName', option, id)} key={id}>
-                                                            {option}
+                                                    {departments.filter(option =>
+                                                        (`${option.department_name} ${option.department_name}`).toLowerCase().includes(searchQueryDepartment.toLowerCase())
+                                                    ).map(option => (
+                                                        <div
+                                                            className="dropdown-item"
+                                                            onClick={() => selectOption('department', option)}
+                                                            key={option.id}
+                                                        >
+                                                            {option.department_name}
                                                         </div>
                                                     ))}
                                                 </div>
@@ -131,7 +183,7 @@ const NewAssignShift = ({ ClosePop }) => {
                                 </div>
                                 <div className="form-group">
                                     {/* Employee Dropdown */}
-                                    <label>Employee *</label>
+                                    <label className='red'>Employee *</label>
                                     <div className="dropdown">
                                         <div className="dropdown-button" ref={employeeButtonRef} onClick={toggleEmployee}>
                                             <div>{formData.employeeName || "Select employee"}</div>
@@ -146,13 +198,18 @@ const NewAssignShift = ({ ClosePop }) => {
                                                     placeholder="Search employee"
                                                     value={searchQueryEmployee}
                                                     onChange={(e) => setSearchQueryEmployee(e.target.value)}
+                                                    required
                                                 />
                                                 <div className="dropdown_I">
-                                                    {['John Doe', 'Jane Smith', 'Michael Brown'].filter(option =>
-                                                        option.toLowerCase().includes(searchQueryEmployee.toLowerCase())
-                                                    ).map((option, id) => (
-                                                        <div className="dropdown-item" onClick={() => selectOption('employeeName', option, id)} key={id}>
-                                                            {option}
+                                                    {empList.filter(option =>
+                                                        (`${option.first_name} ${option.first_name}`).toLowerCase().includes(searchQueryEmployee.toLowerCase())
+                                                    ).map(option => (
+                                                        <div
+                                                            className="dropdown-item"
+                                                            onClick={() => selectOption('employee', option)}
+                                                            key={option.id}
+                                                        >
+                                                            {option.first_name + ' ' + option.last_name}
                                                         </div>
                                                     ))}
                                                 </div>
@@ -168,11 +225,12 @@ const NewAssignShift = ({ ClosePop }) => {
                                         id="date"
                                         value={formData.date}
                                         onChange={handleChange}
+                                        required
                                     />
                                 </div>
                                 <div className="form-group">
                                     {/* Shift Dropdown */}
-                                    <label>Shift *</label>
+                                    <label className='red'>Shift *</label>
                                     <div className="dropdown">
                                         <div className="dropdown-button" ref={shiftButtonRef} onClick={toggleShift}>
                                             <div>{formData.shift || "Select Shift"}</div>
@@ -186,6 +244,7 @@ const NewAssignShift = ({ ClosePop }) => {
                                                     value={searchQueryShift}
                                                     id='searchDepartmentHead'
                                                     onChange={(e) => setSearchQueryShift(e.target.value)}
+                                                    required
                                                 />
                                                 <div className="dropdown_I">
                                                     {['Morning', 'Evening', 'Night'].filter(option =>
@@ -202,42 +261,56 @@ const NewAssignShift = ({ ClosePop }) => {
                                 </div>
                                 <div className="form-group">
                                     {/* Start Time */}
-                                    <label htmlFor="startTime">Start Time *</label>
+                                    <label htmlFor="startTime" className='red'>Start Time *</label>
                                     <input
                                         type="time"
                                         id="startTime"
                                         value={formData.startTime}
                                         onChange={handleChange}
+                                        required
                                     />
                                 </div>
                                 <div className="form-group">
                                     {/* End Time */}
-                                    <label htmlFor="endTime">End Time *</label>
+                                    <label htmlFor="endTime" className='red'>End Time *</label>
                                     <input
                                         type="time"
                                         id="endTime"
                                         value={formData.endTime}
                                         onChange={handleChange}
+                                        required
                                     />
                                 </div>
                                 <div className="form-group">
                                     {/* Status Switch */}
-                                    <label>Shift Active</label>
+                                    <label className=''>Extra Hours </label>
+                                    <label className="switch">
+                                        <input
+                                            type="checkbox"
+                                            id="extra_hours"
+                                            checked={formData.extra_hours}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                        <span className="slider round"></span>
+                                    </label>
+
+                                </div>
+                                <div className="form-group">
+                                    {/* Status Switch */}
+                                    <label className=''>Publish</label>
                                     <label className="switch">
                                         <input
                                             type="checkbox"
                                             id="status"
                                             checked={formData.status}
                                             onChange={handleChange}
+                                            required
                                         />
                                         <span className="slider round"></span>
                                     </label>
 
-
                                 </div>
-
-
-
                             </div>
                             {/* Description Input */}
 
@@ -254,3 +327,4 @@ const NewAssignShift = ({ ClosePop }) => {
 };
 
 export default NewAssignShift;
+// 
