@@ -23,7 +23,17 @@
    text-align: center !important;
 }
 
-    
+ .stick{
+    // position: fixed;
+     position: sticky; /* Make the header and first cell sticky */
+    left: 0; /* Stick to the left */
+    background-color: white ; /* Background color of the fixed header/cell */
+    z-index: 10; 
+}
+.stick2{
+    background-color: #f2eef5 !important;
+}
+
 }
 
 .week_sift_icon{
@@ -36,3 +46,5 @@
         }
     }
 }
+
+

@@ -703,10 +703,10 @@ const Shift = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th>
+                                <th >
                                     <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
                                 </th>
-                                <th>
+                                <th className='stick stick2'>
                                     <div>
                                         Scheduled Shift<span><TiArrowUnsorted /></span>
                                     </div>
@@ -733,7 +733,7 @@ const Shift = () => {
                                             onChange={() => handleCheckboxChange(empIndex)}
                                         />
                                     </td>
-                                    <td className='td'>
+                                    <td className='td stick'>
                                         {emp.name} <br />
                                         {emp.department}
 
@@ -773,7 +773,7 @@ const Shift = () => {
                                         }
 
                                         return (
-                                            <td className='sift_td' key={dateIndex} style={{
+                                            <td className='sift_td ' key={dateIndex} style={{
                                                 backgroundColor: today === dateStr ? '#730fad57' : 'transparent',
                                                 color: cellColor, // Setting text color based on date comparison
                                             }}>
@@ -823,6 +823,8 @@ const Shift = () => {
                         </tbody>
 
                     </table>
+                  
+
                 </div>
                 {/* {loading ? (
                     <div id='Loading'>
