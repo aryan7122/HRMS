@@ -765,7 +765,7 @@ const Shift = () => {
                                         const compareDate = new Date(date); // Date to compare
                                         compareDate.setHours(0, 0, 0, 0); // Set time to midnight to ignore time part
 
-                                        let cellColor = '#320b57'; // Default future date color (black)
+                                        let cellColor = 'black'; // Default future date color (black)
                                         if (compareDate.getTime() < todayDate.getTime()) {
                                             cellColor = 'grey'; // Past date color (grey)
                                         } else if (compareDate.getTime() === todayDate.getTime()) {
