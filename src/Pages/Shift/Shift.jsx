@@ -332,10 +332,16 @@ const Shift = () => {
     // const [isFilterOpen4, setIsFilterOpen4] = useState(false);
 
     // Helper function to get the start of the selected week
+    // function getStartOfWeek(date) {
+    //     const day = date.getDay(); // Sunday: 0, Monday: 1, etc.
+    //     const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
+    //     return new Date(date.setDate(diff));
+    // }
     function getStartOfWeek(date) {
-        const day = date.getDay(); // Sunday: 0, Monday: 1, etc.
-        const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
-        return new Date(date.setDate(diff));
+        const currentDate = new Date(date); // Create a new Date object to avoid modifying the original date
+        const day = currentDate.getDay(); // Sunday: 0, Monday: 1, etc.
+        const diff = currentDate.getDate() - day + (day === 1 ? -6 : 1); // Adjust when day is Sunday
+        return new Date(currentDate.setDate(diff));
     }
 
 
@@ -679,36 +685,7 @@ const Shift = () => {
             </div>
             {/* All Employee  List*/}
             <div className="allEmployeeList">
-                {/* <div className="employee-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>
-                                    <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
-                                </th>
-                                <th> <div>Scheduled Shift<span><TiArrowUnsorted /></span></div></th>
-                                <th> Mon 6</th>
-                                <th>Tue 7</th>
-                                <th>wed 8</th>
-                                <th>Thu 9</th>
-                                <th>fri 10</th>
-                                <th>sat 11</th>
-                                <th>sun 12</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentEmployees.map((emp, index) => (
-                                <tr key={index}>
-                                    <td>
-                                        <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} />
-                                    </td>
-                                    <td></td>
-                                    ...
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div> */}
+           
                 <div className="employee-table week_sift">
                     <table>
                         <thead>
