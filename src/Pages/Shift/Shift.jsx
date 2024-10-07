@@ -402,7 +402,7 @@ const Shift = () => {
 
     console.log('statusNew', statusNew)
     if (error || !employees) {
-        // return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
+        return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
     }
 
     // 
@@ -466,14 +466,14 @@ const Shift = () => {
                 </div>
                 <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2} >
                     <div>
-                        <div
+                        {/* <div
                             className={selectedFilter == null ? 'listActiveStatus' : ''}
                             onClick={() => filter_leftClose(null)}
                         >
-                            <span className=''><FaList /></span>All
-                        </div>
+                         <span className=''><FaList /></span>
+                        </div> */}
                     </div>
-                    <div
+                    {/* <div
                         onClick={() => filter_leftClose('Active')}
                     >
                         <div className={selectedFilter === 'Active' ? 'listActiveStatus' : ''}
@@ -488,7 +488,7 @@ const Shift = () => {
                         >
                             <span><IoIosCloseCircleOutline /></span>Inactive
                         </div>
-                    </div>
+                    </div> */}
 
                 </div>
                 <div className="right">
