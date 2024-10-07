@@ -340,10 +340,10 @@ const Shift = () => {
     function getStartOfWeek(date) {
         const currentDate = new Date(date); // Create a new Date object to avoid modifying the original date
         const day = currentDate.getDay(); // Sunday: 0, Monday: 1, etc.
-        const diff = currentDate.getDate() - day + (day === 1 ? -6 : 1); // Adjust when day is Sunday
+        const diff = currentDate.getDate() - day + (day === 0 ? +6 : 1); // Adjust when day is Sunday
+        console.log('diff', diff)
         return new Date(currentDate.setDate(diff));
     }
-
 
 
     // Handle date change and set the selected week's start date
