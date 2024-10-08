@@ -8,7 +8,7 @@
   .blurBG {
     position: absolute;
     width: 100vw;
-    height: 99vh;
+    height: 100% !important;
     // margin-left: -105px;
     // margin-top: -48px;
     top: 0;
@@ -26,9 +26,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    .popForm {
+    .popForm_a {
       width: 800px;
-      height: 506px;
+      height: 470px;
       background: #fff;
       border-radius: 11px;
       box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.148);

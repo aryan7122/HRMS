@@ -4,7 +4,8 @@ import axios from 'axios';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
 import { OutsideClick2 } from '../../Department/DepartmentList/OutsideClick2';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const NewAssignShift = ({ ClosePop }) => {
 
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
@@ -12,6 +13,8 @@ const NewAssignShift = ({ ClosePop }) => {
     const { isOpen: isShiftOpen, ref: shiftRef, buttonRef: shiftButtonRef, handleToggle: toggleShift, setIsOpen: setShiftOpen } = OutsideClick();
     const [departments, setDepartments] = useState([]); // Store department list from API
     const [empList, setEmpList] = useState([]);
+    const [shiftList, setShiftList] = useState([]);
+
     console.log('departments::', departments)
     const [formData, setFormData] = useState({
         departmentName: '',
@@ -20,6 +23,7 @@ const NewAssignShift = ({ ClosePop }) => {
         employeeId: '',
         date: '',
         shift: '',
+        shiftId: '',
         startTime: '',
         endTime: '',
         status: false,// Active/Inactive
@@ -58,6 +62,14 @@ const NewAssignShift = ({ ClosePop }) => {
                 employeeId: value.id // user_id ko alag se store karo
             }));
         }
+        if (dropdown === 'shift') {
+            // Full name ko store karo aur user_id ko bhi alag se store karo
+            setFormData(prevState => ({
+                ...prevState,
+                shift: `${value.shift_name} `, // Full name
+                shiftId: value.id // user_id ko alag se store karo
+            }));
+        }
         setDepartmentOpen(false)
         setEmployeeOpen(false)
         setShiftOpen(false)
@@ -65,21 +77,59 @@ const NewAssignShift = ({ ClosePop }) => {
 
     const token = localStorage.getItem('access_token');
 
+    console.log('Form Data:', formData);
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form Data:', formData);
         const requestData = {
+            date: formData.date,
             department_id: formData.departmentId,
             employee_id: formData.employeeId,
-            shift: formData.shift,
+            shift_name: formData.shift,
+            shift_id: formData.shiftId,
             start_time: formData.startTime,
             end_time: formData.endTime,
             status: formData.status ? '0' : '1',
             extra_hours: formData.extra_hours ? '0' : '1'
-
         };
+        console.log('requestData', requestData)
+        try {
+            const response = await axios.post(`https://devstronauts.com/public/api/assing/shift/create/update`, requestData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
 
+            if (response.status === 200) {
+                toast.success(response.data.message || 'Created successfully.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+
+                setTimeout(() => {
+                    ClosePop();
+                }, 2000);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            toast.error('Error during create', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
     };
+
     // Fetch departments from API when component mounts
     useEffect(() => {
         axios.post('https://devstronauts.com/public/api/department/list', {
@@ -125,11 +175,44 @@ const NewAssignShift = ({ ClosePop }) => {
                 // setLoading(false);
             });
     }, []);
+    // sift list
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/shift/master/list', {
+           
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+
+
+                setShiftList(response.data.result);
+                console.log('🥳 response list shift 🥳', response.data.result);
+                // setSms()
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+
+
+            },
+            );
+    }, []);
+
     return (
         <div className='NewAttendance_main'>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
             <div className="blurBG"></div>
             <div className="formDivLeave">
-                <div className="popForm">
+                <div className="popForm_a">
                     <div className="Attendance_Head">
                         <h2> New Assign Shift</h2>
                         <div className='close_icon' onClick={ClosePop}>
@@ -247,11 +330,15 @@ const NewAssignShift = ({ ClosePop }) => {
                                                     required
                                                 />
                                                 <div className="dropdown_I">
-                                                    {['Morning', 'Evening', 'Night'].filter(option =>
-                                                        option.toLowerCase().includes(searchQueryShift.toLowerCase())
+                                                    {shiftList.filter(option =>
+                                                        (`${option.shift_name}`).toLowerCase().includes(searchQueryShift.toLowerCase())
                                                     ).map(option => (
-                                                        <div className="dropdown-item" onClick={() => selectOption('shift', option)} key={option}>
-                                                            {option}
+                                                        <div
+                                                            className="dropdown-item"
+                                                            onClick={() => selectOption('shift', option)}
+                                                            key={option.id}
+                                                        >
+                                                            {option.shift_name}
                                                         </div>
                                                     ))}
                                                 </div>

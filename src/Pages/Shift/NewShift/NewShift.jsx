@@ -28,7 +28,7 @@ import './NewShift.scss';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import NewAssignShift from './newAssignShift/AddShift';
+import NewAssignShift from './AddShift/AddShift';
 
 // import { TiArrowUnsorted } from "react-icons/ti";
 import dayjs from "dayjs";
@@ -332,8 +332,6 @@ const NewShift = () => {
             }
         })
             .then(response => {
-
-
                 setEmployees(response.data.result);
                 setFilteredEmployees(response.data.result); // filteredEmployees ko bhi sync karo
                 console.log('🥳 response list shift 🥳', response.data.result);

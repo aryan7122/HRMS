@@ -39,6 +39,8 @@ const Shift = () => {
     // const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
 
     // 
+    const [departments, setDepartments] = useState([]); // Store department list from API
+    const [empList, setEmpList] = useState([]);
     const [error, setError] = useState(false);
 
     const [loading, setLoading] = useState(true);
@@ -63,101 +65,101 @@ const Shift = () => {
         setTogglNewAdd(false);
     };
     const [employees, setEmployees] = useState([
-        {
-            name: "John Doe",
-            isChecked: false,
-            department: "Cloud",
-            shifts: [
-                { date: "10/05/2024", start: "08:00", end: "19:00" },
-                { date: "10/02/2024", start: "16:00", end: "00:00" },
-                { date: "10/03/2024", start: "00:00", end: "08:00" },
-                { date: "10/06/2024", start: "16:00", end: "00:00" },
-            ]
-        },
-        {
-            name: 'John Smith',
-            isChecked: false,
-            department: "Web Development",
-            shifts: [
-                { date: "10/03/2024", start: "00:00", end: "08:00" },
-                { date: "10/05/2024", start: "12:00", end: "20:00" },
-                { date: "10/07/2024", start: "09:00", end: "18:00" },
-            ]
-        },
-        {
-            name: 'Emily Davis',
-            isChecked: false,
-            department: "HR",
-            shifts: [
-                { date: "10/01/2024", start: "09:00", end: "17:00" },
-                { date: "10/04/2024", start: "10:00", end: "18:00" },
-                { date: "10/08/2024", start: "11:00", end: "19:00" },
-            ]
-        },
-        {
-            name: 'Michael Brown',
-            isChecked: false,
-            department: "App Development",
-            shifts: [
-                { date: "10/02/2024", start: "14:00", end: "22:00" },
-                { date: "10/05/2024", start: "08:00", end: "16:00" },
-                { date: "10/07/2024", start: "13:00", end: "21:00" },
-            ]
-        },
-        {
-            name: 'Sarah Johnson',
-            isChecked: false,
-            department: "Cloud",
-            shifts: [
-                { date: "10/06/2024", start: "08:00", end: "17:00" },
-                { date: "10/07/2024", start: "10:00", end: "19:00" },
-                { date: "10/09/2024", start: "09:00", end: "18:00" },
-            ]
-        },
-        {
-            name: 'David Miller',
-            isChecked: false,
-            department: "Marketing",
-            shifts: [
-                { date: "10/03/2024", start: "09:00", end: "17:00" },
-                { date: "10/05/2024", start: "10:00", end: "18:00" },
-                { date: "10/07/2024", start: "08:00", end: "16:00" },
-            ]
-        },
-        {
-            name: 'Anna Taylor',
-            isChecked: false,
-            department: "Sales",
-            shifts: [
-                { date: "10/02/2024", start: "12:00", end: "20:00" },
-                { date: "10/04/2024", start: "11:00", end: "19:00" },
-                { date: "10/06/2024", start: "09:00", end: "17:00" },
-            ]
-        },
-        {
-            name: 'James Wilson',
-            isChecked: false,
-            department: "Finance",
-            shifts: [
-                { date: "10/01/2024", start: "08:00", end: "16:00" },
-                { date: "10/05/2024", start: "10:00", end: "18:00" },
-                { date: "10/08/2024", start: "11:00", end: "19:00" },
-            ]
-        },
-        {
-            name: 'Maria Garcia',
-            isChecked: false,
-            department: "Operations",
-            shifts: [
-                { date: "10/03/2024", start: "07:00", end: "15:00" },
-                { date: "10/05/2024", start: "09:00", end: "17:00" },
-                { date: "10/09/2024", start: "11:00", end: "19:00" },
-            ]
-        }
+        // {
+        //     name: "John Doe",
+        //     isChecked: false,
+        //     department: "Cloud",
+        //     shifts: [
+        //         { date: "10/05/2024", start: "08:00", end: "19:00" },
+        //         { date: "10/02/2024", start: "16:00", end: "00:00" },
+        //         { date: "10/03/2024", start: "00:00", end: "08:00" },
+        //         { date: "10/06/2024", start: "16:00", end: "00:00" },
+        //     ]
+        // },
+        // {
+        //     name: 'John Smith',
+        //     isChecked: false,
+        //     department: "Web Development",
+        //     shifts: [
+        //         { date: "10/03/2024", start: "00:00", end: "08:00" },
+        //         { date: "10/05/2024", start: "12:00", end: "20:00" },
+        //         { date: "10/07/2024", start: "09:00", end: "18:00" },
+        //     ]
+        // },
+        // {
+        //     name: 'Emily Davis',
+        //     isChecked: false,
+        //     department: "HR",
+        //     shifts: [
+        //         { date: "10/01/2024", start: "09:00", end: "17:00" },
+        //         { date: "10/04/2024", start: "10:00", end: "18:00" },
+        //         { date: "10/08/2024", start: "11:00", end: "19:00" },
+        //     ]
+        // },
+        // {
+        //     name: 'Michael Brown',
+        //     isChecked: false,
+        //     department: "App Development",
+        //     shifts: [
+        //         { date: "10/02/2024", start: "14:00", end: "22:00" },
+        //         { date: "10/05/2024", start: "08:00", end: "16:00" },
+        //         { date: "10/07/2024", start: "13:00", end: "21:00" },
+        //     ]
+        // },
+        // {
+        //     name: 'Sarah Johnson',
+        //     isChecked: false,
+        //     department: "Cloud",
+        //     shifts: [
+        //         { date: "10/06/2024", start: "08:00", end: "17:00" },
+        //         { date: "10/07/2024", start: "10:00", end: "19:00" },
+        //         { date: "10/09/2024", start: "09:00", end: "18:00" },
+        //     ]
+        // },
+        // {
+        //     name: 'David Miller',
+        //     isChecked: false,
+        //     department: "Marketing",
+        //     shifts: [
+        //         { date: "10/03/2024", start: "09:00", end: "17:00" },
+        //         { date: "10/05/2024", start: "10:00", end: "18:00" },
+        //         { date: "10/07/2024", start: "08:00", end: "16:00" },
+        //     ]
+        // },
+        // {
+        //     name: 'Anna Taylor',
+        //     isChecked: false,
+        //     department: "Sales",
+        //     shifts: [
+        //         { date: "10/02/2024", start: "12:00", end: "20:00" },
+        //         { date: "10/04/2024", start: "11:00", end: "19:00" },
+        //         { date: "10/06/2024", start: "09:00", end: "17:00" },
+        //     ]
+        // },
+        // {
+        //     name: 'James Wilson',
+        //     isChecked: false,
+        //     department: "Finance",
+        //     shifts: [
+        //         { date: "10/01/2024", start: "08:00", end: "16:00" },
+        //         { date: "10/05/2024", start: "10:00", end: "18:00" },
+        //         { date: "10/08/2024", start: "11:00", end: "19:00" },
+        //     ]
+        // },
+        // {
+        //     name: 'Maria Garcia',
+        //     isChecked: false,
+        //     department: "Operations",
+        //     shifts: [
+        //         { date: "10/03/2024", start: "07:00", end: "15:00" },
+        //         { date: "10/05/2024", start: "09:00", end: "17:00" },
+        //         { date: "10/09/2024", start: "11:00", end: "19:00" },
+        //     ]
+        // }
     ]);
 
 
-    console.log('employees', employees)
+    console.log('employees@', employees)
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -171,7 +173,7 @@ const Shift = () => {
     // 
     const [selectedFilter, setSelectedFilter] = useState(null);
     // alert(selectedFilter)
-    console.log('states', selectedFilter)
+    // console.log('states', selectedFilter)
 
     const filter_leftClose = (filterName) => {
         setSelectedFilter(filterName);
@@ -322,7 +324,7 @@ const Shift = () => {
     // Handle change when a radio button is clicked
     const handleEmploymentTypeChange = (event) => {
         setEmploymentType(event.target.value);
-        console.log('Selected Employment Type:', event.target.value); // Debugging purpose
+        // console.log('Selected Employment Type:', event.target.value); // Debugging purpose
         // toggleFilter()
     };
 
@@ -341,7 +343,7 @@ const Shift = () => {
         const currentDate = new Date(date); // Create a new Date object to avoid modifying the original date
         const day = currentDate.getDay(); // Sunday: 0, Monday: 1, etc.
         const diff = currentDate.getDate() - day + (day === 0 ? +6 : 1); // Adjust when day is Sunday
-        console.log('diff', diff)
+        // console.log('diff', diff)
         return new Date(currentDate.setDate(diff));
     }
 
@@ -374,7 +376,7 @@ const Shift = () => {
     const weekDates = getDatesForWeek(startDate);
 
     const today = new Date().toLocaleDateString();
-    console.log('today', today)
+    // console.log('today', today)
     // date
     // Handle shift addition
     // Handle adding shifts
@@ -400,11 +402,156 @@ const Shift = () => {
         return `${hour12}:${minute} ${ampm}`; // Return formatted time
     };
 
-    console.log('statusNew', statusNew)
+    // console.log('statusNew', statusNew)
     if (error || !employees) {
         return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
     }
 
+    // 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString); // "YYYY-MM-DD" format expected
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() zero-based hota hai
+        const day = String(date.getDate()).padStart(2, '0');
+        const year = date.getFullYear();
+
+        return `${month}/${day}/${year}`;
+    };
+    const token = localStorage.getItem('access_token');
+
+    const fetchData = async () => {
+        try {
+            setLoading(true);
+
+            // Employee List fetch karo
+            const empResponse = await axios.post('https://devstronauts.com/public/api/employee/list', {}, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const empData = empResponse.data.result;
+            setEmpList(empData);
+
+            // Department List fetch karo
+            const deptResponse = await axios.post('https://devstronauts.com/public/api/department/list', {}, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const deptData = deptResponse.data.department;
+            setDepartments(deptData);
+
+            // Shifts List fetch karo
+            const shiftResponse = await axios.post('https://devstronauts.com/public/api/assing/shift/list', {}, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const shiftData = shiftResponse.data.result;
+
+            // Employee aur shift data ko match karo
+            const updatedEmployees = empData
+                .filter(emp => shiftData.some(shift => shift.user_id === emp.id))  // Sirf matched employees ko filter karo
+                .map(emp => {
+                    const matchedShifts = shiftData
+                        .filter(shift => shift.user_id === emp.id)
+                        .map(shift => ({
+                            date: formatDate(shift.date),
+                            start: shift.start_time,
+                            end: shift.end_time
+                        }));
+
+                    return {
+                        name: `${emp.first_name} ${emp.last_name}`,
+                        isChecked: false,
+                        department: deptData.find(dept => dept.id === emp.id)?.department_name || " ",
+                        shifts: matchedShifts
+                    };
+                });
+
+            setEmployees(updatedEmployees);  // Sirf matched employees ko set karo
+            setFilteredEmployees(updatedEmployees)
+            setLoading(false);
+
+        } catch (error) {
+            console.error("Error fetching data: ", error);
+            setLoading(false);
+        }
+    };
+
+    // useEffect me ab ek hi baar fetchData ko call karo
+    useEffect(() => {
+        if (token) {
+            fetchData();
+        }
+    }, [token]);  // Only runs when token changes
+
+
+
+
+    // useEffect(() => {
+    //     setLoading(true)
+    //     axios.post('https://devstronauts.com/public/api/assing/shift/list', {
+
+    //     }, {
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`
+    //         }
+    //     })
+    //         .then(response => {
+
+
+    //             // setEmployees(response.data.result);
+    //             // setFilteredEmployees(response.data.result); // filteredEmployees ko bhi sync karo
+    //             console.log('🥳 response list shift 🥳', response.data.result);
+    //             setLoading(false);
+    //             // setSms()
+    //         })
+    //         .catch(error => {
+    //             console.error("Error fetching data: ", error);
+
+
+    //         },
+    //         );
+    // }, [token]);
+    // // 
+    // useEffect(() => {
+    //     axios.post('https://devstronauts.com/public/api/department/list', {
+    //     }, {
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`
+    //         }
+    //     })
+    //         .then(response => {
+    //             const data = response.data.department;
+    //             setDepartments(data);
+    //             console.log('setDepartments❗setDepartments', data);
+
+    //             // setLoading(false);
+    //         })
+    //         .catch(error => {
+    //             console.error("Error fetching data: ", error);
+    //             // setLoading(false);
+    //         });
+    // }, []);
+
+    // useEffect(() => {
+    //     axios.post('https://devstronauts.com/public/api/employee/list', {
+    //     }, {
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`
+    //         }
+    //     })
+    //         .then(response => {
+    //             const employees = response.data.result;
+
+    //             // Department heads ko extract karo
+    //             // const departmentHeads = employees
+    //             //     .map(emp => `${emp.first_name} ${emp.last_name}`);
+
+    //             setEmpList(employees);
+    //             console.log('employees:❗', employees);
+
+    //             // setLoading(false);
+    //         })
+    //         .catch(error => {
+    //             console.error("Error fetching data: ", error);
+    //             // setLoading(false);
+    //         });
+    // }, []);
     // 
     return (
         <div id='allEmp'>
@@ -685,7 +832,7 @@ const Shift = () => {
             </div>
             {/* All Employee  List*/}
             <div className="allEmployeeList">
-           
+
                 <div className="employee-table week_sift">
                     <table>
                         <thead>
@@ -727,7 +874,7 @@ const Shift = () => {
                                                 {emp.name} <br />
                                                 {emp.department}
                                             </div>
-                                       </div>
+                                        </div>
 
                                     </td>
                                     {weekDates.map((date, dateIndex) => {

@@ -100,6 +100,15 @@ const AddShift = ({ ClosePop }) => {
 
     return (
         <div className='NewAttendance_main'>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
             <div className="blurBG"></div>
             <div className="formDivLeave">
                 <div className="popForm">
