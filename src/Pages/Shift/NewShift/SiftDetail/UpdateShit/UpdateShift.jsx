@@ -1,13 +1,13 @@
-import './AddShift.scss';
-import { useState } from 'react';
+import './UpdateShift.scss';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { OutsideClick } from '../../../Employee_onboarding/AddEmployee/OutsideClick';
-import { OutsideClick2 } from '../../../Department/DepartmentList/OutsideClick2';
+import { OutsideClick } from '../../../../Employee_onboarding/AddEmployee/OutsideClick';
+import { OutsideClick2 } from '../../../../Department/DepartmentList/OutsideClick2';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddShift = ({ ClosePop }) => {
+const UpdateShift = ({ ClosePop, UpdateId }) => {
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
     const { isOpen: isEmployeeOpen, ref: employeeRef, buttonRef: employeeButtonRef, handleToggle: toggleEmployee, setIsOpen: setEmployeeOpen } = OutsideClick();
     const { isOpen: isShiftOpen, ref: shiftRef, buttonRef: shiftButtonRef, handleToggle: toggleShift, setIsOpen: setShiftOpen } = OutsideClick();
@@ -25,7 +25,8 @@ const AddShift = ({ ClosePop }) => {
         extraHours: { hours: '00', minutes: '00' },
         status: '' // Active/Inactive
     });
-
+    const token = localStorage.getItem('access_token');
+console.log('idd,up',UpdateId)
     const handleChange = (e) => {
         const { id, value, type, checked } = e.target;
         setFormData({
@@ -46,12 +47,55 @@ const AddShift = ({ ClosePop }) => {
             [dropdown]: value
         }));
     };
+    // fill form auto
 
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/shift/master/list', {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                // Find the shift data by UpdateId
+                const shift = response.data.result.find(item => item.id == UpdateId);
+                console.log('shift update data', shift)
+                if (shift) {
+                    const [breakHours, breakMinutes] = shift.break_time.split(':');
+                    setFormData({
+                        shiftName: shift.shift_name,
+                        startTime: shift.start_time,
+                        endTime: shift.end_time,
+                        breakTime: { hours: breakHours, minutes: breakMinutes },
+                        extraHours: { hours: '00', minutes: '00' }, // Default extra hours
+                        status: shift.status === '0' ? 'Active' : 'Inactive' // Adjust status based on response
+                    });
+                }
+
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                console.error('Error fetching shift data:', error);
+                toast.error('Error fetching shift data', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+
+            },
+            );
+    }, [UpdateId]);
+
+    // fill form auto
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('access_token');
 
         const requestData = {
+            id: UpdateId,
             shift_name: formData.shiftName,
             start_time: formData.startTime,
             end_time: formData.endTime,
@@ -104,7 +148,7 @@ const AddShift = ({ ClosePop }) => {
             <div className="formDivLeave">
                 <div className="popForm">
                     <div className="Attendance_Head">
-                        <h2> Add Shift</h2>
+                        <h2> Update Shift</h2>
                         <div className='close_icon' onClick={ClosePop}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
                                 <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -197,7 +241,7 @@ const AddShift = ({ ClosePop }) => {
                                                     <div className="dropdown_I">
                                                         {Array.from({ length: 24 }, (_, i) => (
                                                             <div className="dropdown-item" onClick={() => selectTimeOption('extraHours', { hours: String(i).padStart(2, '0'), minutes: formData.extraHours.minutes })} key={i}>
-                                                                {String(i).padStart(2, '0')} 
+                                                                {String(i).padStart(2, '0')}
                                                             </div>
                                                         ))}
                                                     </div>
@@ -248,9 +292,9 @@ const AddShift = ({ ClosePop }) => {
                                     </div>
                                 </div>
                             </div>
-                                <div className="buttons">
-                                    <button type="submit" className="submit-btn">Submit</button>
-                                </div>
+                            <div className="buttons">
+                                <button type="submit" className="submit-btn">Update</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -260,4 +304,4 @@ const AddShift = ({ ClosePop }) => {
     );
 };
 
-export default AddShift;
+export default UpdateShift;

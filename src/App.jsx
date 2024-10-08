@@ -72,6 +72,7 @@ import All_leaves_List_Type from './Pages/LeaveManagement/All_leaves_List_Type/A
 import AllShiftsList from './Pages/ShiftManagement/AllShiftsList/AllShiftsList.jsx';
 import Shift from './Pages/Shift/Shift.jsx';
 import NewShift from './Pages/Shift/NewShift/NewShift.jsx';
+import SiftDetails from './Pages/Shift/NewShift/SiftDetail/SiftDetails.jsx';
 
 
 const App = () => {
@@ -174,7 +175,10 @@ const App = () => {
                   <Route path="/shifts-list" element={<AllShiftsList />} />
 
                   <Route path="/shift" element={<Shift />} />
-                  <Route path="/new-shift" element={<NewShift />} />
+                    <Route path="/new-shift" element={<NewShift />} />
+                    <Route path="/shift-details/:id" element={<SiftDetails />} />
+
+                    
 
 
                 </Routes>

@@ -104,17 +104,15 @@ const NewShift = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isOpen, setIsOpen] = useState(null);
     // 
+    const [isr, setIr] = useState(false);
+
 
     // 
     const [selectedFilter, setSelectedFilter] = useState(null);
     // alert(selectedFilter)
     console.log('states', selectedFilter)
 
-    const filter_leftClose = (filterName) => {
-        setSelectedFilter(filterName);
-        setToggleLeft(false)
-        toggleFilter2()
-    };
+
     // console.log(selectedDepartment)
 
     const handleHidImport = () => {
@@ -206,13 +204,16 @@ const NewShift = () => {
         setSearchQuery('');
         setSelectedDepartment('All');
         setSelectedStatus('All');
-        setCurrentPage(1);
-        setRowsPerPage(10);
+        // setCurrentPage(1);
+        // setRowsPerPage(10);
         // setSelectedDepartmentId(null)
         // setSelectedDate(null)
         setSelectedFilter(null)
-        setEmploymentType(null)
-        setSelectedDate(new Date());
+        // setEmploymentType(null)
+        setSelectedDate(null);
+        setFromDate(null)
+        setToDate(null)
+        setIr(!isr)
     };
     // 
     const [showFilter, setShowFilter] = useState(false);
@@ -304,14 +305,27 @@ const NewShift = () => {
     };
     // 
 
+    const filter_leftClose = (filterName) => {
+        // setSelectedFilter(filterName);
+        if (filterName == 'active') {
+            setSelectedFilter(1)
+        }
+        if (filterName == 'inactive') {
+            setSelectedFilter(2)
+        }
+        if (filterName == null) {
+            setSelectedFilter(null)
+        }
+    };
+
     useEffect(() => {
+        setLoading(true)
         axios.post('https://devstronauts.com/public/api/shift/master/list', {
             search: searchQuery,
-            // job_status: selectedFilter,
-            // employee_type: employmentType,
-            // custom_date: selectedDate,
-            // fromDate: fromDate,
-            // toDate: toDate
+            status: selectedFilter,
+            custom_date: selectedDate,
+            fromDate: fromDate,
+            toDate: toDate
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -322,7 +336,7 @@ const NewShift = () => {
 
                 setEmployees(response.data.result);
                 setFilteredEmployees(response.data.result); // filteredEmployees ko bhi sync karo
-                console.log('🥳 response 🥳', response.data.result);
+                console.log('🥳 response list shift 🥳', response.data.result);
                 setLoading(false);
                 // setSms()
             })
@@ -332,7 +346,7 @@ const NewShift = () => {
 
             },
             );
-    }, [statusId, statusNew, searchQuery, open]);
+    }, [ isr, statusId, statusNew, searchQuery, open, selectedFilter, selectedDate, fromDate, toDate]);
 
     // Toggle the status (real-time)
     const ConformOk = () => {
@@ -526,23 +540,24 @@ const NewShift = () => {
                         </div>
                     </div>
                     <div
-                        onClick={() => filter_leftClose('Active')}
+                        onClick={() => filter_leftClose('active')}
                     >
                         <div
-                            className={`active ${selectedFilter === 'Active' ? 'listActiveStatus' : ''}`}
+                            className={`active ${selectedFilter == '1' ? 'listActiveStatus' : ''}`}
                         >
                             <span><PiCheckSquare /></span>Active
                         </div>
                     </div>
-
                     <div
-                        onClick={() => filter_leftClose('Inactive')}
+                        onClick={() => filter_leftClose('inactive')}
                     >
-                        <div className={`resigned ${selectedFilter === 'Inactive' ? 'listActive' : ''}`}
+                        <div className={`inactive ${selectedFilter == '2' ? 'listActiveStatus' : ''}`}
                         >
-                            <span><FaRegClock /></span>Inactive
+                            <span><MdWork /></span>Inactive
                         </div>
                     </div>
+
+
                 </div>
                 <div className="right">
                     <div className="refresh divRight" onClick={handleRefresh}>
@@ -619,12 +634,7 @@ const NewShift = () => {
                                                 </div>
                                             </div>
                                         )}
-
                                     </div>
-
-
-
-
                                 </div>
                             </div>
                         )}
@@ -647,7 +657,7 @@ const NewShift = () => {
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>Extra Hours</th>
-                                <th>Total Hours</th>
+                                <th>Total HoursTotal Hours</th>
                                 <th>Break Time</th>
                                 <th>Status</th>
                             </tr>
@@ -659,12 +669,12 @@ const NewShift = () => {
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(index)} />
                                     </td>
                                     {/* {console.log('emp.shift_name', emp.start_time)} */}
-                                    <td>{emp.shift_name || ''}</td>
-                                    <td>{convertTo12HourFormat(emp.start_time)}</td>
-                                    <td>{convertTo12HourFormat(emp.end_time)}</td>
-                                    <td>{emp.extra_hours} Hours </td>
-                                    <td>{calculateTotalHours(emp.start_time, emp.end_time, emp.extra_hours)} hours</td>
-                                    <td>{calculateHours(emp.break_time)} Minutes</td>
+                                    <td onClick={() => navigate(`/shift-details/${emp?.id}`)}>{emp.shift_name || ''}</td>
+                                    <td onClick={() => navigate(`/shift-details/${emp?.id}`)}>{convertTo12HourFormat(emp.start_time)}</td>
+                                    <td onClick={() => navigate(`/shift-details/${emp?.id}`)}>{convertTo12HourFormat(emp.end_time)}</td>
+                                    <td onClick={() => navigate(`/shift-details/${emp?.id}`)}>{emp.extra_hours} Hours </td>
+                                    <td onClick={() => navigate(`/shift-details/${emp?.id}`)}>{calculateTotalHours(emp.start_time, emp.end_time, emp.extra_hours)} hours</td>
+                                    <td onClick={() => navigate(`/shift-details/${emp?.id}`)}>{calculateHours(emp.break_time)} Minutes</td>
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">

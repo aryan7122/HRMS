@@ -232,8 +232,8 @@ const AllAttendanceList = (ClosePop) => {
         setSearchQuery('');
         setSelectedDepartment('All');
         setSelectedStatus('All');
-        setCurrentPage(1);
-        setRowsPerPage(10);
+        // setCurrentPage(1);
+        // setRowsPerPage(10);
         setSelectedFilter(null)
         setSelectedDate(null)
         setFromDate(null)
@@ -694,12 +694,12 @@ const AllAttendanceList = (ClosePop) => {
                                        
                                     </td>
                                     <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp?.employee?.first_name + " " + emp?.employee?.last_name || ''}</td>
-                                    <td className='td' onClick={JobDetailsPage}>{emp?.date}</td>
-                                    <td className='td' onClick={JobDetailsPage}>{emp.shift_name}</td>
-                                    <td className='td' onClick={JobDetailsPage}>{emp.punch_in}</td>
-                                    <td className='td' onClick={JobDetailsPage}>{emp.punch_out}</td>
-                                    <td className='td' onClick={JobDetailsPage}>{emp.total_hours_worked}</td>
-                                    <td className='td' onClick={JobDetailsPage}>  {emp?.punch_in ? calculateTotalHours(emp?.punch_in, emp?.punch_out) : ''} Hours</td>
+                                    <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp?.date}</td>
+                                    <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp.shift_name}</td>
+                                    <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp.punch_in}</td>
+                                    <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp.punch_out}</td>
+                                    <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp.total_hours_worked}</td>
+                                    <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>  {emp?.punch_in ? calculateTotalHours(emp?.punch_in, emp?.punch_out) : ''} Hours</td>
 
 
                                     <td>
