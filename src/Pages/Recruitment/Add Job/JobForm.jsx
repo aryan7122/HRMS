@@ -105,7 +105,6 @@ const JobForm = ({ onSubmit }) => {
                 'Authorization': `Bearer ${token}`
             }
         })
-
             .then(response => {
                 console.log('Job Data Submit successfully **:', response);
                 setSms('New Job Data Create successfully')

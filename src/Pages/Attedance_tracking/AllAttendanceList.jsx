@@ -29,6 +29,9 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 import NewAttendance from './addNewAttendance/NewAttendance.jsx';
 import { OutsideClick } from '../../components/OutSideClick.jsx';
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AllAttendanceList = (ClosePop) => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
@@ -48,6 +51,7 @@ const AllAttendanceList = (ClosePop) => {
     const [dropdowns, setDropdowns] = useState(false)
     const [hidImport, setHidImport] = useState(true);
     const navigate = useNavigate()
+    const [overview, setOverview ] = useState([])
     const [employees, setEmployees] = useState([
         { EmployeeName: "Hillery Moses", Date: aa, Shift: "General", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
         { EmployeeName: "Nandan Raikwar", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
@@ -59,7 +63,8 @@ const AllAttendanceList = (ClosePop) => {
         { EmployeeName: "Ramesh Gupta", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
         { EmployeeName: "Rahul Choudhary", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
     ]);
-
+    const [statusNew, setStatusNew] = useState('')
+    console.log('statusNewstatusNew', statusNew)
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -69,7 +74,74 @@ const AllAttendanceList = (ClosePop) => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isOpen, setIsOpen] = useState(null);
 
+    // filter api
+    const [statusId, setStatusId] = useState('')
+    const UpdateStatusHndle = (id) => {
+        setStatusId(id)
+    }
+    const [selectedFilter, setSelectedFilter] = useState(null);
 
+    const filter_leftClose = (filterName) => {
+        // setSelectedFilter(filterName);
+        if (filterName == 'present') {
+            setSelectedFilter(0)
+        }
+        if (filterName == 'absent') {
+            setSelectedFilter(1)
+        }
+        if (filterName == 'halfday') {
+            setSelectedFilter(2)
+        }
+        if (filterName == 'all') {
+            setSelectedFilter(null)
+        }
+        setToggleLeft(false)
+        toggleFilter2()
+    };
+
+    // const [showCustomDate, setShowCustomDate] = useState(false);
+    const [showDateRange, setShowDateRange] = useState(false)
+
+    const handleDateRangeClick = () => {
+        setShowDateRange(!showDateRange)
+        setShowCustomDate(false);
+    }
+    // const handleCustomDateClick = () => {
+    //     setShowCustomDate(!showCustomDate);
+    
+    //     setShowDateRange(false)
+    // };
+
+
+    const [selectedDate, setSelectedDate] = useState(null);
+    console.log('selectedFilter', selectedFilter)
+    const handleDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setSelectedDate(formattedDate);
+    };
+
+
+    const [fromDate, setFromDate] = useState(null);
+    const [toDate, setToDate] = useState(null);
+
+    // Function to handle the date change and format it to yyyy/mm/dd
+    const handleFromDateChange = (event) => {
+
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setFromDate(formattedDate);
+    };
+    const handleToDateChange = (event) => {
+        const date = new Date(event.target.value);
+        // Format the date as yyyy/MM/dd
+        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+        setToDate(formattedDate);
+    };
+
+    // filer api
     // console.log(selectedDepartment)
 
     const handleHidImport = () => {
@@ -106,15 +178,27 @@ const AllAttendanceList = (ClosePop) => {
         setRowsPerPage(Number(e.target.value));
         setCurrentPage(1);
     };
+    const [open, setOpen] = useState(false);
 
     const statuses = ['Present', 'Absent', 'Half day'];
-    const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
-    const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
+    // const departments = ['All', 'Human Resources', 'Maintenance', 'Manning', 'Operations', 'Engineering', 'IT', 'HSEQ'];
+    // const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
     const handleStatusChange = (index, newStatus) => {
-        const updatedEmployees = [...filteredEmployees];
-        updatedEmployees[index].status = newStatus;
-        setFilteredEmployees(updatedEmployees);
+        // const updatedEmployees = [...filteredEmployees];
+        // updatedEmployees[index].status = newStatus;
+        // setFilteredEmployees(updatedEmployees);
+        console.log('<><><>', newStatus)
         setIsOpen(null);
+        if (newStatus == 'Present') {
+            setStatusNew(0)
+        }
+        if (newStatus == 'Absent') {
+            setStatusNew(1)
+        }
+        if (newStatus == 'Half day') {
+            setStatusNew(2)
+        }
+        setOpen(true)
     };
 
     const handleSearchChange = (e) => {
@@ -150,6 +234,10 @@ const AllAttendanceList = (ClosePop) => {
         setSelectedStatus('All');
         setCurrentPage(1);
         setRowsPerPage(10);
+        setSelectedFilter(null)
+        setSelectedDate(null)
+        setFromDate(null)
+        setToDate(null)
     };
     // 
     const [showFilter, setShowFilter] = useState(false);
@@ -190,10 +278,7 @@ const AllAttendanceList = (ClosePop) => {
     const filter_left = () => {
         setToggleLeft(!toggleLeft)
     }
-    const filter_leftClose = () => {
-        setToggleLeft(false)
-        toggleFilter2()
-    }
+ 
     const DateDropdowns = () => {
         setDropdowns(!dropdowns)
     }
@@ -211,47 +296,154 @@ const AllAttendanceList = (ClosePop) => {
     const [loading, setLoading] = useState(true);
     const [AttendanceData, setJobJsonData] = useState([]);
 
-    // const BIN_ID = '66dad0faad19ca34f8a0c6dd';
-    // const MASTER_KEY = '$2a$10$/rHkEpcXQ78/XRNvCpPl4ehBkySOH2T6teIVgZEumbX/if6UWLRly';
-    // const getEmpJson = async () => {
-    //     try {
-    //         const response = await axios.get(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-    //             headers: {
-    //                 'X-Master-Key': MASTER_KEY
-    //             }
-    //         });
-    //         // Response data
-    //         setJobJsonData(response.data.record || []);
-    //         setLoading(false);
-    //         console.log('object:::', response.data);
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //         setLoading(false);
-    //     }
-    // };
-
-    // Call the function to fetch data
-    // useEffect(() => {
-    //     getEmpJson();
-
-    // }, [])
-    // const formattedData = AttendanceData.map(emp => ({
-    //     date: emp.date,
-    //     employeeName: emp.employeeName,
-    //     punchIn: emp.punchIn,
-    //     punchOut: emp.punchOut
-    // }));
-
-    // console.log('AttendanceData ✅🎂', AttendanceData)
     const JobDetailsPage = () => {
         navigate('/attendance-details')
     }
+    const token = localStorage.getItem('access_token');
+    // console.log('token:', token)
+    console.log('ssss', selectedFilter)
+    useEffect(() => {
+        setLoading(true)
+        axios.post('https://devstronauts.com/public/api/attendance/list', {
+            search: searchQuery,
+            status: selectedFilter,   //
+            custom_date: selectedDate,
+            fromDate: fromDate,
+            toDate: toDate
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                // setEmployees(response.data.job_opening);
+                setEmployees(response.data.result)
+                setFilteredEmployees(response.data.result); // filteredEmployees ko bhi sync karo
+                console.log('response 🥳', response.data);
+                setOverview(response.data)
+                // setDepartmentdetails2(response.data.result.department_id)
+                setLoading(false);
+                // setSms()
+                // setError(false)
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                // setError(true)
+
+            });
+    }, [searchQuery, selectedFilter, fromDate, toDate, selectedDate, open, togglNewAdd]);
 
     // 
+    let isRequestInProgress = false;
+
+    const ConformOk = () => {
+        setTimeout(() => {
+            setOpen(false)
+        }, 400);
+        if (statusId && !isRequestInProgress) {
+            isRequestInProgress = true;  // Request start hone par flag true
+            axios.post('https://devstronauts.com/public/api/attendance/status/update', {
+                id: statusId,
+                status: statusNew
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // Success handling
+                    // setSms(`Status update successfully`);
+                    toast.success(response.data.message ||   'Status update successfully.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+
+                    if (response.data.success === true) {
+                        // setShowAlert(true);
+                        // setTimeout(() => {
+                        //     setShowAlert(false);
+                        // }, 4000);
+                    }
+                })
+                .catch(error => {
+                    // Error handling
+                    toast.error(error.message ||'Status update Failed.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+
+                    console.error("Error fetching data: ", error);
+                })
+                .finally(() => {
+                    // Request complete hone ke baad flag reset hoga
+                    isRequestInProgress = false;
+                });
+        }
+    }
+    //
+    const calculateTotalHours = (start, end) => {
+        const startTime = new Date(`1970-01-01T${start}:00`);
+        const endTime = new Date(`1970-01-01T${end}:00`);
+
+        // Adjust for cases where end time is on the next day (e.g., 12 AM to 8 AM)
+        if (endTime < startTime) {
+            endTime.setDate(endTime.getDate() + 1);
+        }
+
+        const totalHours = (endTime - startTime) / (1000 * 60 * 60); // Total working hours
+        let overtime = 0;
+
+        // Overtime calculation, if total working hours are more than 8
+        if (totalHours > 8) {
+            overtime = totalHours - 8;
+        }
+
+        return overtime.toFixed(2); // Return overtime hours as a string with 2 decimal places
+    };
     return (
         <div id='allEmp'>
             {togglNewAdd && <NewAttendance ClosePop={NewAttendanceClosePop} />}
-
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                backdrop={<div className="backdrop" />}
+                className="dialog"
+            >
+                <DialogHeading className="heading">Are you sure?</DialogHeading>
+                <p className="description">
+                    You want to Update this Status
+                </p>
+                <div className="buttons">
+                    <div onClick={ConformOk}>
+                        <Button className="button">
+                            Update
+                        </Button>
+                    </div>
+                    <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                </div>
+            </Dialog>
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
@@ -302,7 +494,7 @@ const AllAttendanceList = (ClosePop) => {
                         </div>
                         <div className="Overview_Right">
                             <p>TOTAL EMPLOYEE</p>
-                            <h3>200</h3>
+                            <h3>{overview.total_employee || '0'}</h3>
                         </div>
                     </div>
                     <div className="Overview_box">
@@ -316,7 +508,7 @@ const AllAttendanceList = (ClosePop) => {
                         </div>
                         <div className="Overview_Right">
                             <p>PRESENT</p>
-                            <h3>100</h3>
+                            <h3>{overview.today_present || '0'}</h3>
                         </div>
                     </div>
                     <div className="Overview_box">
@@ -330,7 +522,7 @@ const AllAttendanceList = (ClosePop) => {
                         </div>
                         <div className="Overview_Right">
                             <p>ABSENT</p>
-                            <h3>50</h3>
+                            <h3>{overview.today_absent || '0'}</h3>
                         </div>
                     </div>
                     <div className="Overview_box">
@@ -344,7 +536,7 @@ const AllAttendanceList = (ClosePop) => {
                         </div>
                         <div className="Overview_Right">
                             <p>HALFDAY</p>
-                            <h3>50</h3>
+                            <h3>{overview.today_halfday || '0' }</h3>
                         </div>
                     </div>
                 </div>
@@ -359,42 +551,44 @@ const AllAttendanceList = (ClosePop) => {
                         <path d="M16 15L15.7 15.4C15.1111 16.1851 14.8167 16.5777 14.3944 16.7889C13.9721 17 13.4814 17 12.5 17H11.5C10.5186 17 10.0279 17 9.60557 16.7889C9.18328 16.5777 8.88885 16.1851 8.3 15.4L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose filterLeftCloseAtt'}`} ref={filterRef2} >
+                <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}>
                     <div className="all">
-                        <div className='listActive' onClick={filter_leftClose}>
-                            <span> <FaList /></span>All
+                        <div
+                            className={selectedFilter == null ? 'listActiveStatus' : ''}
+                            onClick={() => filter_leftClose('all')}
+                        >
+                            <span className=''><FaList /></span>All
                         </div>
                     </div>
-                    <div className="active" onClick={filter_leftClose}>
-                        <div>
+                    <div
+                        onClick={() => filter_leftClose('present')}
+                    >
+                        <div
+                            className={`active ${selectedFilter == '0' ? 'listActiveStatus' : ''}`}
+                        >
                             <span><PiCheckSquare /></span>Present
                         </div>
                     </div>
-
-                    <div className="resigned" onClick={filter_leftClose}>
-                        <div>
-                            <span> <FaRegClock /> </span>Half day
+                    <div
+                        onClick={() => filter_leftClose('absent')}
+                    >
+                        <div className={`inactive ${selectedFilter == '1' ? 'listActiveStatus' : ''}`}
+                        >
+                            <span><MdWork /></span>Absent
                         </div>
                     </div>
-                    <div className="notice_period" onClick={filter_leftClose}>
-                        <div>
-                            <span><IoIosCloseCircleOutline /></span>Absent
+                    <div
+                        onClick={() => filter_leftClose('halfday')}
+                    >
+                        <div className={`resigned ${selectedFilter == '2' ? 'listActiveStatus' : ''}`}
+                        >
+                            <span><FaRegClock /></span>Half day
                         </div>
                     </div>
+                   
                 </div>
+
                 <div className="right">
-                    <div className="toggle_selectIcon divRight" onClick={toggleFilter4} ref={filterButtonRef4}>
-                        <div className='div_box' >
-                            <span id='toggle_selectIcon'>Select Date {!isFilterOpen4 ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-                        </div>
-                        {isFilterOpen4 &&
-                            <div id='DateDropdowns' ref={filterRef4}>
-                                <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                    <DateCalendar />
-                                </LocalizationProvider>
-                            </div>
-                        }
-                    </div>
                     <div className="refresh divRight" onClick={handleRefresh}>
                         <div className='div_box'>
                             <span><BiRevision /></span>
@@ -415,95 +609,44 @@ const AllAttendanceList = (ClosePop) => {
                     </div>
                     <div className="filter divRight">
                         <div className='div_box' onClick={toggleFilter} ref={filterButtonRef}>
-                            <span>
-                                {!isFilterOpen ?
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                        <path d="M3 7H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M3 17H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M18 17L21 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M15 7L21 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M6 7C6 6.06812 6 5.60218 6.15224 5.23463C6.35523 4.74458 6.74458 4.35523 7.23463 4.15224C7.60218 4 8.06812 4 9 4C9.93188 4 10.3978 4 10.7654 4.15224C11.2554 4.35523 11.6448 4.74458 11.8478 5.23463C12 5.60218 12 6.06812 12 7C12 7.93188 12 8.39782 11.8478 8.76537C11.6448 9.25542 11.2554 9.64477 10.7654 9.84776C10.3978 10 9.93188 10 9 10C8.06812 10 7.60218 10 7.23463 9.84776C6.74458 9.64477 6.35523 9.25542 6.15224 8.76537C6 8.39782 6 7.93188 6 7Z" stroke="currentColor" stroke-width="1.5" />
-                                        <path d="M12 17C12 16.0681 12 15.6022 12.1522 15.2346C12.3552 14.7446 12.7446 14.3552 13.2346 14.1522C13.6022 14 14.0681 14 15 14C15.9319 14 16.3978 14 16.7654 14.1522C17.2554 14.3552 17.6448 14.7446 17.8478 15.2346C18 15.6022 18 16.0681 18 17C18 17.9319 18 18.3978 17.8478 18.7654C17.6448 19.2554 17.2554 19.6448 16.7654 19.8478C16.3978 20 15.9319 20 15 20C14.0681 20 13.6022 20 13.2346 19.8478C12.7446 19.6448 12.3552 19.2554 12.1522 18.7654C12 18.3978 12 17.9319 12 17Z" stroke="currentColor" stroke-width="1.5" />
-                                    </svg>
-                                    :
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                        <path d="M7 21L7 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M17 21L17 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M17 6L17 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M7 9L7 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M7 18C6.06812 18 5.60218 18 5.23463 17.8478C4.74458 17.6448 4.35523 17.2554 4.15224 16.7654C4 16.3978 4 15.9319 4 15C4 14.0681 4 13.6022 4.15224 13.2346C4.35523 12.7446 4.74458 12.3552 5.23463 12.1522C5.60218 12 6.06812 12 7 12C7.93188 12 8.39782 12 8.76537 12.1522C9.25542 12.3552 9.64477 12.7446 9.84776 13.2346C10 13.6022 10 14.0681 10 15C10 15.9319 10 16.3978 9.84776 16.7654C9.64477 17.2554 9.25542 17.6448 8.76537 17.8478C8.39782 18 7.93188 18 7 18Z" stroke="currentColor" stroke-width="1.5" />
-                                        <path d="M17 12C16.0681 12 15.6022 12 15.2346 11.8478C14.7446 11.6448 14.3552 11.2554 14.1522 10.7654C14 10.3978 14 9.93188 14 9C14 8.06812 14 7.60218 14.1522 7.23463C14.3552 6.74458 14.7446 6.35523 15.2346 6.15224C15.6022 6 16.0681 6 17 6C17.9319 6 18.3978 6 18.7654 6.15224C19.2554 6.35523 19.6448 6.74458 19.8478 7.23463C20 7.60218 20 8.06812 20 9C20 9.93188 20 10.3978 19.8478 10.7654C19.6448 11.2554 19.2554 11.6448 18.7654 11.8478C18.3978 12 17.9319 12 17 12Z" stroke="currentColor" stroke-width="1.5" />
-                                    </svg>
-                                }
-
-                            </span>
+                            <span><IoFilterSharp /></span>
                         </div>
 
                         {isFilterOpen && (
+
                             <div className="filter-container" ref={filterRef}>
                                 <div className="filter-options">
-                                    {/* <div className="filter-option" onClick={handleCustomDateClick}>
-                                        <p>Custom Date </p>
+
+                                    <div className="filter-option" >
+                                        <p onClick={handleCustomDateClick}>Custom Date {!showCustomDate ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showCustomDate && (
                                             <div className="dropdown-content date-h">
-                                                <div><MdDateRange /> Select Custom date</div>
-                                                <input type="date" />
-                                            </div>
-                                        )}
-                                    </div> */}
-                                    <div className="filter-option">
-                                        <p onClick={handleDepartmentClick}>Department</p>
-                                        {showDepartment && (
-                                            <div className="dropdown-content">
-                                                <ul>
-                                                    <li>
-                                                        <input type="radio" id="all-department" name="department" className="custom-radio" />
-                                                        <label htmlFor="all-department">All</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="it" name="department" className="custom-radio" />
-                                                        <label htmlFor="it">IT</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="hr" name="department" className="custom-radio" />
-                                                        <label htmlFor="hr">HR</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="sales" name="department" className="custom-radio" />
-                                                        <label htmlFor="sales">Sales</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="management" name="department" className="custom-radio" />
-                                                        <label htmlFor="management">Management</label>
-                                                    </li>
-                                                </ul>
+                                                <div><span><MdDateRange /></span>{!selectedDate ? 'Select Custom date' : selectedDate} </div>
+                                                {/* <br /> */}
+                                                <input type="date" name="date" id="" onChange={handleDateChange} />
                                             </div>
                                         )}
                                     </div>
+
                                     <div className="filter-option">
-                                        <p onClick={handleEmploymentTypeClick}>Shift</p>
-                                        {showEmploymentType && (
-                                            <div className="dropdown-content">
-                                                <ul>
-                                                    <li>
-                                                        <input type="radio" id="all" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="all">All </label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="general" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="general">General</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="night" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="night">Night</label>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" id="second" name="employmentType" className="custom-radio" />
-                                                        <label htmlFor="second">Second</label>
-                                                    </li>
-                                                </ul>
+                                        <p onClick={handleDateRangeClick}>Date Range  {!showDateRange ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                        {showDateRange && (
+                                            <div >
+                                                <label id='daterange-contener'>From</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!fromDate ? 'Select Custom date' : fromDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleFromDateChange} />
+                                                </div>
+                                                <label id='daterange-contener'>To</label>
+                                                <div className="dropdown-content date-h">
+                                                    <div><span><MdDateRange /></span>{!toDate ? 'Select Custom date' : toDate} </div>
+                                                    {/* <br /> */}
+                                                    <input type="date" name="date" id="" onChange={handleToDateChange} />
+                                                </div>
                                             </div>
                                         )}
+
                                     </div>
                                 </div>
                             </div>
@@ -550,28 +693,32 @@ const AllAttendanceList = (ClosePop) => {
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} onClick={DelThis} />
                                        
                                     </td>
-                                    <td className='td' onClick={JobDetailsPage}>{emp.EmployeeName}</td>
-                                    <td className='td'  onClick={JobDetailsPage}>{emp.Date}</td>
-                                    <td className='td'  onClick={JobDetailsPage}>{emp.Shift}</td>
-                                    <td className='td' onClick={JobDetailsPage}>{emp.PunchIn}</td>
-                                    <td className='td'  onClick={JobDetailsPage}>{emp.PunchOut}</td>
-                                    <td className='td'  onClick={JobDetailsPage}>{emp.TotalHoursWorked}</td>
-                                    <td className='td'  onClick={JobDetailsPage}>{emp.Overtime}</td>
+                                    <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp?.employee?.first_name + " " + emp?.employee?.last_name || ''}</td>
+                                    <td className='td' onClick={JobDetailsPage}>{emp?.date}</td>
+                                    <td className='td' onClick={JobDetailsPage}>{emp.shift_name}</td>
+                                    <td className='td' onClick={JobDetailsPage}>{emp.punch_in}</td>
+                                    <td className='td' onClick={JobDetailsPage}>{emp.punch_out}</td>
+                                    <td className='td' onClick={JobDetailsPage}>{emp.total_hours_worked}</td>
+                                    <td className='td' onClick={JobDetailsPage}>  {emp?.punch_in ? calculateTotalHours(emp?.punch_in, emp?.punch_out) : ''} Hours</td>
 
 
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
                                                 <div
-                                                    className={`status-display ${emp.status.toLowerCase().replace(' ', '-')}`}
+                                                    className={`status-display ${emp.status == 0 ? 'present' : emp.status == 1 ? 'absent' : 'half-day'}`}
                                                     onClick={() => setIsOpen(isOpen === index ? null : index)}
                                                 >
-                                                    {console.log(emp.status.toLowerCase().replace(' ', '-'))}
-                                                    <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}
+                                                    <span className={`left_dot ${emp.status == 0 ? 'present' : emp.status == 1 ? 'absent' : 'half-day'}`}
                                                     ></span>
-                                                    <div>
+                                                    <div
+                                                        onClick={() => {
+                                                            UpdateStatusHndle(emp.id);
+                                                        }}
+                                                    >
                                                         <div className="">
-                                                            {emp.status}
+                                                            {/* {emp.status} */}
+                                                            {emp.status == 0 ? 'Present' : emp.status == 1 ? 'Absent' : 'Half Day' || ''}
                                                         </div>
                                                         <div className="^wdown">
                                                             <MdOutlineKeyboardArrowDown />
@@ -598,82 +745,21 @@ const AllAttendanceList = (ClosePop) => {
 
                                 </tr>
                             ))}
-                            {/* <>
-                                {AttendanceData.map((data, index) => {
-                                    const punchInTime = new Date(`1970-01-01T${data.punchIn}:00`);
-                                    const punchOutTime = new Date(`1970-01-01T${data.punchOut}:00`);
-
-                                    // Total time in milliseconds
-                                    const totalMilliseconds = punchOutTime - punchInTime;
-
-                                    // Convert milliseconds to hours and minutes
-                                    const totalHours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
-                                    const totalMinutes = Math.floor((totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
-
-                                    // Format as "HH:MM"
-                                    const totalTimeWorked = `${totalHours}h ${totalMinutes}m`;
-
-                                    return (
-                                        <tr key={index}>
-                                            <td>
-                                                <input type="checkbox" checked={data.isChecked} onChange={() => handleCheckboxChange(index)} />
-                                            </td>
-                                            <td onClick={AttendanceDetailsPage}>{data.employeeName}</td>
-                                            <td onClick={AttendanceDetailsPage}>{data.date}</td>
-                                            <td onClick={AttendanceDetailsPage}>{data.shift}</td>
-                                            <td onClick={AttendanceDetailsPage}>{data.punchIn}</td>
-                                            <td onClick={AttendanceDetailsPage}>{data.punchOut}</td>
-                                            <td>{totalHours > 0 ? totalTimeWorked : '-'}</td>
-                                            <td onClick={AttendanceDetailsPage}>{data.overtime}</td>
-                                            <td>
-                                                <div className="status-dropdown">
-                                                    <div key={index} className="status-container">
-                                                        <div
-                                                            className={`status-display ${data.status ? data.status.toLowerCase().replace(' ', '-') : ''}`}
-                                                            onClick={() => setIsOpen(isOpen === index ? null : index)}
-                                                        >
-                                                            {data.status && (
-                                                                <>
-                                                                    <span className={`left_dot ${data.status.toLowerCase().replace(' ', '-')}`}></span>
-                                                                    <div>
-                                                                        <div className="">
-                                                                            {data.status}
-                                                                        </div>
-                                                                        <div className="^wdown">
-                                                                            <MdOutlineKeyboardArrowDown />
-                                                                        </div>
-                                                                    </div>
-                                                                </>
-                                                            )}
-                                                        </div>
-                                                        {isOpen === index && (
-                                                            <div className="status-options">
-                                                                {statuses.map(status => (
-                                                                    <div
-                                                                        key={status}
-                                                                        className="status-option"
-                                                                        onClick={() => handleStatusChange(index, status)}
-                                                                    >
-                                                                        {status}
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </> */}
-
+                        
                         </tbody>
                     </table>
-                    {/* {loading ? (
+                    {loading ? (
                         <div id='Loading'>
                             <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
                         </div> // Show loading text or spinner when data is being fetched
-                    ) : ('')} */}
+                    ) : ('')}
+                    {loading ? '' : employees == '' ? (
+                        <div className="not-found-container">
+                            <img src="https://cdn.dribbble.com/userupload/11708150/file/original-825be68b3517931ad747e0180a4116d3.png?resize=1200x900" alt="" />
+                            <h1 className="grey-text">No matching records found</h1>
+                            <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
+                        </div>
+                    ) : ('')}
                 </div>
                 <div className="pagination">
                     <div className="rows-per-page">
@@ -691,10 +777,11 @@ const AllAttendanceList = (ClosePop) => {
                             {[...Array(totalPages)].map((_, pageIndex) => (
                                 <button
                                     key={pageIndex + 1}
-                                    className={currentPage === pageIndex + 1 ? 'active' : ''}
+                                    className={currentPage === pageIndex + 1 ? 'activePageIndex' : ''}
                                     onClick={() => handlePageChange(pageIndex + 1)}
                                 >
                                     {pageIndex + 1}
+                                    {/* {console.log('currentPage', pageIndex + 1)} */}
                                 </button>
                             ))}
                         </div>

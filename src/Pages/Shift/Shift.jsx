@@ -429,7 +429,7 @@ const Shift = () => {
                             </div>
 
                             <div className="addEmp" style={{ marginLeft: '20px' }} onClick={() => navigate('/new-shift')}>
-                                <p><span><IoMdAdd /></span> Add New Shift</p>
+                                <p>Shift List</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
                                 <div className="div_top"><CiMenuKebab /></div>

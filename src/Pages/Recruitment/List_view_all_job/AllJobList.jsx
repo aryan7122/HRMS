@@ -244,15 +244,11 @@ const AllJobList = () => {
     };
     // 
     const [showFilter, setShowFilter] = useState(false);
-    const [showCustomDate, setShowCustomDate] = useState(false);
     const [showEmploymentType, setShowEmploymentType] = useState(false);
     const [showDepartment, setShowDepartment] = useState(false);
+    const [showCustomDate, setShowCustomDate] = useState(false);
     const [showDateRange, setShowDateRange] = useState(false)
-
-    const showFilterHandle = () => {
-        setShowFilter(!showFilter)
-    }
-
+    
     const handleDateRangeClick = () => {
         setShowDateRange(!showDateRange)
         setShowCustomDate(false);
@@ -264,6 +260,10 @@ const AllJobList = () => {
         setShowDepartment(false);
         setShowDateRange(false)
     };
+    const showFilterHandle = () => {
+        setShowFilter(!showFilter)
+    }
+
 
     const handleEmploymentTypeClick = () => {
         setShowEmploymentType(!showEmploymentType);

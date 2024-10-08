@@ -149,7 +149,7 @@ const App = () => {
 
                   {/* {AllAttendanceList } */}
                   <Route path="/all-attendance-list" element={<AllAttendanceList />} />
-                  <Route path="/attendance-details" element={<AttendanceDetails />} />
+                  <Route path="/attendance-details/:id" element={<AttendanceDetails />} />
                   {/*  */}
                   <Route path="/department" element={<Department />} />
                   <Route path="/designation" element={<Designation />} />
@@ -163,18 +163,18 @@ const App = () => {
 
                   <Route path="/birthday" element={<BirthdayList />} />
                   {/* {All_leaves_List } */}
-                    <Route path="/all-leave" element={<All_leaves_List />} />
-                    <Route path="/new-leave" element={<AddNewLeave />} />
-                    <Route path="/leave-details/:id" element={<LeaveDetails />} />
-                    <Route path="/update-leave/:id" element={<UpdateLeave />} />
-                    <Route path="/leave-type" element={<All_leaves_List_Type />} />
+                  <Route path="/all-leave" element={<All_leaves_List />} />
+                  <Route path="/new-leave" element={<AddNewLeave />} />
+                  <Route path="/leave-details/:id" element={<LeaveDetails />} />
+                  <Route path="/update-leave/:id" element={<UpdateLeave />} />
+                  <Route path="/leave-type" element={<All_leaves_List_Type />} />
 
-                    {/* shift */}
-                    
-                    <Route path="/shifts-list" element={<AllShiftsList />} />
-                    
-                    <Route path="/shift" element={<Shift />} />
-                    <Route path="/new-shift" element={<NewShift />} />
+                  {/* shift */}
+
+                  <Route path="/shifts-list" element={<AllShiftsList />} />
+
+                  <Route path="/shift" element={<Shift />} />
+                  <Route path="/new-shift" element={<NewShift />} />
 
 
                 </Routes>

@@ -1,22 +1,37 @@
 // import { useState } from 'react';
-import '../../Employee_onboarding/EmployeeDetail /EmployeeDetails.scss';
+// import '../../Employee_onboarding/EmployeeDetail /EmployeeDetails.scss';
 // import Img_user from '../../../assets/user.png'
+import './AttendanceDetails.scss'
+import { useState, useRef, useEffect } from 'react';
 import { BiEditAlt } from "react-icons/bi";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { MdDeleteOutline } from "react-icons/md";
+import axios from 'axios';
 
-import { useState, useRef } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import './Calendar.scss';
+import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import UpdateAttendance from '../UpdateAttendance/UpdateAttendance';
 
-const AttendanceDetails = () => {
+const AttendanceDetails = (ClosePop) => {
     const navigate = useNavigate()
+    const { id } = useParams(); // Get the job ID from the URL
+    const [attendanceData, setAttendanceData] = useState('')
     const JobList = () => {
         navigate('/all-attendance-list')
     }
+    const [togglNewAdd, setTogglNewAdd] = useState(false)
+    const NewAttendanceClick = () => {
+        setTogglNewAdd(true)
+    }
 
+    const NewAttendanceClosePop = () => {
+        setTogglNewAdd(false);
+    };
     const calendarRef = useRef(null);
     const [calendarDate, setCalendarDate] = useState(new Date());
 
@@ -55,9 +70,144 @@ const AttendanceDetails = () => {
         { title: 'Off', start: '2024-09-15' }, // Sunday Off
         // ... Add more events as needed
     ];
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const token = localStorage.getItem('access_token');
+   
+    console.log('data 👋', attendanceData)
+
+    const HandleDelete = () => {
+        // confirm()
+        setOpen(true)
+
+    }
+    const DelteConform = () => {
+        if (id) {
+            axios.post('https://devstronauts.com/public/api/attendance/delete', { id }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    // setDepartmentdetails(response.data.department);
+                    // setDepartmentdetails2(response.data.department.enteredbyid)
+                    console.log('⚠️ delete ❗', response)
+                    // setLoading(false);
+                    toast.success('Deleted  successfully.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    // setLoading(false);
+                    setTimeout(() => {
+                        navigate('/all-attendance-list')
+                    }, 2000);
+                })
+                .catch(error => {
+                    toast.error('Deleted  Failed.', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                    setLoading(false);
+                    // setError(true);
+                    console.error("Error fetching designation details:", error);
+                });
+        }
+    }
+    // Fetch  details based 
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/attendance/details', { id:id}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                // Find the specific job based on jobId
+                // const job = response.data.job_opening.find(job => job.id == id);
+                console.log('data 👋', response.data.result)
+                setAttendanceData(response.data.result)
+                // setJobData(job);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching job data: ", error);
+            });
+    }, [id, token]);
+    const convertTo12HourFormat = (time) => {
+        const [hours, minutes] = time.split(":");
+        const period = +hours >= 12 ? 'PM' : 'AM';
+        let newHours = +hours % 12 || 12; // Convert 0 to 12 for midnight
+        return `${newHours}:${minutes} ${period}`;
+    };
+    const calculateTotalHours = (start, end) => {
+        const startTime = new Date(`1970-01-01T${start}:00`);
+        const endTime = new Date(`1970-01-01T${end}:00`);
+
+        // Adjust for cases where end time is on the next day (e.g., 12 AM to 8 AM)
+        if (endTime < startTime) {
+            endTime.setDate(endTime.getDate() + 1);
+        }
+
+        const totalHours = (endTime - startTime) / (1000 * 60 * 60); // Total working hours
+        let overtime = 0;
+
+        // Overtime calculation, if total working hours are more than 8
+        if (totalHours > 8) {
+            overtime = totalHours - 8;
+        }
+
+        return overtime.toFixed(2); // Return overtime hours as a string with 2 decimal places
+    };
+
+    // Example usage
+    // const overtime = calculateOvertime("09:00", "19:30"); // Assuming 9 AM to 7:30 PM
+    // console.log("Overtime:", overtime, "hours");
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 
     return (
         <div className="profile-page">
+            {togglNewAdd && <UpdateAttendance ClosePop={NewAttendanceClosePop} id={id} attendanceDataProp={attendanceData} />}
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                closeOnClick
+                pauseOnHover
+                draggable
+                theme="error"
+            />
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                getPersistentElements={() => document.querySelectorAll(".Toastify")}
+                backdrop={<div className="backdrop" />}
+                className="dialog"
+            >
+                <DialogHeading className="heading">Are you sure?</DialogHeading>
+                <p className="description">
+                    You want to delete this Job Detail
+                </p>
+                <div className="buttons">
+                    <div onClick={DelteConform}>
+                        <Button className="button">
+                            Delete
+                        </Button>
+                    </div>
+                    <DialogDismiss className="button secondary">Cancel</DialogDismiss>
+                </div>
+            </Dialog>
             <div className="details">
                 <div className="title_top">
                     <h2>Attendance Details</h2>
@@ -74,19 +224,24 @@ const AttendanceDetails = () => {
                             <img src="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" />
                         </div>
                         <div className="about_user">
-                            <h3>Ramesh Gupta</h3>
+                            <h3>{attendanceData.user_name || ''}</h3>
                             {/* <p>Web Developer / Full-Time</p> */}
-                            <div className=''><h4></h4> <h5>On Hold</h5></div>
+                            <div className=''><h4></h4> <h5>{attendanceData.status == 1 ? 'Absent' : attendanceData.status == 0 ? 'Present' : 'Half Day' }</h5></div>
                         </div>
                     </div>
                     <div className="action_card">
                         {/* <div><RxReload /></div> */}
-                        <div><BiEditAlt /></div>
-                        <div><span><MdDeleteOutline /></span>Delete</div>
+                        <div onClick={NewAttendanceClick} ><span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#400f6f" fill="none">
+                                <path d="M15.2141 5.98239L16.6158 4.58063C17.39 3.80646 18.6452 3.80646 19.4194 4.58063C20.1935 5.3548 20.1935 6.60998 19.4194 7.38415L18.0176 8.78591M15.2141 5.98239L6.98023 14.2163C5.93493 15.2616 5.41226 15.7842 5.05637 16.4211C4.70047 17.058 4.3424 18.5619 4 20C5.43809 19.6576 6.94199 19.2995 7.57889 18.9436C8.21579 18.5877 8.73844 18.0651 9.78375 17.0198L18.0176 8.78591M15.2141 5.98239L18.0176 8.78591" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M11 20H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            </svg>
+                        </span>  Edit</div>
+                        <div onClick={HandleDelete}><span><MdDeleteOutline /></span>Delete</div>
                     </div>
                 </div>
-                <div className="info-cards" style={{ paddingBottom: '30px' }}>
-                    <div className="card">
+                <div className="info_cards_at" style={{ paddingBottom: '30px' }}>
+                    <div className="card_at">
                         <div className='top_head'> <h3>
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#7f7f7f" fill="none">
@@ -101,19 +256,19 @@ const AttendanceDetails = () => {
                         <div className='contentInformation'>
                             <div>
                                 <h4>Department</h4>
-                                <p>Research & Development</p>
+                                <p>{attendanceData.employee?.department_id || ''}</p>
                             </div>
                             <div>
                                 <h4>Designation</h4>
-                                <p>Engineer</p>
+                                <p>{attendanceData.employee?.designation_id || ''}</p>
                             </div>
                             <div>
                                 <h4>Employee ID</h4>
-                                <p>EMP-001</p>
+                                <p>{attendanceData.employee?.employee_id || ''}</p>
                             </div>
                             <div>
                                 <h4>Shift</h4>
-                                <p>General</p>
+                                <p>{attendanceData.shift_name || ''}</p>
                             </div>
                             <div>
                                 <h4>Employee Type</h4>
@@ -124,7 +279,7 @@ const AttendanceDetails = () => {
 
                         </div>
                     </div>
-                    <div className="card">
+                    <div className="card_at">
                         <div className='top_head'> <h3> <span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
                                 <path d="M14.2618 3.59937C13.1956 2.53312 12.6625 2 12 2C11.3375 2 10.8044 2.53312 9.73815 3.59937C9.09832 4.2392 8.46427 4.53626 7.55208 4.53626C6.7556 4.53626 5.62243 4.38178 5 5.00944C4.38249 5.63214 4.53628 6.76065 4.53628 7.55206C4.53628 8.46428 4.2392 9.09832 3.59935 9.73817C2.53312 10.8044 2.00001 11.3375 2 12C2.00002 12.6624 2.53314 13.1956 3.59938 14.2618C4.31616 14.9786 4.53628 15.4414 4.53628 16.4479C4.53628 17.2444 4.38181 18.3776 5.00949 19C5.63218 19.6175 6.76068 19.4637 7.55206 19.4637C8.52349 19.4637 8.99128 19.6537 9.68457 20.347C10.2749 20.9374 11.0663 22 12 22C12.9337 22 13.7251 20.9374 14.3154 20.347C15.0087 19.6537 15.4765 19.4637 16.4479 19.4637C17.2393 19.4637 18.3678 19.6175 18.9905 19M20.4006 9.73817C21.4669 10.8044 22 11.3375 22 12C22 12.6624 21.4669 13.1956 20.4006 14.2618C19.6838 14.9786 19.4637 15.4414 19.4637 16.4479C19.4637 17.2444 19.6182 18.3776 18.9905 19M18.9905 19H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -134,11 +289,11 @@ const AttendanceDetails = () => {
                         <div className='contentInformation'>
                             <div>
                                 <h4>Created at</h4>
-                                <p>16-Apr-2024</p>
+                                <p> {`${new Date(attendanceData.created_at).getDate()}-${new Date(attendanceData.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(attendanceData.created_at).getFullYear()}`}</p>
                             </div>
                             <div>
                                 <h4>Day</h4>
-                                <p>Monday</p>
+                                <p>{`${daysOfWeek[new Date(attendanceData.created_at).getDay()]}`}</p>
                             </div>
                             <div>
                                 <h4>Scheduled hours</h4>
@@ -146,19 +301,19 @@ const AttendanceDetails = () => {
                             </div>
                             <div>
                                 <h4>Punch in</h4>
-                                <p>09.00AM</p>
+                                <p>{attendanceData?.punch_in ? convertTo12HourFormat(attendanceData?.punch_in) : ''}</p>
                             </div>
                             <div>
                                 <h4>Punch out</h4>
-                                <p>06.00PM</p>
+                                <p>{attendanceData?.punch_out ? convertTo12HourFormat(attendanceData?.punch_out) : ''}</p>
                             </div>
                             <div>
                                 <h4>Total Hours Worked</h4>
-                                <p>08Hrs</p>
+                                <p>{attendanceData.total_hours_worked || ''}</p>
                             </div>
                             <div>
                                 <h4>Overtime</h4>
-                                <p>_</p>
+                                <p>{attendanceData?.punch_in ? calculateTotalHours(attendanceData?.punch_in, attendanceData?.punch_out) : ''} {attendanceData?.punch_in ? 'Hours' : ''} </p>
                             </div>
                         </div>
                         {/* Personal information content */}

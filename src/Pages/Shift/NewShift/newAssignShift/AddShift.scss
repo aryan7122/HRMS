@@ -9,9 +9,13 @@
     position: absolute;
     width: 100vw;
     height: 99vh;
-    margin-left: -105px;
-    margin-top: -48px;
-    backdrop-filter: blur(10px);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    // margin-left: -105px;
+    // margin-top: -48px;
+    backdrop-filter: blur(5px);
     z-index: 99;
   }
   .formDivLeave {
@@ -138,11 +142,11 @@
         border-radius: 5px;
         // position: absolute;
         // z-index: 1;
-        background: #fff;
+        // background: #fff;
 
         .dropdown-button {
           font-size: 14px;
-          background-color: #fff;
+          // background-color: #fff;
           // z-index: 9999 !important;
           padding: 5px 10px;
           border: none;

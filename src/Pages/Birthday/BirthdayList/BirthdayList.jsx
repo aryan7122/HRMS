@@ -150,7 +150,9 @@ const Department = () => {
 
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/employee/list', {}, {
+        axios.post('https://devstronauts.com/public/api/employee/list', {
+            search: searchQuery,
+        }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -166,7 +168,7 @@ const Department = () => {
             .catch(error => {
                 console.error("Error fetching job data: ", error);
             });
-    }, []);
+    }, [searchQuery]);
 
     const filterAndSortEmployees = (employeeData) => {
         const currentDate = new Date();
@@ -244,11 +246,11 @@ const Department = () => {
                             />
                         </div>
                     </div>
-                    <div className="filter divRight">
+                    {/* <div className="filter divRight">
                         <div className='div_box' onClick={toggleFilter2} ref={filterButtonRef2}>
                             <span><IoFilterSharp /></span>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             {/* All Employee  List*/}
@@ -266,7 +268,7 @@ const Department = () => {
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Phone Number</th>
-                                <th>Date</th>
+                                <th>Date of birth</th>
                             </tr>
                         </thead>
                         <tbody>

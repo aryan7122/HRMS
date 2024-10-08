@@ -1,14 +1,14 @@
-import './NewAttendance.scss';
+import './UpdateAttendance.scss';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
-const NewAttendance = ({ ClosePop }) => {
+const UpdateAttendance = ({ ClosePop, id, attendanceDataProp }) => {
     const { isOpen: isEmployeeOpen, ref: employeeRef, buttonRef: employeeButtonRef, handleToggle: toggleEmployee, setIsOpen: setEmployeeOpen } = OutsideClick();
     const { isOpen: isShiftOpen, ref: shiftRef, buttonRef: shiftButtonRef, handleToggle: toggleShift, setIsOpen: setShiftOpen } = OutsideClick();
     const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
-
+    console.log('attendanceDataProp', attendanceDataProp)
     const [empList, setEmpList] = useState([]);
 
     const [formData, setFormData] = useState({
@@ -21,6 +21,22 @@ const NewAttendance = ({ ClosePop }) => {
         shift: '',
 
     });
+    // Effect to update formData when attendanceDataProp changes
+    useEffect(() => {
+        if (attendanceDataProp) {
+            setFormData({
+                employeeName: attendanceDataProp.user_name || '',
+                employeeId: attendanceDataProp.user_id || '',
+                date: attendanceDataProp.date || '',
+                punchIn: attendanceDataProp.punch_in || '',
+                punchOut: attendanceDataProp.punch_out || '',
+                status: attendanceDataProp.status == 2 ? 'Half Day' : attendanceDataProp.status == 1 ? 'Absent' : 'Present',
+                shift: attendanceDataProp.shift_name || '',
+                overtime: attendanceDataProp.overtime || '',
+            });
+        }
+    }, [attendanceDataProp]);
+
     const [attendanceData, setAttendanceData] = useState([]); // Array to hold attendance data
 
     // Fetch existing attendance data from JSONBin
@@ -63,6 +79,7 @@ const NewAttendance = ({ ClosePop }) => {
         // Add new data to the existing attendance data array
         axios.post(`https://devstronauts.com/public/api/attendance/create/update`,
             {
+                id:id,
                 user_name: formData.employeeName,
                 user_id: formData.employeeId,
                 date: formData.date,
@@ -81,7 +98,7 @@ const NewAttendance = ({ ClosePop }) => {
                 console.log('Attendance Create successfully :', response);
                 // alert(error)
                 if (response.status === 200) {
-                    toast.success(response.data.message || 'Attendance Create successfully', {
+                    toast.success(response.data.message || 'Attendance Update successfully', {
                         position: "top-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -112,7 +129,7 @@ const NewAttendance = ({ ClosePop }) => {
                     // setShowAlertError(false)
                     ClosePop();
                 }, 2000);
-                toast.error(error.message || 'Error during create', {
+                toast.error(error.message || 'Error during Update', {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -168,7 +185,7 @@ const NewAttendance = ({ ClosePop }) => {
             <div className="formDiv">
                 <div className="popForm">
                     <div className="Attendance_Head">
-                        <h2>New Attendance</h2>
+                        <h2>New Attendance </h2>
                         <div className='close_icon' onClick={ClosePop}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
                                 <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -313,7 +330,7 @@ const NewAttendance = ({ ClosePop }) => {
                                 </div>
                             </div>
                             <div className="buttons">
-                                <button type="submit" className="submit-btn">Submit</button>
+                                <button type="submit" className="submit-btn">Update</button>
                                 {/* <button type="submit">Submit</button> */}
                             </div>
                         </form>
@@ -324,4 +341,4 @@ const NewAttendance = ({ ClosePop }) => {
     );
 };
 
-export default NewAttendance;
+export default UpdateAttendance;

@@ -139,7 +139,7 @@ const AddShift = ({ ClosePop }) => {
                                     <label className=''>Status </label>
                                     <div className="dropdown">
                                         <div className="dropdown-button" ref={shiftButtonRef} onClick={toggleShift}>
-                                            <div>{formData.status || "Select Shift"}</div>
+                                            <div>{formData.status || "Select Status"}</div>
                                             <span>{!isShiftOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}</span>
                                         </div>
                                         {isShiftOpen && (

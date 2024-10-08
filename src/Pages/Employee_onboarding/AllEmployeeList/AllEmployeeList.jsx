@@ -274,6 +274,7 @@ const AllEmployeeList = () => {
 
             });
     }, [statusId, statusNew, token, sms, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId,open]);
+    
     //  
     const [departmentdetails3, setDepartmentdetails3] = useState('');
     const [departmentdetails2, setDepartmentdetails2] = useState('');
