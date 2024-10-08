@@ -5,6 +5,8 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { OutsideClick } from '../../../Employee_onboarding/AddEmployee/OutsideClick'
 import { OutsideClick2 } from '../../../Department/DepartmentList/OutsideClick2';
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AddShift = ({ ClosePop }) => {
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
     const { isOpen: isEmployeeOpen, ref: employeeRef, buttonRef: employeeButtonRef, handleToggle: toggleEmployee, setIsOpen: setEmployeeOpen } = OutsideClick();
@@ -18,11 +20,12 @@ const AddShift = ({ ClosePop }) => {
         shiftName: '',
         startTime: '',
         endTime: '',
-        totalHours: 0,
-        breakTime: 0,
-        extraHours: 0,
+        totalHours: null,
+        breakTime: null,
+        extraHours: null,
         status: '' // Active/Inactive
     });
+
     const selectOption = (dropdown, value) => {
         setFormData(prevState => ({
             ...prevState,
@@ -37,28 +40,69 @@ const AddShift = ({ ClosePop }) => {
             [id]: type === 'checkbox' ? checked : value
         });
     };
+    const token = localStorage.getItem('access_token');
+    const [loading, setLoading] = useState(false); // Track loading state
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form Data:', formData);
 
-        const startTime = new Date(`1970-01-01T${formData.startTime}`);
-        const endTime = new Date(`1970-01-01T${formData.endTime}`);
-        const totalHours = Math.abs(endTime - startTime) / 36e5; // Calculate hours
+        if (loading) return; // If loading, prevent another submit
+
+        setLoading(true); // Set loading to true when API request starts
+
         const requestData = {
-            shift: formData.shiftName,
+            // id:4,
+            shift_name: formData.shiftName,
             start_time: formData.startTime,
             end_time: formData.endTime,
-            total_hours: totalHours,
             break_time: formData.breakTime,
-            extra_hours: formData.extraHours ? '0' : '1',
+            extra_hours: formData.extraHours || '0', // Default to '0' if null
             status: formData.status === 'Active' ? '0' : '1',
         };
 
-        // Here you would typically send the requestData to your backend API
-        // const response = await axios.post('/api/shift', requestData);
-        // console.log(response.data);
+        console.log('Form Data requestData:::::', requestData);
+
+        try {
+            const response = await axios.post(`https://devstronauts.com/public/api/shift/master/create/update`, requestData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.status === 200) {
+                toast.success(response.data.message || 'Created successfully.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+
+                setTimeout(() => {
+                    ClosePop()
+                    // Redirect or reset form if necessary
+                }, 2000);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            toast.error('Error during create', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        } finally {
+            setLoading(false); // Set loading back to false after API request is complete
+        }
     };
+
 
     return (
         <div className='NewAttendance_main'>
@@ -75,7 +119,7 @@ const AddShift = ({ ClosePop }) => {
                         </div>
                     </div>
                     <div className="form-container-Leave" onSubmit={handleSubmit}>
-                        <form onSubmit={handleSubmit}>
+                        <form >
                             <div id="employeeFormLeave">
                                 <div className="form-group">
                                     {/* Shift Name */}
@@ -118,19 +162,20 @@ const AddShift = ({ ClosePop }) => {
                                         id="breakTime"
                                         value={formData.breakTime}
                                         onChange={handleChange}
-                                        required
+                                        placeholder='HH:MM'
                                         min="0"
                                     />
                                 </div>
                                 <div className="form-group">
                                     {/* Extra Hours */}
-                                    <label htmlFor="extraHours" className=''>Extra Hours</label>
+                                    <label htmlFor="extraHours" className=''>Extra Work (Minutes)</label>
                                     <input
+                                        
                                         type="number"
+                                        placeholder='HH:MM'
                                         id="extraHours"
                                         value={formData.extraHours}
                                         onChange={handleChange}
-                                        required
                                         min="0" // Optional: to prevent negative input
                                     />
                                 </div>
@@ -144,7 +189,7 @@ const AddShift = ({ ClosePop }) => {
                                         </div>
                                         {isShiftOpen && (
                                             <div className="dropdown-menu" ref={shiftRef}>
-                                              
+
                                                 <div className="dropdown_I">
                                                     {['Active', 'Inactive'].filter(option =>
                                                         option.toLowerCase()

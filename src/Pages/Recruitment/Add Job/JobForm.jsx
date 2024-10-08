@@ -11,9 +11,9 @@ import { useDispatch } from 'react-redux';
 import { addJobForm } from '../../../slices/jobSlice';
 import { useSelector } from 'react-redux';
 import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
-import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const JobForm = ({ onSubmit }) => {
     const navigate = useNavigate()

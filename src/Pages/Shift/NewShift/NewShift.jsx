@@ -65,32 +65,32 @@ const NewShift = () => {
     const NewAttendanceClosePop = () => {
         setTogglNewAdd(false);
     };
-   const [employees, setEmployees] = useState([
-    {
-        sift_name: "Morning Shift",
-        start_time: "08:00", // 24-hour format
-        end_time: "16:00",   // 24-hour format
-        extra_hours: "60",
-        break_time: "45",
-        status: "Active"
-    },
-    {
-        sift_name: "Evening Shift",
-        start_time: "16:00", // 24-hour format
-        end_time: "00:00",   // 24-hour format
-        extra_hours: "30",
-        break_time: "45",
-        status: "Inactive"
-    },
-    {
-        sift_name: "Night Shift",
-        start_time: "00:00", // 24-hour format
-        end_time: "08:00",   // 24-hour format
-        extra_hours: "0",
-        break_time: "45",
-        status: "Active"
-    }
-]);
+    const [employees, setEmployees] = useState([
+        // {
+        //     sift_name: "Morning Shift",
+        //     start_time: "08:00", // 24-hour format
+        //     end_time: "16:00",   // 24-hour format
+        //     extra_hours: "60",
+        //     break_time: "45",
+        //     status: "Active"
+        // },
+        // {
+        //     sift_name: "Evening Shift",
+        //     start_time: "16:00", // 24-hour format
+        //     end_time: "00:00",   // 24-hour format
+        //     extra_hours: "30",
+        //     break_time: "45",
+        //     status: "Inactive"
+        // },
+        // {
+        //     sift_name: "Night Shift",
+        //     start_time: "00:00", // 24-hour format
+        //     end_time: "08:00",   // 24-hour format
+        //     extra_hours: "0",
+        //     break_time: "45",
+        //     status: "Active"
+        // }
+    ]);
 
 
 
@@ -157,15 +157,16 @@ const NewShift = () => {
         setSearchQuery(e.target.value);
     };
     const handleStatusChange = (index, newStatus) => {
-        console.log('|||||', newStatus)
+        // console.log('|||||', newStatus)
         if (newStatus == 'Inactive') {
-            setStatusNew(0)
-        } else {
-            setStatusNew(1)
+            setStatusNew('1')
         }
-        const updatedEmployees = [...filteredEmployees];
-        updatedEmployees[index].status = newStatus;
-        setFilteredEmployees(updatedEmployees);
+        if (newStatus == 'Active') {
+            setStatusNew('0')
+        }
+        // const updatedEmployees = [...filteredEmployees];
+        // updatedEmployees[index].status = newStatus;
+        // setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
         setOpen(true)
 
@@ -276,7 +277,7 @@ const NewShift = () => {
     }
 
     const [selectedDate, setSelectedDate] = useState(null);
-    console.log('selectedDate', selectedDate)
+    // console.log('selectedDate', selectedDate)
     const handleDateChange = (event) => {
         const date = new Date(event.target.value);
         // Format the date as yyyy/MM/dd
@@ -303,6 +304,35 @@ const NewShift = () => {
     };
     // 
 
+    useEffect(() => {
+        axios.post('https://devstronauts.com/public/api/shift/master/list', {
+            search: searchQuery,
+            // job_status: selectedFilter,
+            // employee_type: employmentType,
+            // custom_date: selectedDate,
+            // fromDate: fromDate,
+            // toDate: toDate
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+
+
+                setEmployees(response.data.result);
+                setFilteredEmployees(response.data.result); // filteredEmployees ko bhi sync karo
+                console.log('🥳 response 🥳', response.data.result);
+                setLoading(false);
+                // setSms()
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+
+
+            },
+            );
+    }, [statusId, statusNew, searchQuery, open]);
 
     // Toggle the status (real-time)
     const ConformOk = () => {
@@ -311,7 +341,7 @@ const NewShift = () => {
         }, 400);
         // if (statusId && statusNew) {
 
-        axios.post('https://devstronauts.com/public/api/leave/master/status/update', {
+        axios.post('https://devstronauts.com/public/api/shift/master/status/update', {
             id: statusId,
             status: statusNew
         }, {
@@ -322,7 +352,7 @@ const NewShift = () => {
             .then(response => {
                 // setUpdatingEmpId(statusId);
                 // setSms(`Status update successfully`)
-                toast.success(response.data.message || 'Status update successfully.', {
+                toast.success(response.data.message, {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -365,11 +395,14 @@ const NewShift = () => {
 
 
 
-    console.log('statusNew', statusNew)
+    console.log('statusNew ::', statusNew)
     if (error || !employees) {
         // return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
     }
-
+    const calculateHours = (time) => {
+        const [h, m] = time.split(":");
+        return `${h}:${m}`
+    }
     const convertTo12HourFormat = (time) => {
         const [hours, minutes] = time.split(":");
         const period = +hours >= 12 ? 'PM' : 'AM';
@@ -378,17 +411,25 @@ const NewShift = () => {
     };
 
     const calculateTotalHours = (start, end, extra) => {
-        const startTime = new Date(`1970-01-01T${start}:00`);
-        const endTime = new Date(`1970-01-01T${end}:00`);
+        // Split only hours and minutes (ignore seconds)
+        const [hours1, minutes1] = start.split(":").slice(0, 2);
+        const [hours2, minutes2] = end.split(":").slice(0, 2);
 
-        // Adjust for cases where end time is on the next day (e.g., 12 AM to 8 AM)
+        // Create Date objects with hours and minutes only
+        const startTime = new Date(`1970-01-01T${hours1}:${minutes1}:00`);
+        const endTime = new Date(`1970-01-01T${hours2}:${minutes2}:00`);
+
+        // Adjust for cases where end time is on the next day
         if (endTime < startTime) {
             endTime.setDate(endTime.getDate() + 1);
         }
 
-        const totalHours = (endTime - startTime) / (1000 * 60 * 60) + parseInt(extra) / 60; // Convert extra hours to hours
+        // Calculate the total hours, including extra
+        const totalHours = (endTime - startTime) / (1000 * 60 * 60) + parseInt(extra) / 60;
+
         return totalHours.toFixed(2); // Return total hours as a string with 2 decimal places
     };
+
 
     // 
     return (
@@ -435,7 +476,7 @@ const NewShift = () => {
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={() => navigate('/shift')}>
                                 <p><span>
-                                   
+
                                 </span> Assign shift List</p>
                             </div>
 
@@ -605,36 +646,37 @@ const NewShift = () => {
                                 <th><div>Sift Name<span><TiArrowUnsorted /></span></div></th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
-                                <th>Extra Minutes</th>
+                                <th>Extra Hours</th>
                                 <th>Total Hours</th>
                                 <th>Break Time</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {employees.map((emp, index) => (
+                            {currentEmployees.map((emp, index) => (
                                 <tr key={index}>
                                     <td>
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(index)} />
                                     </td>
-                                    <td>{emp.sift_name}</td>
+                                    {/* {console.log('emp.shift_name', emp.start_time)} */}
+                                    <td>{emp.shift_name || ''}</td>
                                     <td>{convertTo12HourFormat(emp.start_time)}</td>
                                     <td>{convertTo12HourFormat(emp.end_time)}</td>
-                                    <td>{emp.extra_hours} mins</td>
+                                    <td>{emp.extra_hours} Hours </td>
                                     <td>{calculateTotalHours(emp.start_time, emp.end_time, emp.extra_hours)} hours</td>
-                                    <td>{emp.break_time} Minutes</td>
+                                    <td>{calculateHours(emp.break_time)} Minutes</td>
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
                                                 <div onClick={toggleFilter4} ref={filterButtonRef4}>
                                                     <div
-                                                        className={`status-display ${emp.status === "Active" ? 'active' : 'inactive'}`}
+                                                        className={`status-display ${emp.status === '0' ? 'active' : 'inactive'}`}
                                                         onClick={() => setIsOpen(isOpen === index ? null : index)}
                                                     >
-                                                        <span className={`left_dot ${emp.status === "Active" ? 'active' : 'inactive'}`}></span>
+                                                        <span className={`left_dot ${emp.status === '0' ? 'active' : 'inactive'}`}></span>
                                                         <div onClick={() => UpdateStatusHndle(emp.id)}>
                                                             <div className="EmpS">
-                                                                {emp.status}
+                                                                {emp.status == 0 ? 'Active' : 'Inactive'}
                                                             </div>
                                                             <div className="^wdown">
                                                                 <MdOutlineKeyboardArrowDown />
@@ -663,6 +705,11 @@ const NewShift = () => {
                         </tbody>
                     </table>
                 </div>
+                {loading ? (
+                    <div id='Loading'>
+                        <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
+                    </div> // Show loading text or spinner when data is being fetched
+                ) : ('')}
                 {loading ? '' : employees == '' ? (
                     <div className="not-found-container">
                         <img src="https://cdn.dribbble.com/userupload/11708150/file/original-825be68b3517931ad747e0180a4116d3.png?resize=1200x900" alt="" />
