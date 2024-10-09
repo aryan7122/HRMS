@@ -81,6 +81,7 @@ import HolidayDetail from './Pages/Holiday/HolidayDetail/HolidayDetail.jsx';
 
 import Project from './Pages/Project_/Project_List /Project.jsx';
 import AddProject from './Pages/Project_/Add_Project/AddProject.jsx';
+import ProjectDetails from './Pages/Project_/Project_Details/ProjectDetails.jsx';
 
 
 const App = () => {
@@ -191,7 +192,9 @@ const App = () => {
                     {/* {Project } */}
                     <Route path="/project" element={<Project />} />
                     <Route path="/add-project" element={<AddProject />} />
+                    <Route path="project-details" element={<ProjectDetails />} />
 
+                    
                     
 
 

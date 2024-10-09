@@ -286,8 +286,8 @@ const Project = () => {
         setShowEmploymentType(false);
     };
 
-    const JobDetailsPage = () => {
-        navigate('/job-details')
+    const projectDetailsPage = () => {
+        navigate('/project-details')
     }
     const NewJobPage = () => {
         navigate('/add-project')
@@ -756,10 +756,10 @@ const Project = () => {
                                             </span>
                                         } */}
                                     </td>
-                                    <td className='td'>Options</td>
-                                    <td >Navjot Kaur</td>
+                                    <td className='td' onClick={projectDetailsPage}>Options</td>
+                                    <td onClick={projectDetailsPage}>Navjot Kaur</td>
                                     <td>
-                                        <div className='status-dropdown'>
+                                        <div className='status-dropdown' onClick={projectDetailsPage}>
                                             <div className="status-container" >
                                                 <div
                                                     className={`status-dis ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}
