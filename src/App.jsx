@@ -65,14 +65,22 @@ import { useSelector } from 'react-redux';
 import All_leaves_List from './Pages/LeaveManagement/All_leaves_List/All_leaves_List.jsx';
 import UpdateEmloyee from './Pages/Employee_onboarding/UpdateEmployee/UpdateEmloyee.jsx';
 import Update_applicant from './Pages/Applicant_tracking/Update-applicant/Update_applicant.jsx';
+
 import AddNewLeave from './Pages/LeaveManagement/Add_Leave/AddNewLeave.jsx';
 import LeaveDetails from './Pages/LeaveManagement/LeaveDetails/LeaveDetails.jsx';
 import UpdateLeave from './Pages/LeaveManagement/Update_Leave/UpdateLeave.jsx';
 import All_leaves_List_Type from './Pages/LeaveManagement/All_leaves_List_Type/All_leaves_List_Type.jsx';
+
 import AllShiftsList from './Pages/ShiftManagement/AllShiftsList/AllShiftsList.jsx';
 import Shift from './Pages/Shift/Shift.jsx';
 import NewShift from './Pages/Shift/NewShift/NewShift.jsx';
 import SiftDetails from './Pages/Shift/NewShift/SiftDetail/SiftDetails.jsx';
+
+import HolidayList from './Pages/Holiday/Holiday_List/HolidayList.jsx';
+import HolidayDetail from './Pages/Holiday/HolidayDetail/HolidayDetail.jsx';
+
+import Project from './Pages/Project_/Project_List /Project.jsx';
+import AddProject from './Pages/Project_/Add_Project/AddProject.jsx';
 
 
 const App = () => {
@@ -173,12 +181,19 @@ const App = () => {
                   {/* shift */}
 
                   <Route path="/shifts-list" element={<AllShiftsList />} />
-
                   <Route path="/shift" element={<Shift />} />
-                    <Route path="/new-shift" element={<NewShift />} />
-                    <Route path="/shift-details/:id" element={<SiftDetails />} />
+                  <Route path="/new-shift" element={<NewShift />} />
+                  <Route path="/shift-details/:id" element={<SiftDetails />} />
+
+                  {/* {HolidayList } */}
+                    <Route path="/holiday" element={<HolidayList />} />
+                    <Route path="/holiday-details" element={<HolidayDetail />} />
+                    {/* {Project } */}
+                    <Route path="/project" element={<Project />} />
+                    <Route path="/add-project" element={<AddProject />} />
 
                     
+
 
 
                 </Routes>

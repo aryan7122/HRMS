@@ -16,25 +16,29 @@ import { MdWork } from "react-icons/md";
 import { FaRegClock } from "react-icons/fa";
 import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
-import './AllJobList.scss';
+import './Project.scss';
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { GiBackstab, GiNotebook } from "react-icons/gi";
 import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
-import { OutsideClick } from '../../../components/OutSideClick';
+import { OutsideClick } from '../../../components/OutSideClick.jsx';
+
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import LodinImg from '../../../assets/loding.gif'
-import { OutsideClickStatus } from './OutsideClickStatus.jsx'; // Adjust import path if necessary
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const AllJobList = () => {
+import { OutsideClickStatus } from '../../Recruitment/List_view_all_job/OutsideClickStatus.jsx';
+import Assign_Project_Popup from '../Assign_Project_Popup/Assign_Project_Popup.jsx';
+
+
+const Project = () => {
 
     const jobs = useSelector((state) => state.job.jobs);
     // console.log('jobs', jobs)
@@ -80,7 +84,11 @@ const AllJobList = () => {
     // 
 
     const [employees, setEmployees] = useState([
-        // { JobTitle: "IT Consultant", Department: "Marketing", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
+        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "Ongoing", priority: "High", isChecked: false },
+        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "Completed", priority: "Medium", isChecked: false },
+        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "On Hold", priority: "Lowest", isChecked: false },
+
+
         // { JobTitle: "Cloud Architect", Department: "Customer Success", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Draft", isChecked: false },
         // { JobTitle: "Software Engineer", Department: "Office Administration", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "On hold", isChecked: false },
         // { JobTitle: "IT Auditor", Department: "Operations", Positions: "10", ExperienceRequired: "07 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Cancelled", isChecked: false },
@@ -196,7 +204,7 @@ const AllJobList = () => {
         setCurrentPage(1);
     };
 
-    const statuses = ['Open', 'Draft', 'On hold', 'Filled', 'Cancelled'];
+    const statuses = ['High', 'Medium', 'Lowest',];
 
 
     const handleSearchChange = (e) => {
@@ -248,7 +256,7 @@ const AllJobList = () => {
     const [showDepartment, setShowDepartment] = useState(false);
     const [showCustomDate, setShowCustomDate] = useState(false);
     const [showDateRange, setShowDateRange] = useState(false)
-    
+
     const handleDateRangeClick = () => {
         setShowDateRange(!showDateRange)
         setShowCustomDate(false);
@@ -282,7 +290,7 @@ const AllJobList = () => {
         navigate('/job-details')
     }
     const NewJobPage = () => {
-        navigate('/add-job')
+        navigate('/add-project')
     }
 
     const filter_left = () => {
@@ -374,11 +382,11 @@ const AllJobList = () => {
             })
             .catch(error => {
                 console.error("Error fetching data: ", error);
-
                 setLoading(false)
+
             },
-                );
-    }, [statusId, statusNew, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId, sms, fromDate, toDate,open]);
+            );
+    }, [statusId, statusNew, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId, sms, fromDate, toDate, open]);
 
     let isRequestInProgress = false;
 
@@ -444,10 +452,10 @@ const AllJobList = () => {
 
     const handleStatusChange = (index, newStatus) => {
         setStatusNew(newStatus)
-        // console.log('status chenge:::', newStatus)
-        // const updatedEmployees = [...filteredEmployees];
-        // updatedEmployees[index].status = newStatus;
-        // setFilteredEmployees(updatedEmployees);
+        console.log('status chenge:::', newStatus)
+        const updatedEmployees = [...filteredEmployees];
+        updatedEmployees[index].priority = newStatus;
+        setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
         // toast.info('Please Wait Status Updating...', {
         //     position: "top-right",
@@ -465,13 +473,20 @@ const AllJobList = () => {
 
     const [activeFilter, setActiveFilter] = useState(null); // Track the active filter
     // const filterRef2 = useRef(null);
-
+    const [togglNewAdd, setTogglNewAdd] = useState(false)
+    const NewClick = () => {
+        setTogglNewAdd(false);
+    }
+    const ClosePop = () => {
+        setTogglNewAdd(true)
+    };
 
 
 
 
     return (
         <div id='allEmp'>
+            {togglNewAdd && <Assign_Project_Popup ClosePop={NewClick} />}
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -506,11 +521,11 @@ const AllJobList = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Jobs list <p>{currentEmployees.length} total</p>
+                            All Projects <p>{currentEmployees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={NewJobPage}>
-                                <p><span><IoMdAdd /></span> Add New Job</p>
+                                <p><span><IoMdAdd /></span>  New Project</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
                                 <div className="div_top"><CiMenuKebab /></div>
@@ -547,58 +562,17 @@ const AllJobList = () => {
                 </div>
 
                 <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}>
-                    <div className="all">
-                        <div
-                            className={selectedFilter == null ? 'listActiveStatus' : ''}
-                            onClick={() => filter_leftClose(null)}
-                        >
-                            <span className=''><FaList /></span>All
-                        </div>
-                    </div>
-                    <div
-                        onClick={() => filter_leftClose('draft')}
-                    >
-                        <div
-                            className={`active ${selectedFilter === 'draft' ? 'listActiveStatus' : ''}`}
-                        >
-                            <span><PiCheckSquare /></span>Draft
-                        </div>
-                    </div>
-                    <div
-                        onClick={() => filter_leftClose('open')}
-                    >
-                        <div className={`inactive ${selectedFilter === 'open' ? 'listActive' : ''}`}
-                        >
-                            <span><MdWork /></span>Open
-                        </div>
-                    </div>
-                    <div
-                        onClick={() => filter_leftClose('onHold')}
-                    >
-                        <div className={`resigned ${selectedFilter === 'onHold' ? 'listActive' : ''}`}
-                        >
-                            <span><FaRegClock /></span>On hold
-                        </div>
-                    </div>
-                    <div
-                        onClick={() => filter_leftClose('filled')}
-                    >
-                        <div className={`terminated ${selectedFilter === 'filled' ? 'listActive' : ''}`}
-                        >
-                            <span><PiCheckSquare /></span>Filled
-                        </div>
-                    </div>
-                    <div
-                        onClick={() => filter_leftClose('cancelled')}
-                    >
-                        <div className={`notice_period ${selectedFilter === 'cancelled' ? 'listActive' : ''}`}
-                        >
-                            <span><IoIosCloseCircleOutline /></span>Cancelled
-                        </div>
-                    </div>
+
                 </div>
 
                 <div className="right">
+                    <div className='Assign_Project' onClick={ClosePop}>
+                        <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#ffffff" fill="none">
+                            <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                            Assign Project</span>
+                    </div>
                     <div className="refresh divRight" onClick={handleRefresh}>
                         <div className='div_box'>
                             <span><BiRevision /></span>
@@ -729,7 +703,7 @@ const AllJobList = () => {
 
                                         )}
                                     </div>
-                                  
+
                                 </div>
                             </div>
                         )}
@@ -757,13 +731,13 @@ const AllJobList = () => {
                                         </span>
                                     } */}
                                 </th>
-                                <th> <div>Job Title<span><TiArrowUnsorted /></span></div></th>
-                                <th>Department</th>
-                                <th>Positions</th>
-                                <th>Experience Required</th>
-                                <th>Skills Required</th>
-
+                                <th> <div>Project Name<span><TiArrowUnsorted /></span></div></th>
+                                <th>Client Name</th>
                                 <th>Status</th>
+                                <th>Date Assigned</th>
+                                <th>Deadline</th>
+                                <th>Assigned to</th>
+                                <th>Priority</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -782,26 +756,44 @@ const AllJobList = () => {
                                             </span>
                                         } */}
                                     </td>
-                                    <td className='td' onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.job_title}</td>
-                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.department}</td>
-                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.no_of_position}</td>
-                                    <td onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.experience}</td>
-                                    <td className='td' onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.skills}</td>
+                                    <td className='td'>Options</td>
+                                    <td >Navjot Kaur</td>
+                                    <td>
+                                        <div className='status-dropdown'>
+                                            <div className="status-container" >
+                                                <div
+                                                    className={`status-dis ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}
+                                                >
+                                                    <span className={`left_d ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                    <div >
+                                                        <div
+                                                        >
+                                                            {emp.status}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className='td' >28-Feb-2024</td>
+                                    <td className='td' >28-Mar-2024</td>
+                                    <td className='td' >Vishwas Patel</td>
+
                                     <td >
                                         <div className="status-dropdown" >
                                             <div key={index} className="status-container" >
                                                 <div
-                                                    className={`status-display ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
+                                                    className={`status-display ${emp.priority ? emp.priority.toLowerCase().replace(' ', '-') : ''}`}
                                                     onClick={() => toggleDropdown(index)}
                                                 >
-                                                    <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                    <span className={`left_dot ${emp.priority ? emp.priority.toLowerCase().replace(' ', '-') : ''}`}></span>
                                                     <div onClick={() => {
                                                         UpdateStatusHndle(emp.id);
                                                     }}>
                                                         <div
 
                                                         >
-                                                            {emp.job_status}
+                                                            {emp.priority}
                                                         </div>
                                                         <div className="^wdown">
                                                             <MdOutlineKeyboardArrowDown />
@@ -812,16 +804,16 @@ const AllJobList = () => {
                                                     <div>
                                                         <div className="status-options" >
                                                             {
-                                                                statuses.map(status => (
+                                                                statuses.map(priority => (
                                                                     <div
-                                                                        key={status}
+                                                                        key={priority}
                                                                         className="status-option"
                                                                         onClick={() => {
-                                                                            handleStatusChange(index, status)
+                                                                            handleStatusChange(index, priority)
                                                                         }
                                                                         }
                                                                     >
-                                                                        {status}
+                                                                        {priority}
                                                                     </div>
                                                                 ))
                                                             }
@@ -885,5 +877,5 @@ const AllJobList = () => {
     );
 };
 
-export default AllJobList;
+export default Project;
 // 

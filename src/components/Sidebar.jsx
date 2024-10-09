@@ -152,9 +152,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </svg>,
             submenu: [
                 { label: 'All Attendance List', path: '/all-Attendance-list' },
-                // { label: 'Shift Management', path: '/shifts-list' },
+                { label: 'Holiday', path: '/holiday' },
                 { label: 'Shift ', path: '/shift' }, 
+                { label: 'Project ', path: '/project' }, 
 
+                
             ]
         }
     ];
