@@ -543,7 +543,7 @@ const ClientDetails = () => {
                         <div className='contentInformation'>
 
                         </div>
-                        <div id='DescriptionJOB'>
+                        <div id='DescriptionJOB' style={{ marginTop: '-25px' }}>
                             <h4>Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum</h4>
                             {/* <p className='paragra'>{designationDetails.description}</p> */}
                         </div>

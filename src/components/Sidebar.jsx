@@ -169,6 +169,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </svg>,
             submenu: [
                 { label: 'Client', path: '/client' },
+                { label: 'Ticket', path: '/ticket' },
+                
 
 
             ]

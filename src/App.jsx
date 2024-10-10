@@ -70,6 +70,10 @@ import Client from './Pages/Client/Client_List/Client.jsx';
 import AddClient from './Pages/Client/Add_Client/AddClient.jsx';
 import ClientDetails from './Pages/Client/Client_Details/ClientDetails.jsx';
 
+{/*Ticket Import*/}
+import Ticket from './Pages/Ticket/Ticket_List/Ticket.jsx';
+import TicketDetails from './Pages/Ticket/Ticket_details/TicketDetails.jsx';
+
 
 import '../src/styles/EffectSroll.scss';
 import './styles/App.scss';
@@ -183,16 +187,19 @@ const App = () => {
 
                   {/* Holiday & Project Management Routes */}
                   <Route path="/holiday" element={<HolidayList />} />
-                  <Route path="/holidaydetails/:id" element={<HolidayDetail />} />
+                    <Route path="/holiday-details" element={<HolidayDetail />} />
                   <Route path="/project" element={<Project />} />
-                    <Route path="/add-project" element={<AddProject />} />
-                    <Route path="/project-details" element={<ProjectDetails />} />
+                  <Route path="/add-project" element={<AddProject />} />
+                  <Route path="/project-details" element={<ProjectDetails />} />
 
                   {/* Client Routes */}
-                    <Route path="/client" element={<Client />} />
-                    <Route path="/new-client" element={<AddClient />} />
-                    <Route path="/client-details" element={<ClientDetails />} />
+                  <Route path="/client" element={<Client />} />
+                  <Route path="/new-client" element={<AddClient />} />
+                  <Route path="/client-details" element={<ClientDetails />} />
 
+                    {/* Ticket Routes*/}
+                    <Route path="/ticket" element={<Ticket />} />
+                    <Route path="/ticket-details" element={<TicketDetails />} />
                     
                 </Routes>
               </div>
