@@ -246,7 +246,7 @@ const ClientDetails = () => {
     }, [id, token, refresh, departmentdetails2]);
 
     const AllEmp = () => {
-        navigate('/department')
+        navigate('/client')
     }
     // const AllEmpPage = () => {
     //     navigate('/department')
