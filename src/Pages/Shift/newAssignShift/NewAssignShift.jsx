@@ -212,7 +212,7 @@ const NewAssignShift = ({ ClosePop }) => {
             />
             <div className="blurBG"></div>
             <div className="formDivLeave">
-                <div className="popForm_a">
+                <div className="popForm_a_Assign">
                     <div className="Attendance_Head">
                         <h2> New Assign Shift</h2>
                         <div className='close_icon' onClick={ClosePop}>

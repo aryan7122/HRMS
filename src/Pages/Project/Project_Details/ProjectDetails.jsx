@@ -207,7 +207,7 @@ const ProjectDetails = () => {
 
 
     const AllEmp = () => {
-        navigate('/designation')
+        navigate('/project')
     }
     const AllEmpPage = () => {
         navigate('/designation')

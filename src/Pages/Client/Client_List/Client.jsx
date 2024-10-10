@@ -24,16 +24,16 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
-import './NewShift.scss';
+import './Client.scss';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import NewAssignShift from './AddShift/AddShift';
+// import NewAssignShift from './AddShift/AddShift';
 
 // import { TiArrowUnsorted } from "react-icons/ti";
 import dayjs from "dayjs";
 
-const NewShift = () => {
+const Client = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
@@ -59,19 +59,17 @@ const NewShift = () => {
     const [open, setOpen] = useState(false);
     // 
     const navigate = useNavigate()
-    const NewAttendanceClick = () => {
-        setTogglNewAdd(true)
+    const NewaddClick = () => {
+        navigate('/new-client')
     }
-    const NewAttendanceClosePop = () => {
-        setTogglNewAdd(false);
-    };
+    
     const [employees, setEmployees] = useState([
         {
-            sift_name: "Morning Shift",
-            start_time: "08:00", // 24-hour format
-            end_time: "16:00",   // 24-hour format
-            extra_hours: "60",
-            break_time: "45",
+            sift_name: "Hillery Moses",
+            start_time: "CL - 704569", // 24-hour format
+            end_time: "Mr. Admin",   // 24-hour format
+            extra_hours: "olivia.williams@quantumsolutions.com",
+            break_time: "63187100000",
             status: "Active"
         },
         // {
@@ -344,7 +342,7 @@ const NewShift = () => {
 
             },
             );
-    }, [ isr, statusId, statusNew, searchQuery, open, selectedFilter, selectedDate, fromDate, toDate]);
+    }, [isr, statusId, statusNew, searchQuery, open, selectedFilter, selectedDate, fromDate, toDate]);
 
     // Toggle the status (real-time)
     const ConformOk = () => {
@@ -407,42 +405,6 @@ const NewShift = () => {
 
 
 
-    console.log('statusNew ::', statusNew)
-    if (error || !employees) {
-        // return <div id="notFounPageID"><img src="https://media2.giphy.com/media/C21GGDOpKT6Z4VuXyn/200w.gif" alt="Error loading data" /></div>;
-    }
-    const calculateHours = (time) => {
-        const [h, m] = time.split(":");
-        return `${h}:${m}`
-    }
-    const convertTo12HourFormat = (time) => {
-        const [hours, minutes] = time.split(":");
-        const period = +hours >= 12 ? 'PM' : 'AM';
-        let newHours = +hours % 12 || 12; // Convert 0 to 12 for midnight
-        return `${newHours}:${minutes} ${period}`;
-    };
-
-    const calculateTotalHours = (start, end, extra) => {
-        // Split only hours and minutes (ignore seconds)
-        const [hours1, minutes1] = start.split(":").slice(0, 2);
-        const [hours2, minutes2] = end.split(":").slice(0, 2);
-
-        // Create Date objects with hours and minutes only
-        const startTime = new Date(`1970-01-01T${hours1}:${minutes1}:00`);
-        const endTime = new Date(`1970-01-01T${hours2}:${minutes2}:00`);
-
-        // Adjust for cases where end time is on the next day
-        if (endTime < startTime) {
-            endTime.setDate(endTime.getDate() + 1);
-        }
-
-        // Calculate the total hours, including extra
-        const totalHours = (endTime - startTime) / (1000 * 60 * 60) + parseInt(extra) / 60;
-
-        return totalHours.toFixed(2); // Return total hours as a string with 2 decimal places
-    };
-
-
     // 
     return (
         <div id='allEmp'>
@@ -476,24 +438,20 @@ const NewShift = () => {
                 </div>
             </Dialog>
 
-            {togglNewAdd && <NewAssignShift ClosePop={NewAttendanceClosePop} />}
+            {/* {togglNewAdd && <NewAssignShift ClosePop={NewAttendanceClosePop} />} */}
 
             <div className="EmpOn_main_container">
                 <div className="EmpOn_header">
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Shifts list <p>{employees.length} total</p>
+                           All Clients list  <p>{employees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
-                            <div className="addEmp" onClick={() => navigate('/shift')}>
-                                <p><span>
+                          
 
-                                </span> Assign shift List</p>
-                            </div>
-
-                            <div className="addEmp" style={{ marginLeft: '20px' }} onClick={NewAttendanceClick}>
-                                <p><span><IoMdAdd /></span> Add New Shift</p>
+                            <div className="addEmp" style={{ marginLeft: '20px' }} onClick={NewaddClick}>
+                                <p><span><IoMdAdd /></span> New Client</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
                                 <div className="div_top"><CiMenuKebab /></div>
@@ -651,12 +609,11 @@ const NewShift = () => {
                                 <th>
                                     <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
                                 </th>
-                                <th><div>Sift Name<span><TiArrowUnsorted /></span></div></th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Extra Hours</th>
-                                <th>Total HoursTotal Hours</th>
-                                <th>Break Time</th>
+                                <th><div>Client Name<span><TiArrowUnsorted /></span></div></th>
+                                <th>Client ID</th>
+                                <th>Contact Person</th>
+                                <th>Client Email ID</th>
+                                <th>Contact Number</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -667,12 +624,12 @@ const NewShift = () => {
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(index)} />
                                     </td>
                                     {/* {console.log('emp.shift_name', emp.start_time)} */}
-                                    <td onClick={() => navigate(`/shift-details/${emp?.id}`)}>{emp.shift_name || ''}</td>
-                                    <td onClick={() => navigate(`/shift-details/${emp?.id}`)}>{convertTo12HourFormat(emp.start_time)}</td>
-                                    <td onClick={() => navigate(`/shift-details/${emp?.id}`)}>{convertTo12HourFormat(emp.end_time)}</td>
-                                    <td onClick={() => navigate(`/shift-details/${emp?.id}`)}>{emp.extra_hours} Hours </td>
-                                    <td onClick={() => navigate(`/shift-details/${emp?.id}`)}>{calculateTotalHours(emp.start_time, emp.end_time, emp.extra_hours)} hours</td>
-                                    <td onClick={() => navigate(`/shift-details/${emp?.id}`)}>{calculateHours(emp.break_time)} Minutes</td>
+                                    <td onClick={() => navigate(`/client-details`)}>{emp.sift_name || ''}</td>
+                                    <td onClick={() => navigate(`/client-details`)}>{(emp.start_time)}</td>
+                                    <td onClick={() => navigate(`/client-details`)}>{(emp.end_time)}</td>
+                                    <td onClick={() => navigate(`/client-details`)}>{emp.extra_hours}  </td>
+                                    <td onClick={() => navigate(`/client-details/${emp?.id}`)}>{emp.break_time}  </td>
+
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
@@ -759,5 +716,5 @@ const NewShift = () => {
     );
 };
 
-export default NewShift;
+export default Client;
 // 
