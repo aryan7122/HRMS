@@ -451,7 +451,7 @@ const Ticket = (ClosePop) => {
                            All Tickets list <p>345 total</p>
                         </h2>
                         <div className="Emp_Head_Right">
-                            <div className="addEmp" onClick={NewAttendanceClick}>
+                            <div className="addEmp" onClick={() => navigate('/add-ticket')}>
                                 <p><span><IoMdAdd /></span>New Ticket</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
@@ -623,7 +623,6 @@ const Ticket = (ClosePop) => {
 
                             <div className="filter-container" ref={filterRef}>
                                 <div className="filter-options">
-
                                     <div className="filter-option" >
                                         <p onClick={handleCustomDateClick}>Custom Date {!showCustomDate ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showCustomDate && (

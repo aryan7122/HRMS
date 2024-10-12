@@ -137,8 +137,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 // { label: 'All Leave', path: '/all-leave' },
                 { label: 'All Leave', path: '/all-leave' },
                 { label: 'Leave Type', path: '/leave-type' },
-                { label: 'Attendance', path: '/attendance' },
-                { label: 'Holidays', path: '/holidays' },
+                { label: 'Travel', path: '/travel' },
+                // { label: 'Holidays', path: '/holidays' },
             ]
         },
         {
@@ -170,6 +170,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             submenu: [
                 { label: 'Client', path: '/client' },
                 { label: 'Ticket', path: '/ticket' },
+                { label: 'Trainers', path: '/trainers' },
+                { label: 'Training', path: '/training' },
+
                 
 
 

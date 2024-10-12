@@ -46,11 +46,11 @@ import DesignationDetails from './Pages/Designation/DesignationDetail/Designatio
 import EmployeeHealthDetails from './Pages/EmployeeHealth/EmployeeHealthDetails/EmployeeHealthDetails.jsx';
 
 {/* Leave Management Imports */ }
-import All_leaves_List from './Pages/LeaveManagement/All_leaves_List/All_leaves_List.jsx';
-import AddNewLeave from './Pages/LeaveManagement/Add_Leave/AddNewLeave.jsx';
-import LeaveDetails from './Pages/LeaveManagement/LeaveDetails/LeaveDetails.jsx';
-import UpdateLeave from './Pages/LeaveManagement/Update_Leave/UpdateLeave.jsx';
-import All_leaves_List_Type from './Pages/LeaveManagement/All_leaves_List_Type/All_leaves_List_Type.jsx';
+import All_leaves_List from './Pages/Leave/All_leaves_List/All_leaves_List.jsx';
+import AddNewLeave from './Pages/Leave/Add_Leave/AddNewLeave.jsx';
+import LeaveDetails from './Pages/Leave/LeaveDetails/LeaveDetails.jsx';
+import UpdateLeave from './Pages/Leave/Update_Leave/UpdateLeave.jsx';
+import All_leaves_List_Type from './Pages/Leave/All_leaves_List_Type/All_leaves_List_Type.jsx';
 
 {/* Shift Management Imports */ }
 import AllShiftsList from './Pages/ShiftManagement/AllShiftsList/AllShiftsList.jsx';
@@ -70,9 +70,25 @@ import Client from './Pages/Client/Client_List/Client.jsx';
 import AddClient from './Pages/Client/Add_Client/AddClient.jsx';
 import ClientDetails from './Pages/Client/Client_Details/ClientDetails.jsx';
 
-{/*Ticket Import*/}
+{/*Ticket Import*/ }
 import Ticket from './Pages/Ticket/Ticket_List/Ticket.jsx';
 import TicketDetails from './Pages/Ticket/Ticket_details/TicketDetails.jsx';
+import AddTicket from './Pages/Ticket/Add_Ticket/AddTicket.jsx';
+
+{/*Trainers Import*/ }
+import Trainers from './Pages/Training_Trainers/Trainers/Trainers.jsx';
+import AddTrainers from './Pages/Training_Trainers/Trainers/Add_Trainers/AddTrainers.jsx';
+import TrainerDetails from './Pages/Training_Trainers/Trainers/Trainer_Details/TrainerDetails.jsx';
+
+{/*Trainers Import*/ }
+import Training from './Pages/Training_Trainers/Training /Training.jsx';
+import AddTraining from './Pages/Training_Trainers/Training /Add_Training /AddTraining.jsx';
+import TrainingDetails from './Pages/Training_Trainers/Training /Training _Details/TrainingDetails.jsx';
+
+{/*Travel Import*/ }
+import Travel from './Pages/Travel/Travel.jsx';
+import TravelDetails from './Pages/Travel/Travel_Details/TravelDetails.jsx';
+import AddTravel from './Pages/Travel/Add_Travel/AddTravel.jsx';
 
 
 import '../src/styles/EffectSroll.scss';
@@ -159,7 +175,7 @@ const App = () => {
                   <Route path="/update-applicant/:id" element={<Update_applicant />} />
 
                   {/* Attendance Tracking Routes */}
-                  <Route path="/all-attendance-list" element={<AllAttendanceList />} />
+                    <Route path="/all-Attendance-list" element={<AllAttendanceList />} />
                   <Route path="/attendance-details/:id" element={<AttendanceDetails />} />
 
                   {/* Department, Designation & Employee Health Routes */}
@@ -186,8 +202,8 @@ const App = () => {
                   <Route path="/shift-details/:id" element={<SiftDetails />} />
 
                   {/* Holiday & Project Management Routes */}
-                  <Route path="/holiday" element={<HolidayList />} />
-                    <Route path="/holiday-details" element={<HolidayDetail />} />
+                    <Route path="/holiday" element={<HolidayList />} />
+                  <Route path="/holiday-details" element={<HolidayDetail />} />
                   <Route path="/project" element={<Project />} />
                   <Route path="/add-project" element={<AddProject />} />
                   <Route path="/project-details" element={<ProjectDetails />} />
@@ -197,10 +213,30 @@ const App = () => {
                   <Route path="/new-client" element={<AddClient />} />
                   <Route path="/client-details" element={<ClientDetails />} />
 
-                    {/* Ticket Routes*/}
-                    <Route path="/ticket" element={<Ticket />} />
-                    <Route path="/ticket-details" element={<TicketDetails />} />
+                  {/* Ticket Routes*/}
+                  <Route path="/ticket" element={<Ticket />} />
+                  <Route path="/ticket-details" element={<TicketDetails />} />
+                    <Route path="/add-ticket" element={<AddTicket />} />
                     
+                  {/* Trainers Routes */}
+                    <Route path="/trainers" element={<Trainers />} />
+                    <Route path="/add-trainer" element={<AddTrainers />} />
+                    <Route path="/trainer-details" element={<TrainerDetails />} />
+
+                    {/* Training Routes */}
+                    <Route path="/training" element={<Training />} />
+                    <Route path="/add-training" element={<AddTraining />} />
+                    <Route path="/training-details" element={<TrainingDetails />} />
+                    {/* Travel Routes */}
+                    <Route path="/travel" element={<Travel />} />
+                    <Route path="/travel-details" element={<TravelDetails />} />
+                    <Route path="/add-travel" element={<AddTravel />} />
+
+                    
+                    
+                    
+                    
+
                 </Routes>
               </div>
             </div>

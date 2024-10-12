@@ -16,9 +16,11 @@ import { MdWork } from "react-icons/md";
 import { FaRegClock } from "react-icons/fa";
 import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
-import './Project.scss';
+import './Training.scss';
+import img_emp1 from '../../../assets/emp1.png'
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import OutsideClick4 from '../../Employee_onboarding/AllEmployeeList/OutSideClick4';
 
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { GiBackstab, GiNotebook } from "react-icons/gi";
@@ -35,17 +37,16 @@ import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { OutsideClickStatus } from '../../Recruitment/List_view_all_job/OutsideClickStatus.jsx';
-import Assign_Project_Popup from '../Assign_Project_Popup/Assign_Project_Popup.jsx';
 
 
-const Project = () => {
+const Training = () => {
 
     const jobs = useSelector((state) => state.job.jobs);
     // console.log('jobs', jobs)
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
-    // const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatusDropdown } = OutsideClickStatus();
+    const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick4();
     const [conformStatus, setConformStatus] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -84,9 +85,11 @@ const Project = () => {
     // 
 
     const [employees, setEmployees] = useState([
-        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "Ongoing", priority: "High", isChecked: false },
-        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "Completed", priority: "Medium", isChecked: false },
-        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "On Hold", priority: "Low", isChecked: false },
+        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "0", Image: img_emp1, priority: "High", isChecked: false },
+        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "1", Image: img_emp1, priority: "Medium", isChecked: false },
+        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "0", Image: img_emp1, priority: "Low", isChecked: false },
+        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "1", Image: img_emp1, priority: "Low", isChecked: false },
+        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "1", Image: img_emp1, priority: "Low", isChecked: false },
 
 
         // { JobTitle: "Cloud Architect", Department: "Customer Success", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Draft", isChecked: false },
@@ -287,10 +290,10 @@ const Project = () => {
     };
 
     const projectDetailsPage = () => {
-        navigate('/project-details')
+        navigate('/Training-details')
     }
     const NewJobPage = () => {
-        navigate('/add-project')
+        navigate('/add-Training')
     }
 
     const filter_left = () => {
@@ -300,6 +303,28 @@ const Project = () => {
     //     // setToggleLeft(false)
     //     toggleFilter2()
     // }
+
+
+    const handleStatusChange = (index, newStatus) => {
+        // console.log('|||||', newStatus)
+        if (newStatus == 'Inactive') {
+            setStatusNew('1')
+        }
+        if (newStatus == 'Active') {
+            setStatusNew('0')
+        }
+        // const updatedEmployees = [...filteredEmployees];
+        // updatedEmployees[index].status = newStatus;
+        // setFilteredEmployees(updatedEmployees);
+        setIsOpen(null);
+        setOpen(true)
+
+    };
+
+    const UpdateStatusHndle = (id) => {
+        setStatusId(id)
+    }
+
     const [fileName, setFileName] = useState('');
 
     const handleFileChange = (event) => {
@@ -326,11 +351,7 @@ const Project = () => {
     // H
 
     // console.log('updateId', statusId)
-    // console.log('status', statusId)
 
-    const UpdateStatusHndle = (id) => {
-        setStatusId(id)
-    }
     const handleEmploymentTypeChange = (event) => {
         setEmploymentType(event.target.value);
         console.log('Selected Employment Type:', event.target.value); // Debugging purpose
@@ -361,7 +382,6 @@ const Project = () => {
     useEffect(() => {
         axios.post('https://devstronauts.com/public/api/jobopening/list', {
             search: searchQuery,
-            job_status: selectedFilter,
             employee_type: employmentType,
             custom_date: selectedDate,
             fromDate: fromDate,
@@ -450,27 +470,6 @@ const Project = () => {
 
 
 
-    const handleStatusChange = (index, newStatus) => {
-        setStatusNew(newStatus)
-        console.log('status chenge:::', newStatus)
-        const updatedEmployees = [...filteredEmployees];
-        updatedEmployees[index].priority = newStatus;
-        setFilteredEmployees(updatedEmployees);
-        setIsOpen(null);
-        // toast.info('Please Wait Status Updating...', {
-        //     position: "top-right",
-        //     autoClose: 2000,
-        //     hideProgressBar: false,
-        //     closeOnClick: true,
-        //     pauseOnHover: true,
-        //     draggable: true,
-        //     progress: undefined,
-        //     theme: "light",
-        // });
-        setSms('')
-        setOpen(true)
-    };
-
     const [activeFilter, setActiveFilter] = useState(null); // Track the active filter
     // const filterRef2 = useRef(null);
     const [togglNewAdd, setTogglNewAdd] = useState(false)
@@ -481,6 +480,7 @@ const Project = () => {
         setTogglNewAdd(true)
     };
 
+    const getTopNewEmployees = employees.slice(0, 5);
 
 
 
@@ -521,11 +521,11 @@ const Project = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Projects <p>{currentEmployees.length} total</p>
+                            All Trainers list  <p>{currentEmployees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={NewJobPage}>
-                                <p><span><IoMdAdd /></span>  New Project</p>
+                                <p><span><IoMdAdd /></span>  New Trainer</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
                                 <div className="div_top"><CiMenuKebab /></div>
@@ -619,7 +619,6 @@ const Project = () => {
                                                 <label id='daterange-contener'>From</label>
                                                 <div className="dropdown-content date-h">
                                                     <div><span><MdDateRange /></span>{!fromDate ? 'Select Custom date' : fromDate} </div>
-                                                    {/* <br /> */}
                                                     <input type="date" name="date" id="" onChange={handleFromDateChange} />
                                                 </div>
                                                 <label id='daterange-contener'>To</label>
@@ -731,12 +730,13 @@ const Project = () => {
                                         </span>
                                     } */}
                                 </th>
-                                <th> <div>Project Name<span><TiArrowUnsorted /></span></div></th>
-                                <th>Client Name</th>
-                                <th>Priority</th>
-                                <th>Date Assigned</th>
-                                <th>Deadline</th>
-                                <th>Assigned to</th>
+                                <th> <div>Training Type<span><TiArrowUnsorted /></span></div></th>
+                                <th>Trainer </th>
+                                <th>Employees</th>
+                                <th>Training Cost</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Duration</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -745,78 +745,56 @@ const Project = () => {
                                 <tr key={index}  >
                                     <td>
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} onClick={DelThis} />
-                                        {/* {emp.isChecked &&
-                                            <span id='deleteThis'>
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#ff0000" fill="none">
-                                                    <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                    <path d="M9 11.7349H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                    <path d="M10.5 15.6543H13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                    <path d="M3 5.5H21M16.0555 5.5L15.3729 4.09173C14.9194 3.15626 14.6926 2.68852 14.3015 2.39681C14.2148 2.3321 14.1229 2.27454 14.0268 2.2247C13.5937 2 13.0739 2 12.0343 2C10.9686 2 10.4358 2 9.99549 2.23412C9.89791 2.28601 9.80479 2.3459 9.7171 2.41317C9.32145 2.7167 9.10044 3.20155 8.65842 4.17126L8.05273 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                </svg>
-                                            </span>
-                                        } */}
                                     </td>
-                                    <td className='td' onClick={projectDetailsPage}>Options</td>
-                                    <td onClick={projectDetailsPage}>Navjot Kaur</td>
+                                    <td className='td' onClick={projectDetailsPage}>Stretching</td>
+                                    <td onClick={projectDetailsPage}>Jayshri Tiwari</td>
                                     <td>
-                                        <div className='status-dropdown' onClick={projectDetailsPage}>
-                                            <div className="status-container" >
-                                                <div
-                                                    className={`status-display ${emp.priority ? emp.priority.toLowerCase().replace(' ', '-') : ''}`}
-                                                >
-                                                    <span className={`left_dot ${emp.priority ? emp.priority.toLowerCase().replace(' ', '-') : ''}`}></span>
-                                                    <div >
-                                                        <div
-                                                        >
-                                                            {emp.priority}
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <div className='newEmp_img'>
+                                            {getTopNewEmployees.map((emp, i) => (
+                                            <div key={i} className='div_newEmp_img_team'>
+                                                <img src={emp.Image} alt={emp.name} />
+                                            </div>
+                                            ))}
+                                            <div className="img_add_p">
+                                                +15
                                             </div>
                                         </div>
                                     </td>
-                                    <td className='td' >28-Feb-2024</td>
-                                    <td className='td' >28-Mar-2024</td>
-                                    <td className='td' >Vishwas Patel</td>
-                                    <td >
-                                        <div className="status-dropdown" >
-                                            <div key={index} className="status-container" >
-                                                <div
-                                                    className={` status-dis ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}
-                                                    onClick={() => toggleDropdown(index)}
-                                                >
-                                                    <span className={` left_d ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}></span>
-                                                    <div onClick={() => {
-                                                        UpdateStatusHndle(emp.id);
-                                                    }}>
-                                                        <div
+                                    <td className='td' >$500</td>
+                                    <td className='td' >16-Apr-2024</td>
+                                    <td >18-Apr-2024</td>
+                                    <td >30hrs</td>
 
-                                                        >
-                                                            {emp.status}
-                                                        </div>
-                                                        <div className="^wdown">
-                                                            <MdOutlineKeyboardArrowDown />
+                                    <td>
+                                        <div className="status-dropdown">
+                                            <div key={index} className="status-container">
+                                                <div onClick={toggleFilter4} ref={filterButtonRef4}>
+                                                    <div
+                                                        className={`status-display ${emp.status === '0' ? 'active' : 'inactive'}`}
+                                                        onClick={() => setIsOpen(isOpen === index ? null : index)}
+                                                    >
+                                                        <span className={`left_dot ${emp.status === '0' ? 'active' : 'inactive'}`}></span>
+                                                        <div onClick={() => UpdateStatusHndle(emp.id)}>
+                                                            <div className="EmpS">
+                                                                {emp.status == 0 ? 'Active' : 'Inactive'}
+                                                            </div>
+                                                            <div className="^wdown">
+                                                                <MdOutlineKeyboardArrowDown />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 {isOpen === index && (
-                                                    <div>
-                                                        <div className="status-options" >
-                                                            {
-                                                                statuses.map(status => (
-                                                                    <div
-                                                                        key={status}
-                                                                        className="status-option"
-                                                                        onClick={() => {
-                                                                            handleStatusChange(index, status)
-                                                                        }
-                                                                        }
-                                                                    >
-                                                                        {status}
-                                                                    </div>
-                                                                ))
-                                                            }
-                                                        </div>
+                                                    <div className="status-options" ref={filterRef4}>
+                                                        {statuses.map(status => (
+                                                            <div
+                                                                key={status}
+                                                                className="status-option"
+                                                                onClick={() => handleStatusChange(index, status)}
+                                                            >
+                                                                {status}
+                                                            </div>
+                                                        ))}
                                                     </div>
                                                 )}
                                             </div>
@@ -873,5 +851,5 @@ const Project = () => {
     );
 };
 
-export default Project;
+export default Training;
 // 

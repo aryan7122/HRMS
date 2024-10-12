@@ -110,7 +110,7 @@ const AddHoliday = ({ ClosePop }) => {
             <div className="formDivLeave">
                 <div className="popForm_h">
                     <div className="Attendance_Head">
-                        <h2> Add Shift</h2>
+                        <h2> Add Holiday</h2>
                         <div className='close_icon' onClick={ClosePop}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
                                 <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
