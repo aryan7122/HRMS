@@ -80,7 +80,9 @@ const AllJobList = () => {
     // 
 
     const [employees, setEmployees] = useState([
-        // { JobTitle: "IT Consultant", Department: "Marketing", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Open", isChecked: false },
+        { job_title: "IT Consultant", Department: "Marketing", Positions: "10", ExperienceRequired: "03 Years", skills: "PHP, React, Laravel, Flutter", job_status: "Open", isChecked: false },
+        { job_title: "IT Consultant", Department: "Marketing", Positions: "10", ExperienceRequired: "03 Years", skills: "PHP, React, Laravel, Flutter", job_status: "Draft", isChecked: false },
+
         // { JobTitle: "Cloud Architect", Department: "Customer Success", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Draft", isChecked: false },
         // { JobTitle: "Software Engineer", Department: "Office Administration", Positions: "10", ExperienceRequired: "03 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "On hold", isChecked: false },
         // { JobTitle: "IT Auditor", Department: "Operations", Positions: "10", ExperienceRequired: "07 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Cancelled", isChecked: false },
@@ -831,9 +833,31 @@ const AllJobList = () => {
                                                 )}
                                             </div>
                                         </div>
-
-
                                     </td>
+                                    {/* <td>
+                                        <div className="status-dropdown">
+                                            <div key={index} className="status-container">
+                                                <select
+                                                    className={`status-display ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
+                                                    onChange={(e) => handleStatusChange(index, e.target.value)}
+                                                    value={emp.job_status}
+                                                >
+                                                    {statuses.map((status) => (
+                                                        <option
+                                                            key={status}
+                                                            value={status}
+                                                            className={`status-option ${status.toLowerCase().replace(' ', '-')}`}
+                                                        >
+                                                            {status}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                                <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                            </div>
+                                        </div>
+                                    </td> */}
+
+
                                 </tr>
                             ))}
                         </tbody>

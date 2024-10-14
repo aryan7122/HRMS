@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { OutsideClick } from '../../../components/OutSideClick';
 import axios from 'axios';
 
-const Department = () => {
+const BirthdayList = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
 
     const [hidImport, setHidImport] = useState(true);
@@ -320,4 +320,4 @@ const Department = () => {
     );
 };
 
-export default Department;
+export default BirthdayList;

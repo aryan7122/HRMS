@@ -24,7 +24,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
-import './Client.scss';
+import './Performance.scss';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -33,7 +33,7 @@ import "react-toastify/dist/ReactToastify.css";
 // import { TiArrowUnsorted } from "react-icons/ti";
 import dayjs from "dayjs";
 
-const Client = () => {
+const Performance = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
@@ -66,19 +66,12 @@ const Client = () => {
     const [employees, setEmployees] = useState([
         {
             sift_name: "Hillery Moses",
-            start_time: "CL - 704569", // 24-hour format
-            end_time: "Mr. Admin",   // 24-hour format
-            extra_hours: "olivia.williams@quantumsolutions.com",
-            break_time: "63187100000",
-            status: "0"
-        },
-        {
-            sift_name: "Hillery Moses",
-            start_time: "CL - 704569", // 24-hour format
-            end_time: "Mr. Admin",   // 24-hour format
-            extra_hours: "olivia.williams@quantumsolutions.com",
-            break_time: "63187100000",
-            status: "1"
+            start_time: "HSEQ", // 24-hour format
+            end_time: "Business Analyst",   // 24-hour format
+            extra_hours: "Intermediate",
+            break_time: "Advance",
+            feedback: "Very Good",
+            status: "Active"
         },
         // {
         //     sift_name: "Evening Shift",
@@ -453,7 +446,7 @@ const Client = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                           All Clients list  <p>{employees.length} total</p>
+                           All Performance list  <p>{employees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                           
@@ -617,12 +610,14 @@ const Client = () => {
                                 <th>
                                     <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
                                 </th>
-                                <th><div>Client Name<span><TiArrowUnsorted /></span></div></th>
-                                <th>Client ID</th>
-                                <th>Contact Person</th>
-                                <th>Client Email ID</th>
-                                <th>Contact Number</th>
+                                <th><div>Employee  Name<span><TiArrowUnsorted /></span></div></th>
+                                <th>Department</th>
+                                <th>Designation</th>
+                                <th>Technical Competencies</th>
+                                <th>Organizational Competencies</th>
+                                <th>Feedback</th>
                                 <th>Status</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -632,12 +627,12 @@ const Client = () => {
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(index)} />
                                     </td>
                                     {/* {console.log('emp.shift_name', emp.start_time)} */}
-                                    <td onClick={() => navigate(`/client-details`)}>{emp.sift_name || ''}</td>
-                                    <td onClick={() => navigate(`/client-details`)}>{(emp.start_time)}</td>
-                                    <td onClick={() => navigate(`/client-details`)}>{(emp.end_time)}</td>
-                                    <td onClick={() => navigate(`/client-details`)}>{emp.extra_hours}  </td>
-                                    <td onClick={() => navigate(`/client-details/${emp?.id}`)}>{emp.break_time}  </td>
-
+                                    <td onClick={() => navigate(`/performance-details`)}>{emp.sift_name || ''}</td>
+                                    <td onClick={() => navigate(`/performance-details`)}>{(emp.start_time)}</td>
+                                    <td onClick={() => navigate(`/performance-details`)}>{(emp.end_time)}</td>
+                                    <td onClick={() => navigate(`/performance-details`)}>{emp.extra_hours}  </td>
+                                    <td onClick={() => navigate(`/performance-details/${emp?.id}`)}>{emp.break_time}  </td>
+                                    <td onClick={() => navigate(`/performance-details/${emp?.id}`)}>{emp.feedback}  </td>
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
@@ -724,5 +719,5 @@ const Client = () => {
     );
 };
 
-export default Client;
+export default Performance;
 // 

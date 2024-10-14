@@ -90,6 +90,18 @@ import Travel from './Pages/Travel/Travel.jsx';
 import TravelDetails from './Pages/Travel/Travel_Details/TravelDetails.jsx';
 import AddTravel from './Pages/Travel/Add_Travel/AddTravel.jsx';
 
+{/*Announcements*/ }
+import Announcements from './Pages/Announcements/Announcements.jsx';
+import AnnouncementsDetails from './Pages/Announcements/Announcements_Details/AnnouncementsDetails.jsx';
+import AddAnnouncements from './Pages/Announcements/Add_Announcements/AddAnnouncements.jsx';
+
+{/*BirthdayList*/ }
+import BirthdayList from './Pages/Birthday/BirthdayList/BirthdayList.jsx';
+
+{/*Performance*/ }
+import Performance from './Pages/Performance/Performance_List/Performance.jsx';
+import PerformanceDetails from './Pages/Performance/Performance_Details/PerformanceDetails.jsx';
+
 
 import '../src/styles/EffectSroll.scss';
 import './styles/App.scss';
@@ -175,7 +187,7 @@ const App = () => {
                   <Route path="/update-applicant/:id" element={<Update_applicant />} />
 
                   {/* Attendance Tracking Routes */}
-                    <Route path="/all-Attendance-list" element={<AllAttendanceList />} />
+                  <Route path="/all-Attendance-list" element={<AllAttendanceList />} />
                   <Route path="/attendance-details/:id" element={<AttendanceDetails />} />
 
                   {/* Department, Designation & Employee Health Routes */}
@@ -202,7 +214,7 @@ const App = () => {
                   <Route path="/shift-details/:id" element={<SiftDetails />} />
 
                   {/* Holiday & Project Management Routes */}
-                    <Route path="/holiday" element={<HolidayList />} />
+                  <Route path="/holiday" element={<HolidayList />} />
                   <Route path="/holiday-details" element={<HolidayDetail />} />
                   <Route path="/project" element={<Project />} />
                   <Route path="/add-project" element={<AddProject />} />
@@ -216,26 +228,36 @@ const App = () => {
                   {/* Ticket Routes*/}
                   <Route path="/ticket" element={<Ticket />} />
                   <Route path="/ticket-details" element={<TicketDetails />} />
-                    <Route path="/add-ticket" element={<AddTicket />} />
-                    
+                  <Route path="/add-ticket" element={<AddTicket />} />
+
                   {/* Trainers Routes */}
-                    <Route path="/trainers" element={<Trainers />} />
-                    <Route path="/add-trainer" element={<AddTrainers />} />
-                    <Route path="/trainer-details" element={<TrainerDetails />} />
+                  <Route path="/trainers" element={<Trainers />} />
+                  <Route path="/add-trainer" element={<AddTrainers />} />
+                  <Route path="/trainer-details" element={<TrainerDetails />} />
 
-                    {/* Training Routes */}
-                    <Route path="/training" element={<Training />} />
-                    <Route path="/add-training" element={<AddTraining />} />
-                    <Route path="/training-details" element={<TrainingDetails />} />
-                    {/* Travel Routes */}
-                    <Route path="/travel" element={<Travel />} />
-                    <Route path="/travel-details" element={<TravelDetails />} />
-                    <Route path="/add-travel" element={<AddTravel />} />
+                  {/* Training Routes */}
+                  <Route path="/training" element={<Training />} />
+                  <Route path="/add-training" element={<AddTraining />} />
+                  <Route path="/training-details" element={<TrainingDetails />} />
 
-                    
-                    
-                    
-                    
+                  {/* Travel Routes */}
+                  <Route path="/travel" element={<Travel />} />
+                  <Route path="/travel-details" element={<TravelDetails />} />
+                  <Route path="/add-travel" element={<AddTravel />} />
+
+                  {/* Announcements Routes */}
+                  <Route path="/announcements" element={<Announcements />} />
+                  <Route path="/announcements-details" element={<AnnouncementsDetails />} />
+                  <Route path="/add-AddAnnouncements" element={<AddAnnouncements />} />
+
+
+                  {/*BirthdayList Routes*/}
+                  <Route path="/birthday" element={<BirthdayList />} />
+
+                  {/*Performance Routes*/}
+                  <Route path="/performance" element={<Performance />} />
+                    <Route path="/performance-details" element={<PerformanceDetails />} />
+
 
                 </Routes>
               </div>

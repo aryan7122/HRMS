@@ -18,7 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { MultiImageUploaders } from '../../../components/MultiImageUpload';
 import { MdDateRange } from "react-icons/md";
 
-const FormAddTicket = ({ onSubmit }) => {
+const FormAddAnnouncements = ({ onSubmit }) => {
     const navigate = useNavigate()
 
     const dispatch = useDispatch();
@@ -172,7 +172,7 @@ const FormAddTicket = ({ onSubmit }) => {
             });
     };
 
-   
+
 
     const toggleDropdown = (dropdown) => {
         // Reset all dropdowns to false, then toggle the selected one
@@ -282,7 +282,7 @@ const FormAddTicket = ({ onSubmit }) => {
                     <div id='form'>
                         <div className="from1">
                             <div className="form-group">
-                                <label className='starred'>Employee Name*</label>
+                                <label className='starred'>Subject*</label>
                                 <input
                                     type="text"
                                     placeholder="Enter Employee"
@@ -292,13 +292,70 @@ const FormAddTicket = ({ onSubmit }) => {
                                     required
                                 />
                             </div>
-
+                            <div className="form-group grupdate">
+                                <label htmlFor="">Expiry</label>
+                                <div className="dropdown-content date-h" id=''>
+                                    <div className='date_tittle'>
+                                        <div className='title__show__d'>
+                                            {!selectedDate ? <span> Choose Expiry date</span> : selectedDate}
+                                        </div>
+                                        <div className='date_icon'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                                                <path d="M18 2V4M6 2V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M11.9955 13H12.0045M11.9955 17H12.0045M15.991 13H16M8 13H8.00897M8 17H8.00897" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M3.5 8H20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M2.5 12.2432C2.5 7.88594 2.5 5.70728 3.75212 4.35364C5.00424 3 7.01949 3 11.05 3H12.95C16.9805 3 18.9958 3 20.2479 4.35364C21.5 5.70728 21.5 7.88594 21.5 12.2432V12.7568C21.5 17.1141 21.5 19.2927 20.2479 20.6464C18.9958 22 16.9805 22 12.95 22H11.05C7.01949 22 5.00424 22 3.75212 20.6464C2.5 19.2927 2.5 17.1141 2.5 12.7568V12.2432Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M3 8H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <input type="date" name="date" id="" onChange={handleDateChange} />
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label className='starred'>Attachment*</label>
+                                <MultiImageUploaders
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                    fieldName="attachment"  // Unique field for resume
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label className='starred'>Notify all Employees*</label>
+                                <div className="dropdown">
+                                    <div className="dropdown-button" ref={designationButtonRef} onClick={toggleDesignation}>
+                                        <div>{formData.designation || "Set Notify"}</div>
+                                        <span id='toggle_selectIcon'> {!isDesignationOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
+                                    </div>
+                                    {isDesignationOpen && (
+                                        <div className="dropdown-menu" ref={designationRef}>
+                                            {/* <input
+                                                type="search"
+                                                className='search22'
+                                                placeholder="Search designation"
+                                                value={searchQueryDesignation}
+                                                id='searchDepartmentHead'
+                                                onChange={handleSearchQueryChangeDesignation}
+                                            /> */}
+                                            <div className="dropdown_I">
+                                                {['Yas', 'No',].filter(option =>
+                                                    option.toLowerCase().includes(searchQueryDesignation.toLowerCase())
+                                                ).map(option => (
+                                                    <div className="dropdown-item" onClick={() => selectOption('designation', option)} key={option}>
+                                                        {option}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                             {/* Employee Dropdown */}
                             <div className="form-group">
-                                <label className='starred'>Requested To*</label>
+                                <label className=''>Notify any others on Email</label>
                                 <div className="dropdown">
                                     <div className="dropdown-button" ref={employeeButtonRef} onClick={toggleEmployee}>
-                                        <div>{formData.employeeName || "Select Requestor Name"}</div>
+                                        <div>{formData.employeeName || "Choose Or search email ID’s"}</div>
                                         <span>{!isEmployeeOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}</span>
                                     </div>
                                     {isEmployeeOpen && (
@@ -307,7 +364,7 @@ const FormAddTicket = ({ onSubmit }) => {
                                                 type="search"
                                                 id='searchDepartmentHead'
 
-                                                placeholder="Search Team"
+                                                placeholder="Search Email ID's"
                                                 value={searchQueryEmployee}
                                                 onChange={(e) => setSearchQueryEmployee(e.target.value)}
                                                 required
@@ -329,89 +386,7 @@ const FormAddTicket = ({ onSubmit }) => {
                                     )}
                                 </div>
                             </div>
-                            {/* Designation Dropdown */}
-                            <div className="form-group">
-                                <label className='starred'>Priority*</label>
-                                <div className="dropdown">
-                                    <div className="dropdown-button" ref={designationButtonRef} onClick={toggleDesignation}>
-                                        <div>{formData.designation || "Set Priority"}</div>
-                                        <span id='toggle_selectIcon'> {!isDesignationOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
-                                    </div>
-                                    {isDesignationOpen && (
-                                        <div className="dropdown-menu" ref={designationRef}>
-                                            {/* <input
-                                                type="search"
-                                                className='search22'
-                                                placeholder="Search designation"
-                                                value={searchQueryDesignation}
-                                                id='searchDepartmentHead'
-                                                onChange={handleSearchQueryChangeDesignation}
-                                            /> */}
-                                            <div className="dropdown_I">
-                                                {['High', 'Medium', 'Low'].filter(option =>
-                                                    option.toLowerCase().includes(searchQueryDesignation.toLowerCase())
-                                                ).map(option => (
-                                                    <div className="dropdown-item" onClick={() => selectOption('designation', option)} key={option}>
-                                                        {option}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label className='starred'>Subject*</label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter subject"
-                                    name="noOfPositions"
-                                    value={formData.noOfPositions}
-                                    onChange={handleChange}
-
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label className=''>Attachment</label>
-                                <MultiImageUploaders
-                                    formData={formData}
-                                    setFormData={setFormData}
-                                    fieldName="attachment"  // Unique field for resume
-                                />
-                            </div>
-                            {/* <div className="form-group">
-                                <label className=''> Date</label>
-                                <input
-                                    type="date"
-                                    placeholder="Select Starting Date"
-                                    name="startingDate"
-                                    value={formData.startingDate}
-                                    id="startingDate"
-                                    onChange={handleChange}
-
-                                />
-                            </div> */}
-                            <div className="form-group grupdate">
-                                <label htmlFor="">Date</label>
-                                <div className="dropdown-content date-h" id=''>
-                                    <div className='date_tittle'>
-                                        <div className='title__show__d'>
-                                            {!selectedDate ? <span> Custom date</span> : selectedDate}
-                                        </div>
-                                        <div className='date_icon'>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                                <path d="M18 2V4M6 2V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M11.9955 13H12.0045M11.9955 17H12.0045M15.991 13H16M8 13H8.00897M8 17H8.00897" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M3.5 8H20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M2.5 12.2432C2.5 7.88594 2.5 5.70728 3.75212 4.35364C5.00424 3 7.01949 3 11.05 3H12.95C16.9805 3 18.9958 3 20.2479 4.35364C21.5 5.70728 21.5 7.88594 21.5 12.2432V12.7568C21.5 17.1141 21.5 19.2927 20.2479 20.6464C18.9958 22 16.9805 22 12.95 22H11.05C7.01949 22 5.00424 22 3.75212 20.6464C2.5 19.2927 2.5 17.1141 2.5 12.7568V12.2432Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M3 8H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <input type="date" name="date" id="" onChange={handleDateChange} />
-                                </div>
-                            </div>
+                            
                         </div>
 
                         <div id='Description' className='DescriptionJob'>
@@ -450,4 +425,4 @@ const FormAddTicket = ({ onSubmit }) => {
     );
 };
 
-export default FormAddTicket;
+export default FormAddAnnouncements;

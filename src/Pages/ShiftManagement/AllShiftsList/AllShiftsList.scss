@@ -721,29 +721,6 @@
             }
           }
 
-          .status-options {
-            position: absolute !important;
-            margin-top: 4px;
-            width: 100%;
-            top: 100%;
-            color: #000 !important;
-            left: 0;
-            background: white !important;
-            z-index: 99999 !important;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-            .status-option {
-              position: relative;
-
-              padding: 8px 12px;
-              cursor: pointer;
-              display: flex;
-              &:hover {
-                background: #de4abc6d;
-              }
-            }
-          }
         }
       }
 
@@ -917,7 +894,7 @@
 }
 @media (max-width: 1355px) {
   .EmpOn_Second_Head .right .divRight .search {
-    width: 80% !important;
+    // width: 80% !important;
   }
   .EmpOn_Second_Head .right .divRight:nth-child(2) {
     // margin-right: -60px;

@@ -3,50 +3,32 @@ import { HiUserPlus } from "react-icons/hi2";
 import { CiMenuKebab } from "react-icons/ci";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { IoMdAdd } from "react-icons/io";
-import { FaList } from "react-icons/fa6";
-import { PiCheckSquare } from "react-icons/pi";
+
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { BiRevision } from "react-icons/bi";
 import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import { MdWork } from "react-icons/md";
-import { FaRegClock } from "react-icons/fa";
-import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
-import './Training.scss';
-import img_emp1 from '../../../assets/emp1.png'
+import './Announcements.scss';
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import OutsideClick4 from '../../Employee_onboarding/AllEmployeeList/OutSideClick4';
-
-import { IoIosCloseCircleOutline } from "react-icons/io";
-import { GiBackstab, GiNotebook } from "react-icons/gi";
-import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
-import { OutsideClick } from '../../../components/OutSideClick.jsx';
+import { OutsideClick } from '../../components/OutSideClick.jsx';
 
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import LodinImg from '../../../assets/loding.gif'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { OutsideClickStatus } from '../../Recruitment/List_view_all_job/OutsideClickStatus.jsx';
 
-
-const Training = () => {
+const Announcements = () => {
 
     const jobs = useSelector((state) => state.job.jobs);
     // console.log('jobs', jobs)
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
-    const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick4();
+    // const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatusDropdown } = OutsideClickStatus();
     const [conformStatus, setConformStatus] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -85,11 +67,9 @@ const Training = () => {
     // 
 
     const [employees, setEmployees] = useState([
-        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "0", Image: img_emp1, priority: "High", isChecked: false },
-        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "1", Image: img_emp1, priority: "Medium", isChecked: false },
-        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "0", Image: img_emp1, priority: "Low", isChecked: false },
-        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "1", Image: img_emp1, priority: "Low", isChecked: false },
-        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "1", Image: img_emp1, priority: "Low", isChecked: false },
+        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "Ongoing", priority: "High", isChecked: false },
+        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "Completed", priority: "Medium", isChecked: false },
+        { JobTitle: "Options", Department: "Navjot", Positions: "8-Feb-2024", ExperienceRequired: "28-Mar-2024", SkillsRequired: "Vishwas Patel", status: "On Hold", priority: "Low", isChecked: false },
 
 
         // { JobTitle: "Cloud Architect", Department: "Customer Success", Positions: "10", ExperienceRequired: "01 Years", SkillsRequired: "PHP, React, Laravel, Flutter", status: "Draft", isChecked: false },
@@ -289,11 +269,11 @@ const Training = () => {
         setShowEmploymentType(false);
     };
 
-    const projectDetailsPage = () => {
-        navigate('/Training-details')
+    const DetailsPage = () => {
+        navigate('/announcements-details')
     }
     const NewJobPage = () => {
-        navigate('/add-Training')
+        navigate('/add-AddAnnouncements')
     }
 
     const filter_left = () => {
@@ -303,28 +283,6 @@ const Training = () => {
     //     // setToggleLeft(false)
     //     toggleFilter2()
     // }
-
-
-    const handleStatusChange = (index, newStatus) => {
-        // console.log('|||||', newStatus)
-        if (newStatus == 'Inactive') {
-            setStatusNew('1')
-        }
-        if (newStatus == 'Active') {
-            setStatusNew('0')
-        }
-        // const updatedEmployees = [...filteredEmployees];
-        // updatedEmployees[index].status = newStatus;
-        // setFilteredEmployees(updatedEmployees);
-        setIsOpen(null);
-        setOpen(true)
-
-    };
-
-    const UpdateStatusHndle = (id) => {
-        setStatusId(id)
-    }
-
     const [fileName, setFileName] = useState('');
 
     const handleFileChange = (event) => {
@@ -480,13 +438,12 @@ const Training = () => {
         setTogglNewAdd(true)
     };
 
-    const getTopNewEmployees = employees.slice(0, 5);
 
 
 
     return (
         <div id='allEmp'>
-            {togglNewAdd && <Assign_Project_Popup ClosePop={NewClick} />}
+            {/* {togglNewAdd && <Assign_Project_Popup ClosePop={NewClick} />} */}
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -521,11 +478,11 @@ const Training = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                            All Training list  <p>{currentEmployees.length} total</p>
+                            All Announcements list   <p>{currentEmployees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={NewJobPage}>
-                                <p><span><IoMdAdd /></span>  New Trainer</p>
+                                <p><span><IoMdAdd /></span>  New Travel </p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
                                 <div className="div_top"><CiMenuKebab /></div>
@@ -725,14 +682,11 @@ const Training = () => {
                                         </span>
                                     } */}
                                 </th>
-                                <th> <div>Training Type<span><TiArrowUnsorted /></span></div></th>
-                                <th>Trainer </th>
-                                <th>Employees</th>
-                                <th>Training Cost</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Duration</th>
-                                <th>Status</th>
+                                <th> <div>Subject<span><TiArrowUnsorted /></span></div></th>
+                                <th>Created Date</th>
+                                <th>Expiry Date</th>
+                                <th>Created By</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -741,60 +695,11 @@ const Training = () => {
                                     <td>
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} onClick={DelThis} />
                                     </td>
-                                    <td className='td' onClick={projectDetailsPage}>Stretching</td>
-                                    <td onClick={projectDetailsPage}>Jayshri Tiwari</td>
-                                    <td>
-                                        <div className='newEmp_img'>
-                                            {getTopNewEmployees.map((emp, i) => (
-                                            <div key={i} className='div_newEmp_img_team'>
-                                                <img src={emp.Image} alt={emp.name} />
-                                            </div>
-                                            ))}
-                                            <div className="img_add_p">
-                                                +15
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className='td' >$500</td>
-                                    <td className='td' >16-Apr-2024</td>
-                                    <td >18-Apr-2024</td>
-                                    <td >30hrs</td>
-
-                                    <td>
-                                        <div className="status-dropdown">
-                                            <div key={index} className="status-container">
-                                                <div onClick={toggleFilter4} ref={filterButtonRef4}>
-                                                    <div
-                                                        className={`status-display ${emp.status === '0' ? 'active' : 'inactive'}`}
-                                                        onClick={() => setIsOpen(isOpen === index ? null : index)}
-                                                    >
-                                                        <span className={`left_dot ${emp.status === '0' ? 'active' : 'inactive'}`}></span>
-                                                        <div onClick={() => UpdateStatusHndle(emp.id)}>
-                                                            <div className="EmpS">
-                                                                {emp.status == 0 ? 'Active' : 'Inactive'}
-                                                            </div>
-                                                            <div className="^wdown">
-                                                                <MdOutlineKeyboardArrowDown />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {isOpen === index && (
-                                                    <div className="status-options" ref={filterRef4}>
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </td>
+                                    <td className='td' onClick={DetailsPage}>Welcome Our New Team Members</td>
+                                    <td onClick={DetailsPage}>16-Apr-2024</td>
+                                    <td>18-Apr-2024</td>
+                                    <td className='td' >Mr Admin</td>
+                                   
                                 </tr>
                             ))}
                         </tbody>
@@ -846,5 +751,5 @@ const Training = () => {
     );
 };
 
-export default Training;
+export default Announcements;
 // 

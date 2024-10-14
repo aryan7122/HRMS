@@ -751,7 +751,7 @@ const Ticket = (ClosePop) => {
 
                         </tbody>
                     </table>
-                    {loading ? (
+                    {/* {loading ? (
                         <div id='Loading'>
                             <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
                         </div> // Show loading text or spinner when data is being fetched
@@ -762,7 +762,7 @@ const Ticket = (ClosePop) => {
                             <h1 className="grey-text">No matching records found</h1>
                             <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
                         </div>
-                    ) : ('')}
+                    ) : ('')} */}
                 </div>
                 <div className="pagination">
                     <div className="rows-per-page">

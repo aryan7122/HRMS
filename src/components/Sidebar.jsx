@@ -138,7 +138,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 { label: 'All Leave', path: '/all-leave' },
                 { label: 'Leave Type', path: '/leave-type' },
                 { label: 'Travel', path: '/travel' },
-                // { label: 'Holidays', path: '/holidays' },
+                { label: 'Announcements', path: '/announcements' }, 
+                { label: 'Performance', path: '/performance' }, 
+
             ]
         },
         {

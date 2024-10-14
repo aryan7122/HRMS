@@ -731,31 +731,7 @@ table {
             }
           }
           
-          .status-options {
-            position: absolute;
-            min-width: 130px !important;
-            padding: 2px;
-            border-radius: 5px !important;
-            top: 100%;
-            // z-index: 999 !important;
-            left: 0;
-            background: rgb(255, 255, 255) !important;
-            border: 1px solid #ccc;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-            
-            .status-option {
-              padding: 8px 12px;
-              // border: 11px solid red !important;
-              cursor: pointer;
-              display: flex;
-              border-radius: 5px;
-              z-index: 99 !important;
-              &:hover {
-                background: #de4abc57;
-                z-index: 9;
-              }
-            }
-          }
+        
         }
       }
       td{
