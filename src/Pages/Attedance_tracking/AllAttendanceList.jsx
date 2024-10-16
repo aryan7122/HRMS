@@ -333,7 +333,7 @@ const AllAttendanceList = (ClosePop) => {
             .catch(error => {
                 console.error("Error fetching data: ", error);
                 // setError(true)
-
+                setLoading(false);
             });
     }, [searchQuery, selectedFilter, fromDate, toDate, selectedDate, open, togglNewAdd]);
 
