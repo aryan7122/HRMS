@@ -809,7 +809,6 @@ const Training = () => {
                                     <td className='td' >16-Apr-2024</td>
                                     <td >18-Apr-2024</td>
                                     <td >30hrs</td>
-
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
@@ -824,7 +823,7 @@ const Training = () => {
                                                                 {emp.status == 0 ? 'Active' : 'Inactive'}
                                                             </div>
                                                             <div className="^wdown">
-                                                                <MdOutlineKeyboardArrowDown />
+                                                                {isOpen === index && isStatusOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
                                                             </div>
                                                         </div>
                                                     </div>

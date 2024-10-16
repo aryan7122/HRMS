@@ -246,7 +246,7 @@ const PerformanceDetails = () => {
     }, [id, token, refresh, departmentdetails2]);
 
     const AllEmp = () => {
-        navigate('/travel')
+        navigate('/performance')
     }
     // const AllEmpPage = () => {
     //     navigate('/department')

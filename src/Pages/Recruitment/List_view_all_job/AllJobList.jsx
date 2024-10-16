@@ -23,7 +23,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { GiBackstab, GiNotebook } from "react-icons/gi";
 import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
-import { OutsideClick } from '../../../components/OutSideClick';
+// import { OutsideClick } from '../../../components/OutSideClick';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import LodinImg from '../../../assets/loding.gif'
@@ -34,6 +34,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
+
 const AllJobList = () => {
 
     const jobs = useSelector((state) => state.job.jobs);
@@ -42,6 +44,8 @@ const AllJobList = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
     // const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatusDropdown } = OutsideClickStatus();
+    const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
+
     const [conformStatus, setConformStatus] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -250,7 +254,7 @@ const AllJobList = () => {
     const [showDepartment, setShowDepartment] = useState(false);
     const [showCustomDate, setShowCustomDate] = useState(false);
     const [showDateRange, setShowDateRange] = useState(false)
-    
+
     const handleDateRangeClick = () => {
         setShowDateRange(!showDateRange)
         setShowCustomDate(false);
@@ -324,6 +328,8 @@ const AllJobList = () => {
 
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
+        setStatusOpen(false)
+
     }
     const handleEmploymentTypeChange = (event) => {
         setEmploymentType(event.target.value);
@@ -379,8 +385,8 @@ const AllJobList = () => {
 
                 setLoading(false)
             },
-                );
-    }, [statusId, statusNew, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId, sms, fromDate, toDate,open]);
+            );
+    }, [statusId, statusNew, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId, sms, fromDate, toDate, open]);
 
     let isRequestInProgress = false;
 
@@ -462,6 +468,7 @@ const AllJobList = () => {
         //     theme: "light",
         // });
         setSms('')
+        setStatusOpen(false)
         setOpen(true)
     };
 
@@ -753,7 +760,7 @@ const AllJobList = () => {
 
                                         )}
                                     </div>
-                                  
+
                                 </div>
                             </div>
                         )}
@@ -826,7 +833,9 @@ const AllJobList = () => {
                                     <td className='td' onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.skills}</td>
                                     <td >
                                         <div className="status-dropdown" >
+                                            
                                             <div key={index} className="status-container" >
+                                                <div onClick={toggleStatus} ref={statusButtonRef}>
                                                 <div
                                                     className={`status-display ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
                                                     onClick={() => toggleDropdown(index)}
@@ -841,31 +850,36 @@ const AllJobList = () => {
                                                             {emp.job_status}
                                                         </div>
                                                         <div className="^wdown">
-                                                            <MdOutlineKeyboardArrowDown />
+                                                                {isOpen === index && isStatusOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
                                                         </div>
                                                     </div>
-                                                </div>
-                                                {isOpen === index && (
-                                                    <div>
-                                                        <div className="status-options" >
-                                                            {
-                                                                statuses.map(status => (
-                                                                    <div
-                                                                        key={status}
-                                                                        className="status-option"
-                                                                        onClick={() => {
-                                                                            handleStatusChange(index, status)
-                                                                        }
-                                                                        }
-                                                                    >
-                                                                        {status}
-                                                                    </div>
-                                                                ))
-                                                            }
-                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                {isStatusOpen &&
+                                                    <>
+                                                        {isOpen === index && (
+                                                            <div>
+                                                            <div className="status-options" ref={statusRef} >
+                                                                    {
+                                                                        statuses.map(status => (
+                                                                            <div
+                                                                                key={status}
+                                                                                className="status-option"
+                                                                                onClick={() => {
+                                                                                    handleStatusChange(index, status)
+                                                                                }
+                                                                                }
+                                                                            >
+                                                                                {status}
+                                                                            </div>
+                                                                        ))
+                                                                    }
+                                                                </div>
 
-                                                    </div>
-                                                )}
+                                                            </div>
+                                                        )}
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                     </td>

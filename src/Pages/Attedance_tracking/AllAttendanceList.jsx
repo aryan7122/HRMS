@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import './AllAttendanceList.scss';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import axios from 'axios';
+import { OutsideClick } from '../Employee_onboarding/AddEmployee/OutsideClick'
 
 import { IoIosCloseCircleOutline } from "react-icons/io";
 // import { GiBackstab, GiNotebook } from "react-icons/gi";
@@ -28,7 +29,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 import NewAttendance from './addNewAttendance/NewAttendance.jsx';
-import { OutsideClick } from '../../components/OutSideClick.jsx';
+// import { OutsideClick } from '../../components/OutSideClick.jsx';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -37,7 +38,8 @@ const AllAttendanceList = (ClosePop) => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
-    const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
+    // const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
+    const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
 
     const [allDel, setAllDel] = useState(true);
     const [thisDel, setThisDel] = useState(false)
@@ -51,17 +53,17 @@ const AllAttendanceList = (ClosePop) => {
     const [dropdowns, setDropdowns] = useState(false)
     const [hidImport, setHidImport] = useState(true);
     const navigate = useNavigate()
-    const [overview, setOverview ] = useState([])
+    const [overview, setOverview] = useState([])
     const [employees, setEmployees] = useState([
-        { EmployeeName: "Hillery Moses", Date: aa, Shift: "General", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
-        { EmployeeName: "Nandan Raikwar", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
-        { EmployeeName: "Vishwas Patel", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
-        { EmployeeName: "Paartho Ghosh", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Half day", isChecked: false },
-        { EmployeeName: "Bhavna Goyal", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
-        { EmployeeName: "Jayshri Tiwari", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
-        { EmployeeName: "Amardeep Singh", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
-        { EmployeeName: "Ramesh Gupta", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
-        { EmployeeName: "Rahul Choudhary", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
+        // { first_name: "Hillery Moses", Date: aa, Shift: "General", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
+        // { EmployeeName: "Nandan Raikwar", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
+        // { EmployeeName: "Vishwas Patel", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
+        // { EmployeeName: "Paartho Ghosh", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Half day", isChecked: false },
+        // { EmployeeName: "Bhavna Goyal", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
+        // { EmployeeName: "Jayshri Tiwari", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
+        // { EmployeeName: "Amardeep Singh", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
+        // { EmployeeName: "Ramesh Gupta", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
+        // { EmployeeName: "Rahul Choudhary", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "06.00 PM", status: "Present", isChecked: false },
     ]);
     const [statusNew, setStatusNew] = useState('')
     console.log('statusNewstatusNew', statusNew)
@@ -78,6 +80,7 @@ const AllAttendanceList = (ClosePop) => {
     const [statusId, setStatusId] = useState('')
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
+        setStatusOpen(false)
     }
     const [selectedFilter, setSelectedFilter] = useState(null);
 
@@ -108,7 +111,7 @@ const AllAttendanceList = (ClosePop) => {
     }
     // const handleCustomDateClick = () => {
     //     setShowCustomDate(!showCustomDate);
-    
+
     //     setShowDateRange(false)
     // };
 
@@ -199,6 +202,7 @@ const AllAttendanceList = (ClosePop) => {
             setStatusNew(2)
         }
         setOpen(true)
+        setStatusOpen(false)
     };
 
     const handleSearchChange = (e) => {
@@ -278,7 +282,7 @@ const AllAttendanceList = (ClosePop) => {
     const filter_left = () => {
         setToggleLeft(!toggleLeft)
     }
- 
+
     const DateDropdowns = () => {
         setDropdowns(!dropdowns)
     }
@@ -353,7 +357,7 @@ const AllAttendanceList = (ClosePop) => {
                 .then(response => {
                     // Success handling
                     // setSms(`Status update successfully`);
-                    toast.success(response.data.message ||   'Status update successfully.', {
+                    toast.success(response.data.message || 'Status update successfully.', {
                         position: "top-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -373,7 +377,7 @@ const AllAttendanceList = (ClosePop) => {
                 })
                 .catch(error => {
                     // Error handling
-                    toast.error(error.message ||'Status update Failed.', {
+                    toast.error(error.message || 'Status update Failed.', {
                         position: "top-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -536,7 +540,7 @@ const AllAttendanceList = (ClosePop) => {
                         </div>
                         <div className="Overview_Right">
                             <p>HALFDAY</p>
-                            <h3>{overview.today_halfday || '0' }</h3>
+                            <h3>{overview.today_halfday || '0'}</h3>
                         </div>
                     </div>
                 </div>
@@ -585,7 +589,7 @@ const AllAttendanceList = (ClosePop) => {
                             <span><FaRegClock /></span>Half day
                         </div>
                     </div>
-                   
+
                 </div>
 
                 <div className="right">
@@ -724,7 +728,7 @@ const AllAttendanceList = (ClosePop) => {
                                 <tr key={index}  >
                                     <td>
                                         <input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} onClick={DelThis} />
-                                       
+
                                     </td>
                                     <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp?.employee?.first_name + " " + emp?.employee?.last_name || ''}</td>
                                     <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp?.date}</td>
@@ -732,45 +736,51 @@ const AllAttendanceList = (ClosePop) => {
                                     <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp.punch_in}</td>
                                     <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp.punch_out}</td>
                                     <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp.total_hours_worked}</td>
-                                    <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>  {emp?.punch_in ? calculateTotalHours(emp?.punch_in, emp?.punch_out) : ''} Hours</td>
+                                    <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>  {emp?.punch_in ? calculateTotalHours(emp?.punch_in, emp?.punch_out) : ''} {emp?.punch_in && 'Hours' }</td>
 
 
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
-                                                <div
-                                                    className={`status-display ${emp.status == 0 ? 'present' : emp.status == 1 ? 'absent' : 'half-day'}`}
-                                                    onClick={() => setIsOpen(isOpen === index ? null : index)}
-                                                >
-                                                    <span className={`left_dot ${emp.status == 0 ? 'present' : emp.status == 1 ? 'absent' : 'half-day'}`}
-                                                    ></span>
+                                                <div onClick={toggleStatus} ref={statusButtonRef}>
                                                     <div
-                                                        onClick={() => {
-                                                            UpdateStatusHndle(emp.id);
-                                                        }}
+                                                        className={`status-display ${emp.status == 0 ? 'present' : emp.status == 1 ? 'absent' : emp.status == 2 ? 'Half Day' : ''}`}
+                                                        onClick={() => setIsOpen(isOpen === index ? null : index)}
                                                     >
-                                                        <div className="">
-                                                            {/* {emp.status} */}
-                                                            {emp.status == 0 ? 'Present' : emp.status == 1 ? 'Absent' : 'Half Day' || ''}
-                                                        </div>
-                                                        <div className="^wdown">
-                                                            <MdOutlineKeyboardArrowDown />
+                                                        <span className={`left_dot ${emp.status == 0 ? 'present' : emp.status == 1 ? 'absent' : emp.status == 2 ? 'Half Day' : ''}`}
+                                                        ></span>
+                                                        <div
+                                                            onClick={() => {
+                                                                UpdateStatusHndle(emp.id);
+                                                            }}
+                                                        >
+                                                            <div className="">
+                                                                {/* {emp.status} */}
+                                                                {emp.status == 0 ? 'Present' : emp.status == 1 ? 'Absent' : emp.status ==  2 ? 'Half Day' : ''}
+                                                            </div>
+                                                            <div className="^wdown">
+                                                                {isOpen === index && isStatusOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {isOpen === index && (
-                                                    <div className="status-options">
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
+                                                {isStatusOpen &&
+                                                    <>
+                                                        {isOpen === index && (
+                                                            <div className="status-options" ref={statusRef}>
+                                                                {statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => handleStatusChange(index, status)}
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))}
                                                             </div>
-                                                        ))}
-                                                    </div>
-                                                )}
+                                                        )}
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                     </td>
@@ -778,7 +788,7 @@ const AllAttendanceList = (ClosePop) => {
 
                                 </tr>
                             ))}
-                        
+
                         </tbody>
                     </table>
                     {loading ? (

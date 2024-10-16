@@ -28,17 +28,21 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 import NewAttendance from '../../Attedance_tracking/addNewAttendance/NewAttendance.jsx';
-import { OutsideClick } from '../../../components/OutSideClick.jsx';
+// import { OutsideClick } from '../../../components/OutSideClick.jsx';
 
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
+
 
 const All_leaves_List = (ClosePop) => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
     const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
+    const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
+
 
     const [allDel, setAllDel] = useState(true);
     const [thisDel, setThisDel] = useState(false)
@@ -56,7 +60,7 @@ const All_leaves_List = (ClosePop) => {
     const [hidImport, setHidImport] = useState(true);
     const navigate = useNavigate()
     const [employees, setEmployees] = useState([
-        // { EmployeeName: "Hillery Moses", Date: 'aa', Shift: "General", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
+        { name: "Hillery Moses", leave_type_name: 'paid', type_of_leave: "General", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Present", isChecked: false },
         // { EmployeeName: "Nandan Raikwar", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
         // { EmployeeName: "Vishwas Patel", Date: "17-Apr-2024", Shift: "Night", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Absent", isChecked: false },
         // { EmployeeName: "Paartho Ghosh", Date: "17-Apr-2024", Shift: "Second", PunchIn: "09.00 AM", PunchOut: "06.00 PM", TotalHoursWorked: "09Hrs", Overtime: "-", status: "Half day", isChecked: false },
@@ -294,9 +298,12 @@ const All_leaves_List = (ClosePop) => {
         setIsOpen(null);
         // }
         setOpen(true)
+        setStatusOpen(false)
     };
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
+        setStatusOpen(false)
+
     }
 
     const ConformOk = () => {
@@ -687,7 +694,7 @@ const All_leaves_List = (ClosePop) => {
                                     <td onClick={() => navigate(`/leave-details/${emp.id}`)}>
                                         {`${new Date(emp.from_date).getDate()}-${new Date(emp.from_date).toLocaleString('en-US', { month: 'short' }).toLowerCase()}-${new Date(emp.from_date).getFullYear()}  - 
                                         ${new Date(emp.to_date).getDate()}-${new Date(emp.to_date).toLocaleString('en-US', { month: 'short' }).toLowerCase()}-${new Date(emp.to_date).getFullYear()}
-                                        `} 
+                                        `}
                                     </td>
 
                                     <td onClick={() => navigate(`/leave-details/${emp.id}`)}>{emp.days}</td>
@@ -697,39 +704,45 @@ const All_leaves_List = (ClosePop) => {
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
-                                                <div
-                                                    className={`status-display ${emp.status.toLowerCase().replace(' ', '-')}`}
-                                                    onClick={() => setIsOpen(isOpen === index ? null : index)}
-                                                >
-                                                    {console.log(emp.status.toLowerCase().replace(' ', '-'))}
-                                                    <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}
-                                                    ></span>
-                                                    <div onClick={() => {
-                                                        UpdateStatusHndle(emp.id);
-                                                    }}>
-                                                        <div className="">
-                                                            {emp.status}
-                                                        </div>
-                                                        <div className="^wdown">
-                                                            <MdOutlineKeyboardArrowDown />
+                                                <div onClick={toggleStatus} ref={statusButtonRef}>
+                                                    <div
+                                                        className={`status-display ${emp.status.toLowerCase().replace(' ', '-')}`}
+                                                        onClick={() => setIsOpen(isOpen === index ? null : index)}
+                                                    >
+                                                        {console.log(emp.status.toLowerCase().replace(' ', '-'))}
+                                                        <span className={`left_dot ${emp.status.toLowerCase().replace(' ', '-')}`}
+                                                        ></span>
+                                                        <div onClick={() => {
+                                                            UpdateStatusHndle(emp.id);
+                                                        }}>
+                                                            <div className="">
+                                                                {emp.status}
+                                                            </div>
+                                                            <div className="^wdown">
+                                                                {isOpen === index && isStatusOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {isOpen === index && (
-                                                    <div className="status-options">
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
+                                                {isStatusOpen &&
+                                                    <>
+                                                        {isOpen === index && (
+                                                            <div className="status-options" ref={statusRef}>
+                                                                {statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => handleStatusChange(index, status)}
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))}
                                                             </div>
-                                                        ))}
+                                                        )}
+                                                    </>
+                                                }
                                                     </div>
-                                                )}
                                             </div>
-                                        </div>
                                     </td>
 
 

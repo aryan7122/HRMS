@@ -16,7 +16,7 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { OutsideClick } from '../../../components/OutSideClick';
+// import { OutsideClick } from '../../../components/OutSideClick';
 import OutsideClick4 from '../../Employee_onboarding/AllEmployeeList/OutSideClick4';
 import axios from 'axios';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -32,6 +32,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // import { TiArrowUnsorted } from "react-icons/ti";
 import dayjs from "dayjs";
+import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
 
 const Performance = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
@@ -40,6 +41,7 @@ const Performance = () => {
     // const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick4();
     // const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
+    const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
 
     // 
     const [error, setError] = useState(false);
@@ -62,7 +64,7 @@ const Performance = () => {
     const NewaddClick = () => {
         navigate('/new-client')
     }
-    
+
     const [employees, setEmployees] = useState([
         {
             sift_name: "Hillery Moses",
@@ -166,11 +168,12 @@ const Performance = () => {
         // setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
         setOpen(true)
-
+        setStatusOpen(false)
     };
 
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
+        setStatusOpen(false)
     }
 
 
@@ -340,6 +343,7 @@ const Performance = () => {
             .catch(error => {
                 console.error("Error fetching data: ", error);
 
+                setLoading(false);
 
             },
             );
@@ -446,10 +450,10 @@ const Performance = () => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                           All Performance list  <p>{employees.length} total</p>
+                            All Performance list  <p>{employees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
-                          
+
 
                             <div className="addEmp" style={{ marginLeft: '20px' }} onClick={NewaddClick}>
                                 <p><span><IoMdAdd /></span> New Client</p>
@@ -653,7 +657,7 @@ const Performance = () => {
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
-                                                <div onClick={toggleFilter4} ref={filterButtonRef4}>
+                                                <div onClick={toggleStatus} ref={statusButtonRef}>
                                                     <div
                                                         className={`status-display ${emp.status === '0' ? 'active' : 'inactive'}`}
                                                         onClick={() => setIsOpen(isOpen === index ? null : index)}
@@ -669,19 +673,23 @@ const Performance = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {isOpen === index && (
-                                                    <div className="status-options" ref={filterRef4}>
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
+                                                {isStatusOpen &&
+                                                    <>
+                                                        {isOpen === index && (
+                                                        <div className="status-options" ref={statusRef}>
+                                                                {statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => handleStatusChange(index, status)}
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))}
                                                             </div>
-                                                        ))}
-                                                    </div>
-                                                )}
+                                                        )}
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                     </td>
@@ -689,7 +697,6 @@ const Performance = () => {
                             ))}
                         </tbody>
                     </table>
-                </div>
                 {loading ? (
                     <div id='Loading'>
                         <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
@@ -702,6 +709,7 @@ const Performance = () => {
                         <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
                     </div>
                 ) : ('')}
+                </div>
                 <div className="pagination">
                     <div className="rows-per-page">
                         <select value={rowsPerPage} onChange={handleRowsPerPageChange}>

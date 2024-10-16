@@ -14,18 +14,20 @@ import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import './EmployeeHealth.scss';
-import { OutsideClick } from '../../../components/OutSideClick';
+// import { OutsideClick } from '../../../components/OutSideClick';
 import axios from 'axios';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const EmployeeHealth = () => {
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
+    const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
     const [isOpen, setIsOpen] = useState(null);
-    const statuses = ['Fully Vaccinated ', 'Partially Vaccinated','Not Vaccinated'];
+    const statuses = ['Fully Vaccinated ', 'Partially Vaccinated', 'Not Vaccinated'];
     const [statusId, setStatusId] = useState('')
     const [statusNew, setStatusNew] = useState('')
 
@@ -202,6 +204,7 @@ const EmployeeHealth = () => {
     };
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
+        setStatusOpen(false)
     }
 
 
@@ -212,8 +215,9 @@ const EmployeeHealth = () => {
         // updatedEmployees[index].status = newStatus;
         // setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
-       setOpen(true)
+        setOpen(true)
         setSms('')
+        setStatusOpen(false)
     };
 
     // status
@@ -285,8 +289,8 @@ const EmployeeHealth = () => {
                 setLoading(false)
 
             })
-    }, [searchQuery, selectedDepartmentId, selectedDate, toDate, fromDate, statusNew,sms,open]);
-// list api
+    }, [searchQuery, selectedDepartmentId, selectedDate, toDate, fromDate, statusNew, sms, open]);
+    // list api
     // status update
     let isRequestInProgress = false;
 
@@ -504,7 +508,7 @@ const EmployeeHealth = () => {
                                         )}
 
                                     </div>
-                                  
+
                                     <div className="filter-option">
                                         <p onClick={handleDepartmentClick}>Department {!showDepartment ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showDepartment && (
@@ -613,7 +617,7 @@ const EmployeeHealth = () => {
                             {currentEmployees.map((emp, index) => (
                                 <tr key={index} >
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
-                                    <td onClick={() => navigate(`/employeehealthdetails/${emp.id}`)}>{emp.employee_name || '-'}{ console.log('emp',emp)}</td>
+                                    <td onClick={() => navigate(`/employeehealthdetails/${emp.id}`)}>{emp.employee_name || '-'}{console.log('emp', emp)}</td>
                                     <td onClick={() => navigate(`/employeehealthdetails/${emp.id}`)}>{emp.department_head || '-'}</td>
                                     <td onClick={() => navigate(`/employeehealthdetails/${emp.id}`)}>{emp.last_checkup_date || '-'}</td>
                                     <td onClick={() => navigate(`/employeehealthdetails/${emp.id}`)}>{emp.checkup_result}</td>
@@ -622,46 +626,52 @@ const EmployeeHealth = () => {
                                     <td>
                                         <div className="status-dropdown" >
                                             <div key={index} className="status-container" >
-                                                <div
-                                                    className={`status-display  ${emp.covid_status ? emp.covid_status.toLowerCase().replace(' ', '-') : ''}`}
-                                                    onClick={() => toggleDropdown(index)}
-                                                >
-                                                    {/* {console.log(`status-display ${emp.covid_status ? emp.covid_status.toLowerCase().replace(' ', '-') : ''}`)} */}
-                                                    <span className={`left_dot  ${emp.covid_status ? emp.covid_status.toLowerCase().replace(' ', '-') : ''}`}></span>
-                                                    <div onClick={() => {
-                                                        UpdateStatusHndle(emp.id);
-                                                    }}>
-                                                        <div
+                                                <div onClick={toggleStatus} ref={statusButtonRef}>
+                                                    <div
+                                                        className={`status-display  ${emp.covid_status ? emp.covid_status.toLowerCase().replace(' ', '-') : ''}`}
+                                                        onClick={() => toggleDropdown(index)}
+                                                    >
+                                                        {/* {console.log(`status-display ${emp.covid_status ? emp.covid_status.toLowerCase().replace(' ', '-') : ''}`)} */}
+                                                        <span className={`left_dot  ${emp.covid_status ? emp.covid_status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                        <div onClick={() => {
+                                                            UpdateStatusHndle(emp.id);
+                                                        }}>
+                                                            <div
 
-                                                        >
-                                                            {emp.covid_status}
-                                                        </div>
-                                                        <div className="^wdown">
-                                                            <MdOutlineKeyboardArrowDown />
+                                                            >
+                                                                {emp.covid_status}
+                                                            </div>
+                                                            <div className="^wdown">
+                                                                {isOpen === index && isStatusOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {isOpen === index && (
-                                                    <div>
-                                                        <div className="status-options" >
-                                                            {
-                                                                statuses.map(status => (
-                                                                    <div
-                                                                        key={status}
-                                                                        className="status-option"
-                                                                        onClick={() => {
-                                                                            handleStatusChange(index, status)
-                                                                        }
-                                                                        }
-                                                                    >
-                                                                        {status}
-                                                                    </div>
-                                                                ))
-                                                            }
-                                                        </div>
+                                                {isStatusOpen &&
+                                                    <>
+                                                        {isOpen === index && (
+                                                            <div>
+                                                                <div className="status-options" ref={statusRef}>
+                                                                    {
+                                                                        statuses.map(status => (
+                                                                            <div
+                                                                                key={status}
+                                                                                className="status-option"
+                                                                                onClick={() => {
+                                                                                    handleStatusChange(index, status)
+                                                                                }
+                                                                                }
+                                                                            >
+                                                                                {status}
+                                                                            </div>
+                                                                        ))
+                                                                    }
+                                                                </div>
 
-                                                    </div>
-                                                )}
+                                                            </div>
+                                                        )}
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                     </td>
@@ -681,7 +691,7 @@ const EmployeeHealth = () => {
                             <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
                         </div>
                     ) : ('')}
-                   
+
                 </div>
                 <div className="pagination">
                     <div className="rows-per-page">

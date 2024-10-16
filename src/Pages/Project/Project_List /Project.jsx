@@ -23,7 +23,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { GiBackstab, GiNotebook } from "react-icons/gi";
 import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
-import { OutsideClick } from '../../../components/OutSideClick.jsx';
+// import { OutsideClick } from '../../../components/OutSideClick.jsx';
 
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -36,6 +36,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { OutsideClickStatus } from '../../Recruitment/List_view_all_job/OutsideClickStatus.jsx';
 import Assign_Project_Popup from '../Assign_Project_Popup/Assign_Project_Popup.jsx';
+import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
 
 
 const Project = () => {
@@ -45,6 +46,8 @@ const Project = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
+    const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
+
     // const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatusDropdown } = OutsideClickStatus();
     const [conformStatus, setConformStatus] = useState(false);
     const [open, setOpen] = useState(false);
@@ -330,6 +333,7 @@ const Project = () => {
 
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
+        setStatusOpen(false)
     }
     const handleEmploymentTypeChange = (event) => {
         setEmploymentType(event.target.value);
@@ -469,6 +473,7 @@ const Project = () => {
         // });
         setSms('')
         setOpen(true)
+        setStatusOpen(false)
     };
 
     const [activeFilter, setActiveFilter] = useState(null); // Track the active filter
@@ -553,7 +558,7 @@ const Project = () => {
             </div>
             <div className="EmpOn_Second_Head">
                 <div id='' onClick={toggleFilter2} ref={filterButtonRef2}>
-                   
+
                 </div>
 
                 <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}>
@@ -811,44 +816,50 @@ const Project = () => {
                                     <td >
                                         <div className="status-dropdown" >
                                             <div key={index} className="status-container" >
-                                                <div
-                                                    className={` status-dis ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}
-                                                    onClick={() => toggleDropdown(index)}
-                                                >
-                                                    <span className={` left_d ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}></span>
-                                                    <div onClick={() => {
-                                                        UpdateStatusHndle(emp.id);
-                                                    }}>
-                                                        <div
+                                                <div onClick={toggleStatus} ref={statusButtonRef}>
+                                                    <div
+                                                        className={` status-dis ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}
+                                                        onClick={() => toggleDropdown(index)}
+                                                    >
+                                                        <span className={` left_d ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                        <div onClick={() => {
+                                                            UpdateStatusHndle(emp.id);
+                                                        }}>
+                                                            <div
 
-                                                        >
-                                                            {emp.status}
-                                                        </div>
-                                                        <div className="^wdown">
-                                                            <MdOutlineKeyboardArrowDown />
+                                                            >
+                                                                {emp.status}
+                                                            </div>
+                                                            <div className="^wdown">
+                                                                <MdOutlineKeyboardArrowDown />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {isOpen === index && (
-                                                    <div>
-                                                        <div className="status-options" >
-                                                            {
-                                                                statuses.map(status => (
-                                                                    <div
-                                                                        key={status}
-                                                                        className="status-option"
-                                                                        onClick={() => {
-                                                                            handleStatusChange(index, status)
-                                                                        }
-                                                                        }
-                                                                    >
-                                                                        {status}
-                                                                    </div>
-                                                                ))
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                )}
+                                                {isStatusOpen &&
+                                                    <>
+                                                        {isOpen === index && (
+                                                            <div>
+                                                                <div className="status-options" ref={statusRef}>
+                                                                    {
+                                                                        statuses.map(status => (
+                                                                            <div
+                                                                                key={status}
+                                                                                className="status-option"
+                                                                                onClick={() => {
+                                                                                    handleStatusChange(index, status)
+                                                                                }
+                                                                                }
+                                                                            >
+                                                                                {status}
+                                                                            </div>
+                                                                        ))
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                     </td>

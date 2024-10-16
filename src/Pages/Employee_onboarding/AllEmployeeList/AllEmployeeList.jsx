@@ -13,7 +13,7 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { OutsideClick } from '../../../components/OutSideClick';
+// import { OutsideClick } from '../../../components/OutSideClick';
 import OutsideClick4 from './OutSideClick4.jsx';
 import axios from 'axios';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -22,6 +22,7 @@ import './AllEmployeeList.scss';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
 
 const AllEmployeeList = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
@@ -29,6 +30,8 @@ const AllEmployeeList = () => {
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
     // const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick4();
+    const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
+
     // 
     const [error, setError] = useState(false);
 
@@ -40,14 +43,14 @@ const AllEmployeeList = () => {
     const [hidImport, setHidImport] = useState(true);
     const [allDel, setAllDel] = useState(false);
     const [toggleLeft, setToggleLeft] = useState(false)
-// 
+    // 
 
     const [conformStatus, setConformStatus] = useState(false);
     const [open, setOpen] = useState(false);
-// 
+    // 
     const navigate = useNavigate()
     const [employees, setEmployees] = useState([
-        // { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "ananya.singh@example.com", phone: "+918555031082", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Active", isChecked: false },
+        // { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "ananya.singh@example.com", phone: "+918555031082", department: "Human Resources", dateOfJoining: "16-May-2024", employee_status: "Active", isChecked: false },
         // { id: "EMP - 0078659", firstName: "Sumit", lastName: "Yadav", email: "vijay.shah@example.com", phone: "+917555232340", department: "Maintenance", dateOfJoining: "16-May-2024", status: "Inactive", isChecked: false },
         // { id: "EMP - 0078659", firstName: "Wasif", lastName: "Hussein", email: "arjun.reddy@example.com", phone: "+918555079422", department: "Manning", dateOfJoining: "16-May-2024", status: "Resigned", isChecked: false },
         // { id: "EMP - 0078659", firstName: "Satyam", lastName: "Singh", email: "aarti.pandey@example.com", phone: "+919955565042", department: "Human Resources", dateOfJoining: "16-May-2024", status: "Terminated", isChecked: false },
@@ -128,6 +131,7 @@ const AllEmployeeList = () => {
 
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
+        setStatusOpen(false)
     }
 
 
@@ -271,10 +275,10 @@ const AllEmployeeList = () => {
             .catch(error => {
                 console.error("Error fetching data: ", error);
                 setError(true)
-
+                setLoading(false);
             });
-    }, [statusId, statusNew, token, sms, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId,open]);
-    
+    }, [statusId, statusNew, token, sms, searchQuery, selectedFilter, employmentType, selectedDate, selectedDepartmentId, open]);
+
     //  
     const [departmentdetails3, setDepartmentdetails3] = useState('');
     const [departmentdetails2, setDepartmentdetails2] = useState('');
@@ -365,7 +369,7 @@ const AllEmployeeList = () => {
         setIsOpen(null);
         setSms('')
         setOpen(true)
-
+        setStatusOpen(false)
     };
 
 
@@ -743,19 +747,19 @@ const AllEmployeeList = () => {
                                 <th>Phone Number</th>
                                 <th>
                                     <div>Department
-                                    <div className="short_ascending_designation">
-                                        <div className='ascending'>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#400f6f" fill="none">
-                                                <path d="M17.9998 15C17.9998 15 13.5809 9.00001 11.9998 9C10.4187 8.99999 5.99985 15 5.99985 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
+                                        <div className="short_ascending_designation">
+                                            <div className='ascending'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#400f6f" fill="none">
+                                                    <path d="M17.9998 15C17.9998 15 13.5809 9.00001 11.9998 9C10.4187 8.99999 5.99985 15 5.99985 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
+                                            <div className='designation'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#400f6f" fill="none">
+                                                    <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
                                         </div>
-                                        <div className='designation'>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#400f6f" fill="none">
-                                                <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div></th>
+                                    </div></th>
                                 <th>Date of Joining</th>
                                 <th>Status</th>
                             </tr>
@@ -796,7 +800,7 @@ const AllEmployeeList = () => {
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
-                                                <div onClick={toggleFilter4} ref={filterButtonRef4}>
+                                                <div onClick={toggleStatus} ref={statusButtonRef}>
                                                     <div
                                                         className={`status-display ${emp.employee_status ? emp.employee_status.toLowerCase().replace(' ', '-') : ''}`}
                                                         onClick={() => setIsOpen(isOpen === index ? null : index)}
@@ -809,24 +813,28 @@ const AllEmployeeList = () => {
                                                                 {emp.employee_status}
                                                             </div>
                                                             <div className="^wdown">
-                                                                <MdOutlineKeyboardArrowDown />
+                                                                {isOpen === index && isStatusOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {isOpen === index && (
-                                                    <div className="status-options" ref={filterRef4}>
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
+                                                {isStatusOpen &&
+                                                    <>
+                                                        {isOpen === index && (
+                                                        <div className="status-options" ref={statusRef}>
+                                                                {statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => handleStatusChange(index, status)}
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))}
                                                             </div>
-                                                        ))}
-                                                    </div>
-                                                )}
+                                                        )}
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                     </td>

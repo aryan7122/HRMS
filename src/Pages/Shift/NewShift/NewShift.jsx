@@ -16,7 +16,7 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { MdDateRange } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { OutsideClick } from '../../../components/OutSideClick';
+// import { OutsideClick } from '../../../components/OutSideClick';
 import OutsideClick4 from '../../Employee_onboarding/AllEmployeeList/OutSideClick4';
 import axios from 'axios';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -29,6 +29,7 @@ import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NewAssignShift from './AddShift/AddShift';
+import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
 
 // import { TiArrowUnsorted } from "react-icons/ti";
 import dayjs from "dayjs";
@@ -40,6 +41,7 @@ const NewShift = () => {
     // const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick4();
     // const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
+    const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
 
     // 
     const [error, setError] = useState(false);
@@ -166,12 +168,14 @@ const NewShift = () => {
         // updatedEmployees[index].status = newStatus;
         // setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
+        setStatusOpen(false)
         setOpen(true)
 
     };
 
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
+        setStatusOpen(false)
     }
 
 
@@ -344,7 +348,7 @@ const NewShift = () => {
 
             },
             );
-    }, [ isr, statusId, statusNew, searchQuery, open, selectedFilter, selectedDate, fromDate, toDate]);
+    }, [isr, statusId, statusNew, searchQuery, open, selectedFilter, selectedDate, fromDate, toDate]);
 
     // Toggle the status (real-time)
     const ConformOk = () => {
@@ -693,7 +697,7 @@ const NewShift = () => {
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
-                                                <div onClick={toggleFilter4} ref={filterButtonRef4}>
+                                                <div onClick={toggleStatus} ref={statusButtonRef}>
                                                     <div
                                                         className={`status-display ${emp.status === '0' ? 'active' : 'inactive'}`}
                                                         onClick={() => setIsOpen(isOpen === index ? null : index)}
@@ -704,24 +708,28 @@ const NewShift = () => {
                                                                 {emp.status == 0 ? 'Active' : 'Inactive'}
                                                             </div>
                                                             <div className="^wdown">
-                                                                <MdOutlineKeyboardArrowDown />
+                                                                {isOpen === index && isStatusOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {isOpen === index && (
-                                                    <div className="status-options" ref={filterRef4}>
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
+                                                {isStatusOpen &&
+                                                    <>
+                                                        {isOpen === index && (
+                                                        <div className="status-options" ref={statusRef}>
+                                                                {statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => handleStatusChange(index, status)}
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))}
                                                             </div>
-                                                        ))}
-                                                    </div>
-                                                )}
+                                                        )}
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                     </td>

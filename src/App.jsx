@@ -53,7 +53,7 @@ import UpdateLeave from './Pages/Leave/Update_Leave/UpdateLeave.jsx';
 import All_leaves_List_Type from './Pages/Leave/All_leaves_List_Type/All_leaves_List_Type.jsx';
 
 {/* Shift Management Imports */ }
-import AllShiftsList from './Pages/ShiftManagement/AllShiftsList/AllShiftsList.jsx';
+import AllShiftsList from './Pages/ShiftManagement____None/AllShiftsList/AllShiftsList.jsx';
 import Shift from './Pages/Shift/Shift.jsx';
 import NewShift from './Pages/Shift/NewShift/NewShift.jsx';
 import SiftDetails from './Pages/Shift/NewShift/SiftDetail/SiftDetails.jsx';

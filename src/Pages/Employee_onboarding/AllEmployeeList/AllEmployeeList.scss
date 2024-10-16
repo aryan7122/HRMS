@@ -783,13 +783,13 @@
           }
 
           .status-options {
-            position: absolute !important;
+            position: absolute ;
             margin-top: 4px;
-            width: 100%;
+            min-width: 120px ;
             top: 100%;
-            color: #000 !important;
+            color: #000 ;
             left: 0;
-            background: white !important;
+            background: white ;
             z-index: 9 !important;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -1226,7 +1226,7 @@ input[type="date"] {
   cursor: pointer;
 }
 
-#reload_data_page:active {
+.div_box:active  #reload_data_page {
   animation: rotate360 0.3s linear;
 }
 

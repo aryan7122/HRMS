@@ -21,19 +21,21 @@ import './All_Applicant_list.scss';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { OutsideClick } from '../Employee_onboarding/AddEmployee/OutsideClick'
 
 import axios from 'axios';
 
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { GiBackstab, GiNotebook } from "react-icons/gi";
 import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
-import { OutsideClick } from '../../components/OutSideClick';
+// import { OutsideClick } from '../../components/OutSideClick';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const All_Applicant_list = () => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
+    const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
 
     const [allDel, setAllDel] = useState(true);
     const [thisDel, setThisDel] = useState(false)
@@ -50,12 +52,12 @@ const All_Applicant_list = () => {
     const [hidImport, setHidImport] = useState(true);
     const navigate = useNavigate()
     const [employees, setEmployees] = useState([
-        { ApplicantName: "Ramesh Gupta", email: "kavita.agarwal@example.com", MobileNumber: "9876543201", JobOpening: "IT coordinator", Source: "Website", SourceName: "-", status: "On Hold", isChecked: false },
-        { ApplicantName: "M. S. Subramaniam", email: "rahul.mishra@example.com", MobileNumber: "9876543201", JobOpening: "Data quality manager", Source: "Walk in", SourceName: "-", status: "Hired", isChecked: false },
-        { ApplicantName: "Vishwas Patel", email: "priya.sharma@example.com", MobileNumber: "9876543206", JobOpening: "Help desk technician", Source: "Campaign", SourceName: "-", status: "New", isChecked: false },
-        { ApplicantName: "Sunil Bhadouriya", email: "rahul.gupta@example.com", MobileNumber: "9876543210", JobOpening: "Support specialist", Source: "Employ Referral", SourceName: "HR-EMP-001", status: "New", isChecked: false },
-        { ApplicantName: "Vikas Tiwari", email: "raj.malhotra@example.com", MobileNumber: "9876543208", JobOpening: "Database administrator", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
-        { ApplicantName: "Paartho Ghosh", email: "amit.kumar@example.com", MobileNumber: "9876543205", JobOpening: "IT technician", Source: "Website", SourceName: "-", status: "Interviewed", isChecked: false },
+        { name: "Ramesh Gupta", email: "kavita.agarwal@example.com", MobileNumber: "9876543201", JobOpening: "IT coordinator", Source: "Website", SourceName: "-", status: "On Hold", isChecked: false },
+        { name: "M. S. Subramaniam", email: "rahul.mishra@example.com", MobileNumber: "9876543201", JobOpening: "Data quality manager", Source: "Walk in", SourceName: "-", status: "Hired", isChecked: false },
+        { name: "Vishwas Patel", email: "priya.sharma@example.com", MobileNumber: "9876543206", JobOpening: "Help desk technician", Source: "Campaign", SourceName: "-", status: "New", isChecked: false },
+        { name: "Sunil Bhadouriya", email: "rahul.gupta@example.com", MobileNumber: "9876543210", JobOpening: "Support specialist", Source: "Employ Referral", SourceName: "HR-EMP-001", status: "New", isChecked: false },
+        { name: "Vikas Tiwari", email: "raj.malhotra@example.com", MobileNumber: "9876543208", JobOpening: "Database administrator", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
+        { name: "Paartho Ghosh", email: "amit.kumar@example.com", MobileNumber: "9876543205", JobOpening: "IT technician", Source: "Website", SourceName: "-", status: "Interviewed", isChecked: false },
         // { ApplicantName: "Bhavna Goyal", Email: "aarti.pandey@example.com", MobileNumber: "9876543202", JobOpening: "Web developer", Source: "Website", SourceName: "-", status: "New", isChecked: false },
         // { ApplicantName: "Navjot Kaur", Email: "anjali.rao@example.com", MobileNumber: "9876543209", JobOpening: "Cloud system engineer", Source: "Website", SourceName: "-", status: "On Hold", isChecked: false },
         // { ApplicantName: "Hillery Moses", Email: "manish.jain@example.com", MobileNumber: "9876543203", JobOpening: "Web administrator", Source: "Website", SourceName: "-", status: "Rejected", isChecked: false },
@@ -127,6 +129,7 @@ const All_Applicant_list = () => {
     // const employeeType = ['All', 'Permanent', 'On Contract', 'Intern', 'Trainee'];
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
+        setStatusOpen(false)
     }
     const handleStatusChange = (index, newStatus) => {
         setStatusNew(newStatus)
@@ -135,6 +138,7 @@ const All_Applicant_list = () => {
         // // updatedEmployees[index].status = newStatus;
         // setFilteredEmployees(updatedEmployees);
         setIsOpen(null);
+        setStatusOpen(false)
         setSms('')
     };
 
@@ -304,7 +308,7 @@ const All_Applicant_list = () => {
 
             },
             );
-    }, [statusNew, sms, , searchQuery, activeFilter, selectedDate, fromDate, toDate,open]);
+    }, [statusNew, sms, , searchQuery, activeFilter, selectedDate, fromDate, toDate, open]);
 
     // list
 
@@ -531,7 +535,7 @@ const All_Applicant_list = () => {
 
                         {isFilterOpen && (
                             <div className="filter-container" ref={filterRef}>
-                                
+
                                 <div className="filter-options">
                                     <div className="filter-option" >
                                         <p onClick={handleCustomDateClick}>Custom Date {!showCustomDate ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
@@ -691,36 +695,41 @@ const All_Applicant_list = () => {
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
-                                                <div
-                                                    className={`status-display ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}
-                                                    onClick={() => setIsOpen(isOpen === index ? null : index)}
-                                                >
-                                                    <span className={`left_dot ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}></span>
-                                                    <div onClick={() => {
-                                                        UpdateStatusHndle(emp.id);
-                                                    }}>
-                                                        <div className="">
-                                                            {emp.status || 'Unknown Status'} {/* Optional: Fallback text */}
-                                                        </div>
-                                                        <div className="^wdown">
-                                                            <MdOutlineKeyboardArrowDown />
+                                                <div onClick={toggleStatus} ref={statusButtonRef}>
+                                                    <div
+                                                        className={`status-display ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}
+                                                        onClick={() => setIsOpen(isOpen === index ? null : index)}
+                                                    >
+                                                        <span className={`left_dot ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                        <div onClick={() => {
+                                                            UpdateStatusHndle(emp.id);
+                                                        }}>
+                                                            <div className="">
+                                                                {emp.status || 'Unknown Status'} {/* Optional: Fallback text */}
+                                                            </div>
+                                                            <div className="^wdown">
+                                                                {isOpen === index && isStatusOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                {isOpen === index && (
-                                                    <div className="status-options">
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
+                                                {isStatusOpen &&
+                                                    <>
+                                                        {isOpen === index && (
+                                                            <div className="status-options" ref={statusRef}>
+                                                                {statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => handleStatusChange(index, status)}
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))}
                                                             </div>
-                                                        ))}
-                                                    </div>
-                                                )}
+                                                        )}
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                     </td>
