@@ -3,18 +3,18 @@ import { createSlice } from '@reduxjs/toolkit';
 const userSlice = createSlice({
     name: 'user',
     initialState: {
-        sidebarW: false,  // Sidebar की existing state
-        liHover: false,   // नई state liHover जोड़ी गई है
+        sidebarW: false,  
+        liHover: false,   
     },
     reducers: {
         setSidebarW: (state, action) => {
-            state.sidebarW = action.payload;  // Sidebar की state को update किया जा रहा है
+            state.sidebarW = action.payload;  
         },
         setLiHover: (state, action) => {
-            state.liHover = action.payload;  // liHover state को update किया जा रहा है
+            state.liHover = action.payload;  
         }
     },
 });
 
-export const { setSidebarW, setLiHover } = userSlice.actions; // नए action को export करें
+export const { setSidebarW, setLiHover } = userSlice.actions; 
 export default userSlice.reducer;

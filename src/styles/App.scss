@@ -6,7 +6,16 @@
   // font-weight: <weight>;
   font-style: normal;
 }
+    ::selection {
+  background: #8400ff;   // Background color of the selected text
+  color: rgb(0, 0, 0);        // Text color of the selected text
+}
+.action_card{
+   -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 
+}
 .NavBar {
   // position: fixed;
   // width: 100vw;

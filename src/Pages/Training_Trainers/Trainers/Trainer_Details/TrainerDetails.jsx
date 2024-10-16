@@ -246,7 +246,7 @@ const TrainerDetails = () => {
     }, [id, token, refresh, departmentdetails2]);
 
     const AllEmp = () => {
-        navigate('/client')
+        navigate('/trainers')
     }
     // const AllEmpPage = () => {
     //     navigate('/department')

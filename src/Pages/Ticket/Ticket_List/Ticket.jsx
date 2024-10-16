@@ -28,16 +28,18 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 // import NewAttendance from './addNewAttendance/NewAttendance.jsx';
-import { OutsideClick } from '../../../components/OutSideClick.jsx';
+// import { OutsideClick } from '../../../components/OutSideClick.jsx';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
 
 const Ticket = (ClosePop) => {
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
     const { isOpen: isFilterOpen3, ref: filterRef3, buttonRef: filterButtonRef3, handleToggle: toggleFilter3 } = OutsideClick();
     const { isOpen: isFilterOpen4, ref: filterRef4, buttonRef: filterButtonRef4, handleToggle: toggleFilter4 } = OutsideClick();
+    const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
 
     const [allDel, setAllDel] = useState(true);
     const [thisDel, setThisDel] = useState(false)
@@ -78,6 +80,8 @@ const Ticket = (ClosePop) => {
     const [statusId, setStatusId] = useState('')
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
+        setStatusOpen(false)
+
     }
     const [selectedFilter, setSelectedFilter] = useState(null);
 
@@ -199,6 +203,8 @@ const Ticket = (ClosePop) => {
             setStatusNew(2)
         }
         setOpen(true)
+        setStatusOpen(false)
+
     };
 
     const handleSearchChange = (e) => {
@@ -448,7 +454,7 @@ const Ticket = (ClosePop) => {
                     <div className="top-bar">
                         <h2>
                             <div className='span'><HiUserPlus /></div>
-                           All Tickets list <p>345 total</p>
+                            All Tickets list <p>345 total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={() => navigate('/add-ticket')}>
@@ -598,7 +604,11 @@ const Ticket = (ClosePop) => {
                 <div className="right">
                     <div className="refresh divRight" onClick={handleRefresh}>
                         <div className='div_box'>
-                            <span><BiRevision /></span>
+                            <span id='reload_data_page'>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" color="#400f6f" fill="none">
+                                    <path d="M15.1667 0.999756L15.7646 2.11753C16.1689 2.87322 16.371 3.25107 16.2374 3.41289C16.1037 3.57471 15.6635 3.44402 14.7831 3.18264C13.9029 2.92131 12.9684 2.78071 12 2.78071C6.75329 2.78071 2.5 6.90822 2.5 11.9998C2.5 13.6789 2.96262 15.2533 3.77093 16.6093M8.83333 22.9998L8.23536 21.882C7.83108 21.1263 7.62894 20.7484 7.7626 20.5866C7.89627 20.4248 8.33649 20.5555 9.21689 20.8169C10.0971 21.0782 11.0316 21.2188 12 21.2188C17.2467 21.2188 21.5 17.0913 21.5 11.9998C21.5 10.3206 21.0374 8.74623 20.2291 7.39023" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
                         </div>
                     </div>
                     <div className="search divRight">
@@ -616,7 +626,25 @@ const Ticket = (ClosePop) => {
                     </div>
                     <div className="filter divRight">
                         <div className='div_box' onClick={toggleFilter} ref={filterButtonRef}>
-                            <span><IoFilterSharp /></span>
+                            {!isFilterOpen ?
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" color="#400F6F" fill="none">
+                                    <path d="M3 7H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M3 17H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M18 17L21 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M15 7L21 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M6 7C6 6.06812 6 5.60218 6.15224 5.23463C6.35523 4.74458 6.74458 4.35523 7.23463 4.15224C7.60218 4 8.06812 4 9 4C9.93188 4 10.3978 4 10.7654 4.15224C11.2554 4.35523 11.6448 4.74458 11.8478 5.23463C12 5.60218 12 6.06812 12 7C12 7.93188 12 8.39782 11.8478 8.76537C11.6448 9.25542 11.2554 9.64477 10.7654 9.84776C10.3978 10 9.93188 10 9 10C8.06812 10 7.60218 10 7.23463 9.84776C6.74458 9.64477 6.35523 9.25542 6.15224 8.76537C6 8.39782 6 7.93188 6 7Z" stroke="currentColor" stroke-width="1.5" />
+                                    <path d="M12 17C12 16.0681 12 15.6022 12.1522 15.2346C12.3552 14.7446 12.7446 14.3552 13.2346 14.1522C13.6022 14 14.0681 14 15 14C15.9319 14 16.3978 14 16.7654 14.1522C17.2554 14.3552 17.6448 14.7446 17.8478 15.2346C18 15.6022 18 16.0681 18 17C18 17.9319 18 18.3978 17.8478 18.7654C17.6448 19.2554 17.2554 19.6448 16.7654 19.8478C16.3978 20 15.9319 20 15 20C14.0681 20 13.6022 20 13.2346 19.8478C12.7446 19.6448 12.3552 19.2554 12.1522 18.7654C12 18.3978 12 17.9319 12 17Z" stroke="currentColor" stroke-width="1.5" />
+                                </svg>
+                                :
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" color="#400F6F" fill="none">
+                                    <path d="M7 21L7 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M17 21L17 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M17 6L17 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M7 9L7 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M7 18C6.06812 18 5.60218 18 5.23463 17.8478C4.74458 17.6448 4.35523 17.2554 4.15224 16.7654C4 16.3978 4 15.9319 4 15C4 14.0681 4 13.6022 4.15224 13.2346C4.35523 12.7446 4.74458 12.3552 5.23463 12.1522C5.60218 12 6.06812 12 7 12C7.93188 12 8.39782 12 8.76537 12.1522C9.25542 12.3552 9.64477 12.7446 9.84776 13.2346C10 13.6022 10 14.0681 10 15C10 15.9319 10 16.3978 9.84776 16.7654C9.64477 17.2554 9.25542 17.6448 8.76537 17.8478C8.39782 18 7.93188 18 7 18Z" stroke="currentColor" stroke-width="1.5" />
+                                    <path d="M17 12C16.0681 12 15.6022 12 15.2346 11.8478C14.7446 11.6448 14.3552 11.2554 14.1522 10.7654C14 10.3978 14 9.93188 14 9C14 8.06812 14 7.60218 14.1522 7.23463C14.3552 6.74458 14.7446 6.35523 15.2346 6.15224C15.6022 6 16.0681 6 17 6C17.9319 6 18.3978 6 18.7654 6.15224C19.2554 6.35523 19.6448 6.74458 19.8478 7.23463C20 7.60218 20 8.06812 20 9C20 9.93188 20 10.3978 19.8478 10.7654C19.6448 11.2554 19.2554 11.6448 18.7654 11.8478C18.3978 12 17.9319 12 17 12Z" stroke="currentColor" stroke-width="1.5" />
+                                </svg>
+                            }
                         </div>
 
                         {isFilterOpen && (
@@ -682,12 +710,25 @@ const Ticket = (ClosePop) => {
                                         </span>
                                     } */}
                                 </th>
-                                <th> <div>Employee Name<span><TiArrowUnsorted /></span></div></th>
+                                <th> <div>Employee Name
+                                    <div className="short_ascending_designation">
+                                        <div className='ascending'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#400f6f" fill="none">
+                                                <path d="M17.9998 15C17.9998 15 13.5809 9.00001 11.9998 9C10.4187 8.99999 5.99985 15 5.99985 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                        <div className='designation'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#400f6f" fill="none">
+                                                <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div></th>
                                 <th>Requested To</th>
                                 <th>Priority</th>
                                 <th>Subject</th>
                                 <th>Creation date</th>
-                               
+
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -703,44 +744,50 @@ const Ticket = (ClosePop) => {
                                     <td className='td' onClick={() => navigate(`/ticket-details`)}>{emp.shift_name}</td>
                                     <td className='td' onClick={() => navigate(`/ticket-details`)}>{emp.punch_in}</td>
                                     <td className='td' onClick={() => navigate(`/ticket-details/${emp?.id}`)}>{emp.punch_out}</td>
-                                 
+
 
                                     <td>
                                         <div className="status-dropdown">
                                             <div key={index} className="status-container">
-                                                <div
-                                                    className={`status-display ${emp.status == 0 ? 'Resolved' : emp.status == 1 ? 'Pending' : emp.status == 2 ? 'Rejected' :''}`}
-                                                    onClick={() => setIsOpen(isOpen === index ? null : index)}
-                                                >
-                                                    <span className={`left_dot ${emp.status == 0 ? 'Resolved' : emp.status == 1 ? 'Pending' : emp.status == 2 ? 'Rejected' : ''}`}
-                                                    ></span>
+                                                <div onClick={toggleStatus} ref={statusButtonRef}>
                                                     <div
-                                                        onClick={() => {
-                                                            UpdateStatusHndle(emp.id);
-                                                        }}
+                                                        className={`status-display ${emp.status == 0 ? 'Resolved' : emp.status == 1 ? 'Pending' : emp.status == 2 ? 'Rejected' : ''}`}
+                                                        onClick={() => setIsOpen(isOpen === index ? null : index)}
                                                     >
-                                                        <div className="">
-                                                            {/* {emp.status} */}
-                                                            {emp.status == 0 ? 'Resolved' : emp.status == 1 ? 'Pending' : emp.status == 2 ? 'Rejected' : ''}
-                                                        </div>
-                                                        <div className="^wdown">
-                                                            <MdOutlineKeyboardArrowDown />
+                                                        <span className={`left_dot ${emp.status == 0 ? 'Resolved' : emp.status == 1 ? 'Pending' : emp.status == 2 ? 'Rejected' : ''}`}
+                                                        ></span>
+                                                        <div
+                                                            onClick={() => {
+                                                                UpdateStatusHndle(emp.id);
+                                                            }}
+                                                        >
+                                                            <div className="">
+                                                                {/* {emp.status} */}
+                                                                {emp.status == 0 ? 'Resolved' : emp.status == 1 ? 'Pending' : emp.status == 2 ? 'Rejected' : ''}
+                                                            </div>
+                                                            <div className="^wdown">
+                                                                <MdOutlineKeyboardArrowDown />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {isOpen === index && (
-                                                    <div className="status-options">
-                                                        {statuses.map(status => (
-                                                            <div
-                                                                key={status}
-                                                                className="status-option"
-                                                                onClick={() => handleStatusChange(index, status)}
-                                                            >
-                                                                {status}
+                                                {isStatusOpen &&
+                                                    <>
+                                                        {isOpen === index && (
+                                                            <div className="status-options" ref={statusRef}>
+                                                                {statuses.map(status => (
+                                                                    <div
+                                                                        key={status}
+                                                                        className="status-option"
+                                                                        onClick={() => handleStatusChange(index, status)}
+                                                                    >
+                                                                        {status}
+                                                                    </div>
+                                                                ))}
                                                             </div>
-                                                        ))}
-                                                    </div>
-                                                )}
+                                                        )}
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                     </td>
@@ -794,7 +841,7 @@ const Ticket = (ClosePop) => {
                 </div>
 
             </div>
-        </div>
+        </div >
     );
 };
 

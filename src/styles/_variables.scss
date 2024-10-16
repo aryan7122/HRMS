@@ -1,7 +1,7 @@
 // variables.scss
 $primary-color: #320b57;
 $lightprimary:#946fb618;
-$secondary-color: #14cb00;
+$secondary-color: #A3C701;
 $text-color: #fff;
 $background-color: #320b57e8;
 $border-color: #c500fb;
@@ -26,58 +26,6 @@ $font_size_table_th: 13px;
 $font_size_table_td: 14px;
 $font_size_table_head: 26px;
 
+$font_size_nav_head:26px;
+$font_size_status:14px ;
 
-
-// For medium screens (between 1024px and 1500px)
-@media (max-width: 1400px) {
-  $font_size_details_grey: 12px;
-  $font_size_details_color: 13px;
-  $font_size_small_title: 11px;
-
-  $font_size_base: 13px;
-  $font_size_form_title: 16px;
-  $font_size_form_header: 17px;
-  $font_size_table_text: 13px;
-
-  $font_size_table_title: 15px;
-  $font_size_table_th: 12px;
-  $font_size_table_td: 13px;
-  $font_size_table_head: 13px;
-
-}
-
-// For tablets (between 768px and 1024px)
-@media (max-width: 1024px) and (min-width: 768px) {
-  $font_size_details_grey: 11px;
-  $font_size_details_color: 12px;
-  $font_size_small_title: 10px;
-
-  $font_size_base: 12px;
-  $font_size_form_title: 15px;
-  $font_size_form_header: 16px;
-  $font_size_table_text: 12px;
-
-  $font_size_table_title: 14px;
-  $font_size_table_th: 11px;
-  $font_size_table_td: 12px;
-}
-
-// For mobile screens (less than 768px)
-@media (max-width: 768px) {
-  $font_size_details_grey: 10px;
-  $font_size_details_color: 11px;
-  $font_size_small_title: 9px;
-
-  $font_size_base: 11px;
-  $font_size_form_title: 14px;
-  $font_size_form_header: 15px;
-  $font_size_table_text: 11px;
-
-  $font_size_table_title: 13px;
-  $font_size_table_th: 10px;
-  $font_size_table_td: 11px;
-}
-// Fonts
-
-
-// $text-color-grey:;
