@@ -797,9 +797,9 @@ const Project = () => {
                                         <div className='status-dropdown' onClick={projectDetailsPage}>
                                             <div className="status-container" >
                                                 <div
-                                                    className={`status-display ${emp.priority ? emp.priority.toLowerCase().replace(' ', '-') : ''}`}
+                                                    className={`status-dis ${emp.priority ? emp.priority.toLowerCase().replace(' ', '-') : ''}`}
                                                 >
-                                                    <span className={`left_dot ${emp.priority ? emp.priority.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                    <span className={`left_d ${emp.priority ? emp.priority.toLowerCase().replace(' ', '-') : ''}`}></span>
                                                     <div >
                                                         <div
                                                         >
@@ -818,10 +818,10 @@ const Project = () => {
                                             <div key={index} className="status-container" >
                                                 <div onClick={toggleStatus} ref={statusButtonRef}>
                                                     <div
-                                                        className={` status-dis ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}
+                                                        className={` status-display  ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}
                                                         onClick={() => toggleDropdown(index)}
                                                     >
-                                                        <span className={` left_d ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                        <span className={`  left_dot ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}></span>
                                                         <div onClick={() => {
                                                             UpdateStatusHndle(emp.id);
                                                         }}>
