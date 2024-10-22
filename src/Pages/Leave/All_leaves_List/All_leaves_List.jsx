@@ -300,6 +300,12 @@ const All_leaves_List = (ClosePop) => {
         setOpen(true)
         setStatusOpen(false)
     };
+    useEffect(() => {
+        if (isStatusOpen == false) {
+            setIsOpen(null)
+        }
+    }, [isStatusOpen])
+
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
         setStatusOpen(false)

@@ -141,6 +141,12 @@ const All_Applicant_list = () => {
         setStatusOpen(false)
         setSms('')
     };
+    useEffect(() => {
+        if (isStatusOpen == false) {
+            setIsOpen(null)
+        }
+    }, [isStatusOpen])
+
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);

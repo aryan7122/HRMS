@@ -79,6 +79,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     }
 
 
+   
 
     const menuItems = [
         {
@@ -309,7 +310,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                                 </li>
                                 <li>
                                     <span className='spanLiP'>
-                                        <span><BsClipboardData /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Report</p>}  {isOpen ? '' : <div className='hover_P'><p>Report</p> <div></div></div>}
+                                        <span onClick={ () => navigate('/reports')}><BsClipboardData /></span>{isOpen && <p className={` ${isOpen ? 'openP' : 'closeP'}`}>Report</p>}  {isOpen ? '' : <div className='hover_P'><p>Report</p> <div></div></div>}
                                     </span>
                                 </li>
                             </ul>

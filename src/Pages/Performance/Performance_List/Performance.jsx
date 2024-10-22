@@ -62,7 +62,7 @@ const Performance = () => {
     // 
     const navigate = useNavigate()
     const NewaddClick = () => {
-        navigate('/new-client')
+        navigate('/add-performance')
     }
 
     const [employees, setEmployees] = useState([
@@ -170,6 +170,12 @@ const Performance = () => {
         setOpen(true)
         setStatusOpen(false)
     };
+    useEffect(() => {
+        if (isStatusOpen == false) {
+            setIsOpen(null)
+        }
+    }, [isStatusOpen])
+
 
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
@@ -456,7 +462,7 @@ const Performance = () => {
 
 
                             <div className="addEmp" style={{ marginLeft: '20px' }} onClick={NewaddClick}>
-                                <p><span><IoMdAdd /></span> New Client</p>
+                                <p><span><IoMdAdd /></span>Add Performance</p>
                             </div>
                             <div className="menu_head" onClick={handleHidImport} ref={filterButtonRef3}>
                                 <div className="div_top"><CiMenuKebab /></div>

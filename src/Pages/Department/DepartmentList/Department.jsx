@@ -722,7 +722,7 @@ const Department = () => {
                                         />
 
                                         <label className="blackcolor1">Parent Department</label>
-                                        <div className="dropdown">
+                                        <div className="dropdown  dropdown_2d">
                                             <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
                                                 <div className='divselect'>{formDetails_2.parentDepartment_2 || "Select department"}</div>
                                                 <span id="toggle_selectIcon"> {!isDepartmentOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
@@ -750,7 +750,7 @@ const Department = () => {
                                             )}
                                         </div>
                                         <label>Department Head</label>
-                                        <div className="dropdown">
+                                        <div className="dropdown dropdown_2d">
                                             <div className="dropdown-button" ref={departmentButtonRef2} onClick={toggleDepartment2}>
                                                 <div className='divselect'>{formDetails_2.departmentHead_2 || "Select department head"}</div>
                                                 <span id="toggle_selectIcon"> {!isDepartmentOpen2 ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>

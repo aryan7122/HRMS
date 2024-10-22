@@ -471,6 +471,12 @@ const AllJobList = () => {
         setStatusOpen(false)
         setOpen(true)
     };
+    useEffect(() => {
+        if (isStatusOpen == false) {
+            setIsOpen(null)
+        }
+    }, [isStatusOpen])
+
 
     const [activeFilter, setActiveFilter] = useState(null); // Track the active filter
     // const filterRef2 = useRef(null);

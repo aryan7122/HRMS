@@ -371,6 +371,12 @@ const AllEmployeeList = () => {
         setOpen(true)
         setStatusOpen(false)
     };
+    useEffect(() => {
+        if (isStatusOpen == false) {
+            setIsOpen(null)
+        }
+    }, [isStatusOpen])
+
 
 
 

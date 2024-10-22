@@ -354,7 +354,13 @@ const Shift = () => {
     const handleDateChange = (newDate) => {
         const selectedStartDate = getStartOfWeek(new Date(newDate));
         setStartDate(selectedStartDate);
+
+        // Jab date successfully select ho tab setWeekSelectOpen ko false set karo
+        if (newDate) {
+            setWeekSelectOpen(false);
+        }
     };
+
 
     // Function to get the date for each day of the current week
     const getDatesForWeek = (startDate) => {
@@ -373,7 +379,10 @@ const Shift = () => {
 
         return dates;
     };
-
+    const [weekSelectOpen, setWeekSelectOpen] = useState(false)
+    const HandleWeekSelectOpen = () =>{
+        setWeekSelectOpen(!weekSelectOpen)
+    }
     // Get the current week's dates
     const weekDates = getDatesForWeek(startDate);
 
@@ -636,15 +645,15 @@ const Shift = () => {
 
                 </div>
                 <div className="right">
-                    <div className="toggle_selectIcon divRight" onClick={toggleFilter4} ref={filterButtonRef4}>
-                        <div className='div_box'>
+                    <div className="toggle_selectIcon divRight">
+                        <div className='div_box' onClick={HandleWeekSelectOpen}>
                             <span id='toggle_selectIcon'>
-                                Select Week {!isFilterOpen4 ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                                Select Week {!weekSelectOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
                             </span>
                         </div>
-                        {isFilterOpen4 &&
-                            <div id='DateDropdowns' ref={filterRef4}>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        {weekSelectOpen &&
+                            <div id='DateDropdowns'>
+                                <LocalizationProvider dateAdapter={AdapterDayjs} ref={filterRef4}>
                                     <DateCalendar onChange={(newDate) => handleDateChange(newDate)} />
                                 </LocalizationProvider>
                             </div>

@@ -204,6 +204,11 @@ const AllAttendanceList = (ClosePop) => {
         setOpen(true)
         setStatusOpen(false)
     };
+    useEffect(() => {
+        if (isStatusOpen == false) {
+            setIsOpen(null)
+        }
+    }, [isStatusOpen])
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);

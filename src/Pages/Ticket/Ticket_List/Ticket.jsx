@@ -206,6 +206,12 @@ const Ticket = (ClosePop) => {
         setStatusOpen(false)
 
     };
+    useEffect(() => {
+        if (isStatusOpen == false) {
+            setIsOpen(null)
+        }
+    }, [isStatusOpen])
+
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
