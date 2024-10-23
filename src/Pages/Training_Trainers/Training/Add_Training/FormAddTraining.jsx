@@ -27,26 +27,26 @@ const FormAddTrainers = ({ onSubmit }) => {
     const { isOpen: isTrainingOpen, ref: TrainingRef, buttonRef: TrainingButtonRef, handleToggle: toggleTraining, setIsOpen: setTrainingOpen } = OutsideClick();
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
-    const [totalday, setTotalday] = useState(null);
+    const [totalDays, setTotalDays] = useState(null);
 
     const handleStartDateChange = (date) => {
         setStartDate(date);
-        calculateTotalDays(startDate, endDate);
-    };
-    
-    const handleEndDateChange = (date) => {
-        setEndDate(date);
-        calculateTotalDays(startDate, endDate);
+        calculateTotalDays(date, endDate); // Pass the new startDate and current endDate
     };
 
-    const calculateTotalDays = (startDate, endDate) => {
-        if (startDate && endDate) {
-            const start = new Date(startDate);
-            const end = new Date(endDate);
-            const diffTime = Math.abs(end - start);
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+        calculateTotalDays(startDate, date); // Pass the current startDate and new endDate
+    };
+
+    const calculateTotalDays = (start, end) => {
+        if (start && end) {
+            const startDate = new Date(start);
+            const endDate = new Date(end);
+            const diffTime = Math.abs(endDate - startDate);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             console.log("Total Days: ", diffDays);
-            setTotalday(diffDays+1)
+            setTotalDays(diffDays + 1); // Add 1 to include both start and end dates
         }
     };
 
@@ -424,7 +424,7 @@ const FormAddTrainers = ({ onSubmit }) => {
                             <DatePicker label="End Date" onDateChange={handleEndDateChange} />
                             <div className="form-group">
                                 <label>Duration</label>
-                                <input type="number" name="totalDays" placeholder='Select Start and End Date' disabled value={totalday} onChange={handleChange} />
+                                <input type="number" name="totalDays" placeholder='Select Start and End Date' disabled value={totalDays} onChange={handleChange} />
                             </div>
                          
                             <div className="form-group">
