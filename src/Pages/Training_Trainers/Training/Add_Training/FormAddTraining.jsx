@@ -16,8 +16,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
-
+import DatePicker from '../../../../components/DatePicker';
 const FormAddTrainers = ({ onSubmit }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -26,7 +25,30 @@ const FormAddTrainers = ({ onSubmit }) => {
     const { isOpen: isTypeOpen, ref: typeRef, buttonRef: typeButtonRef, handleToggle: toggleType, setIsOpen: setTypeOpen } = OutsideClick();
     const { isOpen: isEmployeeNameOpen, ref: EmployeeNameRef, buttonRef: EmployeeNameButtonRef, handleToggle: toggleEmployeeName, setIsOpen: setEmployeeNameOpen } = OutsideClick();
     const { isOpen: isTrainingOpen, ref: TrainingRef, buttonRef: TrainingButtonRef, handleToggle: toggleTraining, setIsOpen: setTrainingOpen } = OutsideClick();
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [totalday, setTotalday] = useState(null);
 
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+        calculateTotalDays(startDate, endDate);
+    };
+    
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+        calculateTotalDays(startDate, endDate);
+    };
+
+    const calculateTotalDays = (startDate, endDate) => {
+        if (startDate && endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            console.log("Total Days: ", diffDays);
+            setTotalday(diffDays+1)
+        }
+    };
 
     const [formData, setFormData] = useState({
         employeeName: '',
@@ -119,32 +141,32 @@ const FormAddTrainers = ({ onSubmit }) => {
     };
 
     // ////////////////////////
-    const [selectedStartDate, setSelectedStartDate] = useState(null);
-    const [selectedEndDate, setSelectedEndDate] = useState(null);
-    const [totalday, setTotalday] = useState(null);
+    // const [selectedStartDate, setSelectedStartDate] = useState(null);
+    // const [selectedEndDate, setSelectedEndDate] = useState(null);
+    // const [totalday, setTotalday] = useState(null);
 
-    const handleDateChange = (newDate) => {
-        const formattedDate = newDate.format('YYYY-MM-DD'); // Format date as yyyy-mm-dd
-        setSelectedStartDate(formattedDate);
-        calculateTotalDays(formattedDate, selectedEndDate);
-    };
+    // const handleDateChange = (newDate) => {
+    //     const formattedDate = newDate.format('YYYY-MM-DD'); // Format date as yyyy-mm-dd
+    //     setSelectedStartDate(formattedDate);
+    //     calculateTotalDays(formattedDate, selectedEndDate);
+    // };
 
-    const handleDateEndChange = (newDate) => {
-        const formattedDate = newDate.format('YYYY-MM-DD'); // Format date as yyyy-mm-dd
-        setSelectedEndDate(formattedDate);
-        calculateTotalDays(selectedStartDate, formattedDate);
-    };
+    // const handleDateEndChange = (newDate) => {
+    //     const formattedDate = newDate.format('YYYY-MM-DD'); // Format date as yyyy-mm-dd
+    //     setSelectedEndDate(formattedDate);
+    //     calculateTotalDays(selectedStartDate, formattedDate);
+    // };
 
-    const calculateTotalDays = (selectedStartDate, selectedEndDate) => {
-        if (selectedStartDate && selectedEndDate) {
-            const start = new Date(selectedStartDate);
-            const end = new Date(selectedEndDate);
-            const diffTime = Math.abs(end - start);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            console.log("Total Days: ", diffDays);
-            setTotalday(diffDays+1)
-        }
-    };
+    // const calculateTotalDays = (selectedStartDate, selectedEndDate) => {
+    //     if (selectedStartDate && selectedEndDate) {
+    //         const start = new Date(selectedStartDate);
+    //         const end = new Date(selectedEndDate);
+    //         const diffTime = Math.abs(end - start);
+    //         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    //         console.log("Total Days: ", diffDays);
+    //         setTotalday(diffDays+1)
+    //     }
+    // };
 
 
     // //////////////////
@@ -398,69 +420,13 @@ const FormAddTrainers = ({ onSubmit }) => {
                                     )}
                                 </div>
                             </div>
-                            <div className="form-group grupdate2">
-                                <label htmlFor="">Start Date</label>
-                                <div className="dropdown-content date-h" id=''>
-                                    <div className='date_tittle'>
-                                        <div className='title__show__d'>
-                                            {!selectedStartDate ? <span> Enter Start Date</span> : selectedStartDate}
-                                        </div>
-                                        <div className='date_icon'>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                                <path d="M18 2V4M6 2V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M11.9955 13H12.0045M11.9955 17H12.0045M15.991 13H16M8 13H8.00897M8 17H8.00897" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M3.5 8H20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M2.5 12.2432C2.5 7.88594 2.5 5.70728 3.75212 4.35364C5.00424 3 7.01949 3 11.05 3H12.95C16.9805 3 18.9958 3 20.2479 4.35364C21.5 5.70728 21.5 7.88594 21.5 12.2432V12.7568C21.5 17.1141 21.5 19.2927 20.2479 20.6464C18.9958 22 16.9805 22 12.95 22H11.05C7.01949 22 5.00424 22 3.75212 20.6464C2.5 19.2927 2.5 17.1141 2.5 12.7568V12.2432Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M3 8H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    {/* <input type="date" name="date" id="" onChange={handleDateChange} /> */}
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <Box
-                                        >
-                                            <DemoItem>
-                                                <DesktopDatePicker
-                                                    onChange={(newValue) => handleDateChange(newValue)}
-                                                />
-                                            </DemoItem>
-                                        </Box>
-                                    </LocalizationProvider>
-                                </div>
-                            </div>
-                            <div className="form-group grupdate2">
-                                <label htmlFor="">End Date</label>
-                                <div className="dropdown-content date-h" id=''>
-                                    <div className='date_tittle'>
-                                        <div className='title__show__d'>
-                                            {!selectedEndDate ? <span> Enter End Date</span> : selectedEndDate}
-                                        </div>
-                                        <div className='date_icon'>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                                <path d="M18 2V4M6 2V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M11.9955 13H12.0045M11.9955 17H12.0045M15.991 13H16M8 13H8.00897M8 17H8.00897" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M3.5 8H20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M2.5 12.2432C2.5 7.88594 2.5 5.70728 3.75212 4.35364C5.00424 3 7.01949 3 11.05 3H12.95C16.9805 3 18.9958 3 20.2479 4.35364C21.5 5.70728 21.5 7.88594 21.5 12.2432V12.7568C21.5 17.1141 21.5 19.2927 20.2479 20.6464C18.9958 22 16.9805 22 12.95 22H11.05C7.01949 22 5.00424 22 3.75212 20.6464C2.5 19.2927 2.5 17.1141 2.5 12.7568V12.2432Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M3 8H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <Box
-                                        >
-                                            <DemoItem>
-                                                <DesktopDatePicker
-                                                    onChange={(newValue) => handleDateEndChange(newValue)}
-                                                />
-                                            </DemoItem>
-                                        </Box>
-                                    </LocalizationProvider>
-                                </div>
-                            </div>
+                            <DatePicker label="Start Date" onDateChange={handleStartDateChange} />
+                            <DatePicker label="End Date" onDateChange={handleEndDateChange} />
                             <div className="form-group">
                                 <label>Duration</label>
                                 <input type="number" name="totalDays" placeholder='Select Start and End Date' disabled value={totalday} onChange={handleChange} />
                             </div>
+                         
                             <div className="form-group">
                                 <label>Training Cost</label>
                                 {/* <input id='doller' type="number" name="cost" placeholder='Enter Training Cost' value={formData.cost} onChange={handleChange} /> */}
