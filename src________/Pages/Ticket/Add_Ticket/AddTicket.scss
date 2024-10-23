@@ -1,0 +1,58 @@
+.grupdate{
+  width: 90% !important;
+}
+.dropdown-content {
+  position: relative;
+  margin: 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.138);
+  padding: 3px;
+  // display: flex;
+  width: 100%;
+
+  // border: 1px solid red !important;
+  overflow: hidden !important;
+  border-radius: 5px;
+  .date_tittle {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin: 0 10px 0 5px;
+    font-size: 14px;
+    .title__show__d {
+      color: #320B57 ;
+      span {
+        color: gray;
+      }
+    }
+  }
+  input[type="date"] {
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0 !important;
+    margin-top: -32px;
+    margin-left: -5px;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    // position: absolute !important;
+    top: 10px;
+    right: 10px;
+    width: 310px;
+    height: 130px;
+    cursor: pointer;
+    opacity: 0;
+  }
+}
+.dropdown-content:hover{
+    outline: none;
+    border: 1px solid #c500fb;
+    box-shadow: 0px 0px 0px 2px rgba(115, 15, 173, 0.307);
+}
+/* Style for the date input field */
+
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Inverts the color of the calendar icon */
+  
+}

@@ -18,8 +18,6 @@ import AllEmployeeList from './Pages/Employee_onboarding/AllEmployeeList/AllEmpl
 import AddEmloyee from './Pages/Employee_onboarding/AddEmployee/AddEmloyee.jsx';
 import EmployeeDetails from './Pages/Employee_onboarding/EmployeeDetail/EmployeeDetails.jsx';
 import UpdateEmloyee from './Pages/Employee_onboarding/UpdateEmployee/UpdateEmloyee.jsx';
-import UpdateEmployeeHealth from './Pages/EmployeeHealth/UpdateEmployeeHealth/UpdateEmployeeHealth.jsx';
-// import UpdateEmployeeHealth from './Pages/EmployeeHealth/UpdateEmployeeHealth /UpdateEmployeeHealth.jsx';
 
 {/* Recruitment Imports */ }
 import AllJobList from './Pages/Recruitment/List_view_all_job/AllJobList.jsx';
@@ -42,6 +40,7 @@ import Department from './Pages/Department/DepartmentList/Department.jsx';
 import Designation from './Pages/Designation/DesignationList/Designation.jsx';
 import EmployeeHealth from './Pages/EmployeeHealth/EmployeeHealthList/EmployeeHealth.jsx';
 import AddEmployeeHealth from './Pages/EmployeeHealth/AddEmployeeHealth/AddEmployeeHealth.jsx';
+import UpdateEmployeeHealth from './Pages/EmployeeHealth/UpdateEmployeeHealth/UpdateEmployeeHealth.jsx';
 import DepartmentDetails from './Pages/Department/DepartmentDetails/DepartmentDetails.jsx';
 import DesignationDetails from './Pages/Designation/DesignationDetail/DesignationDetails.jsx';
 import EmployeeHealthDetails from './Pages/EmployeeHealth/EmployeeHealthDetails/EmployeeHealthDetails.jsx';
@@ -54,7 +53,7 @@ import UpdateLeave from './Pages/Leave/Update_Leave/UpdateLeave.jsx';
 import All_leaves_List_Type from './Pages/Leave/All_leaves_List_Type/All_leaves_List_Type.jsx';
 
 {/* Shift Management Imports */ }
-import AllShiftsList from './Pages/Shift/Shift.jsx';
+import AllShiftsList from './Pages/ShiftManagement____None/AllShiftsList/AllShiftsList.jsx';
 import Shift from './Pages/Shift/Shift.jsx';
 import NewShift from './Pages/Shift/NewShift/NewShift.jsx';
 import SiftDetails from './Pages/Shift/NewShift/SiftDetail/SiftDetails.jsx';
@@ -105,11 +104,10 @@ import PerformanceDetails from './Pages/Performance/Performance_Details/Performa
 
 {/*Reports Import*/ }
 import Reports from './Pages/Reports/Reports.jsx';
-import AddPerformance from './Pages/Performance/Add_Performance/AddPerformance.jsx';
-
 
 {/*Settings Import*/ }
 import Settings from './Pages/Settings/Settings.jsx';
+
 
 
 import '../src/styles/EffectSroll.scss';
@@ -266,15 +264,14 @@ const App = () => {
                   {/*Performance Routes*/}
                   <Route path="/performance" element={<Performance />} />
                   <Route path="/performance-details" element={<PerformanceDetails />} />
-                    <Route path="/add-performance" element={<AddPerformance />} />
 
                     {/*Reports Routes*/}
                     <Route path="/reports" element={<Reports />} />
-                    
 
                     {/* Settings  */}
                     <Route path="/settings" element={<Settings />} />
 
+                    
                 </Routes>
               </div>
             </div>

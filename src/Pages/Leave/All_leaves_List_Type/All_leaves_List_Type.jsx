@@ -138,8 +138,6 @@ const All_leaves_List_Type = (ClosePop) => {
 
     };
 
-    
-
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
     }

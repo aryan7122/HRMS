@@ -172,12 +172,6 @@ const NewShift = () => {
         setOpen(true)
 
     };
-    useEffect(() => {
-        if (isStatusOpen == false) {
-            setIsOpen(null)
-        }
-    }, [isStatusOpen])
-
 
     const UpdateStatusHndle = (id) => {
         setStatusId(id)

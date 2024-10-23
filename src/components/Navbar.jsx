@@ -120,7 +120,7 @@ const Navbar = ({ setIsLoggedIn }) => {
                     <span onClick={toggleNotifications} ref={notificationsButtonRef}>
                     <IoIosNotificationsOutline className="icon"   />
                     </span>
-                    <IoSettingsOutline className="icon" onClick={handleSettingsClick} />
+                    <IoSettingsOutline className="icon" />
                     <img src={user} alt="User" onClick={toggleAccount} ref={accountButtonRef} />
                 </div>
             </div>

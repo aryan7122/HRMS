@@ -1,0 +1,24 @@
+﻿22-10-2024 19:42:50.375|Relative BasePath: C:\Users\aryan\OFFICE\OFFICE\HRMS_aryan\public\Advanced File Recovery\AdvancedFileRecovery.exe
+22-10-2024 19:42:50.377|Relative BasePath: C:\Users\aryan\OFFICE\OFFICE\HRMS_aryan\public\Advanced File Recovery\AdvancedFileRecovery.exe
+22-10-2024 19:42:50.627|Load INI
+22-10-2024 19:42:50.724|args: createschedule
+22-10-2024 19:42:50.812|WinSingleInstance
+22-10-2024 19:42:50.817|
+********** Application Launched **********
+22-10-2024 19:42:50.819|AppMutex:Global\AdvancedFileRecovery_E9AC93B9-E733-40A8-9338-47A4909521B7
+22-10-2024 19:42:51.203|UPDATELINK:: https://activate123.com/afr/notifier/update.asp
+22-10-2024 19:42:51.222|UPDATELINK:: https://activate123.com/afr/notifier/update.asp
+22-10-2024 19:42:54.013|ExecutablePath:: C:\Users\aryan\OFFICE\OFFICE\HRMS_aryan\public\Advanced File Recovery\AFRNotifier.exe
+22-10-2024 19:42:54.052|Environment.OSVersion.Version.Major:: 6
+22-10-2024 19:43:14.689|Relative BasePath: C:\Users\aryan\OFFICE\OFFICE\HRMS_aryan\public\Advanced File Recovery\AdvancedFileRecovery.exe
+22-10-2024 19:43:14.694|Relative BasePath: C:\Users\aryan\OFFICE\OFFICE\HRMS_aryan\public\Advanced File Recovery\AdvancedFileRecovery.exe
+22-10-2024 19:43:14.805|Load INI
+22-10-2024 19:43:14.834|args: startup neweventtrigger
+22-10-2024 19:43:14.860|WinSingleInstance
+22-10-2024 19:43:14.866|
+********** Application Launched **********
+22-10-2024 19:43:14.867|AppMutex:Global\AdvancedFileRecovery_E9AC93B9-E733-40A8-9338-47A4909521B7
+22-10-2024 19:43:15.095|UPDATELINK:: https://activate123.com/afr/notifier/update.asp
+22-10-2024 19:43:15.124|UPDATELINK:: https://activate123.com/afr/notifier/update.asp
+22-10-2024 19:43:18.051|ExecutablePath:: C:\Users\aryan\OFFICE\OFFICE\HRMS_aryan\public\Advanced File Recovery\AFRNotifier.exe
+22-10-2024 19:43:46.575|CURRENT_STATE_OF_REGISTRATION: UNREGISTERED

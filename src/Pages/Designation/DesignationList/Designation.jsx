@@ -627,22 +627,23 @@ const Designation = () => {
                                                     value={formData_3.email_3}
                                                     onChange={handleInputChange_3}
                                                     required
-                                                    className='Designation_name_input'
+                                                    className='imputaddD'
                                                 />
 
                                             </div>
 
-                                            <div className="form-group " id='dipar_3jeij'>
+                                            <div className="form-group" id="depart">
                                                 <label className='Departmentlabel'>Department</label>
-                                                <div className="dropdown dropdown_designation_ top_gap_de32 ">
-                                                    <div className="dropdown-button " ref={departmentButtonRef} onClick={toggleDepartment}>
+
+                                                <div className="dropdown3">
+                                                    <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
                                                         <div>{formData_3.department_3 || "Select department"}</div>
                                                         <span id='toggle_selectIcon'>
                                                             {!isDepartmentOpen ? <IoIosArrowDown /> : <IoIosArrowUp />}
                                                         </span>
                                                     </div>
                                                     {isDepartmentOpen && (
-                                                        <div className="dropdown-menu " ref={departmentRef}>
+                                                        <div className="dropdown-menu" ref={departmentRef}>
                                                             <input
                                                                 type="search"
                                                                 className='search22'
@@ -652,7 +653,7 @@ const Designation = () => {
                                                                 onChange={handleSearchQueryChangeDepartment}
                                                             />
                                                             <div className="dropdown_I">
-                                                                {['Management', 'Sales', 'HR', 'IT'].filter(option =>
+                                                                {['Management', 'Sales', 'HR','IT'].filter(option =>
                                                                     option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
                                                                 ).map(option => (
                                                                     <div className="dropdown-item" onClick={() => selectOption('department_3', option)} key={option}>

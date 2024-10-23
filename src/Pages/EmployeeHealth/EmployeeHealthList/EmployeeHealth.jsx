@@ -36,7 +36,7 @@ const EmployeeHealth = () => {
     const [open, setOpen] = useState(false);
 
     const [employees, setEmployees] = useState([
-        { deptName: "Hillery Moses", deptHead: "HSEQ", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Soy", chorninc: "Lorem ipsum dolor sit amet c...", status:'status' },
+        // { deptName: "Hillery Moses", deptHead: "HSEQ", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Soy", chorninc: "Lorem ipsum dolor sit amet c...", status:'status' },
         // { deptName: "Nandan Raikwar", deptHead: "Operations", parentDept: "14-Apr-2024", overall: "Healthy", allerig: "Milk", chorninc: "Lorem ipsum dolor sit amet c", status: 'status' },
         // { deptName: "Vishwas Patel", deptHead: "Operations", parentDept: "14-Apr-2024", overall: "UnHealthy", allerig: "Pollen", chorninc: "Lorem ipsum dolor sit amet c", status: 'status' },
         // { deptName: "Paartho Ghosh", deptHead: "Engineering", parentDept: "14-Apr-2024", overall: "UnHealthy", allerig: "Latex", chorninc: "Lorem ipsum dolor sit amet c", status: 'status' },
@@ -219,12 +219,6 @@ const EmployeeHealth = () => {
         setSms('')
         setStatusOpen(false)
     };
-    useEffect(() => {
-        if (isStatusOpen == false) {
-            setIsOpen(null)
-        }
-    }, [isStatusOpen])
-
 
     // status
     const [selectedDepartmentId, setSelectedDepartmentId] = useState(''); // State to store selected department

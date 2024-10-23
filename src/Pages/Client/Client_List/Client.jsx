@@ -177,12 +177,6 @@ const Client = () => {
         setOpen(true)
         setStatusOpen(false)
     };
-    useEffect(() => {
-        if (isStatusOpen == false) {
-            setIsOpen(null)
-        }
-    }, [isStatusOpen])
-
 
     const UpdateStatusHndle = (id) => {
         setStatusId(id)
