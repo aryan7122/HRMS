@@ -11,6 +11,12 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 import axios from 'axios';
+import { DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
 
 const FormAddTrainers = ({ onSubmit }) => {
     const navigate = useNavigate();
@@ -21,7 +27,7 @@ const FormAddTrainers = ({ onSubmit }) => {
     const { isOpen: isEmployeeNameOpen, ref: EmployeeNameRef, buttonRef: EmployeeNameButtonRef, handleToggle: toggleEmployeeName, setIsOpen: setEmployeeNameOpen } = OutsideClick();
     const { isOpen: isTrainingOpen, ref: TrainingRef, buttonRef: TrainingButtonRef, handleToggle: toggleTraining, setIsOpen: setTrainingOpen } = OutsideClick();
 
-    
+
     const [formData, setFormData] = useState({
         employeeName: '',
         leaveType: '',
@@ -112,42 +118,36 @@ const FormAddTrainers = ({ onSubmit }) => {
         }
     };
 
+    // ////////////////////////
     const [selectedStartDate, setSelectedStartDate] = useState(null);
     const [selectedEndDate, setSelectedEndDate] = useState(null);
+    const [totalday, setTotalday] = useState(null);
 
-    const handleDateChange = (event) => {
-        const date = new Date(event.target.value);
-        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+    const handleDateChange = (newDate) => {
+        const formattedDate = newDate.format('YYYY-MM-DD'); // Format date as yyyy-mm-dd
         setSelectedStartDate(formattedDate);
         calculateTotalDays(formattedDate, selectedEndDate);
     };
 
-    const handleDateEndChange = (event) => {
-        const date = new Date(event.target.value);
-        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
+    const handleDateEndChange = (newDate) => {
+        const formattedDate = newDate.format('YYYY-MM-DD'); // Format date as yyyy-mm-dd
         setSelectedEndDate(formattedDate);
         calculateTotalDays(selectedStartDate, formattedDate);
     };
 
-    const calculateTotalDays = (startDate, endDate) => {
-        if (startDate && endDate) {
-            const start = new Date(startDate);
-            const end = new Date(endDate);
-
-            // Time difference in milliseconds
-            const timeDiff = end - start;
-
-            // Convert milliseconds to days (1 day = 1000 * 60 * 60 * 24 milliseconds)
-            const diffInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-            // Update formData with totalDays
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                totalDays: diffInDays > 0 ? diffInDays : 0, // Ensure no negative values
-            }));
+    const calculateTotalDays = (selectedStartDate, selectedEndDate) => {
+        if (selectedStartDate && selectedEndDate) {
+            const start = new Date(selectedStartDate);
+            const end = new Date(selectedEndDate);
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            console.log("Total Days: ", diffDays);
+            setTotalday(diffDays+1)
         }
     };
 
+
+    // //////////////////
     const selectOption = (dropdown, value) => {
         setFormData(prevState => ({
             ...prevState,
@@ -165,7 +165,7 @@ const FormAddTrainers = ({ onSubmit }) => {
                 employeeName: `${value.first_name} ${value.last_name}`, // Full name
                 user_id: value.user_id // user_id ko alag se store karo
             }));
-        } 
+        }
         if (dropdown === 'training') {
             // Full name ko store karo aur user_id ko bhi alag se store karo
             setFormData(prevState => ({
@@ -173,7 +173,7 @@ const FormAddTrainers = ({ onSubmit }) => {
                 training: `${value.first_name} ${value.last_name}`, // Full name
                 // user_id: value.user_id // user_id ko alag se store karo
             }));
-        } 
+        }
         if (dropdown === 'leaveType') {
             // Full name ko store karo aur user_id ko bhi alag se store karo
             setFormData(prevState => ({
@@ -184,6 +184,7 @@ const FormAddTrainers = ({ onSubmit }) => {
         }
         setEmployeeNameOpen(false)
     };
+
     // api emp list
     const [departmentHead, setDepartmentHead] = useState([]);
     const [leaveTypeData, setLeaveTypeData] = useState([]);
@@ -414,7 +415,17 @@ const FormAddTrainers = ({ onSubmit }) => {
                                             </svg>
                                         </div>
                                     </div>
-                                    <input type="date" name="date" id="" onChange={handleDateChange} />
+                                    {/* <input type="date" name="date" id="" onChange={handleDateChange} /> */}
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <Box
+                                        >
+                                            <DemoItem>
+                                                <DesktopDatePicker
+                                                    onChange={(newValue) => handleDateChange(newValue)}
+                                                />
+                                            </DemoItem>
+                                        </Box>
+                                    </LocalizationProvider>
                                 </div>
                             </div>
                             <div className="form-group grupdate2">
@@ -434,12 +445,21 @@ const FormAddTrainers = ({ onSubmit }) => {
                                             </svg>
                                         </div>
                                     </div>
-                                    <input type="date" name="date" id="" onChange={handleDateEndChange} />
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <Box
+                                        >
+                                            <DemoItem>
+                                                <DesktopDatePicker
+                                                    onChange={(newValue) => handleDateEndChange(newValue)}
+                                                />
+                                            </DemoItem>
+                                        </Box>
+                                    </LocalizationProvider>
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label>Duration</label>
-                                <input type="number" name="totalDays" placeholder='Select Start and End Date' disabled value={formData.totalDays} onChange={handleChange} />
+                                <input type="number" name="totalDays" placeholder='Select Start and End Date' disabled value={totalday} onChange={handleChange} />
                             </div>
                             <div className="form-group">
                                 <label>Training Cost</label>
