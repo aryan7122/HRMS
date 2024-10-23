@@ -64,20 +64,18 @@ const settingsData = [
     {
         left: [
             {
-                name: 'Employee Information',
+                name: 'Employee xxx',
                 description: 'Lorem ipsum dolor sit amet consectetur. Diam aliquam proin vitae lorem eget. Odio non id dui viverra dictum venenatis orci.',
                 img: user,
             },
         ],
         right: [
             {
-                buttonText: 'Dashboard',
+                buttonText: 'Daily Leave Status',
                 svg: (
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" color="#000000" fill="none">
-                        <path d="M7 17L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                        <path d="M12 17L12 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                        <path d="M17 17L17 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                        <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                        <path d="M15 17.625C14.9264 19.4769 13.3831 21.0494 11.3156 20.9988C10.8346 20.987 10.2401 20.8194 9.05112 20.484C6.18961 19.6768 3.70555 18.3203 3.10956 15.2815C3 14.723 3 14.0944 3 12.8373L3 11.1627C3 9.90561 3 9.27705 3.10956 8.71846C3.70555 5.67965 6.18961 4.32316 9.05112 3.51603C10.2401 3.18064 10.8346 3.01295 11.3156 3.00119C13.3831 2.95061 14.9264 4.52307 15 6.37501" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                        <path d="M21 12H10M21 12C21 11.2998 19.0057 9.99153 18.5 9.5M21 12C21 12.7002 19.0057 14.0085 18.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 ),
             },
@@ -187,10 +185,34 @@ const OrganizationalReports = () => {
         setSearchTerm(e.target.value.toLowerCase());
     };
 
-    const filteredData = settingsData.map(category => ({
-        left: category.left.filter(item => item.name.toLowerCase().includes(searchTerm)),
-        right: category.right.filter(item => item.buttonText.toLowerCase().includes(searchTerm)),
-    }));
+    // const filteredData = settingsData.map(category => ({
+    //     left: category.left.filter(item => item.name.toLowerCase().includes(searchTerm)),
+    //     right: category.right.filter(item => item.buttonText.toLowerCase().includes(searchTerm)),
+    // }));
+    const filteredData = settingsData.map(category => {
+        const leftFiltered = category.left.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())); // searchTerm ko lower case mein convert karna
+        const rightFiltered = category.right.filter(item => item.buttonText.toLowerCase().includes(searchTerm.toLowerCase())); // searchTerm ko lower case mein convert karna
+
+        // Agar rightFiltered mein koi data hai, to leftFiltered ko dikhana
+        const result = {
+            left: [],
+            right: []
+        };
+
+        if (rightFiltered.length > 0) {
+            result.left = category.left; // yahaan `:` ki jagah `=` ka istemal karna hai
+            result.right = rightFiltered; // yahaan bhi `:` ki jagah `=` ka istemal karna hai
+        } else if (leftFiltered.length > 0) {
+            result.left = category.left; // yahaan `:` ki jagah `=` ka istemal karna hai
+            result.right = category.right; // yahaan bhi `:` ki jagah `=` ka istemal karna hai
+        } else {
+            result.left = leftFiltered; // yahaan bhi `:` ki jagah `=` ka istemal karna hai
+            result.right = rightFiltered; // yahaan bhi `:` ki jagah `=` ka istemal karna hai
+        }
+
+        return result; // `result` ko return karna
+    });
+
 
     return (
         <div className="OrganizationalReports-dashboard">
@@ -210,11 +232,11 @@ const OrganizationalReports = () => {
                 />
             </div>
             <div className="categories_section">
-                {settingsData.map((category, index) => (
-                    <div className='Cards_l_r' key={index}>
+                {settingsData.map((category, i) => (
+                    <div className='Cards_l_r' key={i}>
                         <div className="left-section">
-                            {filteredData[0].left.length > 0 ? (
-                                filteredData[0].left.map((item, index) => (
+                            {filteredData[i].left.length > 0 ? (
+                                filteredData[i].left.map((item, index) => (
                                     <div key={index} className="-card">
                                         <img src={item.img} alt="" />
                                         <h4 className="-name">{item.name}</h4>
@@ -222,12 +244,12 @@ const OrganizationalReports = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No matching results found</p>
+                                ''
                             )}
                         </div>
                         <div className="right-section">
-                            {filteredData[0].right.length > 0 ? (
-                                filteredData[0].right.map((item, index) => (
+                            {filteredData[i].right.length > 0 ? (
+                                filteredData[i].right.map((item, index) => (
                                     <div key={index} className="section-card">
                                         <div className="section-svg">{item.svg}</div>
                                         <span className="visit-button">
@@ -238,7 +260,7 @@ const OrganizationalReports = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No matching results found</p>
+                                ''
                             )}
                         </div>
                     </div>

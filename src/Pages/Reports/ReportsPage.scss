@@ -407,19 +407,19 @@
       border-bottom: 1px solid #80808053;
       .left-section {
         width: 50%;
-        background-color: rgba(
-          65,
-          15,
-          111,
-          0.837
-        ); /* Light purple color with opacity */
-        background-image: url("../../assets/repot/bgPattern.png");
-        background-blend-mode: overlay; /* This blends the background color and image */
-        color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        background-size: cover; /* Ensures the background image covers the section properly */
         .-card {
+          background-color: rgba(
+            65,
+            15,
+            111,
+            0.837
+          ); /* Light purple color with opacity */
+          background-image: url("../../assets/repot/bgPattern.png");
+          background-blend-mode: overlay; /* This blends the background color and image */
+          color: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          background-size: cover; /* Ensures the background image covers the section properly */
           .-name {
             font-size: 20px;
           }
