@@ -269,7 +269,7 @@ const settingsData = [
     },
 ];
 
-const OrganizationalReports = () => {
+const MyReports = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -317,6 +317,7 @@ const OrganizationalReports = () => {
                 </div>
                 <input
                     type="text"
+                    id='serch_active-none'
                     placeholder="Search Reports"
                     className="search-input"
                     value={searchTerm}
@@ -331,7 +332,7 @@ const OrganizationalReports = () => {
                                 filteredData[i].left.map((item, index) => (
                                     <div key={index} className="-card">
                                         <div className="img">
-                                        <img src={item.img} alt="" />
+                                            <img src={item.img} alt="" />
                                         </div>
                                         <h4 className="-name">{item.name}</h4>
                                         <p className="-description">{item.description}</p>
@@ -366,5 +367,5 @@ const OrganizationalReports = () => {
 
 };
 
-export default OrganizationalReports;
+export default MyReports;
 //

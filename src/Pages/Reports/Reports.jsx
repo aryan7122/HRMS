@@ -4,6 +4,8 @@ import './ReportsPage.scss'; // Import the SCSS file
 import OrganizationalReports from './OrganizationalReports';
 import { HiUserPlus } from "react-icons/hi2";
 import { TfiClose } from "react-icons/tfi";
+import MyReports from './MyReports';
+
 const Reports = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('My');  // Default Tab
@@ -63,8 +65,8 @@ const Reports = () => {
           {activeTab === 'Organizational' && (
           <OrganizationalReports /> 
           )}
-          {activeTab === 'M y' && (
-            <OrganizationalReports />
+          {activeTab === 'My' && (
+            <MyReports />
           )}
         </div>
       </div>
