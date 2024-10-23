@@ -144,14 +144,15 @@ const settingsData = [
     }
 ];
 
+
 const SettingsDashboard = () => {
-    const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate()
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value.toLowerCase());
     };
-
+  const [searchTerm, setSearchTerm] = useState('');
+  
     const filteredData = settingsData.map(category => ({
         ...category,
         items: category.items.filter(item => item.name.toLowerCase().includes(searchTerm))
@@ -199,5 +200,4 @@ const SettingsDashboard = () => {
         </div>
     );
 };
-
 export default SettingsDashboard;

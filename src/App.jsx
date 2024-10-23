@@ -104,6 +104,7 @@ import PerformanceDetails from './Pages/Performance/Performance_Details/Performa
 
 {/*Reports Import*/ }
 import Reports from './Pages/Reports/Reports.jsx';
+import AddPerformance from './Pages/Performance/Add_Performance/AddPerformance.jsx';
 
 {/*Settings Import*/ }
 import Settings from './Pages/Settings/Settings.jsx';
@@ -264,10 +265,12 @@ const App = () => {
                   {/*Performance Routes*/}
                   <Route path="/performance" element={<Performance />} />
                   <Route path="/performance-details" element={<PerformanceDetails />} />
+                    <Route path="/add-performance" element={<AddPerformance />} />
 
                     {/*Reports Routes*/}
                     <Route path="/reports" element={<Reports />} />
 
+                    
                     {/* Settings  */}
                     <Route path="/settings" element={<Settings />} />
 
