@@ -186,7 +186,11 @@ const SettingsDashboard = () => {
                                 <div className="setting-icon">{item.svg}</div>
                                 <h4 className="setting-name">{item.name}</h4>
                                 <p className="setting-description">{item.description}</p>
-                                <button className="visit-button" onClick={() => navigate(`setting/${item.buttonText}`)}>{item.buttonText}</button>
+                                <button
+                                    className="visit-button"
+                                    onClick={() => navigate(`/setting/${item.name.toLowerCase().replace(/\s+/g, '-')}`)}>
+                                    {item.buttonText}
+                                </button>
                             </div>
                         ))}
                     </div>

@@ -43,7 +43,7 @@ const Department = () => {
     ]);
     const token = localStorage.getItem('access_token');
 
-// 
+    // 
     const [departmentHead, setDepartmentHead] = useState([]);
     console.log('departmentHead❗', departmentHead)
     useEffect(() => {
@@ -71,8 +71,8 @@ const Department = () => {
             });
     }, []);
 
-    
-// 
+
+    // 
 
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
@@ -295,8 +295,8 @@ const Department = () => {
         console.log("Button clicked!");
     };
 
-    
-    
+
+
     // popup
     const initialFormDetails_2 = {
         departmentName_2: '',
@@ -722,7 +722,7 @@ const Department = () => {
                                         />
 
                                         <label className="blackcolor1">Parent Department</label>
-                                        <div className="dropdown">
+                                        <div className="dropdown  dropdown_2d">
                                             <div className="dropdown-button" ref={departmentButtonRef} onClick={toggleDepartment}>
                                                 <div className='divselect'>{formDetails_2.parentDepartment_2 || "Select department"}</div>
                                                 <span id="toggle_selectIcon"> {!isDepartmentOpen ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
@@ -738,7 +738,7 @@ const Department = () => {
                                                         onChange={handleSearchQueryChangeDepartment}
                                                     />
                                                     <div className="dropdown_I">
-                                                        {['Management','HR', 'Sales', 'IT'].filter(option =>
+                                                        {['Management', 'HR', 'Sales', 'IT'].filter(option =>
                                                             option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
                                                         ).map(option => (
                                                             <div className="dropdown-item" onClick={() => selectOption('parentDepartment_2', option)} key={option}>
@@ -750,7 +750,7 @@ const Department = () => {
                                             )}
                                         </div>
                                         <label>Department Head</label>
-                                        <div className="dropdown">
+                                        <div className="dropdown dropdown_2d">
                                             <div className="dropdown-button" ref={departmentButtonRef2} onClick={toggleDepartment2}>
                                                 <div className='divselect'>{formDetails_2.departmentHead_2 || "Select department head"}</div>
                                                 <span id="toggle_selectIcon"> {!isDepartmentOpen2 ? <IoIosArrowDown /> : <IoIosArrowUp />} </span>
