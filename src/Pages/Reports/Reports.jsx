@@ -6,6 +6,7 @@ import { HiUserPlus } from "react-icons/hi2";
 import { TfiClose } from "react-icons/tfi";
 import MyReports, { MyData } from './MyReports';
 import { useLocation } from 'react-router-dom';
+import Dashboard from './Organizational_Reports/dashboard/Dashboard';
 
 const Reports = () => {
   const navigate = useNavigate();
@@ -94,9 +95,10 @@ const Reports = () => {
           {currentURL === '/reports/my' && (
             <MyReports />
           )}
-          {activeTab === `` && (
-            <MyReports />
+          {currentURL === '/reports/organizational/dashboard' && (
+            <Dashboard />
           )}
+
         </div>
       </div>
     </>

@@ -18,7 +18,7 @@ export const OrganizationalData = [
         ],
         right: [
             {
-                buttonText: ' Dashboard',
+                buttonText: 'Dashboard',
                 svg: (
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" color="#000000" fill="none">
                         <path d="M7 17L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
