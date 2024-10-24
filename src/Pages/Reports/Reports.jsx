@@ -7,6 +7,9 @@ import { TfiClose } from "react-icons/tfi";
 import MyReports, { MyData } from './MyReports';
 import { useLocation } from 'react-router-dom';
 import Dashboard from './Organizational_Reports/dashboard/Dashboard';
+import Employee_Attrition_Trend from './Organizational_Reports/Employee_Attrition_Trend/Employee_Attrition_Trend';
+import Addition_Trend from './Organizational_Reports/Addition_Trend/Addition_Trend';
+import Headcount from './Organizational_Reports/Headcount/Headcount';
 
 const Reports = () => {
   const navigate = useNavigate();
@@ -98,7 +101,16 @@ const Reports = () => {
           {currentURL === '/reports/organizational/dashboard' && (
             <Dashboard />
           )}
-
+          {currentURL === '/reports/organizational/employee-attrition-trend' && (
+            <Employee_Attrition_Trend />
+          )}
+          {currentURL === '/reports/organizational/employee-addition-trend' && (
+            <Addition_Trend />
+          )}
+          {currentURL === '/reports/organizational/headcount' && (
+            <Headcount />
+          )}
+          
         </div>
       </div>
     </>

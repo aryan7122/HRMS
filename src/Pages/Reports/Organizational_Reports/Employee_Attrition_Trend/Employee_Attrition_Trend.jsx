@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'; // Add useNavigate here
-import './Dashboard.scss';
 
-const Dashboard = () => {
+const Employee_Attrition_Trend = () => {
     const navigate = useNavigate(); // Use useNavigate here
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(1);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [activetab, setActivetab] = useState('Dashboard');
+    const [activetab, setActivetab] = useState('Employee Attrition Trend');
 
     // Fixed subItems Array
     const subItems = ["Dashboard", "Employee Attrition Trend", "Employee Addition Trend", "Headcount"];
@@ -17,16 +16,18 @@ const Dashboard = () => {
     const handlePrevClick = () => {
         if (selectedIndex > 0) {
             setSelectedIndex(selectedIndex - 1);
+            navigate(`/reports/organizational/${subItems[selectedIndex -1].toLowerCase().replace(/\s+/g, '-')}`); 
+            setActivetab(subItems[selectedIndex -1]);
         }
-        navigate(`/reports/organizational/${subItems[selectedIndex].toLowerCase().replace(/\s+/g, '-')}`);
     };
 
     // Handling the Next Button
     const handleNextClick = () => {
         if (selectedIndex < subItems.length - 1) {
             setSelectedIndex(selectedIndex + 1);
+            navigate(`/reports/organizational/${subItems[selectedIndex +1].toLowerCase().replace(/\s+/g, '-')}`); 
+            setActivetab(subItems[selectedIndex +1]);
         }
-        navigate(`/reports/organizational/${subItems[selectedIndex].toLowerCase().replace(/\s+/g, '-')}`);
     };
 
     // Handle Active Class for Navigation
@@ -40,13 +41,11 @@ const Dashboard = () => {
     };
 
     const handleDropdownClick = (index) => {
-        navigate(`/reports/organizational/${subItems[index].toLowerCase().replace(/\s+/g, '-')}`);
-        const handleDropdownClick = (index) => {
-            navigate(`/reports/organizational/${subItems[index].toLowerCase().replace(/\s+/g, '-')}`);
-            setActivetab(subItems[index]); // Set active tab
-        };
+        navigate(`/reports/organizational/${subItems[index].toLowerCase().replace(/\s+/g, '-')}`); 
+        setActivetab(subItems[index]); // Set active tab
     };
 
+  
     return (
         <div className="breadcrumb-container">
             <div className="arrow_left_right">
@@ -56,6 +55,7 @@ const Dashboard = () => {
                         <path d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </span>
+
                 {/* Disable Next Button if at Last Index */}
                 <span className={`arrow-btn ${selectedIndex === subItems.length - 1 ? 'disabled_' : ''}`} onClick={handleNextClick}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
@@ -115,4 +115,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default Employee_Attrition_Trend;
