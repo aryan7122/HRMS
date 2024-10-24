@@ -16,7 +16,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import Box from '@mui/material/Box';
-import DatePicker from '../../../../components/DatePicker';
+import DatePicker from '../../../../utils/Form/DatePicker';
 const FormAddTrainers = ({ onSubmit }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();

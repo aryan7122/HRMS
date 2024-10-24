@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 import axios from 'axios';
+import DatePicker from '../../../utils/Form/DatePicker';
 
 const JobForm = ({ onSubmit }) => {
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ const JobForm = ({ onSubmit }) => {
         type: '',
         leaveReason: '',
         user_id: '',
-        leave_type_id:''
+        leave_type_id: ''
     });
 
     const [loading, setLoading] = useState(false);
@@ -37,7 +38,29 @@ const JobForm = ({ onSubmit }) => {
     const [searchQueryType, setSearchQueryType] = useState('');
     const token = localStorage.getItem('access_token'); // Get token from local storage or set it directly
     const [searchQueryEmployeeName, setSearchQueryEmployeeName] = useState('');
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [totalDays, setTotalDays] = useState(null);
 
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+        calculateTotalDays(date, endDate); // Pass the new startDate and current endDate
+    };
+
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+        calculateTotalDays(startDate, date); // Pass the current startDate and new endDate
+    };
+    const calculateTotalDays = (start, end) => {
+        if (start && end) {
+            const startDate = new Date(start);
+            const endDate = new Date(end);
+            const diffTime = Math.abs(endDate - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            console.log("Total Days: ", diffDays);
+            setTotalDays(diffDays + 1); // Add 1 to include both start and end dates
+        }
+    };
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData(prevState => ({
@@ -295,7 +318,7 @@ const JobForm = ({ onSubmit }) => {
                                                         onClick={() => selectOption('leaveType', option)}
                                                         key={option.id}
                                                     >
-                                                        {option.leave_type} 
+                                                        {option.leave_type}
                                                     </div>
                                                 ))}
                                             </div>
@@ -304,20 +327,13 @@ const JobForm = ({ onSubmit }) => {
                                 </div>
                             </div>
 
+                            <DatePicker label="Start Date" onDateChange={handleStartDateChange} />
+                            <DatePicker label="End Date" onDateChange={handleEndDateChange} />
                             <div className="form-group">
-                                <label>From Date</label>
-                                <input type="date" name="fromDate" value={formData.fromDate} onChange={handleChange} />
+                                <label>Duration</label>
+                                <input type="number" name="totalDays" placeholder='Select Start and End Date' disabled value={totalDays} onChange={handleChange} />
                             </div>
 
-                            <div className="form-group">
-                                <label>To Date</label>
-                                <input type="date" name="toDate" value={formData.toDate} onChange={handleChange} />
-                            </div>
-
-                            <div className="form-group">
-                                <label>Total Days</label>
-                                <input type="number" name="totalDays" placeholder='Select total days of leave' disabled value={formData.totalDays} onChange={handleChange} />
-                            </div>
 
                             {/* Type Dropdown */}
                             <div className="form-group">

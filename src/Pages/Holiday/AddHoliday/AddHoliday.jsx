@@ -6,6 +6,7 @@ import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick
 import { OutsideClick2 } from '../../Department/DepartmentList/OutsideClick2';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DatePicker from '../../../utils/Form/DatePicker';
 
 const AddHoliday = ({ ClosePop }) => {
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
@@ -23,6 +24,17 @@ const AddHoliday = ({ ClosePop }) => {
         recurrence: '',// Active/Inactive
         description:''
     });
+
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+    };
+
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+    };
     console.log('formData', formData)
     const handleChange = (e) => {
         const { id, value, type, checked } = e.target;
@@ -155,26 +167,8 @@ const AddHoliday = ({ ClosePop }) => {
                                         )}
                                     </div>
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="startTime" className=''>Start Date</label>
-                                    <input
-                                        type="date"
-                                        id="startTime"
-                                        value={formData.startTime}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="endTime" className=''>To Date</label>
-                                    <input
-                                        type="date"
-                                        id="endTime"
-                                        value={formData.endTime}
-                                        onChange={handleChange}
-                                        
-                                    />
-                                </div>
-                               
+                                <DatePicker label="Start Date" onDateChange={handleStartDateChange} />
+                                <DatePicker label="To Date" onDateChange={handleEndDateChange} />
                             </div>
                             <div id="Description" className="">
                                 <div className="form-group">

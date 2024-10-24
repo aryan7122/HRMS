@@ -16,6 +16,8 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MultiImageUploaders } from '../../../components/MultiImageUpload';
+import DatePicker from '../../../utils/Form/DatePicker';
+
 const FormProjectAdd = ({ onSubmit }) => {
     const navigate = useNavigate()
 
@@ -68,6 +70,16 @@ const FormProjectAdd = ({ onSubmit }) => {
     const [searchQueryDesignation, setSearchQueryDesignation] = useState('');
     const [searchQueryRequiredSkills, setSearchQueryRequiredSkills] = useState('');
     const [searchQueryEmployee, setSearchQueryEmployee] = useState('');
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+    };
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+    };
+
 
     // filter search
     const handleChange = (event) => {
@@ -336,30 +348,9 @@ const FormProjectAdd = ({ onSubmit }) => {
 
                                 />
                             </div>
-                            <div className="form-group">
-                                <label className='starred'>Starting Date*</label>
-                                <input
-                                    type="date"
-                                    placeholder="Select Starting Date"
-                                    name="startingDate"
-                                    value={formData.startingDate}
-                                    id="startingDate"
-                                    onChange={handleChange}
-
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className='starred'>Deadline*</label>
-                                <input
-                                    type="date"
-                                    placeholder="Select Starting Date"
-                                    name="deadline"
-                                    value={formData.deadline}
-                                    id="deadline"
-                                    onChange={handleChange}
-
-                                />
-                            </div>
+                            
+                            <DatePicker label="Starting Date" onDateChange={handleStartDateChange} />
+                            <DatePicker label="Deadline" onDateChange={handleEndDateChange} />
 
                             {/* Department Dropdown */}
                             <div className="form-group">

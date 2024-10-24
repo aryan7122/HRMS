@@ -8,31 +8,33 @@ This project is a React application bootstrapped with Vite, providing a minimal 
 Here’s a breakdown of the folder structure used in this project:
 
 ```
-node_modules/
-public/
-src/
-   ├── api/
-   ├── assets/
-   ├── components/
-   ├── Pages/
-   ├── slices/
-   ├── Snippet/
-   ├── styles/
-   ├── Views/
-   ├── App.jsx
-   ├── main.jsx
-   ├── store.js
-   ├── variables.scss
-.env
-.eslintrc.cjs
-.gitignore
-.npmrc
-index.html
-package.json
-package-lock.json
-README.md
-vercel.json
-vite.config.js
+node_modules/          # NPM packages ka folder, automatically generate hota hai after npm install.
+public/               # Static assets jaise favicon, index.html, aur images ke liye.
+src/                  # Main application code yaha rakha jata hai.
+   ├── api/           # API call related functions, jaise fetch, axios requests yaha rakhe jayenge.
+   ├── assets/        # Static assets like images, fonts, etc. for the project.
+   ├── components/    # Reusable React components jo multiple places pe use ho sakte hain.
+   ├── Pages/         # Different pages ka code, like Home, About, etc. (All website pages).
+   ├── slices/        # Redux slices (for state management) ko yaha rakha jata hai (reusable but related api).
+   ├── Snippet/       # Reusable code snippets ya small helper functions jo baar baar use ho sakte hain.
+   ├── styles/        # SCSS/CSS stylesheets ke liye, centralized styling rakha jata hai yaha.
+   ├── utils/         # Page related reusable functions
+   ├── Views/         # High-level views ya page-specific components yaha rakhe jate hain.
+   ├── App.jsx        # Root App component, yahi component render hota hai initially.
+   ├── main.jsx       # Main entry point for the React app, ReactDOM.render ya createRoot yaha hota hai.
+   ├── store.js       # Redux store ka configuration yaha hota hai (agar Redux use kar rahe ho).
+   ├── variables.scss # Global SCSS variables like colors, fonts, spacing ke liye.
+.env                  # Environment variables ke liye file, jaise API keys.
+.eslintrc.cjs         # ESLint configuration file for code linting.
+.gitignore            # Files aur folders jo Git me track nahi hone chahiye, unka list.
+.npmrc                # NPM ke configuration settings (proxy, registry, etc.)
+index.html            # Entry point HTML file jo `public/` me rakha jata hai.
+package.json          # Project metadata, dependencies, and scripts.
+package-lock.json     # Exact versions of installed packages ko lock karta hai.
+README.md             # Project ke baare me documentation yaha hota hai.
+vercel.json           # Vercel deployment ke configuration ke liye file.
+vite.config.js        # Vite bundler configuration file for dev server, build settings.
+
 ```
 
 ### Explanation of Folders

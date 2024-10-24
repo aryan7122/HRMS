@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import "react-toastify/dist/ReactToastify.css";
 import axios from 'axios';
+import DatePicker from '../../../../utils/Form/DatePicker';
 
 const FormAddTrainers = ({ onSubmit }) => {
     const navigate = useNavigate();
@@ -35,11 +36,40 @@ const FormAddTrainers = ({ onSubmit }) => {
         leave_type_id: ''
     });
 
+
+
     const [loading, setLoading] = useState(false);
     const [searchQueryLeaveType, setSearchQueryLeaveType] = useState('');
     const [searchQueryType, setSearchQueryType] = useState('');
     const token = localStorage.getItem('access_token'); // Get token from local storage or set it directly
     const [searchQueryEmployeeName, setSearchQueryEmployeeName] = useState('');
+
+    ////
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [totalDays, setTotalDays] = useState(null);
+
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+        calculateTotalDays(date, endDate); // Pass the new startDate and current endDate
+    };
+
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+        calculateTotalDays(startDate, date); // Pass the current startDate and new endDate
+    };
+    const calculateTotalDays = (start, end) => {
+        if (start && end) {
+            const startDate = new Date(start);
+            const endDate = new Date(end);
+            const diffTime = Math.abs(endDate - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            console.log("Total Days: ", diffDays);
+            setTotalDays(diffDays + 1); // Add 1 to include both start and end dates
+        }
+    };
+    ////////
+
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -110,41 +140,7 @@ const FormAddTrainers = ({ onSubmit }) => {
         }
     };
     
-    const [selectedStartDate, setSelectedStartDate] = useState(null);
-    const [selectedEndDate, setSelectedEndDate] = useState(null);
-
-    const handleDateChange = (event) => {
-        const date = new Date(event.target.value);
-        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
-        setSelectedStartDate(formattedDate);
-        calculateTotalDays(formattedDate, selectedEndDate);
-    };
-
-    const handleDateEndChange = (event) => {
-        const date = new Date(event.target.value);
-        const formattedDate = date.toLocaleDateString('en-CA'); // yyyy-mm-dd format
-        setSelectedEndDate(formattedDate);
-        calculateTotalDays(selectedStartDate, formattedDate);
-    };
-
-    const calculateTotalDays = (startDate, endDate) => {
-        if (startDate && endDate) {
-            const start = new Date(startDate);
-            const end = new Date(endDate);
-
-            // Time difference in milliseconds
-            const timeDiff = end - start;
-
-            // Convert milliseconds to days (1 day = 1000 * 60 * 60 * 24 milliseconds)
-            const diffInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-            // Update formData with totalDays
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                totalDays: diffInDays > 0 ? diffInDays : 0, // Ensure no negative values
-            }));
-        }
-    };
+   
 
     const selectOption = (dropdown, value) => {
         setFormData(prevState => ({
@@ -266,49 +262,11 @@ const FormAddTrainers = ({ onSubmit }) => {
                                 <label className=''>Contact Number</label>
                                 <input type="number" name="number" placeholder='Enter Contact Number' value={formData.number} onChange={handleChange} />
                             </div>
-                            <div className="form-group grupdate2">
-                                <label htmlFor="">Start Date</label>
-                                <div className="dropdown-content date-h" id=''>
-                                    <div className='date_tittle'>
-                                        <div className='title__show__d'>
-                                            {!selectedStartDate ? <span> Custom date</span> : selectedStartDate}
-                                        </div>
-                                        <div className='date_icon'>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                                <path d="M18 2V4M6 2V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M11.9955 13H12.0045M11.9955 17H12.0045M15.991 13H16M8 13H8.00897M8 17H8.00897" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M3.5 8H20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M2.5 12.2432C2.5 7.88594 2.5 5.70728 3.75212 4.35364C5.00424 3 7.01949 3 11.05 3H12.95C16.9805 3 18.9958 3 20.2479 4.35364C21.5 5.70728 21.5 7.88594 21.5 12.2432V12.7568C21.5 17.1141 21.5 19.2927 20.2479 20.6464C18.9958 22 16.9805 22 12.95 22H11.05C7.01949 22 5.00424 22 3.75212 20.6464C2.5 19.2927 2.5 17.1141 2.5 12.7568V12.2432Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M3 8H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <input type="date" name="date" id="" onChange={handleDateChange} />
-                                </div>
-                            </div>
-                            <div className="form-group grupdate2">
-                                <label htmlFor="">End Date</label>
-                                <div className="dropdown-content date-h" id=''>
-                                    <div className='date_tittle'>
-                                        <div className='title__show__d'>
-                                            {!selectedEndDate ? <span> Custom date</span> : selectedEndDate}
-                                        </div>
-                                        <div className='date_icon'>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                                <path d="M18 2V4M6 2V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M11.9955 13H12.0045M11.9955 17H12.0045M15.991 13H16M8 13H8.00897M8 17H8.00897" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M3.5 8H20.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M2.5 12.2432C2.5 7.88594 2.5 5.70728 3.75212 4.35364C5.00424 3 7.01949 3 11.05 3H12.95C16.9805 3 18.9958 3 20.2479 4.35364C21.5 5.70728 21.5 7.88594 21.5 12.2432V12.7568C21.5 17.1141 21.5 19.2927 20.2479 20.6464C18.9958 22 16.9805 22 12.95 22H11.05C7.01949 22 5.00424 22 3.75212 20.6464C2.5 19.2927 2.5 17.1141 2.5 12.7568V12.2432Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M3 8H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <input type="date" name="date" id="" onChange={handleDateEndChange} />
-                                </div>
-                            </div>
+                            <DatePicker label="Start Date" onDateChange={handleStartDateChange} />
+                            <DatePicker label="End Date" onDateChange={handleEndDateChange} />
                             <div className="form-group">
                                 <label>Duration</label>
-                                <input type="number" name="totalDays" placeholder='Select Start and End Date' disabled value={formData.totalDays} onChange={handleChange} />
+                                <input type="number" name="totalDays" placeholder='Select Start and End Date' disabled value={totalDays} onChange={handleChange} />
                             </div>
                             <div className="form-group">
                                 <label>Role</label>

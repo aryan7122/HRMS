@@ -6,6 +6,7 @@ import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick
 import { OutsideClick2 } from '../../Department/DepartmentList/OutsideClick2';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DatePicker from '../../../utils/Form/DatePicker';
 const NewAssignShift = ({ ClosePop }) => {
 
     const { isOpen: isDepartmentOpen, ref: departmentRef, buttonRef: departmentButtonRef, handleToggle: toggleDepartment, setIsOpen: setDepartmentOpen } = OutsideClick2();
@@ -32,7 +33,12 @@ const NewAssignShift = ({ ClosePop }) => {
     const [searchQueryDepartment, setSearchQueryDepartment] = useState('');
     const [searchQueryEmployee, setSearchQueryEmployee] = useState('');
     const [searchQueryShift, setSearchQueryShift] = useState('');
+    ///
+    const [startDate, setStartDate] = useState(null);
 
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+    }
     const handleChange = (e) => {
         const { id, value, type, checked } = e.target;
         setFormData({
@@ -301,16 +307,8 @@ const NewAssignShift = ({ ClosePop }) => {
                                     </div>
                                 </div>
                                 {/* Date Input */}
-                                <div className="form-group">
-                                    <label htmlFor="date" className='red'>Date *</label>
-                                    <input
-                                        type="date"
-                                        id="date"
-                                        value={formData.date}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
+                                <DatePicker label="Start Date" onDateChange={handleStartDateChange} />
+
                                 <div className="form-group">
                                     {/* Shift Dropdown */}
                                     <label className='red'>Shift *</label>

@@ -13,6 +13,7 @@ import '../../Employee_onboarding/AddEmployee/NavbarForm.scss';
 // import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 // import { CiCircleChevRight } from 'react-icons/ci'; // Ensure you have this icon
 import axios from 'axios';
+import DatePicker from '../../../utils/Form/DatePicker';
 
 import './AddEmployeeHealthForm.scss'; // Update with the correct path if necessary
 import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
@@ -63,7 +64,17 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
         user_id: '',
         notes: ''
     });
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [totalDays, setTotalDays] = useState(null);
 
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+    };
+
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+    };
     const [dropdowns, setDropdowns] = useState({
         bloodGroup: false,
         healthCheckResults: false,
@@ -551,26 +562,9 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
                                     onChange={handleChange}
                                 />
                             </div>
-                            <div className="form-group">
-                                <label>Last Health Checkup Date</label>
-                                <input
-                                    type="date"
-                                    name="lastHealthCheckupDate"
-                                    value={formData.lastHealthCheckupDate}
-                                    onChange={handleChange}
-
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Next Scheduled Check-Up Date</label>
-                                <input
-                                    type="date"
-                                    name="nextHealthCheckupDate"
-                                    value={formData.nextHealthCheckupDate}
-                                    onChange={handleChange}
-
-                                />
-                            </div>
+                           
+                            <DatePicker label="Last Health Checkup Date" onDateChange={handleStartDateChange} />
+                            <DatePicker label="Next Scheduled Check-Up Date" onDateChange={handleEndDateChange} />
                             <div className="form-group">
                                 <label>Health Check Results</label>
                                 <div className="dropdown">

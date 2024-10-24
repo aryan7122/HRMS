@@ -75,7 +75,7 @@ const NewAttendance = ({ ClosePop }) => {
         <div className='NewAttendance_main'>
             <div className="blurBG"></div>
             <div className="formDivLeave">
-                <div className="popForm">
+                <div className="popForm leave_form__">
                     <div className="Attendance_Head">
                         <h2>Add New Leave Type</h2>
                         <div className='close_icon' onClick={ClosePop}>

@@ -88,7 +88,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 40px !important;
     border-radius: 1px !important
 }
-
+.css-1anqmj6-MuiPopper-root-MuiPickersPopper-root {
+    z-index: 9999999999999999999999 !important;
+}
 // .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root::-webkit-calendar-picker-indicator {
 //     // position: absolute !important;
 //     top: 10px;

@@ -268,7 +268,7 @@ const App = () => {
                     <Route path="/add-performance" element={<AddPerformance />} />
 
                     {/*Reports Routes*/}
-                    <Route path="/reports" element={<Reports />} />
+                    <Route path="/reports/*" element={<Reports />} />
 
                     
                     {/* Settings  */}

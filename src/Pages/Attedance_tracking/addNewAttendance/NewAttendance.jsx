@@ -4,6 +4,7 @@ import axios from 'axios';
 import { OutsideClick } from '../../Employee_onboarding/AddEmployee/OutsideClick'
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
+import DatePicker from '../../../utils/Form/DatePicker';
 const NewAttendance = ({ ClosePop }) => {
     const { isOpen: isEmployeeOpen, ref: employeeRef, buttonRef: employeeButtonRef, handleToggle: toggleEmployee, setIsOpen: setEmployeeOpen } = OutsideClick();
     const { isOpen: isShiftOpen, ref: shiftRef, buttonRef: shiftButtonRef, handleToggle: toggleShift, setIsOpen: setShiftOpen } = OutsideClick();
@@ -22,6 +23,11 @@ const NewAttendance = ({ ClosePop }) => {
 
     });
     const [attendanceData, setAttendanceData] = useState([]); // Array to hold attendance data
+    const [startDate, setStartDate] = useState(null);
+
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+    };
 
     // Fetch existing attendance data from JSONBin
     const [searchQueryEmployee, setSearchQueryEmployee] = useState('');
@@ -244,28 +250,8 @@ const NewAttendance = ({ ClosePop }) => {
                                     )}
                                 </div>
                             </div>
-                            {/* <div className="form-group">
-                                <label htmlFor="employeeName" className='red'>Employee Name*</label>
-                                <input
-                                    type="text"
-                                    id="employeeName"
-                                    placeholder="Enter full name of employee"
-                                    required
-                                    value={formData.employeeName}
-                                    onChange={handleChange}
-                                />
-                            </div> */}
-                            <div className="form-group">
-                                <label htmlFor="date" className='red'>Date*</label>
-                                <input
-                                    type="date"
-                                    id="date"
-                                    required
-                                    value={formData.date}
-                                    onChange={handleChange}
-                                    className='input'
-                                />
-                            </div>
+                            <DatePicker label="Date" onDateChange={handleStartDateChange} />
+
                             <div className="form-group">
                                 <label htmlFor="punchIn">Punch In</label>
                                 <input

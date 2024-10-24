@@ -7,7 +7,7 @@ import Performance from '../../assets/repot/Performance.png'
 import clock from '../../assets/repot/clock.png'
 import date from '../../assets/repot/date.png'
 
-const settingsData = [
+export const OrganizationalData = [
     {
         left: [
             {
@@ -18,7 +18,7 @@ const settingsData = [
         ],
         right: [
             {
-                buttonText: 'Dashboard',
+                buttonText: ' Dashboard',
                 svg: (
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" color="#000000" fill="none">
                         <path d="M7 17L7 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
@@ -277,11 +277,11 @@ const OrganizationalReports = () => {
         setSearchTerm(e.target.value.toLowerCase());
     };
 
-    // const filteredData = settingsData.map(category => ({
+    // const filteredData = OrganizationalData.map(category => ({
     //     left: category.left.filter(item => item.name.toLowerCase().includes(searchTerm)),
     //     right: category.right.filter(item => item.buttonText.toLowerCase().includes(searchTerm)),
     // }));
-    const filteredData = settingsData.map(category => {
+    const filteredData = OrganizationalData.map(category => {
         const leftFiltered = category.left.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase())); // searchTerm ko lower case mein convert karna
         const rightFiltered = category.right.filter(item => item.buttonText.toLowerCase().includes(searchTerm.toLowerCase())); // searchTerm ko lower case mein convert karna
 
@@ -324,7 +324,7 @@ const OrganizationalReports = () => {
                 />
             </div>
             <div className="categories_section">
-                {settingsData.map((category, i) => (
+                {OrganizationalData.map((category, i) => (
                     <div className='Cards_l_r' key={i}>
                         <div className="left-section">
                             {filteredData[i].left.length > 0 ? (
@@ -346,10 +346,10 @@ const OrganizationalReports = () => {
                                 filteredData[i].right.map((item, index) => (
                                     <div key={index} className="section-card">
                                         <div className="section-svg"
-                                            onClick={() => navigate(`/reports/${item.buttonText.toLowerCase().replace(/\s+/g, '-')}`)}
+                                            onClick={() => navigate(`/reports/organizational/${item.buttonText.toLowerCase().replace(/\s+/g, '-')}`)}
                                         >{item.svg}</div>
                                         <span className="visit-button"
-                                            onClick={() => navigate(`/reports/${item.buttonText.toLowerCase().replace(/\s+/g, '-')}`)}>
+                                            onClick={() => navigate(`/reports/organizational/${item.buttonText.toLowerCase().replace(/\s+/g, '-')}`)}>
                                             {item.buttonText}
                                         </span>
                                     </div>
