@@ -277,3 +277,45 @@ g{
     touch-action: none;
     width: 100% !important;
 }
+
+
+
+
+.custom-dropdown__ {
+    display: flex ;
+    align-items: center;
+    justify-content: space-between;
+    right: 1px;
+    margin-right: 20px;
+    label {
+        font-weight: bold;
+        margin-right: 10px;
+        font-size: 16px;
+    }
+
+    select {
+        width: 150px; // Set the width as needed
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        font-size: 16px;
+        color: #333;
+        cursor: pointer;
+        transition: border-color 0.2s;
+
+        &:focus {
+            border-color: #400F6F;
+            outline: none;
+        }
+
+        option {
+            padding: 10px;
+        }
+    }
+
+    .month-selector {
+        margin-top: 10px; // Add some space above
+        display: block;
+    }
+}

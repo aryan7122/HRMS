@@ -20,16 +20,7 @@ import {
     markElementClasses,
 } from '@mui/x-charts/LineChart';
 
-const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-const xLabels = [
-    'Page A',
-    'Page B',
-    'Page C',
-    'Page D',
-    'Page E',
-    'Page F',
-    'Page G',
-];
+
 
 const Addition_Trend = () => {
     const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
@@ -96,6 +87,25 @@ const Addition_Trend = () => {
         // Cleanup listener on component unmount
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+
+
+    const [timeRange, setTimeRange] = useState('1y'); // '1y' for 1 year, '6m' for 6 months, '1m' for month
+    const [selectedMonth, setSelectedMonth] = useState(null); // month ke liye
+
+    const filterData = () => {
+        if (timeRange === '1y') {
+            return EmployeeAdditionTrend.slice(0, 12); // last 12 months ka data
+        } else if (timeRange === '6m') {
+            return EmployeeAdditionTrend.slice(0, 6); // last 6 months ka data
+        } else if (timeRange === '1m' && selectedMonth) {
+            return EmployeeAdditionTrend.filter(item => item.label === selectedMonth); // specific month ka data
+        }
+        return EmployeeAdditionTrend; // default all data
+    };
+
+    const filteredData = filterData();
+
     return (
         <>
             {/* nav */}
@@ -209,13 +219,31 @@ const Addition_Trend = () => {
                             >
 
                                 <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                                    <div className="custom-dropdown__">
+                                        <div>
+                                        </div>
+                                        <div>
+                                            <select onChange={(e) => setTimeRange(e.target.value)} value={timeRange}>
+                                                <option value="1y">1 Year</option>
+                                                <option value="6m">6 Months</option>
+                                                <option value="1m">Month</option>
+                                            </select>
+                                        </div>
+                                        {timeRange === '1m' && (
+                                            <select onChange={(e) => setSelectedMonth(e.target.value)} value={selectedMonth} className="month-selector">
+                                                {EmployeeAdditionTrend.map((item, index) => (
+                                                    <option key={index} value={item.label}>{item.label}</option>
+                                                ))}
+                                            </select>
+                                        )}
+                                    </div>
 
                                     {/* Line Chart Container */}
                                     <ChartContainer
                                         width={screenWidth - 170}
                                         height={300}
-                                        series={[{ type: 'line', data: EmployeeAdditionTrend.slice(0, 12).map(item => item.value) }]}
-                                        xAxis={[{ scaleType: 'point', data: EmployeeAdditionTrend.slice(0, 12).map(item => item.label) }]}
+                                        series={[{ type: 'line', data: filteredData.map(item => item.value) }]}
+                                        xAxis={[{ scaleType: 'point', data: filteredData.map(item => item.label) }]}
                                         sx={{
                                             [`& .${lineElementClasses.root}`]: {
                                                 stroke: '#400F6F',
@@ -240,31 +268,25 @@ const Addition_Trend = () => {
                                     <BarChart
                                         style={{ width: '100%' }}
                                         sx={{
-                                            // border: '1px solid #ccc',
                                             borderRadius: '10px',
                                             padding: '10px',
                                             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                            // marginLeft:'-120px'
                                         }}
-
                                         height={400}
                                         series={[
                                             {
-                                                data: EmployeeAdditionTrend.slice(0, 12).map(item => item.value),
+                                                data: filteredData.map(item => item.value),
                                                 stack: 'stack1'
                                             }
                                         ]}
                                         xAxis={[{
-                                            data: EmployeeAdditionTrend.slice(0, 12).map(item => item.label),
+                                            data: filteredData.map(item => item.label),
                                             scaleType: 'band'
                                         }]}
                                     />
                                 </div>
-
-
                             </Box>
                         </Grid>
-
                     </Grid>
                 </Box>
             </div>
