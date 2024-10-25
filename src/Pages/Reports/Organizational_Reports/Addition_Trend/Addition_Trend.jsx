@@ -98,6 +98,8 @@ const Addition_Trend = () => {
             return EmployeeAdditionTrend.slice(0, 12); // last 12 months ka data
         } else if (timeRange === '6m') {
             return EmployeeAdditionTrend.slice(0, 6); // last 6 months ka data
+        } else if (timeRange === '3m') {
+            return EmployeeAdditionTrend.slice(0, 3); // last 6 months ka data
         } else if (timeRange === '1m' && selectedMonth) {
             return EmployeeAdditionTrend.filter(item => item.label === selectedMonth); // specific month ka data
         }
@@ -224,9 +226,10 @@ const Addition_Trend = () => {
                                         </div>
                                         <div>
                                             <select onChange={(e) => setTimeRange(e.target.value)} value={timeRange}>
-                                                <option value="1y">1 Year</option>
-                                                <option value="6m">6 Months</option>
-                                                <option value="1m">Month</option>
+                                                <option value="1y">This Year</option>
+                                                <option value="6m">Last Six Months</option>
+                                                <option value="3m">Last Three Months</option>
+                                                <option value="1m">Custom</option>
                                             </select>
                                         </div>
                                         {timeRange === '1m' && (
