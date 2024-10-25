@@ -276,14 +276,22 @@ const Addition_Trend = () => {
                                         series={[
                                             {
                                                 data: filteredData.map(item => item.value),
-                                                stack: 'stack1'
                                             }
                                         ]}
+                                        borderRadius={10}
                                         xAxis={[{
                                             data: filteredData.map(item => item.label),
                                             scaleType: 'band'
                                         }]}
                                     />
+                                    <div className="lable_chart_">
+                                        <span className="s_count">
+                                            Count
+                                        </span>
+                                        <span className="s_Percentage">
+                                            Percentage
+                                        </span>
+                                   </div>
                                 </div>
                             </Box>
                         </Grid>
