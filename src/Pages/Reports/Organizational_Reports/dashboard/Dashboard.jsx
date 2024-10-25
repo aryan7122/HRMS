@@ -291,7 +291,7 @@ const Dashboard = () => {
             {/* chart */}
             <div id="cart_d">
                 <Box sx={{
-                    width: { lg: '123%', md: '104%' },
+                    width: { lg: '123%', md: '110%' },
                     padding: '0px', scale: '0.9', marginLeft: '-60px',
                     overflow: 'hidden'
                 }}>
