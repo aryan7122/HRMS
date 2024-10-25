@@ -76,6 +76,7 @@
     .dropdown-select {
       margin-right: 2px;
       .dropdown-menu- {
+        z-index: 99;
         width: 220px;
         position: absolute;
         height: 155px;
@@ -106,15 +107,29 @@
   margin: 0 30px ;
 }
 .Overview_dashboard {
-  margin: 10px;
+  margin: 15px 10px;
   user-select: none;
-  // margin: 10px 30px;
-  margin-top: 15px;
-  // border: 1px solid red;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
   width: 98%;
+  gap: 20px;
+
+  // Default to 4 columns (for desktops and larger screens)
+  grid-template-columns: repeat(4, 1fr);
+
+  // For laptops, switch to 3 columns
+  @media (max-width: 1324px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  // For tablets, switch to 2 columns
+  @media (max-width: 968px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // For mobile devices, switch to 1 column
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
   h2 {
     font-size: 18px;
     font-weight: 500;
@@ -130,7 +145,6 @@
     border-radius: 20px;
     .Overview_box_dashboard {
       width: 100%;
-
       .Overview_top_dashboard {
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
@@ -179,6 +193,60 @@
           }
         }
       }
+    }
+  }
+}
+
+.hover_tab_nav-2{
+  display: flex;
+  align-items: center;
+  margin: 20px 20px;
+}
+.cart_head_{
+  margin: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0 10px 5px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.326);
+  .l_title{
+    font-size: 18px;
+    color: #2A2A2A;
+  }
+  .btn_r_Export{
+    border: 1px solid #88888881;
+    padding: 5px 10px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    span{
+      margin: 0 3px;
+    }
+  }
+}
+
+.center_cart_text{
+  font-size: 11px;
+  margin-left: -98px !important;
+ 
+}
+g{
+}
+.css-1u0lry5-MuiChartsLegend-root{
+  
+  .MuiChartsLegend-series{
+    .MuiChartsLegend-mark{
+      // border-radius: 50% !important;
+    }
+    rect{
+      width: 15px;
+      height: 15px;
+      // border-radius: 50px !important;
+      // margin-left: 130px !important;
+    }
+    text{
+      font-size: 11px !important;
     }
   }
 }

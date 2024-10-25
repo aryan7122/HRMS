@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'; // Add useNavigate here
+import { OutsideClick } from '../../../Employee_onboarding/AddEmployee/OutsideClick'
 
 const Employee_Attrition_Trend = () => {
+    const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
+
     const navigate = useNavigate(); // Use useNavigate here
     const [selectedIndex, setSelectedIndex] = useState(1);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -74,7 +77,7 @@ const Employee_Attrition_Trend = () => {
                 <span className="separator">/</span>
                 <div
                     className="breadcrumb-item dropdown-select"
-                    onClick={() => setShowDropdown(!showDropdown)}
+                    onClick={toggleStatus} ref={statusButtonRef}
                 >
                     <button className="btn_option">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#400f6f" fill="none">
@@ -86,7 +89,7 @@ const Employee_Attrition_Trend = () => {
                         <span>
                             {activetab}
                         </span>
-                        {showDropdown ?
+                        {isStatusOpen ?
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" color="#4a4a4a" fill="none">
                                 <path d="M17.9998 15C17.9998 15 13.5809 9.00001 11.9998 9C10.4187 8.99999 5.99985 15 5.99985 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
@@ -97,8 +100,8 @@ const Employee_Attrition_Trend = () => {
                         }
                     </button>
 
-                    {showDropdown && (
-                        <div className="dropdown-menu-">
+                    {isStatusOpen && (
+                        <div className="dropdown-menu-" ref={statusRef}>
                             {subItems.map((item, index) => (
                                 <span key={index} className={isActiveTab(index)} onClick={() => {
                                     handleDropdownClick(index);
