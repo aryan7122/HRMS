@@ -240,10 +240,10 @@ const Addition_Trend = () => {
 
                                     {/* Line Chart Container */}
                                     <ChartContainer
-                                        width={screenWidth - 170}
+                                        width={screenWidth - 100}
                                         height={300}
                                         series={[{ type: 'line', data: filteredData.map(item => item.value) }]}
-                                        xAxis={[{ scaleType: 'point', data: filteredData.map(item => item.label) }]}
+                                        xAxis={[{ scaleType: 'band', data: filteredData.map(item => item.label) }]}
                                         sx={{
                                             [`& .${lineElementClasses.root}`]: {
                                                 stroke: '#400F6F',
@@ -256,7 +256,8 @@ const Addition_Trend = () => {
                                                 strokeWidth: 12,
                                             },
                                             marginBottom: '-300px',
-                                            marginLeft: '50px'
+                                            marginLeft: '50px',
+                                            zIndex:'0'
                                         }}
                                         disableAxisListener
                                     >
@@ -281,7 +282,9 @@ const Addition_Trend = () => {
                                         borderRadius={10}
                                         xAxis={[{
                                             data: filteredData.map(item => item.label),
-                                            scaleType: 'band'
+                                            scaleType: 'band',
+                                            tickPlacement: 'middle',
+                                            dataKey: 'month'
                                         }]}
                                     />
                                     <div className="lable_chart_">
