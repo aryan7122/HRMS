@@ -58,7 +58,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 
-.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root,.css-1umw9bq-MuiSvgIcon-root{
+.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root,.css-1umw9bq-MuiSvgIcon-root,.css-yxqbup{
    position: absolute !important;
     width: 100% !important;
     height: 100% !important;
@@ -71,7 +71,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-radius: 1px !important;
     scale: 45 !important;
 }
-.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root,.css-jupps9-MuiInputBase-root-MuiOutlinedInput-root{
+.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root,.css-jupps9-MuiInputBase-root-MuiOutlinedInput-root,.css-1oy18r0{
   top: 0 !important;
   margin-top: -33px !important;
   opacity: 0 !important;
@@ -81,7 +81,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
    position: absolute !important;
     width: 100% !important;
     height: 100% !important;
-    top: 0 !important;
+    top: 1 !important;
     // margin-left: -315px !important;
     left: 0 !important;
     width: 100%;
@@ -90,7 +90,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .css-1anqmj6-MuiPopper-root-MuiPickersPopper-root {
     z-index: 9999999999999999999999 !important;
-    
+
 }
 .css-189ousr-MuiPopper-root-MuiPickersPopper-root {
   z-index: 99999999999999999999999 !important;
