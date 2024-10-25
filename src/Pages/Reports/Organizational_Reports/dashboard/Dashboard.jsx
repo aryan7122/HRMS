@@ -465,7 +465,7 @@ const Dashboard = () => {
                     }}  >
                         <div className="cart_head_">
                             <div className="l_title">
-                                Department Summary
+                               Gender
                             </div>
                             <div className="btn_r_Export">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#141b34" fill="none">
@@ -536,7 +536,7 @@ const Dashboard = () => {
                     }}  >
                         <div className="cart_head_">
                             <div className="l_title">
-                                Department Summary
+                                Age Group
                             </div>
                             <div className="btn_r_Export">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#141b34" fill="none">
