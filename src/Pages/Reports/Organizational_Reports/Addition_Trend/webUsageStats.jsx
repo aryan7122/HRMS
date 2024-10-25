@@ -36,18 +36,18 @@ export const GenderSummary = [
 ];
 
 export const EmployeeAdditionTrend = [
-    { label: 'January', value: 0 },
-    { label: 'February', value: 0 },
-    { label: 'March', value: 5 },
-    { label: 'April', value: 20 },
-    { label: 'May', value: 25 },
-    { label: 'June', value: 30 },
-    { label: 'July', value: 35 },
-    { label: 'August', value: 40 },
-    { label: 'September', value: 45 },
-    { label: 'October', value: 30 },
-    { label: 'November', value: 55 },
-    { label: 'December', value: 30 },
+    { month: 'January', additions: 5 },
+    { month: 'February', additions: 10 },
+    { month: 'March', additions: 15 },
+    { month: 'April', additions: 20 },
+    { month: 'May', additions: 25 },
+    { month: 'June', additions: 30 },
+    { month: 'July', additions: 35 },
+    { month: 'August', additions: 40 },
+    { month: 'September', additions: 45 },
+    { month: 'October', additions: 50 },
+    { month: 'November', additions: 55 },
+    { month: 'December', additions: 60 },
 ];
 
 export const valueFormatter = (params) => `${params.value}`; // Update this line

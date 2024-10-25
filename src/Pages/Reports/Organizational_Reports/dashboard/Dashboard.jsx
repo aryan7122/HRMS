@@ -332,7 +332,7 @@ const Dashboard = () => {
                                 }}
                             >
                                 <PieChart
-                                    height={300}
+                                    height={350}
                                     series={[
                                         {
                                             data: DepartmentSummary.slice(0, 9),

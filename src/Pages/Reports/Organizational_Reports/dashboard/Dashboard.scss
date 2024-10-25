@@ -255,6 +255,25 @@ g{
 
 
 #cart_d{
-  // border: 1px solid red ;
   overflow: hidden !important;
+}
+
+.css-13z1cr7-MuiChartsSurface-root {
+    position: absolute !important;
+    width: 100%;
+    
+  }
+  .css-172kpif-MuiResponsiveChart-container>svg{
+    // position: absolute !important;
+    
+  }
+  .css-132pz3d-MuiChartsAxis-root-MuiChartsXAxis-root{
+  // border: 1px solid red !important;
+  // display: none;
+
+}
+
+.css-1evyvmv-MuiChartsSurface-root {
+    touch-action: none;
+    width: 100% !important;
 }
