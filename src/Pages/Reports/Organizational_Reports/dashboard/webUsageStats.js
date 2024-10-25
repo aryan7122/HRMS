@@ -50,4 +50,19 @@ export const EmployeeAdditionTrend = [
     { label: 'December', value: 30 },
 ];
 
+
+export const HeadcountData = [
+    { label: '0', value: 0 },
+    { label: '2015', value: 0 },
+    { label: '2016', value: 5 },
+    { label: '2017', value: 20 },
+    { label: '2018', value: 25 },
+    { label: '2019', value: 30 },
+    { label: '2020', value: 35 },
+    { label: '2021', value: 40 },
+    { label: '2022', value: 45 },
+    { label: '2023', value: 30 },
+    { label: '2024', value: 55 },
+];
+
 export const valueFormatter = (params) => `${params.value}`; // Update this line
