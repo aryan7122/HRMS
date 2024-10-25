@@ -289,317 +289,321 @@ const Dashboard = () => {
 
             </div>
             {/* chart */}
-            <Box sx={{
-                width: { lg: '117%', md: '104%' },
-                padding: '0px', scale: '0.95', marginLeft: '-20px'
-            }}>
-                <Grid container spacing={1}>
-                    {/* 1st Chart */}
-                    {/* <div className="grid_card"> */}
-                    <Grid xs={12} sm={12} md={12} lg={5} sx={{
-                        margin: '20px',
-                        border: '1px solid #ddd', // Optional border for better visibility
-                        borderRadius: '12px', // Rounded corners
-                        backgroundColor: '#f9f9f9', // Background color
-                    }}  >
-                        <div className="cart_head_">
-                            <div className="l_title">
-                                Department Summary
+            <div id="cart_d">
+                <Box sx={{
+                    width: { lg: '123%', md: '104%' },
+                    padding: '0px', scale: '0.9', marginLeft: '-60px',
+                    overflow: 'hidden'
+                }}>
+                    <Grid container spacing={1}>
+                        {/* 1st Chart */}
+                        {/* <div className="grid_card"> */}
+                        <Grid xs={12} sm={12} md={12} lg={5} sx={{
+                            margin: '20px',
+                            border: '1px solid #ddd', // Optional border for better visibility
+                            borderRadius: '12px', // Rounded corners
+                            backgroundColor: '#f9f9f9', // Background color
+                        }}  >
+                            <div className="cart_head_">
+                                <div className="l_title">
+                                    Department Summary
+                                </div>
+                                <div className="btn_r_Export">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#141b34" fill="none">
+                                        <path d="M17.4776 9.01106C17.485 9.01102 17.4925 9.01101 17.5 9.01101C19.9853 9.01101 22 11.0294 22 13.5193C22 15.8398 20.25 17.7508 18 18M17.4776 9.01106C17.4924 8.84606 17.5 8.67896 17.5 8.51009C17.5 5.46695 15.0376 3 12 3C9.12324 3 6.76233 5.21267 6.52042 8.03192M17.4776 9.01106C17.3753 10.1476 16.9286 11.1846 16.2428 12.0165M6.52042 8.03192C3.98398 8.27373 2 10.4139 2 13.0183C2 15.4417 3.71776 17.4632 6 17.9273M6.52042 8.03192C6.67826 8.01687 6.83823 8.00917 7 8.00917C8.12582 8.00917 9.16474 8.38194 10.0005 9.01101" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M12 13L12 21M12 13C11.2998 13 9.99153 14.9943 9.5 15.5M12 13C12.7002 13 14.0085 14.9943 14.5 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>
+                                        Export
+                                    </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
+                                        <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
                             </div>
-                            <div className="btn_r_Export">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#141b34" fill="none">
-                                    <path d="M17.4776 9.01106C17.485 9.01102 17.4925 9.01101 17.5 9.01101C19.9853 9.01101 22 11.0294 22 13.5193C22 15.8398 20.25 17.7508 18 18M17.4776 9.01106C17.4924 8.84606 17.5 8.67896 17.5 8.51009C17.5 5.46695 15.0376 3 12 3C9.12324 3 6.76233 5.21267 6.52042 8.03192M17.4776 9.01106C17.3753 10.1476 16.9286 11.1846 16.2428 12.0165M6.52042 8.03192C3.98398 8.27373 2 10.4139 2 13.0183C2 15.4417 3.71776 17.4632 6 17.9273M6.52042 8.03192C6.67826 8.01687 6.83823 8.00917 7 8.00917C8.12582 8.00917 9.16474 8.38194 10.0005 9.01101" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M12 13L12 21M12 13C11.2998 13 9.99153 14.9943 9.5 15.5M12 13C12.7002 13 14.0085 14.9943 14.5 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <span>
-                                    Export
-                                </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
-                                    <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                position: 'relative',
-
-                                width: '100%',
-                            }}
-                        >
-                            <PieChart
-                                height={300}
-                                series={[
-                                    {
-                                        data: DepartmentSummary.slice(0, 9),
-                                        innerRadius: 50, // Set a fixed radius
-                                        arcLabel: (params) => (
-                                            <Box sx={{ textAlign: 'left', paddingLeft: '10px', color: '#333' }}>
-                                                {params.label ?? ''}
-                                            </Box>
-                                        ),
-                                        arcLabelMinAngle: 30,
-                                        valueFormatter,
-                                    },
-                                ]}
-                                skipAnimation={false} // Animation setting
-
-                            />
-                            {/* Center Title and Total */}
                             <Box
                                 sx={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    textAlign: 'center',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+
+                                    width: '100%',
                                 }}
                             >
-                                <div className="center_cart_text">
-                                    <Typography variant="p">Total</Typography>
-                                    <Typography variant="h6">
-                                        {DepartmentSummary.reduce((acc, item) => acc + item.value, 0)} {/* Total value */}
-                                    </Typography>
-                                </div>
-                            </Box>
-                        </Box>
-                    </Grid>
-                    {/* 2 */}
-                    <Grid xs={12} sm={12} md={12} lg={5} sx={{
-                        margin: '20px',
-                        border: '1px solid #ddd', // Optional border for better visibility
-                        borderRadius: '12px', // Rounded corners
-                        backgroundColor: '#f9f9f9', // Background color
-                    }}  >
-                        <div className="cart_head_">
-                            <div className="l_title">
-                                Designation Summary
-                            </div>
-                            <div className="btn_r_Export">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#141b34" fill="none">
-                                    <path d="M17.4776 9.01106C17.485 9.01102 17.4925 9.01101 17.5 9.01101C19.9853 9.01101 22 11.0294 22 13.5193C22 15.8398 20.25 17.7508 18 18M17.4776 9.01106C17.4924 8.84606 17.5 8.67896 17.5 8.51009C17.5 5.46695 15.0376 3 12 3C9.12324 3 6.76233 5.21267 6.52042 8.03192M17.4776 9.01106C17.3753 10.1476 16.9286 11.1846 16.2428 12.0165M6.52042 8.03192C3.98398 8.27373 2 10.4139 2 13.0183C2 15.4417 3.71776 17.4632 6 17.9273M6.52042 8.03192C6.67826 8.01687 6.83823 8.00917 7 8.00917C8.12582 8.00917 9.16474 8.38194 10.0005 9.01101" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M12 13L12 21M12 13C11.2998 13 9.99153 14.9943 9.5 15.5M12 13C12.7002 13 14.0085 14.9943 14.5 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <span>
-                                    Export
-                                </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
-                                    <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                        {/* Designation Navbar */}
-                        <div className="hover_tab_nav-2">
-                            {DesignationSummary.map((item) => (
-                                <Typography
-                                    key={item.label}
-                                    onMouseEnter={() => handleHover(item.label)} // Hover pe update
-                                    onMouseLeave={() => setSelectedData(DesignationSummary)} // Leave pe reset
+                                <PieChart
+                                    height={300}
+                                    series={[
+                                        {
+                                            data: DepartmentSummary.slice(0, 9),
+                                            innerRadius: 40, // Set a fixed radius
+                                            arcLabel: (params) => (
+                                                <Box sx={{ textAlign: 'left', paddingLeft: '10px', color: '#333' }}>
+                                                    {params.label ?? ''}
+                                                </Box>
+                                            ),
+                                            arcLabelMinAngle: 30,
+                                            valueFormatter,
+                                        },
+                                    ]}
+                                    skipAnimation={false} // Animation setting
+
+                                />
+                                {/* Center Title and Total */}
+                                <Box
                                     sx={{
-                                        padding: '8px 16px',
-                                        cursor: 'pointer',
-                                        transition: 'background 0.3s',
-                                        '&:hover': { backgroundColor: '#e0e0e0', borderRadius: '8px' }
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        textAlign: 'center',
                                     }}
                                 >
-                                    {item.label}
-                                </Typography>
-                            ))}
-                        </div>
+                                    <div className="center_cart_text">
+                                        <Typography variant="p">Total</Typography>
+                                        <Typography variant="h6">
+                                            {DepartmentSummary.reduce((acc, item) => acc + item.value, 0)} {/* Total value */}
+                                        </Typography>
+                                    </div>
+                                </Box>
+                            </Box>
+                        </Grid>
+                        {/* 2 */}
+                        <Grid xs={12} sm={12} md={12} lg={5} sx={{
+                            margin: '20px',
+                            border: '1px solid #ddd', // Optional border for better visibility
+                            borderRadius: '12px', // Rounded corners
+                            backgroundColor: '#f9f9f9', // Background color
+                        }}  >
+                            <div className="cart_head_">
+                                <div className="l_title">
+                                    Designation Summary
+                                </div>
+                                <div className="btn_r_Export">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#141b34" fill="none">
+                                        <path d="M17.4776 9.01106C17.485 9.01102 17.4925 9.01101 17.5 9.01101C19.9853 9.01101 22 11.0294 22 13.5193C22 15.8398 20.25 17.7508 18 18M17.4776 9.01106C17.4924 8.84606 17.5 8.67896 17.5 8.51009C17.5 5.46695 15.0376 3 12 3C9.12324 3 6.76233 5.21267 6.52042 8.03192M17.4776 9.01106C17.3753 10.1476 16.9286 11.1846 16.2428 12.0165M6.52042 8.03192C3.98398 8.27373 2 10.4139 2 13.0183C2 15.4417 3.71776 17.4632 6 17.9273M6.52042 8.03192C6.67826 8.01687 6.83823 8.00917 7 8.00917C8.12582 8.00917 9.16474 8.38194 10.0005 9.01101" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M12 13L12 21M12 13C11.2998 13 9.99153 14.9943 9.5 15.5M12 13C12.7002 13 14.0085 14.9943 14.5 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>
+                                        Export
+                                    </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
+                                        <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                            </div>
+                            {/* Designation Navbar */}
+                            <div className="hover_tab_nav-2">
+                                {DesignationSummary.map((item) => (
+                                    <Typography
+                                        key={item.label}
+                                        onMouseEnter={() => handleHover(item.label)} // Hover pe update
+                                        onMouseLeave={() => setSelectedData(DesignationSummary)} // Leave pe reset
+                                        sx={{
+                                            padding: '8px 16px',
+                                            cursor: 'pointer',
+                                            transition: 'background 0.3s',
+                                            '&:hover': { backgroundColor: '#e0e0e0', borderRadius: '8px' }
+                                        }}
+                                    >
+                                        {item.label}
+                                    </Typography>
+                                ))}
+                            </div>
 
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                position: 'relative',
-
-                                width: '100%',
-                            }}
-                        >
-                            <PieChart
-                                height={300}
-                                series={[
-                                    {
-                                        data: selectedData,
-                                        innerRadius: 60,
-                                        arcLabel: (params) => (
-                                            <Box sx={{ textAlign: 'left', paddingLeft: '10px', color: '#333' }}>
-                                                {params.label ?? ''}
-                                            </Box>
-                                        ),
-                                        arcLabelMinAngle: 30,
-                                        valueFormatter,
-                                    },
-                                ]}
-                                skipAnimation={false}
-                            />
-                            {/* Center Title and Total */}
                             <Box
                                 sx={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    textAlign: 'center',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+
+                                    width: '100%',
                                 }}
                             >
-                                <div className="center_cart_text">
-                                    {/* <Typography variant="p">Total</Typography> */}
-                                    <Typography variant="h6">
-                                        {selectedData.reduce((acc, item) => acc + item.value, 0)} {/* Total value */}
-                                    </Typography>
-                                </div>
+                                <PieChart
+                                    height={300}
+                                    series={[
+                                        {
+                                            data: selectedData,
+                                            innerRadius: 60,
+                                            arcLabel: (params) => (
+                                                <Box sx={{ textAlign: 'left', paddingLeft: '10px', color: '#333' }}>
+                                                    {params.label ?? ''}
+                                                </Box>
+                                            ),
+                                            arcLabelMinAngle: 30,
+                                            valueFormatter,
+                                        },
+                                    ]}
+                                    skipAnimation={false}
+                                />
+                                {/* Center Title and Total */}
+                                <Box
+                                    sx={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    <div className="center_cart_text">
+                                        {/* <Typography variant="p">Total</Typography> */}
+                                        <Typography variant="h6">
+                                            {selectedData.reduce((acc, item) => acc + item.value, 0)} {/* Total value */}
+                                        </Typography>
+                                    </div>
+                                </Box>
                             </Box>
-                        </Box>
-                    </Grid>                  
-                    {/* </div> */}
-                    {/* 3 */}
-                    <Grid xs={12} sm={12} md={12} lg={5} sx={{
-                        margin: '20px',
-                        border: '1px solid #ddd', // Optional border for better visibility
-                        borderRadius: '12px', // Rounded corners
-                        backgroundColor: '#f9f9f9', // Background color
-                    }}  >
-                        <div className="cart_head_">
-                            <div className="l_title">
-                               Gender
+                        </Grid>
+                        {/* </div> */}
+                        {/* 3 */}
+                        <Grid xs={12} sm={12} md={12} lg={5} sx={{
+                            margin: '20px',
+                            border: '1px solid #ddd', // Optional border for better visibility
+                            borderRadius: '12px', // Rounded corners
+                            backgroundColor: '#f9f9f9', // Background color
+                        }}  >
+                            <div className="cart_head_">
+                                <div className="l_title">
+                                    Gender
+                                </div>
+                                <div className="btn_r_Export">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#141b34" fill="none">
+                                        <path d="M17.4776 9.01106C17.485 9.01102 17.4925 9.01101 17.5 9.01101C19.9853 9.01101 22 11.0294 22 13.5193C22 15.8398 20.25 17.7508 18 18M17.4776 9.01106C17.4924 8.84606 17.5 8.67896 17.5 8.51009C17.5 5.46695 15.0376 3 12 3C9.12324 3 6.76233 5.21267 6.52042 8.03192M17.4776 9.01106C17.3753 10.1476 16.9286 11.1846 16.2428 12.0165M6.52042 8.03192C3.98398 8.27373 2 10.4139 2 13.0183C2 15.4417 3.71776 17.4632 6 17.9273M6.52042 8.03192C6.67826 8.01687 6.83823 8.00917 7 8.00917C8.12582 8.00917 9.16474 8.38194 10.0005 9.01101" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M12 13L12 21M12 13C11.2998 13 9.99153 14.9943 9.5 15.5M12 13C12.7002 13 14.0085 14.9943 14.5 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>
+                                        Export
+                                    </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
+                                        <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
                             </div>
-                            <div className="btn_r_Export">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#141b34" fill="none">
-                                    <path d="M17.4776 9.01106C17.485 9.01102 17.4925 9.01101 17.5 9.01101C19.9853 9.01101 22 11.0294 22 13.5193C22 15.8398 20.25 17.7508 18 18M17.4776 9.01106C17.4924 8.84606 17.5 8.67896 17.5 8.51009C17.5 5.46695 15.0376 3 12 3C9.12324 3 6.76233 5.21267 6.52042 8.03192M17.4776 9.01106C17.3753 10.1476 16.9286 11.1846 16.2428 12.0165M6.52042 8.03192C3.98398 8.27373 2 10.4139 2 13.0183C2 15.4417 3.71776 17.4632 6 17.9273M6.52042 8.03192C6.67826 8.01687 6.83823 8.00917 7 8.00917C8.12582 8.00917 9.16474 8.38194 10.0005 9.01101" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M12 13L12 21M12 13C11.2998 13 9.99153 14.9943 9.5 15.5M12 13C12.7002 13 14.0085 14.9943 14.5 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <span>
-                                    Export
-                                </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
-                                    <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                position: 'relative',
-
-                                width: '100%',
-                            }}
-                        >
-                            <PieChart
-                                height={300}
-                                series={[
-                                    {
-                                        data: GenderSummary.slice(0, 9),
-                                        innerRadius: 50, // Set a fixed radius
-                                        arcLabel: (params) => (
-                                            <Box sx={{ textAlign: 'left', paddingLeft: '10px', color: '#333' }}>
-                                                {params.label ?? ''}
-                                            </Box>
-                                        ),
-                                        arcLabelMinAngle: 30,
-                                        valueFormatter,
-                                    },
-                                ]}
-                                skipAnimation={false} // Animation setting
-
-                            />
-                            {/* Center Title and Total */}
                             <Box
                                 sx={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    textAlign: 'center',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+
+                                    width: '100%',
                                 }}
                             >
-                                <div className="center_cart_text">
-                                    <Typography variant="p">Total</Typography>
-                                    <Typography variant="h6">
-                                        {GenderSummary.reduce((acc, item) => acc + item.value, 0)} {/* Total value */}
-                                    </Typography>
-                                </div>
+                                <PieChart
+                                    height={300}
+                                    series={[
+                                        {
+                                            data: GenderSummary.slice(0, 9),
+                                            innerRadius: 50, // Set a fixed radius
+                                            arcLabel: (params) => (
+                                                <Box sx={{ textAlign: 'left', paddingLeft: '10px', color: '#333' }}>
+                                                    {params.label ?? ''}
+                                                </Box>
+                                            ),
+                                            arcLabelMinAngle: 30,
+                                            valueFormatter,
+                                        },
+                                    ]}
+                                    skipAnimation={false} // Animation setting
+
+                                />
+                                {/* Center Title and Total */}
+                                <Box
+                                    sx={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    <div className="center_cart_text">
+                                        <Typography variant="p">Total</Typography>
+                                        <Typography variant="h6">
+                                            {GenderSummary.reduce((acc, item) => acc + item.value, 0)} {/* Total value */}
+                                        </Typography>
+                                    </div>
+                                </Box>
                             </Box>
-                        </Box>
+                        </Grid>
+                        {/* 4 */}
+                        <Grid xs={12} sm={12} md={12} lg={5} sx={{
+                            margin: '20px',
+                            border: '1px solid #ddd', // Optional border for better visibility
+                            borderRadius: '12px', // Rounded corners
+                            backgroundColor: '#f9f9f9', // Background color
+                        }}  >
+                            <div className="cart_head_">
+                                <div className="l_title">
+                                    Age Group
+                                </div>
+                                <div className="btn_r_Export">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#141b34" fill="none">
+                                        <path d="M17.4776 9.01106C17.485 9.01102 17.4925 9.01101 17.5 9.01101C19.9853 9.01101 22 11.0294 22 13.5193C22 15.8398 20.25 17.7508 18 18M17.4776 9.01106C17.4924 8.84606 17.5 8.67896 17.5 8.51009C17.5 5.46695 15.0376 3 12 3C9.12324 3 6.76233 5.21267 6.52042 8.03192M17.4776 9.01106C17.3753 10.1476 16.9286 11.1846 16.2428 12.0165M6.52042 8.03192C3.98398 8.27373 2 10.4139 2 13.0183C2 15.4417 3.71776 17.4632 6 17.9273M6.52042 8.03192C6.67826 8.01687 6.83823 8.00917 7 8.00917C8.12582 8.00917 9.16474 8.38194 10.0005 9.01101" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M12 13L12 21M12 13C11.2998 13 9.99153 14.9943 9.5 15.5M12 13C12.7002 13 14.0085 14.9943 14.5 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span>
+                                        Export
+                                    </span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
+                                        <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+
+                                    width: '100%',
+                                }}
+                            >
+                                <PieChart
+                                    height={300}
+                                    series={[
+                                        {
+                                            data: AgeGroupSummary.slice(0, 9),
+                                            innerRadius: 50, // Set a fixed radius
+                                            arcLabel: (params) => (
+                                                <Box sx={{ textAlign: 'left', paddingLeft: '10px', color: '#333' }}>
+                                                    {params.label ?? ''}
+                                                </Box>
+                                            ),
+                                            arcLabelMinAngle: 30,
+                                            valueFormatter,
+                                        },
+                                    ]}
+                                    skipAnimation={false} // Animation setting
+
+                                />
+                                {/* Center Title and Total */}
+                                <Box
+                                    sx={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    <div className="center_cart_text">
+                                        <Typography variant="p">Total</Typography>
+                                        <Typography variant="h6">
+                                            {AgeGroupSummary.reduce((acc, item) => acc + item.value, 0)} {/* Total value */}
+                                        </Typography>
+                                    </div>
+                                </Box>
+                            </Box>
+                        </Grid>
                     </Grid>
-                    {/* 4 */}
-                    <Grid xs={12} sm={12} md={12} lg={5} sx={{
-                        margin: '20px',
-                        border: '1px solid #ddd', // Optional border for better visibility
-                        borderRadius: '12px', // Rounded corners
-                        backgroundColor: '#f9f9f9', // Background color
-                    }}  >
-                        <div className="cart_head_">
-                            <div className="l_title">
-                                Age Group
-                            </div>
-                            <div className="btn_r_Export">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#141b34" fill="none">
-                                    <path d="M17.4776 9.01106C17.485 9.01102 17.4925 9.01101 17.5 9.01101C19.9853 9.01101 22 11.0294 22 13.5193C22 15.8398 20.25 17.7508 18 18M17.4776 9.01106C17.4924 8.84606 17.5 8.67896 17.5 8.51009C17.5 5.46695 15.0376 3 12 3C9.12324 3 6.76233 5.21267 6.52042 8.03192M17.4776 9.01106C17.3753 10.1476 16.9286 11.1846 16.2428 12.0165M6.52042 8.03192C3.98398 8.27373 2 10.4139 2 13.0183C2 15.4417 3.71776 17.4632 6 17.9273M6.52042 8.03192C6.67826 8.01687 6.83823 8.00917 7 8.00917C8.12582 8.00917 9.16474 8.38194 10.0005 9.01101" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M12 13L12 21M12 13C11.2998 13 9.99153 14.9943 9.5 15.5M12 13C12.7002 13 14.0085 14.9943 14.5 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <span>
-                                    Export
-                                </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#9b9b9b" fill="none">
-                                    <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                position: 'relative',
+                </Box>
+            </div>
 
-                                width: '100%',
-                            }}
-                        >
-                            <PieChart
-                                height={300}
-                                series={[
-                                    {
-                                        data: AgeGroupSummary.slice(0, 9),
-                                        innerRadius: 50, // Set a fixed radius
-                                        arcLabel: (params) => (
-                                            <Box sx={{ textAlign: 'left', paddingLeft: '10px', color: '#333' }}>
-                                                {params.label ?? ''}
-                                            </Box>
-                                        ),
-                                        arcLabelMinAngle: 30,
-                                        valueFormatter,
-                                    },
-                                ]}
-                                skipAnimation={false} // Animation setting
-
-                            />
-                            {/* Center Title and Total */}
-                            <Box
-                                sx={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    textAlign: 'center',
-                                }}
-                            >
-                                <div className="center_cart_text">
-                                    <Typography variant="p">Total</Typography>
-                                    <Typography variant="h6">
-                                        {AgeGroupSummary.reduce((acc, item) => acc + item.value, 0)} {/* Total value */}
-                                    </Typography>
-                                </div>
-                            </Box>
-                        </Box>
-                    </Grid>
-                </Grid>
-            </Box>
         </>
     );
 };

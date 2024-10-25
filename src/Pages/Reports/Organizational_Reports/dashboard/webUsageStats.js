@@ -4,7 +4,7 @@ export const DepartmentSummary = [
     { label: 'Operations', value: 100 },
     { label: 'Maintenance', value: 60 },
     { label: 'Manning', value: 10 },
-    { label: 'Human Resources', value: 10 },
+    { label: 'HR ', value: 10 },
     { label: 'Engineering', value: 5 },
     { label: 'IT', value: 25 },
 ];

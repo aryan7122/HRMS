@@ -202,6 +202,8 @@
   align-items: center;
   margin: 20px 20px;
 }
+
+
 .cart_head_{
   margin: 10px 20px;
   display: flex;
@@ -249,4 +251,10 @@ g{
       font-size: 11px !important;
     }
   }
+}
+
+
+#cart_d{
+  // border: 1px solid red ;
+  overflow: hidden !important;
 }
