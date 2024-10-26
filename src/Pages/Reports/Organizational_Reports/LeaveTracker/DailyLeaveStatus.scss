@@ -228,11 +228,15 @@
   align-items: center;
   justify-content: start;
   gap: 20px;
+  border-bottom: none;
   .img_usr_chart{
     width: 20px;
     height: 20px;
   }
   .print_right_icon_22{
     width: 170px;
+  }
+  .print_right_icon_3{
+    width: 120px;
   }
 }
