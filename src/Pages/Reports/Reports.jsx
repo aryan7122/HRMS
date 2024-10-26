@@ -6,10 +6,16 @@ import { HiUserPlus } from "react-icons/hi2";
 import { TfiClose } from "react-icons/tfi";
 import MyReports, { MyData } from './MyReports';
 import { useLocation } from 'react-router-dom';
-import Dashboard from './Organizational_Reports/dashboard/Dashboard';
-import Employee_Attrition_Trend from './Organizational_Reports/Employee_Attrition_Trend/Employee_Attrition_Trend';
-import Addition_Trend from './Organizational_Reports/Addition_Trend/Addition_Trend';
-import Headcount from './Organizational_Reports/Headcount/Headcount';
+// 
+import Dashboard from './Organizational_Reports/EmployeeInformation/dashboard/Dashboard';
+import Employee_Attrition_Trend from './Organizational_Reports/EmployeeInformation/Employee_Attrition_Trend/Employee_Attrition_Trend';
+import Addition_Trend from './Organizational_Reports/EmployeeInformation/Addition_Trend/Addition_Trend';
+import Headcount from './Organizational_Reports/EmployeeInformation/Headcount/Headcount';
+// 
+import DailyLeaveStatus from './Organizational_Reports/LeaveTracker/DailyLeaveStatus';
+import ResourceAvailability from './Organizational_Reports/LeaveTracker/ResourceAvailability';
+import LeaveBalance from './Organizational_Reports/LeaveTracker/LeaveBalance';
+import LeaveTypeSummary from './Organizational_Reports/LeaveTracker/LeaveTypeSummary';
 
 const Reports = () => {
   const navigate = useNavigate();
@@ -49,7 +55,7 @@ const Reports = () => {
   return (
     <>
       <div className="setting_nav_">
-        <div className="top-bar">
+        <div className="top-bar-r">
           <h2>
             <div className='span' style={{ marginLeft: '-15px', marginRight: '10px' }}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#30005a" fill="none">
@@ -59,7 +65,7 @@ const Reports = () => {
               </svg>
             </div>Reports </h2>
           <span className="close_nav" onClick={JobList}><TfiClose /></span>
-          <div className="">
+          <div className="right-pattern">
             <span className="1"></span>
             <span className="2"></span>
             <span className="3"></span>
@@ -69,9 +75,6 @@ const Reports = () => {
             <span className="7"></span>
             <span className="8"></span>
             <span className="9"></span>
-            <span className="10"></span>
-            {/* <span className="11"></span> */}
-
           </div>
         </div>
       </div>
@@ -98,6 +101,7 @@ const Reports = () => {
           {currentURL === '/reports/my' && (
             <MyReports />
           )}
+          {/* Employee Information */}
           {currentURL === '/reports/organizational/dashboard' && (
             <Dashboard />
           )}
@@ -110,7 +114,19 @@ const Reports = () => {
           {currentURL === '/reports/organizational/headcount' && (
             <Headcount />
           )}
-          
+          {/* Leave Tracker */}
+          {currentURL === '/reports/organizational/daily-leave-status' && (
+            <DailyLeaveStatus />
+          )}
+          {currentURL === '/reports/organizational/resource-availability' && (
+            <ResourceAvailability />
+          )}
+          {currentURL === '/reports/organizational/leave-balance' && (
+            <LeaveBalance />
+          )}
+          {currentURL === '/reports/organizational/leave-type-summary' && (
+            <LeaveTypeSummary />
+          )}
         </div>
       </div>
     </>

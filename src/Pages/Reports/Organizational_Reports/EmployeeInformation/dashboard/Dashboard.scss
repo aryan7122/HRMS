@@ -172,6 +172,33 @@
           }
         }
       }
+        .Overview__dashboard {
+       border-radius: 20px;
+        padding: 20px;
+        font-size: 12px;
+        background: #ebe7ee;
+        .title_o {
+          color: #2a2a2a;
+          padding-bottom: 10px;
+        }
+        .hading_o {
+          .flex-O-h {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .t-n-o {
+              font-size: 38px;
+              color: #2a2a2a;
+            }
+            .o-span-svg {
+              background: #fff;
+              padding: 12px;
+              border-radius: 11px;
+            }
+          }
+        }
+      }
+      
       .Overview_bottom_dashboard {
         padding: 20px;
         display: flex;

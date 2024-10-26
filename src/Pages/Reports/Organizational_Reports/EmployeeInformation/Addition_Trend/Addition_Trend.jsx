@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'; // Add useNavigate here
-import { OutsideClick } from '../../../Employee_onboarding/AddEmployee/OutsideClick'
+import { OutsideClick } from '../../../../Employee_onboarding/AddEmployee/OutsideClick'
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -9,7 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { DepartmentSummary, DesignationSummary, HeadcountData, GenderSummary, AgeGroupSummary, valueFormatter } from '../dashboard/webUsageStats';
+import { DepartmentSummary, DesignationSummary, EmployeeAdditionTrend, GenderSummary, AgeGroupSummary, valueFormatter } from '../../../../../utils/Chart/webUsageStats';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { ChartContainer } from '@mui/x-charts/ChartContainer';
@@ -22,14 +22,14 @@ import {
 
 
 
-const Headcount = () => {
+const Addition_Trend = () => {
     const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
 
 
     const navigate = useNavigate(); // Use useNavigate here
-    const [selectedIndex, setSelectedIndex] = useState(3);
+    const [selectedIndex, setSelectedIndex] = useState(2);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [activetab, setActivetab] = useState('Headcount');
+    const [activetab, setActivetab] = useState('Employee Addition Trend');
 
     // Fixed subItems Array
     const subItems = ["Dashboard", "Employee Attrition Trend", "Employee Addition Trend", "Headcount"];
@@ -94,14 +94,16 @@ const Headcount = () => {
     const [selectedMonth, setSelectedMonth] = useState(null); // month ke liye
 
     const filterData = () => {
-        if (timeRange === '10y') {
-            return HeadcountData.slice(0, 10); // last 12 months ka data
-        } else if (timeRange === '5y') {
-            return HeadcountData.slice(0, 5); // last 6 months ka data
+        if (timeRange === '1y') {
+            return EmployeeAdditionTrend.slice(0, 12); // last 12 months ka data
+        } else if (timeRange === '6m') {
+            return EmployeeAdditionTrend.slice(0, 6); // last 6 months ka data
+        } else if (timeRange === '3m') {
+            return EmployeeAdditionTrend.slice(0, 3); // last 6 months ka data
         } else if (timeRange === '1m' && selectedMonth) {
-            return HeadcountData.filter(item => item.label === selectedMonth); // specific month ka data
+            return EmployeeAdditionTrend.filter(item => item.label === selectedMonth); // specific month ka data
         }
-        return HeadcountData; // default all data
+        return EmployeeAdditionTrend; // default all data
     };
 
     const filteredData = filterData();
@@ -192,7 +194,7 @@ const Headcount = () => {
                         }}  >
                             <div className="cart_head_">
                                 <div className="l_title">
-                                    Headcount
+                                    Employee Addition Trend
                                 </div>
                                 <div className="btn_r_Export">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#141b34" fill="none">
@@ -224,14 +226,15 @@ const Headcount = () => {
                                         </div>
                                         <div>
                                             <select onChange={(e) => setTimeRange(e.target.value)} value={timeRange}>
-                                                <option value="10y">Last 10 Year</option>
-                                                <option value="5y">Last 5 Months</option>
+                                                <option value="1y">This Year</option>
+                                                <option value="6m">Last Six Months</option>
+                                                <option value="3m">Last Three Months</option>
                                                 <option value="1m">Custom</option>
                                             </select>
                                         </div>
                                         {timeRange === '1m' && (
                                             <select onChange={(e) => setSelectedMonth(e.target.value)} value={selectedMonth} className="month-selector">
-                                                {HeadcountData.map((item, index) => (
+                                                {EmployeeAdditionTrend.map((item, index) => (
                                                     <option key={index} value={item.label}>{item.label}</option>
                                                 ))}
                                             </select>
@@ -241,7 +244,7 @@ const Headcount = () => {
                                     {/* Line Chart Container */}
                                     <ChartContainer
                                         width={screenWidth - 100}
-                                        height={300}
+                                        height={450}
                                         series={[{ type: 'line', data: filteredData.map(item => item.value) }]}
                                         xAxis={[{ scaleType: 'band', data: filteredData.map(item => item.label) }]}
                                         sx={{
@@ -255,8 +258,8 @@ const Headcount = () => {
                                                 fill: '#400F6F',
                                                 strokeWidth: 12,
                                             },
-                                            marginBottom: '-300px',
-                                            marginLeft: '50px',
+                                            marginBottom: '-410px',
+                                            marginLeft: '36px',
                                             zIndex: '0'
                                         }}
                                         disableAxisListener
@@ -306,4 +309,4 @@ const Headcount = () => {
     );
 };
 
-export default Headcount;
+export default Addition_Trend;

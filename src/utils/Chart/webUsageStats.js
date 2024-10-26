@@ -36,20 +36,34 @@ export const GenderSummary = [
 ];
 
 export const EmployeeAdditionTrend = [
-    { label: 'January', value: 0 },
+    { label: 'January', value: 10 },
     { label: 'February', value: 0 },
     { label: 'March', value: 5 },
     { label: 'April', value: 20 },
     { label: 'May', value: 25 },
-    { label: 'June', value: 30 },
+    { label: 'June', value: 0 },
     { label: 'July', value: 35 },
-    { label: 'August', value: 40 },
+    { label: 'August', value: 98 },
     { label: 'September', value: 45 },
     { label: 'October', value: 30 },
     { label: 'November', value: 55 },
     { label: 'December', value: 30 },
 ];
 
+export const EmployeeAttritionTrend = [
+    { label: 'January', value: 0 },
+    { label: 'February', value: 0 },
+    { label: 'March', value: 5 },
+    { label: 'April', value: 20 },
+    { label: 'May', value: 25 },
+    { label: 'June', value: 0 },
+    { label: 'July', value: 5 },
+    { label: 'August', value: 8 },
+    { label: 'September', value: 45 },
+    { label: 'October', value: 30 },
+    { label: 'November', value: 55 },
+    { label: 'December', value: 2 },
+];
 
 export const HeadcountData = [
     { label: '0', value: 0 },

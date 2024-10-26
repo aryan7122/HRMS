@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'; // Add useNavigate here
 import './Dashboard.scss';
-import { OutsideClick } from '../../../Employee_onboarding/AddEmployee/OutsideClick'
+import { OutsideClick } from '../../../../Employee_onboarding/AddEmployee/OutsideClick.jsx'
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -10,7 +10,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { DepartmentSummary, DesignationSummary, GenderSummary, AgeGroupSummary, valueFormatter } from './webUsageStats.js';
+import { DepartmentSummary, DesignationSummary, GenderSummary, AgeGroupSummary, valueFormatter } from '../../../../../utils/Chart/webUsageStats.js';
 
 const Dashboard = () => {
     const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();

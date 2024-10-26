@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'; // Add useNavigate here
-import { OutsideClick } from '../../../Employee_onboarding/AddEmployee/OutsideClick'
+import { OutsideClick } from '../../../../Employee_onboarding/AddEmployee/OutsideClick'
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -9,7 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { DepartmentSummary, DesignationSummary, EmployeeAdditionTrend, GenderSummary, AgeGroupSummary, valueFormatter } from '../dashboard/webUsageStats';
+import { DepartmentSummary, DesignationSummary, EmployeeAttritionTrend, GenderSummary, AgeGroupSummary, valueFormatter } from '../../../../../utils/Chart/webUsageStats';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { ChartContainer } from '@mui/x-charts/ChartContainer';
@@ -95,15 +95,15 @@ const Employee_Attrition_Trend = () => {
 
     const filterData = () => {
         if (timeRange === '1y') {
-            return EmployeeAdditionTrend.slice(0, 12); // last 12 months ka data
+            return EmployeeAttritionTrend.slice(0, 12); // last 12 months ka data
         } else if (timeRange === '6m') {
-            return EmployeeAdditionTrend.slice(0, 6); // last 6 months ka data
+            return EmployeeAttritionTrend.slice(0, 6); // last 6 months ka data
         } else if (timeRange === '3m') {
-            return EmployeeAdditionTrend.slice(0, 3); // last 6 months ka data
+            return EmployeeAttritionTrend.slice(0, 3); // last 6 months ka data
         } else if (timeRange === '1m' && selectedMonth) {
-            return EmployeeAdditionTrend.filter(item => item.label === selectedMonth); // specific month ka data
+            return EmployeeAttritionTrend.filter(item => item.label === selectedMonth); // specific month ka data
         }
-        return EmployeeAdditionTrend; // default all data
+        return EmployeeAttritionTrend; // default all data
     };
 
     const filteredData = filterData();
@@ -234,7 +234,7 @@ const Employee_Attrition_Trend = () => {
                                         </div>
                                         {timeRange === '1m' && (
                                             <select onChange={(e) => setSelectedMonth(e.target.value)} value={selectedMonth} className="month-selector">
-                                                {EmployeeAdditionTrend.map((item, index) => (
+                                                {EmployeeAttritionTrend.map((item, index) => (
                                                     <option key={index} value={item.label}>{item.label}</option>
                                                 ))}
                                             </select>
@@ -244,7 +244,7 @@ const Employee_Attrition_Trend = () => {
                                     {/* Line Chart Container */}
                                     <ChartContainer
                                         width={screenWidth - 100}
-                                        height={300}
+                                        height={450}
                                         series={[{ type: 'line', data: filteredData.map(item => item.value) }]}
                                         xAxis={[{ scaleType: 'band', data: filteredData.map(item => item.label) }]}
                                         sx={{
@@ -258,8 +258,8 @@ const Employee_Attrition_Trend = () => {
                                                 fill: '#400F6F',
                                                 strokeWidth: 12,
                                             },
-                                            marginBottom: '-300px',
-                                            marginLeft: '50px',
+                                            marginBottom: '-410px',
+                                            marginLeft: '36px',
                                             zIndex: '0'
                                         }}
                                         disableAxisListener
