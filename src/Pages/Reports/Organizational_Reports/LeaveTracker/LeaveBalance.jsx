@@ -169,15 +169,11 @@ const LeaveBalance = () => {
                     </div>
                 </div>
             </div>
-            <div className="total-leaves" style={{ textAlign: 'center', marginTop: '10px' }}>
-                <div className="title_totale_leave">
-                Total Leaves ({totalLeaves})= Sick Leave ({totalSickLeaves})+ Casual Leave ({totalCasualLeaves})+ Earned Leaves({totalEarnedLeaves})
-                </div>
-            </div>
+
             <div className="leavebalanceCartPie">
                 <div className="TotalLeaves">
                     <div className="total-leaves" style={{ textAlign: 'center', marginTop: '10px' }}>
-                        <h3>Total Leaves: ({totalLeaves})</h3>
+                        <p>Total Leaves: ({totalLeaves})</p>
                     </div>
                     <div className="pieChart">
                         <ResponsiveContainer>
@@ -206,90 +202,95 @@ const LeaveBalance = () => {
                     <path d="M4 8H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                     <path d="M4 16H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                 </svg>
-                <div className="otherLeaves">
-                    <div className="pieChart">
-                        <div className="total-leaves" style={{ textAlign: 'center', marginTop: '10px' }}>
-                            <h3>Sick Leaves: ({totalSickLeaves})</h3>
+                <div className="piechats">
+                    <div className="total-leaves" style={{ textAlign: 'center', marginTop: '10px' }}>
+                        <div className="title_totale_leave">
+                            Total Leaves ({totalLeaves})= Sick Leave ({totalSickLeaves})+ Casual Leave ({totalCasualLeaves})+ Earned Leaves({totalEarnedLeaves})
                         </div>
-                        <ResponsiveContainer>
-
-                            <PieChart>
-                                <Legend content={renderLegend} />
-                                <Pie
-                                    data={SickLeaves}
-                                    dataKey="value"
-                                    isAnimationActive={false}
-                                    cx="50%"
-                                    cy="50%"
-                                    outerRadius={100}
-                                    innerRadius={40}
-                                    label
-                                >
-
-                                </Pie>
-                                <Tooltip />
-                            </PieChart>
-                        </ResponsiveContainer>
                     </div>
+                    <div className="otherLeaves">
+                        <div className="pieChart">
+                            <div className="total-leaves" style={{ textAlign: 'center', marginTop: '10px' }}>
+                                <p>Sick Leaves: ({totalSickLeaves})</p>
+                            </div>
+                            <ResponsiveContainer>
 
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" color="#4a4a4a" fill="none">
-                            <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                    <div className="pieChart">
-                        <div className="total-leaves" style={{ textAlign: 'center', marginTop: '10px' }}>
-                            <h3>Casual Leaves : ({totalCasualLeaves})</h3>
+                                <PieChart>
+                                    <Legend content={renderLegend} />
+                                    <Pie
+                                        data={SickLeaves}
+                                        dataKey="value"
+                                        isAnimationActive={false}
+                                        cx="50%"
+                                        cy="50%"
+                                        outerRadius={100}
+                                        innerRadius={40}
+                                        label
+                                    >
+
+                                    </Pie>
+                                    <Tooltip />
+                                </PieChart>
+                            </ResponsiveContainer>
                         </div>
-                        <ResponsiveContainer>
-                            <PieChart>
-                                <Legend content={renderLegend} />
-                                <Pie
-                                    data={CasualLeaves}
-                                    dataKey="value"
-                                    isAnimationActive={false}
-                                    cx="50%"
-                                    cy="50%"
-                                    outerRadius={100}
-                                    innerRadius={40}
-                                    label
-                                >
-
-                                </Pie>
-                                <Tooltip />
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </div>
-
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" color="#4a4a4a" fill="none">
-                            <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                    <div className="pieChart">
-                        <div className="total-leaves" style={{ textAlign: 'center', marginTop: '10px' }}>
-                            <h3>Earned Leaves: ({totalEarnedLeaves})</h3>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" color="#4a4a4a" fill="none">
+                                <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
                         </div>
-                        <ResponsiveContainer>
-                            <PieChart>
-                                <Legend content={renderLegend} />
-                                <Pie
-                                    data={EarnedLeaves}
-                                    dataKey="value"
-                                    isAnimationActive={false}
-                                    cx="50%"
-                                    cy="50%"
-                                    outerRadius={100}
-                                    innerRadius={40}
-                                    label
-                                >
+                        <div className="pieChart">
+                            <div className="total-leaves" style={{ textAlign: 'center', marginTop: '10px' }}>
+                                <p>Casual Leaves : ({totalCasualLeaves})</p>
+                            </div>
+                            <ResponsiveContainer>
+                                <PieChart>
+                                    <Legend content={renderLegend} />
+                                    <Pie
+                                        data={CasualLeaves}
+                                        dataKey="value"
+                                        isAnimationActive={false}
+                                        cx="50%"
+                                        cy="50%"
+                                        outerRadius={100}
+                                        innerRadius={40}
+                                        label
+                                    >
 
-                                </Pie>
-                                <Tooltip />
-                            </PieChart>
-                        </ResponsiveContainer>
+                                    </Pie>
+                                    <Tooltip />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" color="#4a4a4a" fill="none">
+                                <path d="M12 4V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M4 12H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div className="pieChart">
+                            <div className="total-leaves" style={{ textAlign: 'center', marginTop: '10px' }}>
+                                <p>Earned Leaves: ({totalEarnedLeaves})</p>
+                            </div>
+                            <ResponsiveContainer>
+                                <PieChart>
+                                    <Legend content={renderLegend} />
+                                    <Pie
+                                        data={EarnedLeaves}
+                                        dataKey="value"
+                                        isAnimationActive={false}
+                                        cx="50%"
+                                        cy="50%"
+                                        outerRadius={100}
+                                        innerRadius={40}
+                                        label
+                                    >
+
+                                    </Pie>
+                                    <Tooltip />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </div>
                     </div>
                 </div>
 
