@@ -231,10 +231,14 @@ const DailyLeaveStatus = () => {
                                         315
                                     </span>
                                     <span className="o-span-svg">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" color="#141b34" fill="none">
-                                            <path d="M7.78256 17.1112C6.68218 17.743 3.79706 19.0331 5.55429 20.6474C6.41269 21.436 7.36872 22 8.57068 22H15.4293C16.6313 22 17.5873 21.436 18.4457 20.6474C20.2029 19.0331 17.3178 17.743 16.2174 17.1112C13.6371 15.6296 10.3629 15.6296 7.78256 17.1112Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M15.5 10C15.5 11.933 13.933 13.5 12 13.5C10.067 13.5 8.5 11.933 8.5 10C8.5 8.067 10.067 6.5 12 6.5C13.933 6.5 15.5 8.067 15.5 10Z" stroke="currentColor" stroke-width="1.5" />
-                                            <path d="M2.854 16C2.30501 14.7664 2 13.401 2 11.9646C2 6.46129 6.47715 2 12 2C17.5228 2 22 6.46129 22 11.9646C22 13.401 21.695 14.7664 21.146 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" color="#400f6f" fill="none">
+                                            <path d="M13 16.7033C13 15.7854 13 15.3265 13.2034 14.9292C13.4067 14.5319 13.7859 14.2501 14.5442 13.6866L15.0442 13.315C16.2239 12.4383 16.8138 12 17.5 12C18.1862 12 18.7761 12.4383 19.9558 13.315L20.4558 13.6866C21.2141 14.2501 21.5933 14.5319 21.7966 14.9292C22 15.3265 22 15.7854 22 16.7033V18.1782C22 19.9798 22 20.8806 21.4142 21.4403C20.8284 22 19.8856 22 18 22H13V16.7033Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                            <path d="M18 12.0002V5C18 2.518 17.482 2 15 2H11C8.518 2 8 2.518 8 5V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <ellipse cx="3.5" cy="14" rx="1.5" ry="2" stroke="currentColor" stroke-width="1.5" />
+                                            <path d="M3.5 16V22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                            <path d="M2 22H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                            <path d="M12 6H14M12 9H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                            <path d="M17.5 22L17.5 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
                                     </span>
                                 </div>
@@ -256,10 +260,11 @@ const DailyLeaveStatus = () => {
                                         315
                                     </span>
                                     <span className="o-span-svg">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" color="#141b34" fill="none">
-                                            <path d="M7.78256 17.1112C6.68218 17.743 3.79706 19.0331 5.55429 20.6474C6.41269 21.436 7.36872 22 8.57068 22H15.4293C16.6313 22 17.5873 21.436 18.4457 20.6474C20.2029 19.0331 17.3178 17.743 16.2174 17.1112C13.6371 15.6296 10.3629 15.6296 7.78256 17.1112Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M15.5 10C15.5 11.933 13.933 13.5 12 13.5C10.067 13.5 8.5 11.933 8.5 10C8.5 8.067 10.067 6.5 12 6.5C13.933 6.5 15.5 8.067 15.5 10Z" stroke="currentColor" stroke-width="1.5" />
-                                            <path d="M2.854 16C2.30501 14.7664 2 13.401 2 11.9646C2 6.46129 6.47715 2 12 2C17.5228 2 22 6.46129 22 11.9646C22 13.401 21.695 14.7664 21.146 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" color="#400f6f" fill="none">
+                                            <path d="M10.2892 21.9614H9.39111C6.14261 21.9614 4.51836 21.9614 3.50918 20.9363C2.5 19.9111 2.5 18.2612 2.5 14.9614V9.96139C2.5 6.66156 2.5 5.01165 3.50918 3.98653C4.51836 2.9614 6.14261 2.9614 9.39111 2.9614H12.3444C15.5929 2.9614 17.4907 3.01658 18.5 4.04171C19.5092 5.06683 19.5 6.66156 19.5 9.96139V11.1478" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M15.9453 2V4M10.9453 2V4M5.94531 2V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M7 15H11M7 10H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                            <path opacity="0.93" d="M20.7598 14.8785C19.8544 13.8641 19.3112 13.9245 18.7076 14.1056C18.2851 14.166 16.8365 15.8568 16.2329 16.3952C15.2419 17.3743 14.2464 18.3823 14.1807 18.5138C13.9931 18.8188 13.8186 19.3592 13.7341 19.963C13.5771 20.8688 13.3507 21.8885 13.6375 21.9759C13.9242 22.0632 14.7239 21.8954 15.6293 21.7625C16.2329 21.6538 16.6554 21.533 16.9572 21.3519C17.3797 21.0983 18.1644 20.2046 19.5164 18.8761C20.3644 17.9833 21.1823 17.3664 21.4238 16.7626C21.6652 15.8568 21.3031 15.3737 20.7598 14.8785Z" stroke="currentColor" stroke-width="1.5" />
                                         </svg>
                                     </span>
                                 </div>
@@ -281,10 +286,10 @@ const DailyLeaveStatus = () => {
                                         315
                                     </span>
                                     <span className="o-span-svg">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" color="#141b34" fill="none">
-                                            <path d="M7.78256 17.1112C6.68218 17.743 3.79706 19.0331 5.55429 20.6474C6.41269 21.436 7.36872 22 8.57068 22H15.4293C16.6313 22 17.5873 21.436 18.4457 20.6474C20.2029 19.0331 17.3178 17.743 16.2174 17.1112C13.6371 15.6296 10.3629 15.6296 7.78256 17.1112Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M15.5 10C15.5 11.933 13.933 13.5 12 13.5C10.067 13.5 8.5 11.933 8.5 10C8.5 8.067 10.067 6.5 12 6.5C13.933 6.5 15.5 8.067 15.5 10Z" stroke="currentColor" stroke-width="1.5" />
-                                            <path d="M2.854 16C2.30501 14.7664 2 13.401 2 11.9646C2 6.46129 6.47715 2 12 2C17.5228 2 22 6.46129 22 11.9646C22 13.401 21.695 14.7664 21.146 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" color="#400f6f" fill="none">
+                                            <path d="M5.77778 16C4.66596 16.6327 4 17.4385 4 18.3158C4 20.3505 7.58172 22 12 22C16.4183 22 20 20.3505 20 18.3158C20 17.4385 19.334 16.6327 18.2222 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                            <path d="M12.9981 7H11.0019C8.13196 7 6.19701 10.0691 7.32753 12.828C7.48501 13.2124 7.84633 13.4615 8.24612 13.4615H8.9491C9.18605 13.4615 9.39259 13.6302 9.45006 13.8706L10.3551 17.6567C10.5438 18.4462 11.222 19 12 19C12.778 19 13.4562 18.4462 13.6449 17.6567L14.5499 13.8706C14.6074 13.6302 14.814 13.4615 15.0509 13.4615H15.7539C16.1537 13.4615 16.515 13.2124 16.6725 12.828C17.803 10.0691 15.868 7 12.9981 7Z" stroke="currentColor" stroke-width="1.5" />
+                                            <path d="M14.5 4.5C14.5 5.88071 13.3807 7 12 7C10.6193 7 9.5 5.88071 9.5 4.5C9.5 3.11929 10.6193 2 12 2C13.3807 2 14.5 3.11929 14.5 4.5Z" stroke="currentColor" stroke-width="1.5" />
                                         </svg>
                                     </span>
                                 </div>
@@ -369,7 +374,7 @@ const DailyLeaveStatus = () => {
 
                         {isFilterOpen && (
 
-                            <div className="filter-container" ref={filterRef}>
+                            <div className="filter-container filter-option-w-big " ref={filterRef}>
                                 <div className="filter-options">
 
                                     <div className="filter-option" >
@@ -386,8 +391,8 @@ const DailyLeaveStatus = () => {
 
 
 
-                                    <div className="filter-option">
-                                        <p onClick={handleEmploymentTypeClick}>Employment Type {!showEmploymentType ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                    <div className="filter-option ">
+                                        <p onClick={handleEmploymentTypeClick}>Leave Type {!showEmploymentType ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
                                         {showEmploymentType && (
                                             <div className="dropdown-content">
                                                 <ul>
@@ -405,46 +410,58 @@ const DailyLeaveStatus = () => {
                                                     <li>
                                                         <input
                                                             type="radio"
-                                                            id="permanent"
+                                                            id="SickLeave"
                                                             name="employmentType"
                                                             className="custom-radio"
-                                                            value="Permanent"
+                                                            value="SickLeave"
                                                             onChange={handleEmploymentTypeChange}
                                                         />
-                                                        <label htmlFor="permanent">Permanent</label>
+                                                        <label htmlFor="SickLeave">Sick Leave</label>
                                                     </li>
                                                     <li>
                                                         <input
                                                             type="radio"
-                                                            id="contract"
+                                                            id="CasualLeave"
                                                             name="employmentType"
                                                             className="custom-radio"
-                                                            value="Contract"
+                                                            value="CasualLeave"
                                                             onChange={handleEmploymentTypeChange}
                                                         />
-                                                        <label htmlFor="contract">On Contract</label>
+                                                        <label htmlFor="CasualLeave">Casual Leave</label>
                                                     </li>
                                                     <li>
                                                         <input
                                                             type="radio"
-                                                            id="intern"
+                                                            id="EarnedLeave"
                                                             name="employmentType"
                                                             className="custom-radio"
-                                                            value="Intern"
+                                                            value="EarnedLeave"
                                                             onChange={handleEmploymentTypeChange}
                                                         />
-                                                        <label htmlFor="intern">Intern</label>
+                                                        <label htmlFor="EarnedLeave">Earned Leave</label>
+                                                    </li>
+                                                    <li >
+                                                        <input
+                                                            
+                                                            type="radio"
+                                                            id="MaternityLeave"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value="MaternityLeave"
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label  htmlFor="MaternityLeave">Maternity Leave (Women’s Only)</label>
                                                     </li>
                                                     <li>
                                                         <input
                                                             type="radio"
-                                                            id="trainee"
+                                                            id="PaternityLeave"
                                                             name="employmentType"
                                                             className="custom-radio"
-                                                            value="Trainee"
+                                                            value="PaternityLeave"
                                                             onChange={handleEmploymentTypeChange}
                                                         />
-                                                        <label htmlFor="trainee">Trainee</label>
+                                                        <label htmlFor="PaternityLeave">Paternity Leave</label>
                                                     </li>
 
                                                 </ul>

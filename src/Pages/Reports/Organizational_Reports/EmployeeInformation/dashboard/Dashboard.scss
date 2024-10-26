@@ -107,7 +107,8 @@
   margin: 0 30px;
 }
 .Overview_dashboard {
-  margin: 15px 10px;
+  // border: 1px solid red;
+  margin-left: 15px;
   user-select: none;
   display: grid;
   width: 98%;
@@ -143,8 +144,10 @@
     border: 1px solid #7973734f !important;
     // padding: 10px;
     border-radius: 20px;
+    width: 90%;
     .Overview_box_dashboard {
       width: 100%;
+  
       .Overview_top_dashboard {
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
