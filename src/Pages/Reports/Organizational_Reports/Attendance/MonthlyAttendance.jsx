@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom'; // Add useNavigate here
 import '../EmployeeInformation/dashboard/Dashboard.scss';
 import { OutsideClick } from '../../../Employee_onboarding/AddEmployee/OutsideClick.jsx'
-import Calendar from "../../../../utils/Calendar/Calendar.jsx";
+import Calendar from "../../../../utils/Calendar/Employee_present_absent/CalendarAPStatus.jsx";
 import { MdDateRange } from "react-icons/md";
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -14,19 +14,19 @@ import user from '../../../../assets/user.png'
 
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-const ResourceAvailability = () => {
+const MonthlyAttendance = () => {
     const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
 
 
     const navigate = useNavigate(); // Use useNavigate here
-    const [selectedIndex, setSelectedIndex] = useState(1);
+    const [selectedIndex, setSelectedIndex] = useState(2);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [activetab, setActivetab] = useState('Resource Availability');
+    const [activetab, setActivetab] = useState('Monthly Attendance');
 
     // Fixed subItems Array
-    const subItems = ["Daily Leave Status", "Resource Availability", "Leave Balance", "Leave Type Summary"];
+    const subItems = ["Daily Attendance Report", "Employee Present/Absent Status", "Monthly Attendance"];
 
     // Log the subItems properly
     console.log('selectedIndex', selectedIndex)
@@ -196,7 +196,7 @@ const ResourceAvailability = () => {
                 </div>
             </div>
             <div className="_Leave_Balance_second_title">
-                <h3>Resource Availability</h3>
+                <h3>Employee Attendance</h3>
                 <div className="print_right_icon" onClick={handlePrint} >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" width="20" height="20" color="#4a4a4a" fill="none">
                         <path d="M7.35396 18C5.23084 18 4.16928 18 3.41349 17.5468C2.91953 17.2506 2.52158 16.8271 2.26475 16.3242C1.87179 15.5547 1.97742 14.5373 2.18868 12.5025C2.36503 10.8039 2.45321 9.95455 2.88684 9.33081C3.17153 8.92129 3.55659 8.58564 4.00797 8.35353C4.69548 8 5.58164 8 7.35396 8H16.646C18.4184 8 19.3045 8 19.992 8.35353C20.4434 8.58564 20.8285 8.92129 21.1132 9.33081C21.5468 9.95455 21.635 10.8039 21.8113 12.5025C22.0226 14.5373 22.1282 15.5547 21.7352 16.3242C21.4784 16.8271 21.0805 17.2506 20.5865 17.5468C19.8307 18 18.7692 18 16.646 18" stroke="currentColor" stroke-width="1.5" />
@@ -417,4 +417,4 @@ const ResourceAvailability = () => {
     );
 };
 
-export default ResourceAvailability;
+export default MonthlyAttendance;

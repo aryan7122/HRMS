@@ -52,7 +52,7 @@ const DailyAttendance = () => {
     const [activetab, setActivetab] = useState('Daily Attendance Report');
 
     // Fixed subItems Array
-    const subItems = ["Daily Attendance Report", "Resource Availability", "Leave Balance", "Leave Type Summary"];
+    const subItems = ["Daily Attendance Report", "Employee Present/Absent Status", "Employee Present/Absent"];
 
     // Log the subItems properly
     console.log('selectedIndex', selectedIndex)
@@ -233,7 +233,7 @@ const DailyAttendance = () => {
                     </div>
                 </div>
             </div>
-            <h2 className="Overview_main_h2_title_o">Overview</h2>
+            <h2 className="Overview_main_h2_title_att">Overview</h2>
             <div className="Overview_dashboard">
                 <div className="Overview_dashboard">
                     <div className="Overview_box_dashboard">

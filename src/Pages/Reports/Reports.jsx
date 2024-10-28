@@ -16,8 +16,12 @@ import DailyLeaveStatus from './Organizational_Reports/LeaveTracker/DailyLeaveSt
 import ResourceAvailability from './Organizational_Reports/LeaveTracker/ResourceAvailability';
 import LeaveBalance from './Organizational_Reports/LeaveTracker/LeaveBalance';
 import LeaveTypeSummary from './Organizational_Reports/LeaveTracker/LeaveTypeSummary';
-import DailyAttendance from './Organizational_Reports/Attendance/DailyAttendance';
 // 
+import DailyAttendance from './Organizational_Reports/Attendance/DailyAttendance';
+import Employee_present_absent from './Organizational_Reports/Attendance/Employee_present_absent';
+import MonthlyAttendance from './Organizational_Reports/Attendance/MonthlyAttendance';
+import Performance from './Organizational_Reports/Performance/Performance';
+
 
 const Reports = () => {
   const navigate = useNavigate();
@@ -133,6 +137,23 @@ const Reports = () => {
           {currentURL === '/reports/organizational/daily-attendance-report' && (
             <DailyAttendance />
           )}
+          {currentURL === '/reports/organizational/employee-present/absent-status' && (
+            <Employee_present_absent />
+          )}
+          {currentURL === '/reports/organizational/monthly-attendance' && (
+            <MonthlyAttendance />
+          )}
+          {/* performance-review */}
+          {currentURL === '/reports/organizational/appraisal-status' && (
+            <Performance />
+          )}
+          {currentURL === '/reports/organizational/performance-review' && (
+            <Performance />
+          )}
+          {currentURL === '/reports/organizational/appraisal-history' && (
+            <Performance />
+          )}
+          
         </div>
       </div>
     </>

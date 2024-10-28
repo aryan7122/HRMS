@@ -101,6 +101,18 @@
         background: #ea530e;
       }
     }
+    .Absent {
+      padding: 5px 7px;
+      border-radius: 20px;
+      background: #ff00003f;
+      display: flex;
+      align-items: center;
+      
+      .dot {
+        padding: 1px;
+        background: #ff0000;
+      }
+    }
 
     .date {
       width: 100%;
@@ -154,7 +166,14 @@
     overflow: hidden;
     color: #ea530e;
     }
+  &.Absent {
+      background-color: #ffffff;
+      color: #ff0000 ;
 
+      .date {
+        color: #000000 !important;
+      }
+    }
     &.sick-leave {
       background-color: #4976f4;
       color: #4976f4;
