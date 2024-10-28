@@ -52,7 +52,7 @@ const DailyAttendance = () => {
     const [activetab, setActivetab] = useState('Daily Attendance Report');
 
     // Fixed subItems Array
-    const subItems = ["Daily Attendance Report", "Employee Present/Absent Status", "Employee Present/Absent"];
+    const subItems = ["Daily Attendance Report", "Employee Present/Absent Status", "Monthly Attendance"];
 
     // Log the subItems properly
     console.log('selectedIndex', selectedIndex)
