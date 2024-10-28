@@ -16,6 +16,8 @@ import DailyLeaveStatus from './Organizational_Reports/LeaveTracker/DailyLeaveSt
 import ResourceAvailability from './Organizational_Reports/LeaveTracker/ResourceAvailability';
 import LeaveBalance from './Organizational_Reports/LeaveTracker/LeaveBalance';
 import LeaveTypeSummary from './Organizational_Reports/LeaveTracker/LeaveTypeSummary';
+import DailyAttendance from './Organizational_Reports/Attendance/DailyAttendance';
+// 
 
 const Reports = () => {
   const navigate = useNavigate();
@@ -126,6 +128,10 @@ const Reports = () => {
           )}
           {currentURL === '/reports/organizational/leave-type-summary' && (
             <LeaveTypeSummary />
+          )}
+          {/* Attendance */}
+          {currentURL === '/reports/organizational/daily-attendance-report' && (
+            <DailyAttendance />
           )}
         </div>
       </div>

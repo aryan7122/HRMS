@@ -123,7 +123,7 @@ const Calendar = () => {
 
                     </span>
 
-                    Leave
+                    Sick Leave
                 </div>
                 <div className='casual'>
                     <span className="dot">

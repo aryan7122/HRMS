@@ -134,7 +134,7 @@ export const OrganizationalData = [
         ],
         right: [
             {
-                buttonText: 'Daily Attendance',
+                buttonText: 'Daily Attendance Report',
                 svg: (
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" color="#000000" fill="none">
                         <path d="M2 22H13C17.9706 22 22 17.9706 22 13C22 8.02944 17.9706 4 13 4C8.36745 4 4.49744 7.50005 4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
