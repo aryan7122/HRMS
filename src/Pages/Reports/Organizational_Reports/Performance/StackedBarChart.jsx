@@ -80,16 +80,24 @@ const StackedBarChart = () => {
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
-                            <Tooltip />
-                            <Legend />
-                            <Bar dataKey="Expected" stackId="a" fill="#00BFFF"
+                            {/* <Tooltip /> */}
+                            {/* <Legend /> */}
+                            <Bar dataKey="Expected" stackId="a" fill="#0eaedf"
                                 barSize={40} 
                             />
-                            <Bar dataKey="Achieved" stackId="a" fill="#800080"
+                            <Bar dataKey="Achieved" stackId="a" fill="#400f6f"
                                 barSize={40} radius={[10, 10, 0, 0]}
                             />
                         </BarChart>
                     </ResponsiveContainer>
+                    <div className="lable_chart_ResponsiveContainer">
+                        <span className="Expected">
+                            Expected Value
+                        </span>
+                        <span className="Achieved">
+                            Achieved Value
+                        </span>
+                    </div>
                 </div>
 
                

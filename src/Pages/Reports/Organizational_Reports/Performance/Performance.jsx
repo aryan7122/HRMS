@@ -31,12 +31,12 @@ const Performance = () => {
     };
 
     const navigate = useNavigate(); // Use useNavigate here
-    const [selectedIndex, setSelectedIndex] = useState(2);
+    const [selectedIndex, setSelectedIndex] = useState(0);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [activetab, setActivetab] = useState('Monthly Attendance');
+    const [activetab, setActivetab] = useState('Appraisal Status');
 
     // Fixed subItems Array
-    const subItems = ["Daily Attendance Report", "Employee Present/Absent Status", "Monthly Attendance"];
+    const subItems = ["Appraisal Status", "Performance Review", "Appraisal History"];
 
     // Log the subItems properly
     console.log('selectedIndex', selectedIndex)
