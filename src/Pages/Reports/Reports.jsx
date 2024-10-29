@@ -21,6 +21,19 @@ import DailyAttendance from './Organizational_Reports/Attendance/DailyAttendance
 import Employee_present_absent from './Organizational_Reports/Attendance/Employee_present_absent';
 import MonthlyAttendance from './Organizational_Reports/Attendance/MonthlyAttendance';
 import Performance from './Organizational_Reports/Performance/Performance';
+// 
+import AllProjects from './Organizational_Reports/Trainee/AllProjects/AllProjects';
+import TrainingAttendance from './Organizational_Reports/Trainee/TrainingAttendance/TrainingAttendance';
+import TraineeEmployee from './Organizational_Reports/Trainee/TraineeEmployee/TraineeEmployee';
+
+
+
+import MyDailyLeaveStatus from './My_Reports/LeaveTracker/MyDailyLeaveStatus';
+import MyResourceAvailability from './My_Reports/LeaveTracker/MyResourceAvailability';
+import MyLeaveBalance from './My_Reports/LeaveTracker/MyLeaveBalance';
+import MyLeaveTypeSummary from './My_Reports/LeaveTracker/MyLeaveTypeSummary';
+import MyPerformance from './My_Reports/Performance/MyPerformance';
+// 
 
 
 const Reports = () => {
@@ -152,6 +165,32 @@ const Reports = () => {
           )}
           {currentURL === '/reports/organizational/appraisal-history' && (
             <Performance />
+          )}
+          {currentURL === '/reports/organizational/all-projects' && (
+            <AllProjects />
+          )}
+          {currentURL === '/reports/organizational/training-attendance' && (
+            <TrainingAttendance />
+          )}
+          {currentURL === '/reports/organizational/trainee-employee' && (
+            <TraineeEmployee />
+          )}
+
+          {/* Leave Tracker */}
+          {currentURL === '/reports/my/daily-leave-status' && (
+            <MyDailyLeaveStatus />
+          )}
+          {currentURL === '/reports/my/resource-availability' && (
+            <MyResourceAvailability />
+          )}
+          {currentURL === '/reports/my/leave-balance' && (
+            <MyLeaveBalance />
+          )}
+          {currentURL === '/reports/my/leave-type-summary' && (
+            <MyLeaveTypeSummary />
+          )}
+          {currentURL === '/reports/my/performance-review' && (
+            <MyPerformance />
           )}
           
         </div>
