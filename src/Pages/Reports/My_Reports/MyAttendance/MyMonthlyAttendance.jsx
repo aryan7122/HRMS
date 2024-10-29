@@ -12,31 +12,21 @@ import { Box, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import user from '../../../../assets/user.png'
 
-
-import './Performance.scss'
-
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import StackedBarChart from "./StackedBarChart.jsx";
-const MyPerformance = () => {
+const MyMonthlyAttendance = () => {
     const { isOpen: isStatusOpen, ref: statusRef, buttonRef: statusButtonRef, handleToggle: toggleStatus, setIsOpen: setStatusOpen } = OutsideClick();
     const { isOpen: isFilterOpen, ref: filterRef, buttonRef: filterButtonRef, handleToggle: toggleFilter } = OutsideClick();
     const { isOpen: isFilterOpen2, ref: filterRef2, buttonRef: filterButtonRef2, handleToggle: toggleFilter2 } = OutsideClick();
 
 
-    const [activeTab, setActiveTab] = useState('Technical');
-
-    const toggleTab = (tab) => {
-        setActiveTab(tab);
-    };
-
     const navigate = useNavigate(); // Use useNavigate here
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(2);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [activetab, setActivetab] = useState('Performance Review');
+    const [activetab, setActivetab] = useState('Monthly Attendance');
 
     // Fixed subItems Array
-    const subItems = ["Performance Review"];
+    const subItems = [ "Monthly Attendance"];
 
     // Log the subItems properly
     console.log('selectedIndex', selectedIndex)
@@ -119,7 +109,7 @@ const MyPerformance = () => {
         setSelectedDateFilter(prev => prev.add(1, 'day'));
     };
 
-    const formattedDate = selectedDateFilter.format(' MMMM - YYYY');
+    const formattedDate = selectedDateFilter.format('DD - MMMM - YYYY'); // '26 of October of 2024'
     console.log(formattedDate);
 
     const printRef = useRef();
@@ -206,7 +196,7 @@ const MyPerformance = () => {
                 </div>
             </div>
             <div className="_Leave_Balance_second_title">
-                <h3>Monthly Performance Review</h3>
+                <h3>Employee Attendance</h3>
                 <div className="print_right_icon" onClick={handlePrint} >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" width="20" height="20" color="#4a4a4a" fill="none">
                         <path d="M7.35396 18C5.23084 18 4.16928 18 3.41349 17.5468C2.91953 17.2506 2.52158 16.8271 2.26475 16.3242C1.87179 15.5547 1.97742 14.5373 2.18868 12.5025C2.36503 10.8039 2.45321 9.95455 2.88684 9.33081C3.17153 8.92129 3.55659 8.58564 4.00797 8.35353C4.69548 8 5.58164 8 7.35396 8H16.646C18.4184 8 19.3045 8 19.992 8.35353C20.4434 8.58564 20.8285 8.92129 21.1132 9.33081C21.5468 9.95455 21.635 10.8039 21.8113 12.5025C22.0226 14.5373 22.1282 15.5547 21.7352 16.3242C21.4784 16.8271 21.0805 17.2506 20.5865 17.5468C19.8307 18 18.7692 18 16.646 18" stroke="currentColor" stroke-width="1.5" />
@@ -218,10 +208,19 @@ const MyPerformance = () => {
                     Print
                 </div>
             </div>
-            <div className="EmpOn_Second_Head EmpOn_Second_Head_celender left_left" >
-
+            <div className="EmpOn_Second_Head EmpOn_Second_Head_celender" >
+                <div id='' onClick={toggleFilter2} ref={filterButtonRef2}>
+                </div>
                 <div className="_Leave_Balance_second_title _Leave_Balance_second_title_2">
-                    <div className="daft_filter" >
+                    <div className="print_right_icon print_right_icon_22" >
+                        <img src={user} alt="" className="img_usr_chart" />
+                        Mr.Akash Shinde
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#4a4a4a" fill="none">
+                            <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                    </div>
+                    <div className="print_right_icon" >
                         Filter
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#4a4a4a" fill="none">
                             <path d="M3 7H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -234,7 +233,7 @@ const MyPerformance = () => {
 
                     </div>
                 </div>
-                <div className='left_filter_p_l left_filter_p_l_my'>
+                <div className='left_filter_p_l'>
                     <div className="date_left_filter">
                         <div className="date_picker_open">
                             <div className={'date-filter__button'} onClick={handlePreviousDate}>
@@ -277,10 +276,140 @@ const MyPerformance = () => {
                 <div>
 
                 </div>
+                <div className="right">
 
+                    <div className="filter divRight">
+                        <div className='div_box' onClick={toggleFilter} ref={filterButtonRef}>
+                            {!isFilterOpen ?
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" color="#400F6F" fill="none">
+                                    <path d="M3 7H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M3 17H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M18 17L21 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M15 7L21 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M6 7C6 6.06812 6 5.60218 6.15224 5.23463C6.35523 4.74458 6.74458 4.35523 7.23463 4.15224C7.60218 4 8.06812 4 9 4C9.93188 4 10.3978 4 10.7654 4.15224C11.2554 4.35523 11.6448 4.74458 11.8478 5.23463C12 5.60218 12 6.06812 12 7C12 7.93188 12 8.39782 11.8478 8.76537C11.6448 9.25542 11.2554 9.64477 10.7654 9.84776C10.3978 10 9.93188 10 9 10C8.06812 10 7.60218 10 7.23463 9.84776C6.74458 9.64477 6.35523 9.25542 6.15224 8.76537C6 8.39782 6 7.93188 6 7Z" stroke="currentColor" stroke-width="1.5" />
+                                    <path d="M12 17C12 16.0681 12 15.6022 12.1522 15.2346C12.3552 14.7446 12.7446 14.3552 13.2346 14.1522C13.6022 14 14.0681 14 15 14C15.9319 14 16.3978 14 16.7654 14.1522C17.2554 14.3552 17.6448 14.7446 17.8478 15.2346C18 15.6022 18 16.0681 18 17C18 17.9319 18 18.3978 17.8478 18.7654C17.6448 19.2554 17.2554 19.6448 16.7654 19.8478C16.3978 20 15.9319 20 15 20C14.0681 20 13.6022 20 13.2346 19.8478C12.7446 19.6448 12.3552 19.2554 12.1522 18.7654C12 18.3978 12 17.9319 12 17Z" stroke="currentColor" stroke-width="1.5" />
+                                </svg>
+                                :
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" color="#400F6F" fill="none">
+                                    <path d="M7 21L7 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M17 21L17 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M17 6L17 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M7 9L7 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M7 18C6.06812 18 5.60218 18 5.23463 17.8478C4.74458 17.6448 4.35523 17.2554 4.15224 16.7654C4 16.3978 4 15.9319 4 15C4 14.0681 4 13.6022 4.15224 13.2346C4.35523 12.7446 4.74458 12.3552 5.23463 12.1522C5.60218 12 6.06812 12 7 12C7.93188 12 8.39782 12 8.76537 12.1522C9.25542 12.3552 9.64477 12.7446 9.84776 13.2346C10 13.6022 10 14.0681 10 15C10 15.9319 10 16.3978 9.84776 16.7654C9.64477 17.2554 9.25542 17.6448 8.76537 17.8478C8.39782 18 7.93188 18 7 18Z" stroke="currentColor" stroke-width="1.5" />
+                                    <path d="M17 12C16.0681 12 15.6022 12 15.2346 11.8478C14.7446 11.6448 14.3552 11.2554 14.1522 10.7654C14 10.3978 14 9.93188 14 9C14 8.06812 14 7.60218 14.1522 7.23463C14.3552 6.74458 14.7446 6.35523 15.2346 6.15224C15.6022 6 16.0681 6 17 6C17.9319 6 18.3978 6 18.7654 6.15224C19.2554 6.35523 19.6448 6.74458 19.8478 7.23463C20 7.60218 20 8.06812 20 9C20 9.93188 20 10.3978 19.8478 10.7654C19.6448 11.2554 19.2554 11.6448 18.7654 11.8478C18.3978 12 17.9319 12 17 12Z" stroke="currentColor" stroke-width="1.5" />
+                                </svg>
+                            }
+                        </div>
+
+                        {isFilterOpen && (
+
+                            <div className="filter-container filter-option-w-big " ref={filterRef}>
+                                <div className="filter-options">
+
+                                    <div className="filter-option" >
+                                        <p onClick={handleCustomDateClick}>Custom Date {!showCustomDate ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                        {showCustomDate && (
+                                            <div className="dropdown-content date-h">
+                                                <div><span><MdDateRange /></span>{!selectedDate ? 'Select Custom date' : selectedDate} </div>
+                                                {/* <br /> */}
+                                                <input type="date" name="date" id="" onChange={handleDateChange} />
+                                            </div>
+                                        )}
+                                    </div>
+
+
+
+
+                                    <div className="filter-option ">
+                                        <p onClick={handleEmploymentTypeClick}>Leave Type {!showEmploymentType ? <IoIosArrowDown /> : <IoIosArrowUp />}</p>
+                                        {showEmploymentType && (
+                                            <div className="dropdown-content">
+                                                <ul>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="All"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value=" "
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label htmlFor="All">All</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="SickLeave"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value="SickLeave"
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label htmlFor="SickLeave">Sick Leave</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="CasualLeave"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value="CasualLeave"
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label htmlFor="CasualLeave">Casual Leave</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="EarnedLeave"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value="EarnedLeave"
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label htmlFor="EarnedLeave">Earned Leave</label>
+                                                    </li>
+                                                    <li >
+                                                        <input
+
+                                                            type="radio"
+                                                            id="MaternityLeave"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value="MaternityLeave"
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label htmlFor="MaternityLeave">Maternity Leave (Women’s Only)</label>
+                                                    </li>
+                                                    <li>
+                                                        <input
+                                                            type="radio"
+                                                            id="PaternityLeave"
+                                                            name="employmentType"
+                                                            className="custom-radio"
+                                                            value="PaternityLeave"
+                                                            onChange={handleEmploymentTypeChange}
+                                                        />
+                                                        <label htmlFor="PaternityLeave">Paternity Leave</label>
+                                                    </li>
+
+                                                </ul>
+                                                {/* <p>Selected Employment Type: {employmentType}</p> Displaying selected value */}
+                                            </div>
+
+
+
+                                        )}
+                                    </div>
+
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
             <div ref={printRef}>
-                <StackedBarChart />
+            <Calendar  />
             </div>
             <div id="bottom_m_l">
             </div>
@@ -288,4 +417,4 @@ const MyPerformance = () => {
     );
 };
 
-export default MyPerformance;
+export default MyMonthlyAttendance;

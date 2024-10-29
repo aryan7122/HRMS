@@ -33,6 +33,7 @@ import MyResourceAvailability from './My_Reports/LeaveTracker/MyResourceAvailabi
 import MyLeaveBalance from './My_Reports/LeaveTracker/MyLeaveBalance';
 import MyLeaveTypeSummary from './My_Reports/LeaveTracker/MyLeaveTypeSummary';
 import MyPerformance from './My_Reports/Performance/MyPerformance';
+import MyMonthlyAttendance from './My_Reports/MyAttendance/MyMonthlyAttendance';
 // 
 
 
@@ -191,6 +192,9 @@ const Reports = () => {
           )}
           {currentURL === '/reports/my/performance-review' && (
             <MyPerformance />
+          )}
+          {currentURL === '/reports/my/monthly-attendance' && (
+            <MyMonthlyAttendance />
           )}
           
         </div>
