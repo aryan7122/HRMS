@@ -189,7 +189,7 @@ const SettingsDashboard = () => {
                                 <p className="setting-description">{item.description}</p>
                                 <button
                                     className="visit-button"
-                                    onClick={() => navigate(`/setting/${item.name.toLowerCase().replace(/\s+/g, '-')}`)}>
+                                    onClick={() => navigate(`/settings/${item.name.toLowerCase().replace(/\s+/g, '-')}`)}>
                                     {item.buttonText}
                                 </button>
                             </div>
