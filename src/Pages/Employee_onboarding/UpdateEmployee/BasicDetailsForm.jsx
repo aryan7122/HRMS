@@ -13,6 +13,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { MultiImageUpload } from '../../../components/MultiImageUpload.jsx';
+import DatePicker from '../../../utils/Form/DatePicker';
 
 const BasicDetailsForm = ({ onSubmit, next, update }) => {
     const [fileName, setFileName] = useState('');
@@ -26,13 +27,26 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
     const { isOpen: isEmploymentTypeOpen, ref: employmentTypeRef, buttonRef: employmentTypeButtonRef, handleToggle: toggleEmploymentType, setIsOpen: setEmploymentTypeOpen } = OutsideClick();
     const { isOpen: isEmployeeStatusOpen, ref: employeeStatusRef, buttonRef: employeeStatusButtonRef, handleToggle: toggleEmployeeStatus, setIsOpen: setEmployeeStatusOpen } = OutsideClick();
     const { isOpen: isSourceOfHireOpen, ref: sourceOfHireRef, buttonRef: sourceOfHireButtonRef, handleToggle: toggleSourceOfHire, setIsOpen: setSourceOfHireOpen } = OutsideClick();
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [endDateExit, setEndDateExit] = useState(null);
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
 
+    };
+    const handleStartDateChangeExit = (date) => {
+        setEndDateExit(date);
+    };
+
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+    };
     const [formData, setFormData] = useState({
         employeeId: '',
         firstName: '',
         lastName: '',
         photo: '',
-        dob: '',
+        dob: startDate,
         age: '',
         gender: '',
         email: '',
@@ -40,16 +54,16 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
         reportingManager: '',
         department: '',
         designation: '',
-        doj: '',
+        doj: endDate,
         maritalStatus: '',
-        doe: '',
+        doe: endDateExit,
         employmentType: '',
         employeeStatus: '',
         attachment: []
     });
     const { id } = useParams();
-    console.log('basic form', formData)
     const token = localStorage.getItem('access_token');
+    console.log('basic form', formData)
     useEffect(() => {
         if (id) {
             axios.post('https://hrms.dragnilifecare.in/public/api/employee/details', {
@@ -61,37 +75,40 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
             })
                 .then(response => {
                     const data = response.data.result;
-                    console.log('data🗑️', data.employee[0])
+                    // console.log('data🗑️', data.employee[0])
+                    setStartDate(data.employee[0].date_of_birth || ''),
+                        setEndDate(data.employee[0].joining_date || ''),
+                        setEndDateExit(data.employee[0].date_of_exit || ''),
 
-                    setFormData({
-                        employeeId: data.employee[0].experience || '',
-                        firstName: data.first_name || '',
-                        lastName: data.last_name || '',
-                        // photo: data.employee[0].image || '',
-                        dob: data.employee[0].date_of_birth || '',
-                        age: data.employee[0].age || '',
-                        gender: data.employee[0].gender || '',
-                        email: data.employee[0].email || '',
-                        contactNumber: data.employee[0].mobile_no || '',
-                        reportingManager: data.employee[0].reporting_manager || '',
-                        department: data.employee[0].department_id || '',
-                        designation: data.employee[0].designation_id || '',
-                        doj: data.employee[0].joining_date || '',
-                        maritalStatus: data.employee[0].marital || '',
-                        doe: data.employee[0].date_of_exit || '',
-                        employmentType: data.employee[0].employment_type || '',
-                        employeeStatus: data.employee[0].employee_status || '',
-                        sourceOfHire: data.employee[0].source_of_hire || '',
-                        attachment: data.employee[0].image
-                            ? JSON.parse(data.employee[0].image).map(item => ({
-                                name: item.name, // Image name
-                                url: item.url   // Image URL
-                            }))
-                            : []
+                        setFormData({
+                            employeeId: data.employee[0].experience || '',
+                            firstName: data.first_name || '',
+                            lastName: data.last_name || '',
+                            // photo: data.employee[0].image || '',
+                            dob: data.employee[0].date_of_birth || '',
+                            age: data.employee[0].age || '',
+                            gender: data.employee[0].gender || '',
+                            email: data.employee[0].email || '',
+                            contactNumber: data.employee[0].mobile_no || '',
+                            reportingManager: data.employee[0].reporting_manager || '',
+                            department: data.employee[0].department_id || '',
+                            designation: data.employee[0].designation_id || '',
+                            doj: data.employee[0].joining_date || '',
+                            maritalStatus: data.employee[0].marital || '',
+                            doe: data.employee[0].date_of_exit || '',
+                            employmentType: data.employee[0].employment_type || '',
+                            employeeStatus: data.employee[0].employee_status || '',
+                            sourceOfHire: data.employee[0].source_of_hire || '',
+                            attachment: data.employee[0].image
+                                ? JSON.parse(data.employee[0].image).map(item => ({
+                                    name: item.name, // Image name
+                                    url: item.url   // Image URL
+                                }))
+                                : []
 
-                    });
+                        });
 
-                    console.log('response❗', response.data.result);
+                    console.log('response❗', response.data);
                     // toast.success(response.data.message);
 
                 })
@@ -109,8 +126,9 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
                     });
                 });
         }
-        // update(formData)
-    }, [id, token]);  // token and id dependancy
+        update(formData)
+    }, [id, token]);  // token and id dependanc\\
+
 
     const [searchQuery_2, setSearchQuery_2] = useState('');
     const handleSearchQueryChange_2 = (event) => {
@@ -291,14 +309,8 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
                         </div>
 
                         <div className="form-group">
-                            <label>Date of Birth</label>
-                            <input
-                                type="date"
-                                name="dob"
-                                value={formData.dob}
-                                onChange={handleChange}
+                            <DatePicker label="Date of Birth" onDateChange={handleStartDateChange} initialDate={startDate} />
 
-                            />
                         </div>
                         <div className="form-group">
                             <label>Age</label>
@@ -430,14 +442,8 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
                         </div>
 
                         <div className="form-group">
-                            <label>Date of Joining</label>
-                            <input
-                                type="date"
-                                name="doj"
-                                value={formData.doj}
-                                onChange={handleChange}
+                            <DatePicker label="Date of Joining" onDateChange={handleEndDateChange} initialDate={endDate} />
 
-                            />
                         </div>
 
                         <div className="form-group">
@@ -468,13 +474,8 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
                             </div>
                         </div>
                         <div className="form-group">
-                            <label>Date of Exit</label>
-                            <input
-                                type="date"
-                                name="doe"
-                                value={formData.doe}
-                                onChange={handleChange}
-                            />
+                            <DatePicker label="Date of Exit" onDateChange={handleStartDateChangeExit} initialDate={endDateExit} />
+
                         </div>
                         {/* Employment Type Dropdown */}
 

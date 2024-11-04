@@ -11,11 +11,21 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, useParams } from 'react-router-dom';
 import { MultiImageUploaders } from '../../../components/MultiImageUpload.jsx';
+import DatePicker from '../../../utils/Form/DatePicker';
 
 const ExperienceForm = ({ onSubmit, next, update }) => {
     // Using the 'experiences' key inside the state as per your suggestion
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+    };
+
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+    };
     const [experienceForms, setExperienceForms] = useState({
         experiences: [
             {
@@ -23,8 +33,8 @@ const ExperienceForm = ({ onSubmit, next, update }) => {
                 industry: "",
                 job_title: "",
                 duration: "",
-                from_date: "",
-                to_date: "",
+                from_date: startDate,
+                to_date: endDate,
                 description: "",
                 experience_letter: [],
             }
@@ -89,8 +99,14 @@ const ExperienceForm = ({ onSubmit, next, update }) => {
                     const data = response.data.result.experiences;
 
                     console.log('data👉', data);
-
+                    
                     if (data && data.length > 0) {
+                        // const startDates = data.map(exp => exp.from_date || "");
+                        // const endDates = data.map(exp => exp.to_date || "");
+
+                        // setStartDate(startDates);
+                        // setEndDate(endDates);
+
                         setExperienceForms({
                             experiences: data.map(exp => ({
                                 company_name: exp.company_name || "",
@@ -295,23 +311,9 @@ const ExperienceForm = ({ onSubmit, next, update }) => {
                                 />
                             </div>
                             <div className="form-group" id='form_group_Duration'>
-                                <div id='div_Duration'>
-                                    <label>From</label>
-                                    <label>To</label>
-                                </div>
                                 <div className='divDate'>
-                                    <input
-                                        type="date"
-                                        name="from_date"
-                                        value={form.from_date}
-                                        onChange={(e) => handleChange(index, e)}
-                                    />
-                                    <input
-                                        type="date"
-                                        name="to_date"
-                                        value={form.to_date}
-                                        onChange={(e) => handleChange(index, e)}
-                                    />
+                                    <DatePicker label="From" onDateChange={handleStartDateChange} initialDate={form.from_date} />
+                                    <DatePicker label="to" onDateChange={handleEndDateChange} initialDate={form.to_date} />
                                 </div>
                             </div>
                             {/* <div className="form-group">
