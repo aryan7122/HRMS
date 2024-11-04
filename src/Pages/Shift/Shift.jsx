@@ -425,21 +425,21 @@ const Shift = () => {
             setLoading(true);
 
             // Employee List fetch karo
-            const empResponse = await axios.post('https://devstronauts.com/public/api/employee/list', {}, {
+            const empResponse = await axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {}, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const empData = empResponse.data.result;
             setEmpList(empData);
 
             // Department List fetch karo
-            const deptResponse = await axios.post('https://devstronauts.com/public/api/department/list', {}, {
+            const deptResponse = await axios.post('https://hrms.dragnilifecare.in/public/api/department/list', {}, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const deptData = deptResponse.data.department;
             setDepartments(deptData);
 
             // Shifts List fetch karo
-            const shiftResponse = await axios.post('https://devstronauts.com/public/api/assing/shift/list', {}, {
+            const shiftResponse = await axios.post('https://hrms.dragnilifecare.in/public/api/assing/shift/list', {}, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const shiftData = shiftResponse.data.result;
@@ -486,7 +486,7 @@ const Shift = () => {
 
     // useEffect(() => {
     //     setLoading(true)
-    //     axios.post('https://devstronauts.com/public/api/assing/shift/list', {
+    //     axios.post('https://hrms.dragnilifecare.in/public/api/assing/shift/list', {
 
     //     }, {
     //         headers: {
@@ -511,7 +511,7 @@ const Shift = () => {
     // }, [token]);
     // // 
     // useEffect(() => {
-    //     axios.post('https://devstronauts.com/public/api/department/list', {
+    //     axios.post('https://hrms.dragnilifecare.in/public/api/department/list', {
     //     }, {
     //         headers: {
     //             'Authorization': `Bearer ${token}`
@@ -531,7 +531,7 @@ const Shift = () => {
     // }, []);
 
     // useEffect(() => {
-    //     axios.post('https://devstronauts.com/public/api/employee/list', {
+    //     axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
     //     }, {
     //         headers: {
     //             'Authorization': `Bearer ${token}`

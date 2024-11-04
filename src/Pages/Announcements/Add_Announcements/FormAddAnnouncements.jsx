@@ -112,7 +112,7 @@ const FormAddAnnouncements = ({ onSubmit }) => {
     const handleSubmit = (event) => {
         event.preventDefault();  // Prevent default form submission
         // setLoading(true)
-        axios.post(`https://devstronauts.com/public/api/jobopening/create/update`,
+        axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/jobopening/create/update`,
             {
                 job_title: formData.jobTitle,
                 department: formData.department,
@@ -236,7 +236,7 @@ const FormAddAnnouncements = ({ onSubmit }) => {
         setSearchQueryRequiredSkills('');
     };
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/employee/list`, {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`

@@ -153,7 +153,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
         };
 
         // Make the POST request
-        axios.post('https://devstronauts.com/public/api/employee/health/create/update', payload, {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/health/create/update', payload, {
             headers: {
                 'Authorization': `Bearer ${token}`, // If needed, provide the token here
                 'Content-Type': 'application/json'
@@ -281,7 +281,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
         if (departmentHead.length > 0) {
             return
         }
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -562,7 +562,7 @@ const AddEmployeeHealthForm = ({ onSubmit }) => {
                                     onChange={handleChange}
                                 />
                             </div>
-                           
+
                             <DatePicker label="Last Health Checkup Date" onDateChange={handleStartDateChange} />
                             <DatePicker label="Next Scheduled Check-Up Date" onDateChange={handleEndDateChange} />
                             <div className="form-group">

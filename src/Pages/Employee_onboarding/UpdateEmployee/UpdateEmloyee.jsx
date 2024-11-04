@@ -99,12 +99,12 @@ const UpdateEmployee = () => {
         setActiveFormIndex(activeFormIndex + 1);
 
     };
-    
+
     const handleFormData = async (newData) => {
         const updatedData = { ...formDataRef.current, ...newData };
         setFormData(updatedData);
         formDataRef.current = updatedData;
-        
+
         const formDataApi = prepareFormData(updatedData);
         console.log('formDataApi❗', formDataApi);
 
@@ -119,7 +119,7 @@ const UpdateEmployee = () => {
                 // console.log("Request URL: ", url);
                 // console.log("Request Body: ", formDataApi);
 
-                const response = await axios.post('https://devstronauts.com/public/api/employee/create/update',
+                const response = await axios.post('https://hrms.dragnilifecare.in/public/api/employee/create/update',
                     formDataApi
                     , {
                         headers: {

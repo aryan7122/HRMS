@@ -363,7 +363,7 @@ const Project = () => {
     const token = localStorage.getItem('access_token');
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/jobopening/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/jobopening/list', {
             search: searchQuery,
             job_status: selectedFilter,
             employee_type: employmentType,
@@ -400,7 +400,7 @@ const Project = () => {
         }, 400);
         if (statusId && statusNew && !isRequestInProgress) {
             isRequestInProgress = true;  // Request start hone par flag true
-            axios.post('https://devstronauts.com/public/api/jobopening/status/update', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/jobopening/status/update', {
                 job_id: statusId,
                 job_status: statusNew
             }, {

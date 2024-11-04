@@ -32,7 +32,7 @@ const FormAddTravel = ({ onSubmit }) => {
         leaveType: '',
         email: '',
         training: '',
-        number:'',
+        number: '',
         role: '',
         cost: '',
         totalDays: '',
@@ -105,7 +105,7 @@ const FormAddTravel = ({ onSubmit }) => {
         };
 
         try {
-            const response = await axios.post('https://devstronauts.com/public/api/leave/create/update', requestData, {
+            const response = await axios.post('https://hrms.dragnilifecare.in/public/api/leave/create/update', requestData, {
                 headers: {
                     'Authorization': `Bearer ${token}`, // Include token in header
                     'Content-Type': 'application/json',
@@ -145,8 +145,8 @@ const FormAddTravel = ({ onSubmit }) => {
             setLoading(false); // Hide loading indicator
         }
     };
-    
-   
+
+
     const selectOption = (dropdown, value) => {
         setFormData(prevState => ({
             ...prevState,
@@ -185,7 +185,7 @@ const FormAddTravel = ({ onSubmit }) => {
         if (departmentHead.length > 0) {
             return
         }
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -207,7 +207,7 @@ const FormAddTravel = ({ onSubmit }) => {
         if (leaveTypeData.length > 0) {
             return
         }
-        axios.post('https://devstronauts.com/public/api/leave/master/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/leave/master/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -227,7 +227,7 @@ const FormAddTravel = ({ onSubmit }) => {
 
     // Fetch departments from API when component mounts
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/department/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/department/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -317,7 +317,7 @@ const FormAddTravel = ({ onSubmit }) => {
                                 <label className=''>Place of visit</label>
                                 <input type="text" name="number" placeholder='Enter Place of visit' value={formData.number} onChange={handleChange} />
                             </div>
-                           
+
                             <DatePicker label="Expected date of arrival" onDateChange={handleStartDateChange} />
                             <DatePicker label="Choose date of arrival" onDateChange={handleEndDateChange} />
                             <div className="form-group">
@@ -327,7 +327,7 @@ const FormAddTravel = ({ onSubmit }) => {
 
                             <div className="form-group">
                                 <label>Purpose of visit</label>
-                                <input type="text" name="role" placeholder='Enter Role Name'  value={formData.role} onChange={handleChange} />
+                                <input type="text" name="role" placeholder='Enter Role Name' value={formData.role} onChange={handleChange} />
                             </div>
                             <div className="form-group">
                                 <label>Purpose of visit</label>
@@ -341,8 +341,8 @@ const FormAddTravel = ({ onSubmit }) => {
                                         placeholder='Enter Training Cost'
                                         value={formData.cost}
                                         onChange={handleChange}
-                                        // style={{
-                                        //     paddingLeft: formData.cost ? '20px' : '10px'
+                                    // style={{
+                                    //     paddingLeft: formData.cost ? '20px' : '10px'
                                     // }}                                    
                                     />
                                 </div>

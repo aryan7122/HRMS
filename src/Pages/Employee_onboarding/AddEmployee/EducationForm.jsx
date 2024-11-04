@@ -7,12 +7,27 @@ import { GrCloudUpload } from "react-icons/gr";
 import { IoMdAddCircleOutline, IoMdCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { MultiImageUploaders } from '../../../components/MultiImageUpload';
+import DatePicker from '../../../utils/Form/DatePicker';
 
 const EducationForm = ({ onSubmit, next }) => {
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
 
     // Education forms state, nested under "educations" array
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [completionDate, setCompletionDate] = useState(null);
+
+    const handleCompletionDateChange = (date) => {
+        setCompletionDate(date);
+    };
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+    };
+
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+    };
     const [educationForms, setEducationForms] = useState({
         educations: [
             {
@@ -20,9 +35,9 @@ const EducationForm = ({ onSubmit, next }) => {
                 degree: "",
                 specialization: "",
                 attachment: [],
-                date_of_completion: "",
-                from_date: "",
-                to_date: ""
+                date_of_completion: completionDate,
+                from_date: startDate,
+                to_date: endDate
             }
         ]
     });
@@ -195,32 +210,13 @@ const EducationForm = ({ onSubmit, next }) => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Date of Completion</label>
-                                <input
-                                    type="date"
-                                    name="date_of_completion"
-                                    value={form.date_of_completion}
-                                    onChange={(e) => handleChange(index, e)}
-                                />
+                                <DatePicker label="Date of Completion" onDateChange={handleCompletionDateChange} />
+
                             </div>
                             <div className="form-group" id='form_group_Duration'>
-                                <div id='div_Duration'>
-                                    <label> From</label>
-                                    <label>To</label>
-                                </div>
                                 <div className='divDate'>
-                                    <input
-                                        type="date"
-                                        name="from_date"
-                                        value={form.from_date}
-                                        onChange={(e) => handleChange(index, e)}
-                                    />
-                                    <input
-                                        type="date"
-                                        name="to_date"
-                                        value={form.to_date}
-                                        onChange={(e) => handleChange(index, e)}
-                                    />
+                                    <DatePicker label="From" onDateChange={handleStartDateChange} />
+                                    <DatePicker label="to" onDateChange={handleEndDateChange} />
                                 </div>
                             </div>
                         </div>

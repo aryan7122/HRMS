@@ -282,7 +282,7 @@ const All_Applicant_list = () => {
 
     console.log('employees', employees)
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/applicant/list', {
+        axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/applicant/list`, {
             search: searchQuery,
             status: activeFilter,
             custom_date: selectedDate,
@@ -322,7 +322,7 @@ const All_Applicant_list = () => {
         }, 400);
         if (statusId && statusNew && !isRequestInProgress) {
             isRequestInProgress = true;  // Request start hone par flag true
-            axios.post('https://devstronauts.com/public/api/applicant/status/update', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/applicant/status/update', {
                 id: statusId,
                 status: statusNew
             }, {

@@ -153,7 +153,7 @@ const TrainerDetails = () => {
     console.log('departmentdetails::', departmentdetails)
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/department/details', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/department/details', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -181,7 +181,7 @@ const TrainerDetails = () => {
     }
     const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/department/delete', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/department/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -227,7 +227,7 @@ const TrainerDetails = () => {
     // HandleDelete
     useEffect(() => {
         // if (departmentdetails) {  // Ensure jobData is available before making this call
-        axios.post('https://devstronauts.com/public/api/get-user', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/get-user', {
             enteredbyid: departmentdetails2
         }, {
             headers: {
@@ -331,7 +331,7 @@ const TrainerDetails = () => {
         // Reset form fields
         // Reset search query
         // toggleDropdownVisibility_2('departmentDropdownOpen_2'); // Close dropdown
-        axios.post('https://devstronauts.com/public/api/department/create/update', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/department/create/update', {
             id,
             department_name: formDetails_2.departmentName_2,  // Email ko formData se lo
             department_head: formDetails_2.departmentHead_2, // Department ID ko formData se lo
@@ -382,7 +382,7 @@ const TrainerDetails = () => {
                 console.error("Error during create/update:", error);
             });
     };
-    
+
     const selectOption = (field, option) => {
         setFormDetails_2((prevState) => ({
             ...prevState,
@@ -504,7 +504,7 @@ const TrainerDetails = () => {
                             <div>
                                 <h4>Training Duration</h4>
                             </div>
-                           
+
                             <div>
                                 <h4>Training Cost</h4>
                             </div>
@@ -513,7 +513,7 @@ const TrainerDetails = () => {
                             </div>
                             <div>
                                 <h4>Created at</h4>
-                                    {/* {`${new Date(departmentdetails.created_at).getDate()}-${new Date(departmentdetails.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(departmentdetails.created_at).getFullYear()}`} */}
+                                {/* {`${new Date(departmentdetails.created_at).getDate()}-${new Date(departmentdetails.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(departmentdetails.created_at).getFullYear()}`} */}
                             </div>
 
 
@@ -524,7 +524,7 @@ const TrainerDetails = () => {
                                 </p>
 
                             </div>
-                            
+
                         </div>
                         {/* <div id='DescriptionJOB'>
                             <h4>Description</h4>

@@ -108,7 +108,7 @@ const JobForm = ({ onSubmit }) => {
         };
 
         try {
-            const response = await axios.post('https://devstronauts.com/public/api/leave/create/update', requestData, {
+            const response = await axios.post('https://hrms.dragnilifecare.in/public/api/leave/create/update', requestData, {
                 headers: {
                     'Authorization': `Bearer ${token}`, // Include token in header
                     'Content-Type': 'application/json',
@@ -188,7 +188,7 @@ const JobForm = ({ onSubmit }) => {
         if (departmentHead.length > 0) {
             return
         }
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -210,7 +210,7 @@ const JobForm = ({ onSubmit }) => {
         if (leaveTypeData.length > 0) {
             return
         }
-        axios.post('https://devstronauts.com/public/api/leave/master/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/leave/master/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`

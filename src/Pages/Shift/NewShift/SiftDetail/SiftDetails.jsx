@@ -62,7 +62,7 @@ const SiftDetails = () => {
 
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/shift/master/details', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/shift/master/details', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -82,7 +82,7 @@ const SiftDetails = () => {
 
     useEffect(() => {
         if (designationDetails) {  // Ensure jobData is available before making this call
-            axios.post('https://devstronauts.com/public/api/get-user', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/get-user', {
                 enteredbyid: designationDetails.enteredbyid
             }, {
                 headers: {
@@ -98,7 +98,7 @@ const SiftDetails = () => {
                     console.error("Error fetching user data: ", error);
                 });
         }
-    }, [designationDetails2,designationDetails]);
+    }, [designationDetails2, designationDetails]);
 
     // HandleDelete
     const [open, setOpen] = useState(false);
@@ -108,9 +108,9 @@ const SiftDetails = () => {
         setOpen(true)
 
     }
-    const DelteConform = () => { 
+    const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/shift/master/delete', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/shift/master/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -153,10 +153,10 @@ const SiftDetails = () => {
         }
     }
 
-    
+
     // HandleDelete
 
-   
+
     if (loading) {
         return <div id="notFounPageID"><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="Loading..." /></div>;
     }
@@ -169,16 +169,16 @@ const SiftDetails = () => {
     const AllEmp = () => {
         navigate('/new-shift')
     }
-   
+
     const UpdatedesignationDetails = () => {
         // setShowPopup(true)
         // navigate(`/update-designation/${id}`);
         // useEffect(() => {
-            // if (designationDetails) {
-               
+        // if (designationDetails) {
+
         // }, [designationDetails]);
 
-      
+
     }
     const calculateHours = (time) => {
         const [h, m] = time.split(":");
@@ -328,19 +328,19 @@ const SiftDetails = () => {
                             <div>
                                 <h4>Created At</h4>
                                 <p>   {`${new Date(designationDetails.created_at).getDate()}-${new Date(designationDetails.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(designationDetails.created_at).getFullYear()}`}</p>
-                            </div>                           
+                            </div>
                         </div>
                         <div id='DescriptionJOB'>
                             {/* <h4>Description</h4> */}
                             {/* <p className='paragra'>{designationDetails.description}</p> */}
                         </div>
                     </div>
-                   
+
                 </div>
                 {/* table */}
 
             </div>
-           
+
         </div>
 
     );

@@ -43,7 +43,7 @@ const NewAttendance = ({ ClosePop }) => {
         };
 
         try {
-            const response = await axios.post('https://devstronauts.com/public/api/leave/master/create/update', requestData, {
+            const response = await axios.post('https://hrms.dragnilifecare.in/public/api/leave/master/create/update', requestData, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

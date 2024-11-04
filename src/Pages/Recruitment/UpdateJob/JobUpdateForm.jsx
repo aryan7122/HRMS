@@ -87,7 +87,7 @@ const JobUpdateForm = ({ onSubmit }) => {
     const handleSubmit = (event) => {
         event.preventDefault();  // Prevent default form submission
 
-        axios.post(`https://devstronauts.com/public/api/jobopening/create/update`,
+        axios.post(`https://hrms.dragnilifecare.in/public/api/jobopening/create/update`,
             {
                 id: id,  // Replace this with dynamic if needed
                 job_title: formData.jobTitle,
@@ -184,13 +184,13 @@ const JobUpdateForm = ({ onSubmit }) => {
     useEffect(() => {
         if (formData.requiredSkills) {
             if (typeof formData.requiredSkills === 'string') {
-                
+
                 setSelectedSkills(formData.requiredSkills.split(','));
             }
-            } else {
-                setSelectedSkills([]); // If empty, set as an empty array
-            }
-    },[sms]);
+        } else {
+            setSelectedSkills([]); // If empty, set as an empty array
+        }
+    }, [sms]);
 
     // useEffect(() => {
     //     setFormData(prevFormData => ({
@@ -240,7 +240,7 @@ const JobUpdateForm = ({ onSubmit }) => {
     // get
     // Fetch job data on component mount
     useEffect(() => {
-        axios.post(`https://devstronauts.com/public/api/jobopening/list`, {}, {
+        axios.post(`https://hrms.dragnilifecare.in/public/api/jobopening/list`, {}, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -279,12 +279,12 @@ const JobUpdateForm = ({ onSubmit }) => {
     const handleSearchQueryChangeRequiredSkills = (e) => setSearchQueryRequiredSkills(e.target.value);
 
     const employmentTypeOptions = [
-       'Permanent', 'On Contract', 'Intern', 'Trainee'
+        'Permanent', 'On Contract', 'Intern', 'Trainee'
     ];
 
     const requiredSkillsOptions = [
         'Communication Skills', 'Software Development', 'Leadership Skills', 'Team Collaboration',
-         'Project Management', 'Data Analysis', 'PHP', 'Java', 'Laravel',
+        'Project Management', 'Data Analysis', 'PHP', 'Java', 'Laravel',
         'JavaScript', 'React.js', 'Node.js', 'Python', 'Machine Learning', 'Artificial Intelligence',
         'DevOps', 'Cloud Computing', 'AWS', 'Azure', 'Docker', 'Kubernetes', 'MySQL', 'MongoDB',
         'HTML', 'CSS', 'TypeScript', 'REST API', 'GraphQL', 'Version Control', 'Git', 'Agile Methodology',
@@ -396,7 +396,7 @@ const JobUpdateForm = ({ onSubmit }) => {
                                                 onChange={handleSearchQueryChangeDepartment}
                                             />
                                             <div className="dropdown_I">
-                                                {['Management', 'Sales', 'HR','IT'].filter(option =>
+                                                {['Management', 'Sales', 'HR', 'IT'].filter(option =>
                                                     option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
                                                 ).map(option => (
                                                     <div className="dropdown-item" onClick={() => selectOption('department', option)} key={option}>

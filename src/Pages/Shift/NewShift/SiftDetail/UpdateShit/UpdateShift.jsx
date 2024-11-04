@@ -26,7 +26,7 @@ const UpdateShift = ({ ClosePop, UpdateId }) => {
         status: '' // Active/Inactive
     });
     const token = localStorage.getItem('access_token');
-console.log('idd,up',UpdateId)
+    console.log('idd,up', UpdateId)
     const handleChange = (e) => {
         const { id, value, type, checked } = e.target;
         setFormData({
@@ -50,7 +50,7 @@ console.log('idd,up',UpdateId)
     // fill form auto
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/shift/master/list', {}, {
+        axios.post('https://hrms.dragnilifecare.in/public/api/shift/master/list', {}, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -105,7 +105,7 @@ console.log('idd,up',UpdateId)
         };
         console.log('requestData', requestData)
         try {
-            const response = await axios.post(`https://devstronauts.com/public/api/shift/master/create/update`, requestData, {
+            const response = await axios.post(`https://hrms.dragnilifecare.in/public/api/shift/master/create/update`, requestData, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

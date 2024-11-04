@@ -108,7 +108,7 @@ const Assign_Project_Popup = ({ ClosePop }) => {
         };
         console.log('requestData', requestData)
         try {
-            const response = await axios.post(`https://devstronauts.com/public/api/assing/shift/create/update`, requestData, {
+            const response = await axios.post(`https://hrms.dragnilifecare.in/public/api/assing/shift/create/update`, requestData, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -147,7 +147,7 @@ const Assign_Project_Popup = ({ ClosePop }) => {
 
     // Fetch departments from API when component mounts
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/department/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/department/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -167,7 +167,7 @@ const Assign_Project_Popup = ({ ClosePop }) => {
     }, []);
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -192,7 +192,7 @@ const Assign_Project_Popup = ({ ClosePop }) => {
     }, []);
     // sift list
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/shift/master/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/shift/master/list', {
 
         }, {
             headers: {
@@ -347,7 +347,7 @@ const Assign_Project_Popup = ({ ClosePop }) => {
                                         )}
                                     </div>
                                 </div>
-                                  
+
                             </div>
                             {/* Description Input */}
 

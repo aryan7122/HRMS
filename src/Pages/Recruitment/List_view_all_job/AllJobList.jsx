@@ -359,7 +359,7 @@ const AllJobList = () => {
     const token = localStorage.getItem('access_token');
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/jobopening/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/jobopening/list', {
             search: searchQuery,
             job_status: selectedFilter,
             employee_type: employmentType,
@@ -396,7 +396,7 @@ const AllJobList = () => {
         }, 400);
         if (statusId && statusNew && !isRequestInProgress) {
             isRequestInProgress = true;  // Request start hone par flag true
-            axios.post('https://devstronauts.com/public/api/jobopening/status/update', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/jobopening/status/update', {
                 job_id: statusId,
                 job_status: statusNew
             }, {
@@ -833,33 +833,33 @@ const AllJobList = () => {
                                     <td className='td' onClick={() => navigate(`/job-details/${emp.id}`)}>{emp.skills}</td>
                                     <td >
                                         <div className="status-dropdown" >
-                                            
+
                                             <div key={index} className="status-container" >
                                                 <div onClick={toggleStatus} ref={statusButtonRef}>
-                                                <div
-                                                    className={`status-display ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
-                                                    onClick={() => toggleDropdown(index)}
-                                                >
-                                                    <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}></span>
-                                                    <div onClick={() => {
-                                                        UpdateStatusHndle(emp.id);
-                                                    }}>
-                                                        <div
+                                                    <div
+                                                        className={`status-display ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}
+                                                        onClick={() => toggleDropdown(index)}
+                                                    >
+                                                        <span className={`left_dot ${emp.job_status ? emp.job_status.toLowerCase().replace(' ', '-') : ''}`}></span>
+                                                        <div onClick={() => {
+                                                            UpdateStatusHndle(emp.id);
+                                                        }}>
+                                                            <div
 
-                                                        >
-                                                            {emp.job_status}
-                                                        </div>
-                                                        <div className="^wdown">
+                                                            >
+                                                                {emp.job_status}
+                                                            </div>
+                                                            <div className="^wdown">
                                                                 {isOpen === index && isStatusOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    </div>
-                                                    </div>
+                                                </div>
                                                 {isStatusOpen &&
                                                     <>
                                                         {isOpen === index && (
                                                             <div>
-                                                            <div className="status-options" ref={statusRef} >
+                                                                <div className="status-options" ref={statusRef} >
                                                                     {
                                                                         statuses.map(status => (
                                                                             <div

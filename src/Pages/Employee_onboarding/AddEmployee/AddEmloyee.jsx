@@ -97,7 +97,7 @@ const AddEmployee = () => {
         }
         if (token && formDataApi) {
             try {
-                const response = await axios.post('https://devstronauts.com/public/api/employee/create/update',
+                const response = await axios.post('https://hrms.dragnilifecare.in/public/api/employee/create/update',
                     // JSON.stringify(formDataApi),
                     formDataApi,
                     {

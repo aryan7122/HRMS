@@ -338,7 +338,7 @@ const Announcements = () => {
     const token = localStorage.getItem('access_token');
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/jobopening/list', {
+        axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/jobopening/list`, {
             search: searchQuery,
             employee_type: employmentType,
             custom_date: selectedDate,
@@ -374,7 +374,7 @@ const Announcements = () => {
         }, 400);
         if (statusId && statusNew && !isRequestInProgress) {
             isRequestInProgress = true;  // Request start hone par flag true
-            axios.post('https://devstronauts.com/public/api/jobopening/status/update', {
+            axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/jobopening/status/update`, {
                 job_id: statusId,
                 job_status: statusNew
             }, {

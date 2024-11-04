@@ -57,7 +57,7 @@ const DocumentsForm = ({ onSubmit, update }) => {
     // 
 
     const [formData, setFormData] = useState({});
-    
+
     useEffect(() => {
         // Make sure to create a copy of the documents array
         const newDocuments = [...allDocumentsData.documents];
@@ -85,7 +85,7 @@ const DocumentsForm = ({ onSubmit, update }) => {
         // Update the allDocumentsData state with the modified documents
         setAllDocumentsData({ documents: newDocuments });
     }, [formData]);
-// 
+    // 
     useEffect(() => {
         // Create a new object to store the updated formData
         const updatedFormData = {};
@@ -122,7 +122,7 @@ const DocumentsForm = ({ onSubmit, update }) => {
     const token = localStorage.getItem('access_token');
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/employee/details', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/employee/details', {
                 user_id: id
             }, {
                 headers: {

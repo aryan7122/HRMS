@@ -57,7 +57,7 @@ const SendOTP = () => {
   const sendOTPRequest = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('https://devstronauts.com/public/api/email-get-otp', { email });
+      const response = await axios.post('https://hrms.dragnilifecare.in/public/api/email-get-otp', { email });
       console.log('response', response.data)
       if (response.data.message === 'OTP sent successfully on your registered Email id.') {
         setSms('OTP sent successfully');
@@ -109,7 +109,7 @@ const SendOTP = () => {
 
     try {
       const otpCode = otp.join("");
-      const response = await axios.post('https://devstronauts.com/public/api/validate-otp', { email, otp: otpCode });
+      const response = await axios.post('https://hrms.dragnilifecare.in/public/api/validate-otp', { email, otp: otpCode });
 
       if (!response.data.error) {
         const token = response.data.access_token;
@@ -134,7 +134,7 @@ const SendOTP = () => {
       } else {
         setError(response.data.message || "Invalid OTP");
         setSms(response.data.message || 'Invalid OTP');
-        toast.error( 'Invalid OTP', {
+        toast.error('Invalid OTP', {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -146,7 +146,7 @@ const SendOTP = () => {
         });
       }
     } catch (err) {
-      toast.error( 'Please try again', {
+      toast.error('Please try again', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -159,7 +159,7 @@ const SendOTP = () => {
       setError('An error occurred while verifying OTP. Please try again.');
       setSms('An error occurred while verifying OTP. Please try again.');
 
-     
+
     }
     setLoading(false);
   };

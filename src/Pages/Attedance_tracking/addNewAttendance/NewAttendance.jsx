@@ -67,7 +67,7 @@ const NewAttendance = ({ ClosePop }) => {
         console.log('Form Data:', formData);
 
         // Add new data to the existing attendance data array
-        axios.post(`https://devstronauts.com/public/api/attendance/create/update`,
+        axios.post(`https://hrms.dragnilifecare.in/public/api/attendance/create/update`,
             {
                 user_name: formData.employeeName,
                 user_id: formData.employeeId,
@@ -105,15 +105,15 @@ const NewAttendance = ({ ClosePop }) => {
                     }, 2000);
                 }
                 // Clear the form after successful submission
-              
+
             })
             .catch(error => {
                 setLoading(false)
                 console.error('Error:', error);
                 // const er = error.message
-               
+
                 // alert(error)
-                
+
                 setTimeout(() => {
                     // setShowAlertError(false)
                     ClosePop();
@@ -139,12 +139,12 @@ const NewAttendance = ({ ClosePop }) => {
         // });
 
         // Close the popup after submission
-      
+
     };
     const token = localStorage.getItem('access_token');
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`

@@ -264,7 +264,7 @@ const EmployeeHealth = () => {
 
     useEffect(() => {
         setLoading(true)
-        axios.post('https://devstronauts.com/public/api/employee/health/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/health/list', {
             search: searchQuery,
             department_head: selectedDepartmentId,
             custom_date: selectedDate,
@@ -303,7 +303,7 @@ const EmployeeHealth = () => {
 
             const updateStatus = async () => {
                 try {
-                    const response = await axios.post('https://devstronauts.com/public/api/employee/health/status/update', {
+                    const response = await axios.post('https://hrms.dragnilifecare.in/public/api/employee/health/status/update', {
                         id: statusId,
                         covid_status: statusNew
                     }, {

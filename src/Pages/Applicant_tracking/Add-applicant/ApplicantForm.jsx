@@ -1,4 +1,4 @@
-import { useState ,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import '../../Employee_onboarding/AddEmployee/AddEmloyee.scss';
 import '../../Employee_onboarding/AddEmployee/NavbarForm.scss';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -24,7 +24,7 @@ const ApplicantForm = ({ onSubmit }) => {
 
     const navigate = useNavigate()
 
-    
+
     const { locationsapi, fetchStates, fetchCities } = useLocationData();
     console.log('locationsapi🌐', locationsapi)
 
@@ -53,19 +53,19 @@ const ApplicantForm = ({ onSubmit }) => {
         availabilityDate: '',
         expectedSalary: '',
         referredPerson: '',
-        job_opening_id:'',
-        job_opening_name:''
+        job_opening_id: '',
+        job_opening_name: ''
     });
 
     console.log('formData', formData)
-    
+
     const handleFileChange = (event) => {
         const { name, files } = event.target;
         setFormData(prevState => ({
             ...prevState,
             [name]: files[0] ? files[0].name : ''
         }));
-       
+
     };
     const [dropdowns, setDropdowns] = useState({
         department: false
@@ -90,7 +90,7 @@ const ApplicantForm = ({ onSubmit }) => {
             email: formData.email,
             mobile_no: formData.contactNumber,
             job_opening_id: formData.job_opening_id,
-            job_opening_name:formData.job_opening_name,
+            job_opening_name: formData.job_opening_name,
             resume: formData.resume, // Make sure it's a file path or a proper file object
             cover_letter: formData.coverLetter, // Same as resume
             country_id: formData.cityId,
@@ -109,7 +109,7 @@ const ApplicantForm = ({ onSubmit }) => {
         // You would typically send the requestData using Axios or Fetch
         // Example with Axios:
 
-        axios.post('https://devstronauts.com/public/api/applicant/create/update', requestData,
+        axios.post('https://hrms.dragnilifecare.in/public/api/applicant/create/update', requestData,
             {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -219,14 +219,14 @@ const ApplicantForm = ({ onSubmit }) => {
             }));
         }
         setSourceOpen(false)
-        setSearchQuery(''); 
+        setSearchQuery('');
         setCityOpen(false);
         setCountryOpen(false);
         setStateOpen(false);
 
     };
     const handleSearchQueryChange = (e) => setSearchQuery(e.target.value);
-    const filteredJobOpeningOptions =  JobOpeningData.filter(option =>
+    const filteredJobOpeningOptions = JobOpeningData.filter(option =>
         option.toLowerCase().includes(searchQueryJobOpening.toLowerCase())
     );
 
@@ -239,7 +239,7 @@ const ApplicantForm = ({ onSubmit }) => {
         if (departmentHead.length > 0) {
             return
         }
-        axios.post('https://devstronauts.com/public/api/jobopening/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/jobopening/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -600,16 +600,16 @@ const ApplicantForm = ({ onSubmit }) => {
                             </div>
                             {formData.department == "Referral" && (
 
-                            <div className="form-group">
-                                <label>Referred Person</label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter Referred Person"
-                                    name="referredPerson"
-                                    value={formData.referredPerson}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                                <div className="form-group">
+                                    <label>Referred Person</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter Referred Person"
+                                        name="referredPerson"
+                                        value={formData.referredPerson}
+                                        onChange={handleChange}
+                                    />
+                                </div>
                             )}
                         </div>
                     </div>

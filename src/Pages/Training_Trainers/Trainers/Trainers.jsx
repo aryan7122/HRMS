@@ -354,7 +354,7 @@ const Trainers = () => {
     const token = localStorage.getItem('access_token');
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/jobopening/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/jobopening/list', {
             search: searchQuery,
             employee_type: employmentType,
             custom_date: selectedDate,
@@ -390,7 +390,7 @@ const Trainers = () => {
         }, 400);
         if (statusId && statusNew && !isRequestInProgress) {
             isRequestInProgress = true;  // Request start hone par flag true
-            axios.post('https://devstronauts.com/public/api/jobopening/status/update', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/jobopening/status/update', {
                 job_id: statusId,
                 job_status: statusNew
             }, {
@@ -526,7 +526,7 @@ const Trainers = () => {
             </div>
             <div className="EmpOn_Second_Head">
                 <div id='' onClick={toggleFilter2} ref={filterButtonRef2}>
-                   
+
                 </div>
 
                 <div className={`left ${!isFilterOpen2 ? 'filterLeftOpen' : 'filterLeftClose'}`} ref={filterRef2}>

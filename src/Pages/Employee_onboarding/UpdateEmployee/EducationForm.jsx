@@ -72,7 +72,7 @@ const EducationForm = ({ onSubmit, next, update }) => {
 
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/employee/details', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/employee/details', {
                 user_id: id
             }, {
                 headers: {

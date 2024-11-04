@@ -65,7 +65,7 @@ const Applicant_detail = () => {
     // details
     useEffect(() => {
         setLoading(true)
-        axios.post('https://devstronauts.com/public/api/applicant/details', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/applicant/details', {
             id: id
         }, {
             headers: {
@@ -100,7 +100,7 @@ const Applicant_detail = () => {
     }
     const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/applicant/delete', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/applicant/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

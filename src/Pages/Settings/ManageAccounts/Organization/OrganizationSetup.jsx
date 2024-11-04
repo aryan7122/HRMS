@@ -16,7 +16,7 @@ import { MdWork } from "react-icons/md";
 import { FaRegClock } from "react-icons/fa";
 import { RiFilterOffFill } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
-import './Project.scss';
+import './OrganizationSetup.scss';
 import { useLocation } from 'react-router-dom';
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -42,7 +42,7 @@ import { OutsideClick } from '../../../Employee_onboarding/AddEmployee/OutsideCl
 
 import userImg from '../../../../assets/user.png'
 
-const Users = () => {
+const OrganizationSetup = () => {
 
 
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -635,7 +635,7 @@ const Users = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="close_svg_icon" onClick={() => navigate('/settings')} >
+                            <div className="close_svg_icon" onClick={handleHomeClick} >
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" color="#4a4a4a" fill="none">
                                     <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="currentColor" stroke-width="1.5" />
@@ -715,12 +715,12 @@ const Users = () => {
                     <div className="top-bar EmpOn_main_container_box_none">
                         <h2>
                             {/* <div className='span'><HiUserPlus /></div> */}
-                            All Users
+                            Departments
                             <p>{currentEmployees.length} total</p>
                         </h2>
                         <div className="Emp_Head_Right">
                             <div className="addEmp" onClick={NewJobPage}>
-                                <p><span><IoMdAdd /></span>Add Shift</p>
+                                <p><span><IoMdAdd /></span>Add Department</p>
                             </div>
                             <div className="filter divRight">
                                 <div className='div_box_toggale' onClick={toggleFilter} ref={filterButtonRef}>
@@ -911,7 +911,7 @@ const Users = () => {
                                         </span>
                                     } */}
                                 </th>
-                                <th> <div>Basic Information
+                                <th> <div>Department Name
                                     <div className="short_ascending_designation">
                                         <div className='ascending'>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#400f6f" fill="none">
@@ -925,11 +925,9 @@ const Users = () => {
                                         </div>
                                     </div>
                                 </div></th>
-                                <th>Designation</th>
-                                <th>Date of Joining</th>
-                                <th>Employee Status</th>
-                                <th>Account Status</th>
-                                <th>Action</th>
+                                <th>Department Head</th>
+                                <th>Parent Department</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -949,114 +947,10 @@ const Users = () => {
                                         } */}
                                     </td>
                                     <td className='td' onClick={projectDetailsPage}>
-                                        <div className="img_title">
-                                            <img src={userImg} alt="" />
-                                            <div className="email_title">
-                                                <h4 className="title_">
-                                                    1-Akash Shinde
-                                                </h4>
-                                                <p>
-                                                    Akash25shinde@gmail.com
-                                                </p>
-                                            </div>
-                                        </div>
+                                        Manning
                                     </td>
                                     <td onClick={projectDetailsPage}>Navjot Kaur</td>
                                     <td className='td' >28-Feb-2024</td>
-
-
-                                    <td >
-                                        <div className="status-dropdown" >
-                                            <div key={index} className="status-container" >
-                                                <div onClick={toggleStatus} ref={statusButtonRef}>
-                                                    <div
-                                                        className={` status-display  ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}
-                                                        onClick={() => toggleDropdown(index)}
-                                                    >
-                                                        <span className={`  left_dot ${emp.status ? emp.status.toLowerCase().replace(' ', '-') : ''}`}></span>
-                                                        <div onClick={() => {
-                                                            UpdateStatusHndle(emp.id);
-                                                        }}>
-                                                            <div
-
-                                                            >
-                                                                {emp.status}
-                                                            </div>
-                                                            <div className="^wdown">
-                                                                <MdOutlineKeyboardArrowDown />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {isStatusOpen &&
-                                                    <>
-                                                        {isOpen === index && (
-                                                            <div>
-                                                                <div className="status-options" ref={statusRef}>
-                                                                    {
-                                                                        statuses.map(status => (
-                                                                            <div
-                                                                                key={status}
-                                                                                className="status-option"
-                                                                                onClick={() => {
-                                                                                    handleStatusChange(index, status)
-                                                                                }
-                                                                                }
-                                                                            >
-                                                                                {status}
-                                                                            </div>
-                                                                        ))
-                                                                    }
-                                                                </div>
-                                                            </div>
-                                                        )}
-                                                    </>
-                                                }
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className='td ' >
-                                        <div className='center_tddd'>
-                                            <label className="switch_">
-                                                <input
-                                                    type="checkbox"
-                                                    id="status"
-                                                    className='checkbock'
-                                                    checked={emp.AccountStatus}
-                                                    onChange={() => handleChange(index)}
-                                                    required
-                                                />
-                                                <span className="slider_ round"></span>
-                                            </label>
-                                            <label className='lable_true_fallse'>
-                                                {emp.AccountStatus == true ?
-                                                    <span className='Login_Enabled'>
-                                                        Login Enabled
-                                                    </span>
-                                                    :
-                                                    <span className='Login_Disabled'>
-                                                        Login Disabled
-                                                    </span>
-                                                }
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td className='td' >
-                                        <div className="action_edit_delete">
-                                            <div className="action_edit">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#4a4a4a" fill="none">
-                                                    <path d="M15.2141 5.98239L16.6158 4.58063C17.39 3.80646 18.6452 3.80646 19.4194 4.58063C20.1935 5.3548 20.1935 6.60998 19.4194 7.38415L18.0176 8.78591M15.2141 5.98239L6.98023 14.2163C5.93493 15.2616 5.41226 15.7842 5.05637 16.4211C4.70047 17.058 4.3424 18.5619 4 20C5.43809 19.6576 6.94199 19.2995 7.57889 18.9436C8.21579 18.5877 8.73844 18.0651 9.78375 17.0198L18.0176 8.78591M15.2141 5.98239L18.0176 8.78591" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M11 20H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                </svg>
-                                            </div>
-                                            <div className="action_delete">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" color="#d0021b" fill="none">
-                                                    <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                    <path d="M3 5.5H21M16.0557 5.5L15.3731 4.09173C14.9196 3.15626 14.6928 2.68852 14.3017 2.39681C14.215 2.3321 14.1231 2.27454 14.027 2.2247C13.5939 2 13.0741 2 12.0345 2C10.9688 2 10.436 2 9.99568 2.23412C9.8981 2.28601 9.80498 2.3459 9.71729 2.41317C9.32164 2.7167 9.10063 3.20155 8.65861 4.17126L8.05292 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>
@@ -1108,5 +1002,5 @@ const Users = () => {
     );
 };
 
-export default Users;
+export default OrganizationSetup;
 // 

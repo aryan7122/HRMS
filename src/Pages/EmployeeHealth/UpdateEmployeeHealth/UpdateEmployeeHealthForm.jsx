@@ -64,7 +64,7 @@ const UpdateEmployeeHealthForm = ({ onSubmit }) => {
         attachment: [],
         user_id: '',
         notes: '',
-        profilePicture:''
+        profilePicture: ''
     });
 
     const [dropdowns, setDropdowns] = useState({
@@ -146,7 +146,7 @@ const UpdateEmployeeHealthForm = ({ onSubmit }) => {
         };
 
         // Make the POST request
-        axios.post('https://devstronauts.com/public/api/employee/health/create/update', payload, {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/health/create/update', payload, {
             headers: {
                 'Authorization': `Bearer ${token}`, // If needed, provide the token here
                 // 'Content-Type': 'application/json'
@@ -218,7 +218,7 @@ const UpdateEmployeeHealthForm = ({ onSubmit }) => {
         // API call to fetch employee health details
         const fetchHealthDetails = async () => {
             try {
-                const response = await axios.post('https://devstronauts.com/public/api/employee/health/details', {
+                const response = await axios.post('https://hrms.dragnilifecare.in/public/api/employee/health/details', {
                     id: id
                 }, {
                     headers: {
@@ -320,7 +320,7 @@ const UpdateEmployeeHealthForm = ({ onSubmit }) => {
         if (departmentHead.length > 0) {
             return
         }
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`

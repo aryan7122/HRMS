@@ -23,7 +23,7 @@ const JobDetails = () => {
 
     // Fetch  details based 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/jobopening/list', {}, {
+        axios.post('https://hrms.dragnilifecare.in/public/api/jobopening/list', {}, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -43,7 +43,7 @@ const JobDetails = () => {
     // Fetch user data based on enteredbyid from jobData
     useEffect(() => {
         if (jobData) {  // Ensure jobData is available before making this call
-            axios.post('https://devstronauts.com/public/api/get-user', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/get-user', {
                 enteredbyid: jobData.enteredbyid
             }, {
                 headers: {
@@ -59,7 +59,7 @@ const JobDetails = () => {
         }
     }, [jobData, token]); // Add jobData as dependency
     // HandleDelete
-      const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const HandleDelete = () => {
         // confirm()
@@ -68,7 +68,7 @@ const JobDetails = () => {
     }
     const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/jobopening/delete', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/jobopening/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -110,13 +110,13 @@ const JobDetails = () => {
                 });
         }
     }
-    
+
     // HandleDelete
 
     const JobList = () => {
         navigate('/all-job-list');
     };
-    
+
     const JOBUPDATE = () => {
         navigate(`/job-update/${id}`);
     }

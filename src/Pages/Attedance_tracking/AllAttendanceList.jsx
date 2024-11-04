@@ -308,7 +308,7 @@ const AllAttendanceList = (ClosePop) => {
     console.log('ssss', selectedFilter)
     useEffect(() => {
         setLoading(true)
-        axios.post('https://devstronauts.com/public/api/attendance/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/attendance/list', {
             search: searchQuery,
             status: selectedFilter,   //
             custom_date: selectedDate,
@@ -346,7 +346,7 @@ const AllAttendanceList = (ClosePop) => {
         }, 400);
         if (statusId && !isRequestInProgress) {
             isRequestInProgress = true;  // Request start hone par flag true
-            axios.post('https://devstronauts.com/public/api/attendance/status/update', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/attendance/status/update', {
                 id: statusId,
                 status: statusNew
             }, {
@@ -736,7 +736,7 @@ const AllAttendanceList = (ClosePop) => {
                                     <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp.punch_in}</td>
                                     <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp.punch_out}</td>
                                     <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>{emp.total_hours_worked}</td>
-                                    <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>  {emp?.punch_in ? calculateTotalHours(emp?.punch_in, emp?.punch_out) : ''} {emp?.punch_in && 'Hours' }</td>
+                                    <td className='td' onClick={() => navigate(`/attendance-details/${emp?.id}`)}>  {emp?.punch_in ? calculateTotalHours(emp?.punch_in, emp?.punch_out) : ''} {emp?.punch_in && 'Hours'}</td>
 
 
                                     <td>
@@ -756,7 +756,7 @@ const AllAttendanceList = (ClosePop) => {
                                                         >
                                                             <div className="">
                                                                 {/* {emp.status} */}
-                                                                {emp.status == 0 ? 'Present' : emp.status == 1 ? 'Absent' : emp.status ==  2 ? 'Half Day' : ''}
+                                                                {emp.status == 0 ? 'Present' : emp.status == 1 ? 'Absent' : emp.status == 2 ? 'Half Day' : ''}
                                                             </div>
                                                             <div className="^wdown">
                                                                 {isOpen === index && isStatusOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}

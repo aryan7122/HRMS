@@ -1,4 +1,4 @@
-import { useState ,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import '../../Employee_onboarding/AddEmployee/AddEmloyee.scss';
 import '../../Employee_onboarding/AddEmployee/NavbarForm.scss';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -53,18 +53,18 @@ const UpdateApplicantForm = ({ onSubmit }) => {
         referredPerson: '',
         job_opening_id: '',
         job_opening_name: ''
-       
+
     });
 
     console.log('formData🥳', formData)
-    
+
     const handleFileChange = (event) => {
         const { name, files } = event.target;
         setFormData(prevState => ({
             ...prevState,
             [name]: files[0] ? files[0].name : ''
         }));
-       
+
     };
     const [dropdowns, setDropdowns] = useState({
         department: false
@@ -108,7 +108,7 @@ const UpdateApplicantForm = ({ onSubmit }) => {
         // You would typically send the requestData using Axios or Fetch
         // Example with Axios:
 
-        axios.post('https://devstronauts.com/public/api/applicant/create/update', requestData,
+        axios.post('https://hrms.dragnilifecare.in/public/api/applicant/create/update', requestData,
             {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -215,7 +215,7 @@ const UpdateApplicantForm = ({ onSubmit }) => {
             }));
         }
         setSourceOpen(false)
-        setSearchQuery(''); 
+        setSearchQuery('');
         setCityOpen(false);
         setCountryOpen(false);
         setStateOpen(false);
@@ -228,7 +228,7 @@ const UpdateApplicantForm = ({ onSubmit }) => {
         // API se data fetch karo
         const fetchApplicantDetails = async () => {
             try {
-                const response = await axios.post(`https://devstronauts.com/public/api/applicant/details`, {id}, {
+                const response = await axios.post(`https://hrms.dragnilifecare.in/public/api/applicant/details`, { id }, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -304,7 +304,7 @@ const UpdateApplicantForm = ({ onSubmit }) => {
         if (departmentHead.length > 0) {
             return
         }
-        axios.post('https://devstronauts.com/public/api/jobopening/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/jobopening/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`

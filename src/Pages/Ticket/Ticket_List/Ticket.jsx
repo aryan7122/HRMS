@@ -310,7 +310,7 @@ const Ticket = (ClosePop) => {
     console.log('ssss', selectedFilter)
     useEffect(() => {
         setLoading(true)
-        axios.post('https://devstronauts.com/public/api/attendance/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/attendance/list', {
             search: searchQuery,
             status: selectedFilter,   //
             custom_date: selectedDate,
@@ -348,7 +348,7 @@ const Ticket = (ClosePop) => {
         }, 400);
         if (statusId && !isRequestInProgress) {
             isRequestInProgress = true;  // Request start hone par flag true
-            axios.post('https://devstronauts.com/public/api/attendance/status/update', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/attendance/status/update', {
                 id: statusId,
                 status: statusNew
             }, {

@@ -22,7 +22,7 @@ const AddHoliday = ({ ClosePop }) => {
         startTime: '',
         endTime: '',
         recurrence: '',// Active/Inactive
-        description:''
+        description: ''
     });
 
     const [startDate, setStartDate] = useState(null);
@@ -70,7 +70,7 @@ const AddHoliday = ({ ClosePop }) => {
         };
         console.log('requestData', requestData)
         try {
-            const response = await axios.post(`https://devstronauts.com/public/api/smm`, requestData, {
+            const response = await axios.post(`https://hrms.dragnilifecare.in/public/api/smm`, requestData, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

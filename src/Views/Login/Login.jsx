@@ -60,7 +60,7 @@ const Login = ({ setIsLoggedIn }) => {
     setSms('')
 
     try {
-      const response = await axios.post('https://devstronauts.com/public/api/login', {
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/login`, {
         email,
         password,
       });

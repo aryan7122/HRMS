@@ -15,7 +15,7 @@ import axios from 'axios';
 const JobForm = ({ onSubmit }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { id } = useParams(); 
+    const { id } = useParams();
     const { isOpen: isLeaveTypeOpen, ref: leaveTypeRef, buttonRef: leaveTypeButtonRef, handleToggle: toggleLeaveType, setIsOpen: setLeaveTypeOpen } = OutsideClick();
     const { isOpen: isTypeOpen, ref: typeRef, buttonRef: typeButtonRef, handleToggle: toggleType, setIsOpen: setTypeOpen } = OutsideClick();
     const { isOpen: isEmployeeNameOpen, ref: EmployeeNameRef, buttonRef: EmployeeNameButtonRef, handleToggle: toggleEmployeeName, setIsOpen: setEmployeeNameOpen } = OutsideClick();
@@ -68,7 +68,7 @@ const JobForm = ({ onSubmit }) => {
     // console.log("Submitted form data:", formData);
     // Fetch job data on component mount
     useEffect(() => {
-        axios.post(`https://devstronauts.com/public/api/leave/list`,{}, {
+        axios.post(`https://hrms.dragnilifecare.in/public/api/leave/list`, {}, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -76,7 +76,7 @@ const JobForm = ({ onSubmit }) => {
             .then(response => {
                 let leaveForm = response.data.result.find(job => job.id == id);
                 console.log('🗑️-🗑️', leaveForm)
-               
+
                 setFormData(prevFormData => ({
                     ...prevFormData,
                     employeeName: leaveForm.name || '',   // If no data is present, use an empty string
@@ -102,7 +102,7 @@ const JobForm = ({ onSubmit }) => {
 
         // Prepare request data
         const requestData = {
-            id:id,
+            id: id,
             user_id: formData.user_id,
             name: formData.employeeName,
             leave_type_id: formData.leave_type_id,
@@ -115,7 +115,7 @@ const JobForm = ({ onSubmit }) => {
         };
 
         try {
-            const response = await axios.post('https://devstronauts.com/public/api/leave/create/update', requestData, {
+            const response = await axios.post('https://hrms.dragnilifecare.in/public/api/leave/create/update', requestData, {
                 headers: {
                     'Authorization': `Bearer ${token}`, // Include token in header
                     'Content-Type': 'application/json',
@@ -195,7 +195,7 @@ const JobForm = ({ onSubmit }) => {
         if (departmentHead.length > 0) {
             return
         }
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -203,7 +203,7 @@ const JobForm = ({ onSubmit }) => {
         })
             .then(response => {
                 const employees = response.data.result;
-                setDepartmentHead(employees); 
+                setDepartmentHead(employees);
                 console.log('employees❗ ', employees)
                 setLoading(false);
             })
@@ -219,7 +219,7 @@ const JobForm = ({ onSubmit }) => {
         if (leaveTypeData.length > 0) {
             return
         }
-        axios.post('https://devstronauts.com/public/api/leave/master/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/leave/master/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -260,7 +260,7 @@ const JobForm = ({ onSubmit }) => {
                 <form onSubmit={handleSubmit}>
                     <div id='form'>
                         <div className="from1">
-                          
+
                             <div className="form-group">
                                 <label className='starred'>Employee Name*</label>
                                 <div className="dropdown">

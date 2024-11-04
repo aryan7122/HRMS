@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../../EmployeeHealth/EmployeeHealthDetails/EmployeeHealthDetails.scss';
 import iconEdu from '../../../assets/icons/edu.png'
 import img_emp1 from '../../../assets/emp1.png'
@@ -20,12 +20,12 @@ const EmployeeHealthDetails = (employeeData) => {
     const navigate = useNavigate()
     const { id } = employeeData
     console.log('hhhhhhIDDDDDDDD❗', employeeData.employeeData)
-    
+
 
     const AllEmp = () => {
         navigate('/health')
     }
-   
+
     const projects = [
         {
             name: "E-commerce Website Redesign",
@@ -81,7 +81,7 @@ const EmployeeHealthDetails = (employeeData) => {
     console.log('employees', employees)
     useEffect(() => {
         setLoading(true)
-        axios.post('https://devstronauts.com/public/api/employee/health/details', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/health/details', {
             id: employeeData.employeeData || ''
         }, {
             headers: {
@@ -119,64 +119,64 @@ const EmployeeHealthDetails = (employeeData) => {
         </div>// Error handling if job not found
     }
 
-   
+
 
     return (
 
-         
-            <div className="details">
-                
-                <div className="info-cards">
-                    <div className="card">
-                        <div className='top_head'> <h3> <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" stroke="currentColor" stroke-width="1.5" />
-                                <path d="M12.2422 17V12C12.2422 11.5286 12.2422 11.2929 12.0957 11.1464C11.9493 11 11.7136 11 11.2422 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M11.992 8H12.001" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                        </span>Employee  Information</h3></div>
-                        <div className='contentInformation'>
-                            <div>
-                                <h4>Department </h4>
-                                <p>{employees.department_head || '-'}</p>
-                            </div>
-                        
-                            <div>
-                                <h4>Mobile no.</h4>
-                                <p>{employees.mobile_no || '-'}</p>
-                            </div>
-                            <div>
-                                <h4>Gender</h4>
-                                <p>{employees.gender || '-'}</p>
-                            </div>
-                            <div>
-                                <h4>Weight</h4>
-                                <p>{employees.weight + ' kg' || '-'}</p>
-                            </div>
-                            <div>
-                                <h4>Height</h4>
-                                <p>{employees.height + ' cm' || '-'}</p>
-                            </div>
-                            <div>
-                                <h4>Blood group</h4>
-                                <p>{employees.blood_group || '-'}</p>
-                            </div>
 
+        <div className="details">
+
+            <div className="info-cards">
+                <div className="card">
+                    <div className='top_head'> <h3> <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                            <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" stroke="currentColor" stroke-width="1.5" />
+                            <path d="M12.2422 17V12C12.2422 11.5286 12.2422 11.2929 12.0957 11.1464C11.9493 11 11.7136 11 11.2422 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M11.992 8H12.001" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>Employee  Information</h3></div>
+                    <div className='contentInformation'>
+                        <div>
+                            <h4>Department </h4>
+                            <p>{employees.department_head || '-'}</p>
                         </div>
-                        <div id='DescriptionJOB'>
-                            <h4>Notes</h4>
-                            <p className='paragra'>{employees.notes || '-'}</p>
+
+                        <div>
+                            <h4>Mobile no.</h4>
+                            <p>{employees.mobile_no || '-'}</p>
                         </div>
+                        <div>
+                            <h4>Gender</h4>
+                            <p>{employees.gender || '-'}</p>
+                        </div>
+                        <div>
+                            <h4>Weight</h4>
+                            <p>{employees.weight + ' kg' || '-'}</p>
+                        </div>
+                        <div>
+                            <h4>Height</h4>
+                            <p>{employees.height + ' cm' || '-'}</p>
+                        </div>
+                        <div>
+                            <h4>Blood group</h4>
+                            <p>{employees.blood_group || '-'}</p>
+                        </div>
+
                     </div>
-                    <div className="card">
-                        <div className='top_head'> <h3> <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
-                                <path d="M19.4626 3.99352C16.7809 2.3486 14.4404 3.01148 13.0344 4.06738C12.4578 4.50033 12.1696 4.7168 12 4.7168C11.8304 4.7168 11.5422 4.50033 10.9656 4.06738C9.55962 3.01148 7.21909 2.3486 4.53744 3.99352C1.01807 6.1523 0.221719 13.2742 8.33953 19.2827C9.88572 20.4272 10.6588 20.9994 12 20.9994C13.3412 20.9994 14.1143 20.4272 15.6605 19.2827C23.7783 13.2742 22.9819 6.1523 19.4626 3.99352Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                <path d="M12 9V15M9 12L15 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                            </svg>
-                        </span>Health Information</h3></div>
-                        <div className='Health_Information'>
-                            {/* <div>
+                    <div id='DescriptionJOB'>
+                        <h4>Notes</h4>
+                        <p className='paragra'>{employees.notes || '-'}</p>
+                    </div>
+                </div>
+                <div className="card">
+                    <div className='top_head'> <h3> <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#9b9b9b" fill="none">
+                            <path d="M19.4626 3.99352C16.7809 2.3486 14.4404 3.01148 13.0344 4.06738C12.4578 4.50033 12.1696 4.7168 12 4.7168C11.8304 4.7168 11.5422 4.50033 10.9656 4.06738C9.55962 3.01148 7.21909 2.3486 4.53744 3.99352C1.01807 6.1523 0.221719 13.2742 8.33953 19.2827C9.88572 20.4272 10.6588 20.9994 12 20.9994C13.3412 20.9994 14.1143 20.4272 15.6605 19.2827C23.7783 13.2742 22.9819 6.1523 19.4626 3.99352Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            <path d="M12 9V15M9 12L15 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                    </span>Health Information</h3></div>
+                    <div className='Health_Information'>
+                        {/* <div>
                                 <h4>Record Date : </h4>
                                 <p>08-Mar-2024</p>
                             </div>
@@ -196,40 +196,40 @@ const EmployeeHealthDetails = (employeeData) => {
                                 <h4>Hospitalizations :</h4>
                                 <p>Not Yet</p>
                             </div> */}
-                            <div>
-                                <h4>Overall Health Status</h4>
-                                <p>{employees.checkup_result || '-'}</p>
-                            </div>
-                            <div>
-                                <h4>Last Health Check Date</h4>
-                                <p>{employees.last_checkup_date}</p>
-                            </div>
-                            <div>
-                                <h4>Next Health Check Date</h4>
-                                <p>{employees.next_checkup_date}</p>
-                            </div>
-                            <div>
-                                <h4>Allergies</h4>
-                                <p>{employees.allergies || '-'}</p>
-                            </div>
-                            <div>
-                                <h4>Chronic Conditions</h4>
-                                <p>{employees.chronic_condition || '-'}</p>
-                            </div>
-                            <div>
-                                <h4>Covid affected :</h4>
-                                <p>{employees.covid_affected || '-'}</p>
-                            </div>
-                            <div>
-                                <h4>Emergency Contact Name</h4>
-                                <p>{employees.contact_name || '-'}</p>
-                            </div>
-
+                        <div>
+                            <h4>Overall Health Status</h4>
+                            <p>{employees.checkup_result || '-'}</p>
                         </div>
+                        <div>
+                            <h4>Last Health Check Date</h4>
+                            <p>{employees.last_checkup_date}</p>
+                        </div>
+                        <div>
+                            <h4>Next Health Check Date</h4>
+                            <p>{employees.next_checkup_date}</p>
+                        </div>
+                        <div>
+                            <h4>Allergies</h4>
+                            <p>{employees.allergies || '-'}</p>
+                        </div>
+                        <div>
+                            <h4>Chronic Conditions</h4>
+                            <p>{employees.chronic_condition || '-'}</p>
+                        </div>
+                        <div>
+                            <h4>Covid affected :</h4>
+                            <p>{employees.covid_affected || '-'}</p>
+                        </div>
+                        <div>
+                            <h4>Emergency Contact Name</h4>
+                            <p>{employees.contact_name || '-'}</p>
+                        </div>
+
                     </div>
                 </div>
-
             </div>
+
+        </div>
     );
 };
 

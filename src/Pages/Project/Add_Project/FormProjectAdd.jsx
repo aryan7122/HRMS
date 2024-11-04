@@ -42,10 +42,10 @@ const FormProjectAdd = ({ onSubmit }) => {
         attachment: [],
         jobTitle: '',
         client: '',
-        startingDate:'',
-        deadline:'',
+        startingDate: '',
+        deadline: '',
         employeeName: '',
-        employeeId:'',
+        employeeId: '',
         designation: '',
         department: '',
         jobLocation: [],
@@ -109,7 +109,7 @@ const FormProjectAdd = ({ onSubmit }) => {
     const handleSubmit = (event) => {
         event.preventDefault();  // Prevent default form submission
         // setLoading(true)
-        axios.post(`https://devstronauts.com/public/api/jobopening/create/update`,
+        axios.post(`https://hrms.dragnilifecare.in/public/api/jobopening/create/update`,
             {
                 job_title: formData.jobTitle,
                 department: formData.department,
@@ -149,7 +149,7 @@ const FormProjectAdd = ({ onSubmit }) => {
                     }, 2000);
                 }
                 // Clear the form after successful submission
-             
+
             })
             .catch(error => {
                 setLoading(false)
@@ -232,7 +232,7 @@ const FormProjectAdd = ({ onSubmit }) => {
         setSearchQueryRequiredSkills('');
     };
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -263,7 +263,7 @@ const FormProjectAdd = ({ onSubmit }) => {
 
     const handleSearchQueryChangeDepartment = (e) => setSearchQueryDepartment(e.target.value);
 
-  
+
     return (
         <>
             <div className="" onSubmit={onSubmit}>
@@ -348,7 +348,7 @@ const FormProjectAdd = ({ onSubmit }) => {
 
                                 />
                             </div>
-                            
+
                             <DatePicker label="Starting Date" onDateChange={handleStartDateChange} />
                             <DatePicker label="Deadline" onDateChange={handleEndDateChange} />
 

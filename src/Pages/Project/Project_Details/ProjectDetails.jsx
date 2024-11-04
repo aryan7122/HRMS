@@ -100,7 +100,7 @@ const ProjectDetails = () => {
 
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/designation/details', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/designation/details', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -119,7 +119,7 @@ const ProjectDetails = () => {
 
     useEffect(() => {
         if (designationDetails) {  // Ensure jobData is available before making this call
-            axios.post('https://devstronauts.com/public/api/get-user', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/get-user', {
                 enteredbyid: designationDetails.enteredbyid
             }, {
                 headers: {
@@ -147,7 +147,7 @@ const ProjectDetails = () => {
     }
     const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/designation/delete', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/designation/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -283,7 +283,7 @@ const ProjectDetails = () => {
         event.preventDefault();
 
         // Sab fields bharne ke baad hi API ko call karo
-        axios.post('https://devstronauts.com/public/api/designation/create/update', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/designation/create/update', {
             id,
             designation_name: formData_3.email_3,  // Email ko formData se lo
             department_id: formData_3.department_3, // Department ID ko formData se lo
@@ -446,7 +446,7 @@ const ProjectDetails = () => {
                                 {/* <p>   {`${new Date(designationDetails.created_at).getDate()}-${new Date(designationDetails.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(designationDetails.created_at).getFullYear()}`}</p> */}
                             </div>
                         </div>
-                        
+
                     </div>
                     <div className="card">
                         <div className='top_head'> <h3> <span>
@@ -457,7 +457,7 @@ const ProjectDetails = () => {
                             </svg>
                         </span>Project Description</h3></div>
                         <div className='contentInformation'>
-                           
+
                         </div>
                         <div id='DescriptionJOB'>
                             <h4>Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum. Lorem ipsum dolor sit amet consectetur. Neque dui ipsumsectetur. Neque dui ipsum</h4>
@@ -479,7 +479,7 @@ const ProjectDetails = () => {
 
                         </div>
                         <div id='DescriptionJOB'>
-                            
+
                         </div>
                     </div>
                 </div>

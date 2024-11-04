@@ -310,7 +310,7 @@ const Designation = () => {
     const handleSubmitForm_3 = (event) => {
         event.preventDefault();
         // Sab fields bharne ke baad hi API ko call karo
-        axios.post('https://devstronauts.com/public/api/designation/create/update', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/designation/create/update', {
             designation_name: formData_3.email_3,
             department_id: formData_3.department_3,
             description: formData_3.Description_3
@@ -354,7 +354,7 @@ const Designation = () => {
             });
     };
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/designation/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/designation/list', {
             search: searchQuery,
             custom_date: selectedDate,
             fromDate: fromDate,

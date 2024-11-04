@@ -158,7 +158,7 @@ const HolidayList = () => {
 
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
             search: searchQuery,
         }, {
             headers: {
@@ -220,10 +220,10 @@ const HolidayList = () => {
                         </h2>
                         <div className="Emp_Head_Right">
 
-                            <div className="addEmp" style={{ marginLeft: '20px',marginRight:'30px' }} onClick={ClosePop}>
+                            <div className="addEmp" style={{ marginLeft: '20px', marginRight: '30px' }} onClick={ClosePop}>
                                 <p><span><IoMdAdd /></span>  Add New Holiday</p>
                             </div>
-                            
+
                         </div>
                         <div className="_div">
                             <span className="1"></span>
@@ -309,7 +309,7 @@ const HolidayList = () => {
                                 <tr key={index} onClick={() => handleDepartmentClick1(DepartmentDetails)}>
                                     <td><input type="checkbox" checked={emp.isChecked} onChange={() => handleCheckboxChange(indexOfFirstEmployee + index)} /></td>
                                     <td onClick={() => navigate(`/holiday-details`)}>{emp.deptName}</td>
-                                    <td  className='td'>{emp.email}</td>
+                                    <td className='td'>{emp.email}</td>
                                     <td >{emp.first_name}</td>
                                     <td >{emp.last_name}</td>
                                     <td onClick={() => navigate(`/employee-details/${emp.user_id}`)}>{emp.mobile_no}</td>

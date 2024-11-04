@@ -28,23 +28,23 @@ const ForgotPassword = () => {
     if (email) {
       try {
         setLoading(true); // Show loading when the request starts
-        const response = await axios.post('https://devstronauts.com/public/api/email-get-otp', {
+        const response = await axios.post('https://hrms.dragnilifecare.in/public/api/email-get-otp', {
           email: email
         });
 
         if (response.data.message === "OTP sent successfully on your registered Email id.") {
-            toast.success(sms || 'OTP sent Successfully', {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+          toast.success(sms || 'OTP sent Successfully', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
 
-            navigate('/otp-verification'); // Redirect to OTP verification page
+          navigate('/otp-verification'); // Redirect to OTP verification page
 
           setShowAlert(true)
           setTimeout(() => {

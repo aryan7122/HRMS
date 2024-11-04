@@ -58,7 +58,7 @@ const ContactsForm = ({ onSubmit, next, update }) => {
 
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/employee/details', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/employee/details', {
                 user_id: id
             }, {
                 headers: {
@@ -122,10 +122,10 @@ const ContactsForm = ({ onSubmit, next, update }) => {
                 });
         }
     }, [id, token]);
-   
+
 
     console.log('locationsapi', locationsapi)
-  
+
     useEffect(() => {
         const stateID = formData.country
         if (typeof formData.country === 'number') {
@@ -143,7 +143,7 @@ const ContactsForm = ({ onSubmit, next, update }) => {
             }
         }
     }, [formData.country]);
-    
+
     const [sameAsPresent, setSameAsPresent] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
 

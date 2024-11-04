@@ -6,6 +6,7 @@ import SettingsDashboard from './settingsData.jsx';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Users from './ManageAccounts/Users/Users.jsx';
+import OrganizationSetup from './ManageAccounts/Organization/OrganizationSetup.jsx';
 
 const Settings = () => {
     const navigate = useNavigate();
@@ -46,7 +47,6 @@ const Settings = () => {
         <>
             {currentURL === '/settings' && (
                 <>
-
                     <div className="setting_nav_">
                         <div className="top-bar">
                             <h2><div className='span'><HiUserPlus /></div>Settings </h2>
@@ -71,9 +71,11 @@ const Settings = () => {
                 </>
             )}
 
-           
-            {currentURL === '/settings/manage-accounts' && (
+            {currentURL === '/settings/manage-accounts/users' && (
                 <Users />
+            )}
+            {currentURL === '/settings/manage-accounts/organization-setup' && (
+                <OrganizationSetup />
             )}
             
         </>

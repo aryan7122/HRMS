@@ -153,7 +153,7 @@ const PerformanceDetails = () => {
     console.log('departmentdetails::', departmentdetails)
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/department/details', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/department/details', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -181,7 +181,7 @@ const PerformanceDetails = () => {
     }
     const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/department/delete', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/department/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -227,7 +227,7 @@ const PerformanceDetails = () => {
     // HandleDelete
     useEffect(() => {
         // if (departmentdetails) {  // Ensure jobData is available before making this call
-        axios.post('https://devstronauts.com/public/api/get-user', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/get-user', {
             enteredbyid: departmentdetails2
         }, {
             headers: {
@@ -331,7 +331,7 @@ const PerformanceDetails = () => {
         // Reset form fields
         // Reset search query
         // toggleDropdownVisibility_2('departmentDropdownOpen_2'); // Close dropdown
-        axios.post('https://devstronauts.com/public/api/department/create/update', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/department/create/update', {
             id,
             department_name: formDetails_2.departmentName_2,  // Email ko formData se lo
             department_head: formDetails_2.departmentHead_2, // Department ID ko formData se lo
@@ -382,7 +382,7 @@ const PerformanceDetails = () => {
                 console.error("Error during create/update:", error);
             });
     };
-    
+
     const selectOption = (field, option) => {
         setFormDetails_2((prevState) => ({
             ...prevState,
@@ -505,7 +505,7 @@ const PerformanceDetails = () => {
                                 </p>
 
                             </div>
-                            
+
                         </div>
                         <div id='DescriptionJOB'>
                             <h4>Purpose of Travel</h4>
@@ -527,18 +527,18 @@ const PerformanceDetails = () => {
                                 <h4>Review Period :</h4>
                                 <p>{employees.checkup_result || 'Excellent'}</p>
                             </div>
-                                <div>
-                                    <h4>Review Period :</h4>
-                                    <p>{employees.checkup_result || '-'}</p>
-                                </div>
-                                <div>
-                                    <h4>Last Review Date :</h4>
-                                    <p>{employees.last_checkup_date || '-'}</p>
-                                </div>
-                                <div>
-                                    <h4>Next Review Date :</h4>
-                                    <p>{employees.next_checkup_date || '-'}</p>
-                                </div>
+                            <div>
+                                <h4>Review Period :</h4>
+                                <p>{employees.checkup_result || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Last Review Date :</h4>
+                                <p>{employees.last_checkup_date || '-'}</p>
+                            </div>
+                            <div>
+                                <h4>Next Review Date :</h4>
+                                <p>{employees.next_checkup_date || '-'}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -573,7 +573,7 @@ const PerformanceDetails = () => {
                                             <td>{project.name}</td>
                                             <td>{project.manager}</td>
                                             <td>{project.contact}</td>
-                                           
+
                                             <td>{project.createdDate}</td>
                                             <td className={project.status === "Approved" ? "completed" : "pending"}>
                                                 <span className="td">

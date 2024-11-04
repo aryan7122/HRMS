@@ -255,10 +255,10 @@ border: none !important
 }
 .close_svg_icon{
   margin-right: 30PX;
+  cursor: pointer;
   svg:hover{
     color: red !important;
   }
-  cursor: pointer;
 }
 ._div_navigation_top{
   // border: 1PX solid RED;  
@@ -277,6 +277,9 @@ border: none !important
   transition: 0.5s linear;
   height: 50px;
   color: #fff;
+  border: 1px solid red !important;
+  // position: absolute;
+  // width: 87%;
   div{
     .select_s{
       height: 40px;

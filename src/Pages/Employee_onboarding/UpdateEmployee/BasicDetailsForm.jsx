@@ -52,7 +52,7 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
     const token = localStorage.getItem('access_token');
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/employee/details', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/employee/details', {
                 user_id: id
             }, {
                 headers: {
@@ -109,7 +109,7 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
                     });
                 });
         }
-        update(formData)
+        // update(formData)
     }, [id, token]);  // token and id dependancy
 
     const [searchQuery_2, setSearchQuery_2] = useState('');

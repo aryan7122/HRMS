@@ -153,7 +153,7 @@ const DepartmentDetails = () => {
     console.log('departmentdetails::', departmentdetails)
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/department/details', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/department/details', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -181,7 +181,7 @@ const DepartmentDetails = () => {
     }
     const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/department/delete', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/department/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -227,7 +227,7 @@ const DepartmentDetails = () => {
     // HandleDelete
     useEffect(() => {
         // if (departmentdetails) {  // Ensure jobData is available before making this call
-        axios.post('https://devstronauts.com/public/api/get-user', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/get-user', {
             enteredbyid: departmentdetails2
         }, {
             headers: {
@@ -331,7 +331,7 @@ const DepartmentDetails = () => {
         // Reset form fields
         // Reset search query
         // toggleDropdownVisibility_2('departmentDropdownOpen_2'); // Close dropdown
-        axios.post('https://devstronauts.com/public/api/department/create/update', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/department/create/update', {
             id,
             department_name: formDetails_2.departmentName_2,  // Email ko formData se lo
             department_head: formDetails_2.departmentHead_2, // Department ID ko formData se lo
@@ -404,7 +404,7 @@ const DepartmentDetails = () => {
     return (
         <div className="profile-page">
             <div className="">
-                
+
                 <ToastContainer
                     position="top-right"
                     autoClose={5000}
@@ -427,9 +427,9 @@ const DepartmentDetails = () => {
                     </p>
                     <div className="buttons">
                         <div onClick={DelteConform}>
-                        <Button className="button" >
-                            Delete
-                        </Button>
+                            <Button className="button" >
+                                Delete
+                            </Button>
                         </div>
                         <DialogDismiss className="button secondary">Cancel</DialogDismiss>
                     </div>
@@ -500,7 +500,7 @@ const DepartmentDetails = () => {
                             <div>
                                 <h4>Created By</h4>
                                 {departmentdetails3 && (
-                                <p>{departmentdetails3 || '-'}</p>
+                                    <p>{departmentdetails3 || '-'}</p>
                                 )}
                             </div>
 

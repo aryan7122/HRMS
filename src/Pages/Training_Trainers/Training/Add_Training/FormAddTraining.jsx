@@ -99,7 +99,7 @@ const FormAddTrainers = ({ onSubmit }) => {
         };
 
         try {
-            const response = await axios.post('https://devstronauts.com/public/api/leave/create/update', requestData, {
+            const response = await axios.post('https://hrms.dragnilifecare.in/public/api/leave/create/update', requestData, {
                 headers: {
                     'Authorization': `Bearer ${token}`, // Include token in header
                     'Content-Type': 'application/json',
@@ -217,7 +217,7 @@ const FormAddTrainers = ({ onSubmit }) => {
         if (departmentHead.length > 0) {
             return
         }
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -239,7 +239,7 @@ const FormAddTrainers = ({ onSubmit }) => {
         if (leaveTypeData.length > 0) {
             return
         }
-        axios.post('https://devstronauts.com/public/api/leave/master/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/leave/master/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -426,7 +426,7 @@ const FormAddTrainers = ({ onSubmit }) => {
                                 <label>Duration</label>
                                 <input type="number" name="totalDays" placeholder='Select Start and End Date' disabled value={totalDays} onChange={handleChange} />
                             </div>
-                         
+
                             <div className="form-group">
                                 <label>Training Cost</label>
                                 {/* <input id='doller' type="number" name="cost" placeholder='Enter Training Cost' value={formData.cost} onChange={handleChange} /> */}

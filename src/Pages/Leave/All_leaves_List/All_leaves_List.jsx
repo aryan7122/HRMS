@@ -256,7 +256,7 @@ const All_leaves_List = (ClosePop) => {
             setError(null);   // Har bar call se pehle error ko reset karna
 
             try {
-                const response = await axios.post('https://devstronauts.com/public/api/leave/list', {
+                const response = await axios.post('https://hrms.dragnilifecare.in/public/api/leave/list', {
                     search: searchQuery,
                     status: selectedFilter,
                     custom_date: selectedDate,
@@ -312,7 +312,7 @@ const All_leaves_List = (ClosePop) => {
         }, 400);
         if (statusId && statusNew && !isRequestInProgress) {
             isRequestInProgress = true;  // Request start hone par flag true
-            axios.post('https://devstronauts.com/public/api/leave/status/update', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/leave/status/update', {
                 id: statusId,
                 status: statusNew
             }, {
@@ -741,8 +741,8 @@ const All_leaves_List = (ClosePop) => {
                                                         )}
                                                     </>
                                                 }
-                                                    </div>
                                             </div>
+                                        </div>
                                     </td>
 
 

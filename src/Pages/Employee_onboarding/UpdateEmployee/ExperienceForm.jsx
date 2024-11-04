@@ -64,8 +64,8 @@ const ExperienceForm = ({ onSubmit, next, update }) => {
             updatedFormData[experienceLetterKey] = experience.experience_letter || {};
         });
 
-        setFormData(updatedFormData); 
-    }, [next]); 
+        setFormData(updatedFormData);
+    }, [next]);
     // attacment in update img
 
 
@@ -78,7 +78,7 @@ const ExperienceForm = ({ onSubmit, next, update }) => {
 
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/employee/details', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/employee/details', {
                 user_id: id
             }, {
                 headers: {

@@ -329,7 +329,7 @@ const Client = () => {
 
     useEffect(() => {
         setLoading(true)
-        axios.post('https://devstronauts.com/public/api/shift/master/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/shift/master/list', {
             search: searchQuery,
             status: selectedFilter,
             custom_date: selectedDate,
@@ -362,7 +362,7 @@ const Client = () => {
         }, 400);
         // if (statusId && statusNew) {
 
-        axios.post('https://devstronauts.com/public/api/shift/master/status/update', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/shift/master/status/update', {
             id: statusId,
             status: statusNew
         }, {
@@ -680,7 +680,7 @@ const Client = () => {
                                                 {isStatusOpen &&
                                                     <>
                                                         {isOpen === index && (
-                                                        <div className="status-options" ref={statusRef}>
+                                                            <div className="status-options" ref={statusRef}>
                                                                 {statuses.map(status => (
                                                                     <div
                                                                         key={status}

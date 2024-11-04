@@ -58,7 +58,7 @@ const EmployeeDetails = () => {
     useEffect(() => {
         setLoading(true)
         if (id) {
-            axios.post('https://devstronauts.com/public/api/employee/details', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/employee/details', {
                 user_id: id
             }, {
                 headers: {
@@ -143,7 +143,7 @@ const EmployeeDetails = () => {
     }
     const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/employee/delete', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/employee/delete', {
                 user_id: id
             }, {
                 headers: {

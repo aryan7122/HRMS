@@ -104,7 +104,7 @@ const FormAddTicket = ({ onSubmit }) => {
     const handleSubmit = (event) => {
         event.preventDefault();  // Prevent default form submission
         // setLoading(true)
-        axios.post(`https://devstronauts.com/public/api/jobopening/create/update`,
+        axios.post(`https://hrms.dragnilifecare.in/public/api/jobopening/create/update`,
             {
                 job_title: formData.jobTitle,
                 department: formData.department,
@@ -169,7 +169,7 @@ const FormAddTicket = ({ onSubmit }) => {
             });
     };
 
-   
+
 
     const toggleDropdown = (dropdown) => {
         // Reset all dropdowns to false, then toggle the selected one
@@ -228,7 +228,7 @@ const FormAddTicket = ({ onSubmit }) => {
         setSearchQueryRequiredSkills('');
     };
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`

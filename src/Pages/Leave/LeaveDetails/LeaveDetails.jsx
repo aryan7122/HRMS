@@ -88,7 +88,7 @@ const LeaveDetails = () => {
 
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/leave/details', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/leave/details', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -110,7 +110,7 @@ const LeaveDetails = () => {
 
     useEffect(() => {
         if (leavedetails) {  // Ensure jobData is available before making this call
-            axios.post('https://devstronauts.com/public/api/get-user', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/get-user', {
                 enteredbyid: leavedetails.enteredbyid
             }, {
                 headers: {
@@ -135,7 +135,7 @@ const LeaveDetails = () => {
     }
     const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/leave/delete', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/leave/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

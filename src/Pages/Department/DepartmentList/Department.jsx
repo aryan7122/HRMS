@@ -47,7 +47,7 @@ const Department = () => {
     const [departmentHead, setDepartmentHead] = useState([]);
     console.log('departmentHead❗', departmentHead)
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -344,7 +344,7 @@ const Department = () => {
     const handleSubmitForm_2 = (event) => {
         setRun(',')
         event.preventDefault();
-        axios.post('https://devstronauts.com/public/api/department/create/update', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/department/create/update', {
             department_name: formDetails_2.departmentName_2,  // Email ko formData se lo
             department_head: formDetails_2.departmentHead_2, // Department ID ko formData se lo
             parent_department: formDetails_2.parentDepartment_2, // Description ko formData se lo
@@ -424,7 +424,7 @@ const Department = () => {
     };
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/department/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/department/list', {
             search: searchQuery,
             custom_date: selectedDate,
             fromDate: fromDate,

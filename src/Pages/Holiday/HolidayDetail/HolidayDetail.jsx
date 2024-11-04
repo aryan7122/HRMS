@@ -100,7 +100,7 @@ const HolidayDetail = () => {
 
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/designation/details', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/designation/details', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -119,7 +119,7 @@ const HolidayDetail = () => {
 
     useEffect(() => {
         if (designationDetails) {  // Ensure jobData is available before making this call
-            axios.post('https://devstronauts.com/public/api/get-user', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/get-user', {
                 enteredbyid: designationDetails.enteredbyid
             }, {
                 headers: {
@@ -147,7 +147,7 @@ const HolidayDetail = () => {
     }
     const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/designation/delete', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/designation/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -283,7 +283,7 @@ const HolidayDetail = () => {
         event.preventDefault();
 
         // Sab fields bharne ke baad hi API ko call karo
-        axios.post('https://devstronauts.com/public/api/designation/create/update', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/designation/create/update', {
             id,
             designation_name: formData_3.email_3,  // Email ko formData se lo
             department_id: formData_3.department_3, // Department ID ko formData se lo
@@ -480,7 +480,7 @@ const HolidayDetail = () => {
                 {/* table */}
 
             </div>
-           
+
         </div>
 
     );

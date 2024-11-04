@@ -10,9 +10,10 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { OutsideClick } from './OutsideClick.jsx'
 import axios from 'axios';
 import { MultiImageUpload } from '../../../components/MultiImageUpload.jsx';
+import DatePicker from '../../../utils/Form/DatePicker';
 
 const BasicDetailsForm = ({ onSubmit, next }) => {
-    
+
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
     const [inconSelect, setInconSelect] = useState(false)
@@ -24,13 +25,16 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
     const { isOpen: isEmploymentTypeOpen, ref: employmentTypeRef, buttonRef: employmentTypeButtonRef, handleToggle: toggleEmploymentType, setIsOpen: setEmploymentTypeOpen } = OutsideClick();
     const { isOpen: isEmployeeStatusOpen, ref: employeeStatusRef, buttonRef: employeeStatusButtonRef, handleToggle: toggleEmployeeStatus, setIsOpen: setEmployeeStatusOpen } = OutsideClick();
     const { isOpen: isSourceOfHireOpen, ref: sourceOfHireRef, buttonRef: sourceOfHireButtonRef, handleToggle: toggleSourceOfHire, setIsOpen: setSourceOfHireOpen } = OutsideClick();
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [endDateExit, setEndDateExit] = useState(null);
 
     const [formData, setFormData] = useState({
         employeeId: '',
         firstName: '',
         lastName: '',
         photo: '',
-        dob: '',
+        dob: startDate,
         age: '',
         gender: '',
         email: '',
@@ -38,14 +42,25 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
         reportingManager: '',
         department: '',
         designation: '',
-        doj: '',
+        doj: endDate,
         maritalStatus: '',
-        doe: '',
+        doe: endDateExit,
         employmentType: '',
         employeeStatus: '',
         sourceOfHire: '',
-        attachment:[]
+        attachment: []
     });
+  
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+    };
+    const handleStartDateChangeExit = (date) => {
+        setEndDateExit(date);
+    };
+
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+    };
 
     const [searchQuery_2, setSearchQuery_2] = useState('');
     const handleSearchQueryChange_2 = (event) => {
@@ -85,12 +100,12 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
     // const token = localStorage.getItem('access_token');
     // console.log(' formData.firstName:',  formData.firstName)
 
-    const handleSubmit =  (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         // console.log('onSubmit', formData)
         onSubmit(formData)
         // try {
-        //     const response = await axios.post('https://devstronauts.com/public/api/employee/create/update', { 
+        //     const response = await axios.post('https://hrms.dragnilifecare.in/public/api/employee/create/update', { 
         //         first_name: formData.firstName,
         //         last_name: formData.lastName,
         //         email: formData.email,
@@ -146,8 +161,8 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
         // }
         // console.log(formData);
     };
-    
-    
+
+
     const nextSumbit = (event) => {
         event.preventDefault();
         // console.log('onSubmit', formData)
@@ -208,7 +223,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
     const handleSearchQueryChangeEmployeeStatus = (e) => setSearchQueryEmployeeStatus(e.target.value);
 
     const employmentTypeOptions = [
-     'Permanent', 'On Contract', 'Intern', 'Trainee'
+        'Permanent', 'On Contract', 'Intern', 'Trainee'
     ];
 
     const employeeStatusOptions = [
@@ -222,7 +237,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
         option.toLowerCase().includes(searchQueryEmployeeStatus.toLowerCase())
     );
     // 
-   
+
 
     return (
         <>
@@ -302,16 +317,10 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
 
                             />
                         </div>
-                       
+
                         <div className="form-group">
-                            <label>Date of Birth</label>
-                            <input
-                                type="date"
-                                name="dob"
-                                value={formData.dob}
-                                onChange={handleChange}
-                                
-                            />
+                            <DatePicker label="Date of Birth" onDateChange={handleStartDateChange} />
+
                         </div>
                         <div className="form-group">
                             <label>Age</label>
@@ -321,7 +330,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                 name="age"
                                 value={formData.age}
                                 onChange={handleChange}
-                                
+
                             />
                         </div>
                         {/* Gender Dropdown */}
@@ -397,7 +406,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                             onChange={handleSearchQueryChangeDepartment}
                                         />
                                         <div className="dropdown_I">
-                                            {['Management','HR',"Sales","IT",].filter(option =>
+                                            {['Management', 'HR', "Sales", "IT",].filter(option =>
                                                 option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
                                             ).map(option => (
                                                 <div className="dropdown-item" onClick={() => selectOption('department', option)} key={option}>
@@ -442,14 +451,8 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                         </div>
 
                         <div className="form-group">
-                            <label>Date of Joining</label>
-                            <input
-                                type="date"
-                                name="doj"
-                                value={formData.doj}
-                                onChange={handleChange}
-                                
-                            />
+                            <DatePicker label="Date of Joining" onDateChange={handleEndDateChange} />
+
                         </div>
 
                         <div className="form-group">
@@ -460,7 +463,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                 name="employeeId"
                                 value={formData.employeeId}
                                 onChange={handleChange}
-                                
+
                             />
                         </div>
                         {/* Marital Status Dropdown */}
@@ -480,13 +483,8 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                             </div>
                         </div>
                         <div className="form-group">
-                            <label>Date of Exit</label>
-                            <input
-                                type="date"
-                                name="doe"
-                                value={formData.doe}
-                                onChange={handleChange}
-                            />
+                            <DatePicker label="Date of Exit" onDateChange={handleStartDateChangeExit} />
+
                         </div>
                         {/* Employment Type Dropdown */}
 
@@ -581,7 +579,7 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
                                             id="searchDepartmentHead"
                                         />
                                         <div className="dropdown_I">
-                                            {['Referral', 'Direct', 'Campus','Advertisement'].filter(option =>
+                                            {['Referral', 'Direct', 'Campus', 'Advertisement'].filter(option =>
                                                 option.toLowerCase().includes(searchQuerySourceOfHire.toLowerCase())
                                             ).map(option => (
                                                 <div className="dropdown-item" onClick={() => selectOption('sourceOfHire', option)} key={option}>

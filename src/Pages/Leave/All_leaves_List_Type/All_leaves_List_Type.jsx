@@ -281,7 +281,7 @@ const All_leaves_List_Type = (ClosePop) => {
             setError(null);   // Har bar call se pehle error ko reset karna
 
             try {
-                const response = await axios.post('https://devstronauts.com/public/api/leave/master/list', {
+                const response = await axios.post('https://hrms.dragnilifecare.in/public/api/leave/master/list', {
                     // search: searchQuery,
                     // status: selectedFilter,
                     // custom_date: selectedDate,
@@ -320,7 +320,7 @@ const All_leaves_List_Type = (ClosePop) => {
         }, 400);
         // if (statusId && statusNew) {
 
-        axios.post('https://devstronauts.com/public/api/leave/master/status/update', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/leave/master/status/update', {
             id: statusId,
             status: statusNew
         }, {
@@ -540,7 +540,7 @@ const All_leaves_List_Type = (ClosePop) => {
                             ))}
                         </Slider>
                     </div>
-                ) : 
+                ) :
                     <div className='Overview_sl'>
                         <div className="Overview_box">
                             <div className="Overview_Top">

@@ -77,7 +77,7 @@ const JobForm = ({ onSubmit }) => {
         }));
     };
 
-  
+
     // };
     const [loading, setLoading] = useState(false);
     const [selectedSkills, setSelectedSkills] = useState([]);
@@ -88,7 +88,7 @@ const JobForm = ({ onSubmit }) => {
     const handleSubmit = (event) => {
         event.preventDefault();  // Prevent default form submission
         // setLoading(true)
-        axios.post(`https://devstronauts.com/public/api/jobopening/create/update`,
+        axios.post(`https://hrms.dragnilifecare.in/public/api/jobopening/create/update`,
             {
                 job_title: formData.jobTitle,
                 department: formData.department,
@@ -183,13 +183,13 @@ const JobForm = ({ onSubmit }) => {
             ...prevFormData,
             requiredSkills: selectedSkills
         }));
-    }, [selectedSkills]); 
+    }, [selectedSkills]);
     const handleSkillSelection = (dropdown, skill) => {
         // Check if skill already exists in selectedSkills
         if (!selectedSkills.includes(skill)) {
             setSelectedSkills(prevSkills => [...prevSkills, skill]);
         }
-                setRequiredSkillsOpen(false)
+        setRequiredSkillsOpen(false)
 
     };
 
@@ -212,7 +212,7 @@ const JobForm = ({ onSubmit }) => {
         //     setSelectedSkills(prevState => [...prevState, value]);
         // }
         // // setRequiredSkillsOpen(false);
-        setSearchQueryRequiredSkills('');  
+        setSearchQueryRequiredSkills('');
     };
 
     if (loading) {
@@ -227,7 +227,7 @@ const JobForm = ({ onSubmit }) => {
     const handleSearchQueryChangeRequiredSkills = (e) => setSearchQueryRequiredSkills(e.target.value);
 
     const employmentTypeOptions = [
-      'Permanent', 'On Contract', 'Intern', 'Trainee'
+        'Permanent', 'On Contract', 'Intern', 'Trainee'
     ];
 
     // skill
@@ -243,7 +243,7 @@ const JobForm = ({ onSubmit }) => {
         'SQL', 'NoSQL', 'Blockchain', 'Web3', 'Mobile Development', 'Flutter', 'Android Development',
         'iOS Development', 'Swift', 'Kotlin', 'Automation', 'Pandas', 'NumPy', 'TensorFlow', 'PyTorch',
         'Database Management', 'Backend Development', 'Frontend Development', 'API Integration', 'Microservices',
-         'Team Leadership', 'Public Speaking', 'Conflict Resolution', 'Strategic Thinking'
+        'Team Leadership', 'Public Speaking', 'Conflict Resolution', 'Strategic Thinking'
     ];
 
 
@@ -264,19 +264,19 @@ const JobForm = ({ onSubmit }) => {
             setSearchQueryRequiredSkills(''); // Clear the input after adding
         }
     };
-// skill
+    // skill
     return (
         <>
             <div className="" onSubmit={onSubmit}>
-            <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                closeOnClick
-                pauseOnHover
-                draggable
-                theme="error"
-            />
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    closeOnClick
+                    pauseOnHover
+                    draggable
+                    theme="error"
+                />
                 {/* {showAlert ? <div> <div id='showAlert' ><p> {sms}</p></div> </div> : ''} */}
                 {/* {showAlertError ? <div> <div id='showAlertError' ><p>{sms}</p></div> </div> : ''} */}
 
@@ -346,7 +346,7 @@ const JobForm = ({ onSubmit }) => {
                                                 onChange={handleSearchQueryChangeDepartment}
                                             />
                                             <div className="dropdown_I">
-                                                {['Management', 'Sales', 'HR','IT'].filter(option =>
+                                                {['Management', 'Sales', 'HR', 'IT'].filter(option =>
                                                     option.toLowerCase().includes(searchQueryDepartment.toLowerCase())
                                                 ).map(option => (
                                                     <div className="dropdown-item" onClick={() => selectOption('department', option)} key={option}>
@@ -415,7 +415,7 @@ const JobForm = ({ onSubmit }) => {
                                     )}
                                 </div>
                             </div>
-                            
+
 
                             <div className="form-group">
                                 <label>No. of Positions*</label>
@@ -425,7 +425,7 @@ const JobForm = ({ onSubmit }) => {
                                     name="noOfPositions"
                                     value={formData.noOfPositions}
                                     onChange={handleChange}
-                                    
+
                                 />
                             </div>
 
@@ -575,7 +575,7 @@ const JobForm = ({ onSubmit }) => {
                                         </div>
                                     )}
                                 </div> */}
-                                
+
 
 
 
@@ -640,7 +640,7 @@ const JobForm = ({ onSubmit }) => {
                                     name="description"
                                     value={formData.description}
                                     onChange={handleChange}
-                                    
+
                                 />
                             </div>
                         </div>

@@ -9,10 +9,10 @@ const useLocationData = () => {
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-   
+
     const fetchCountries = async () => {
         try {
-            const response = await axios.post('https://devstronauts.com/public/api/getcountry',);
+            const response = await axios.post('https://hrms.dragnilifecare.in/public/api/getcountry',);
             const countryData = response.data.country;
             // console.log('countryData', countryData)
             setLocationsapi((prev) => ({
@@ -26,7 +26,7 @@ const useLocationData = () => {
 
     const fetchStates = async (id) => {
         try {
-            const response = await axios.post('https://devstronauts.com/public/api/getstate', {
+            const response = await axios.post('https://hrms.dragnilifecare.in/public/api/getstate', {
                 country_id: id,
             });
             // console.log('response', response)
@@ -42,7 +42,7 @@ const useLocationData = () => {
 
     const fetchCities = async (id) => {
         try {
-            const response = await axios.post('https://devstronauts.com/public/api/getcity', {
+            const response = await axios.post('https://hrms.dragnilifecare.in/public/api/getcity', {
                 state_id: id,
             });
             const cityData = response.data.country;

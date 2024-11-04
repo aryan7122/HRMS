@@ -11,7 +11,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { number } from 'prop-types';
 import { MultiImageUploaders } from '../../../components/MultiImageUpload';
 
-const DocumentsForm = ({ onSubmit,next }) => {
+const DocumentsForm = ({ onSubmit, next }) => {
     const [educationForms, setEducationForms] = useState([
         {
             documentType: '',
@@ -106,11 +106,11 @@ const DocumentsForm = ({ onSubmit,next }) => {
     //         attachment: '',
     //     }
     // });
-  
+
 
     // useEffect(() => {
     //     if (id) {
-    //         axios.post('https://devstronauts.com/public/api/employee/details', {
+    //         axios.post('https://hrms.dragnilifecare.in/public/api/employee/details', {
     //             user_id: id
     //         }, {
     //             headers: {
@@ -236,8 +236,8 @@ const DocumentsForm = ({ onSubmit,next }) => {
         ]);
     };
     // console.log('&&&&&&', educationForms[educationForms.length - 1].documentType)
-    console.log('setSelectOneOp❗',selectOneOp)
-    useEffect(()=>{
+    console.log('setSelectOneOp❗', selectOneOp)
+    useEffect(() => {
         setSelectOneOp(educationForms[educationForms.length - 1].documentType)
     }, [educationForms])
     const selectOption = (index, option) => {
@@ -299,7 +299,7 @@ const DocumentsForm = ({ onSubmit,next }) => {
         console.log('allDocumentsData', allDocumentsData.documents); // All document data printed here
         next(allDocumentsData)
     };
-    
+
 
     // 
 

@@ -42,7 +42,7 @@ const DesignationDetails = () => {
         setShowPopup(false);
     };
 
-  
+
 
     const handleInputChange_3 = (event) => {
         const { name, value } = event.target;
@@ -72,7 +72,7 @@ const DesignationDetails = () => {
     // 
     const [currentSlide, setCurrentSlide] = useState(0); // State to track current slide
 
-    
+
     const [designationDetails, setDesignationDetails] = useState(null);
     const [designationDetails2, setDesignationDetails2] = useState('');
 
@@ -100,7 +100,7 @@ const DesignationDetails = () => {
 
     useEffect(() => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/designation/details', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/designation/details', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -119,7 +119,7 @@ const DesignationDetails = () => {
 
     useEffect(() => {
         if (designationDetails) {  // Ensure jobData is available before making this call
-            axios.post('https://devstronauts.com/public/api/get-user', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/get-user', {
                 enteredbyid: designationDetails.enteredbyid
             }, {
                 headers: {
@@ -135,7 +135,7 @@ const DesignationDetails = () => {
                     console.error("Error fetching user data: ", error);
                 });
         }
-    }, [designationDetails2,designationDetails]);
+    }, [designationDetails2, designationDetails]);
 
     // HandleDelete
     const [open, setOpen] = useState(false);
@@ -145,9 +145,9 @@ const DesignationDetails = () => {
         setOpen(true)
 
     }
-    const DelteConform = () => { 
+    const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/designation/delete', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/designation/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -190,7 +190,7 @@ const DesignationDetails = () => {
         }
     }
 
-    
+
     // HandleDelete
 
     const handleBackToDesignations = () => {
@@ -216,16 +216,16 @@ const DesignationDetails = () => {
         setShowPopup(true)
         // navigate(`/update-designation/${id}`);
         // useEffect(() => {
-            // if (designationDetails) {
-                setFormData_3({
-                    email_3: designationDetails?.designation_name || '',
-                    department_3: designationDetails?.department_id || '',
-                    Description_3: designationDetails?.description || '',
-                });
-            // }
+        // if (designationDetails) {
+        setFormData_3({
+            email_3: designationDetails?.designation_name || '',
+            department_3: designationDetails?.department_id || '',
+            Description_3: designationDetails?.description || '',
+        });
+        // }
         // }, [designationDetails]);
 
-      
+
     }
 
     const selectOption = (field, option) => {
@@ -237,7 +237,7 @@ const DesignationDetails = () => {
     };
 
     // popup 
-  
+
     // Slider settings
     const settings = {
         dots: true,
@@ -275,15 +275,15 @@ const DesignationDetails = () => {
 
     // Chunk the employees array into groups of 4
     const employeeChunks = chunkArray(employees, 4);
-// slider end
+    // slider end
 
-   
+
 
     const handleSubmitForm_3 = (event) => {
         event.preventDefault();
 
         // Sab fields bharne ke baad hi API ko call karo
-        axios.post('https://devstronauts.com/public/api/designation/create/update', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/designation/create/update', {
             id,
             designation_name: formData_3.email_3,  // Email ko formData se lo
             department_id: formData_3.department_3, // Department ID ko formData se lo
@@ -424,7 +424,7 @@ const DesignationDetails = () => {
                             <div>
                                 <h4>Created At</h4>
                                 <p>   {`${new Date(designationDetails.created_at).getDate()}-${new Date(designationDetails.created_at).toLocaleString('en-US', { month: 'short' })}-${new Date(designationDetails.created_at).getFullYear()}`}</p>
-                            </div>                           
+                            </div>
                         </div>
                         <div id='DescriptionJOB'>
                             <h4>Description</h4>

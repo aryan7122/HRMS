@@ -73,7 +73,7 @@ const SetNewPassword = () => {
           };
 
           // Sending POST request to reset password API
-          const response = await axios.post('https://devstronauts.com/public/api/reset-password', payload, {
+          const response = await axios.post('https://hrms.dragnilifecare.in/public/api/reset-password', payload, {
             headers: {
               Authorization: `Bearer ${token}` // Sending token in Authorization header
             }

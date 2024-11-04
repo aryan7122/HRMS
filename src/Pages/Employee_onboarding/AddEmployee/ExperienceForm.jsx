@@ -7,11 +7,21 @@ import { GrCloudUpload } from "react-icons/gr";
 import { IoMdAddCircleOutline, IoMdCloseCircleOutline } from "react-icons/io";
 import { IoIosArrowDropleft, IoIosArrowDropright } from "react-icons/io";
 import { MultiImageUploaders } from '../../../components/MultiImageUpload.jsx';
+import DatePicker from '../../../utils/Form/DatePicker';
 
 const ExperienceForm = ({ onSubmit, next }) => {
     // Using the 'experiences' key inside the state as per your suggestion
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+    };
+
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+    };
     const [experienceForms, setExperienceForms] = useState({
         experiences: [
             {
@@ -19,8 +29,8 @@ const ExperienceForm = ({ onSubmit, next }) => {
                 industry: "",
                 job_title: "",
                 duration: "",
-                from_date: "",
-                to_date: "",
+                from_date: startDate,
+                to_date: endDate,
                 description: "",
                 experience_letter: [],
             }
@@ -45,7 +55,7 @@ const ExperienceForm = ({ onSubmit, next }) => {
         });
     }, [formData]);
 
-    
+
     console.log('experienceForms', experienceForms)
     const handleFileChange = (index, event) => {
         const file = event.target.files[0];
@@ -205,23 +215,10 @@ const ExperienceForm = ({ onSubmit, next }) => {
                                 />
                             </div>
                             <div className="form-group" id='form_group_Duration'>
-                                <div id='div_Duration'>
-                                    <label>From</label>
-                                    <label>To</label>
-                                </div>
+                               
                                 <div className='divDate'>
-                                    <input
-                                        type="date"
-                                        name="from_date"
-                                        value={form.from_date}
-                                        onChange={(e) => handleChange(index, e)}
-                                    />
-                                    <input
-                                        type="date"
-                                        name="to_date"
-                                        value={form.to_date}
-                                        onChange={(e) => handleChange(index, e)}
-                                    />
+                                    <DatePicker label="From" onDateChange={handleStartDateChange} />
+                                    <DatePicker label="to" onDateChange={handleEndDateChange} />
                                 </div>
                             </div>
                             {/* <div className="form-group">
@@ -244,8 +241,8 @@ const ExperienceForm = ({ onSubmit, next }) => {
                                 <MultiImageUploaders
                                     formData={formData}
                                     setFormData={setFormData}
-                                    fieldName={`experience_letter_${index}`} 
-                                    />
+                                    fieldName={`experience_letter_${index}`}
+                                />
                             </div>
                         </div>
                         <div id='Description'>

@@ -251,7 +251,7 @@ const AllEmployeeList = () => {
     // console.log('token:', token)
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
             search: searchQuery,
             employee_status: selectedFilter,   //
             employment_type: employmentType,
@@ -285,7 +285,7 @@ const AllEmployeeList = () => {
     // console.log('departmentdetails3 ::', departmentdetails3)
     useEffect(() => {
         // if (departmentdetails) {  // Ensure jobData is available before making this call
-        axios.post('https://devstronauts.com/public/api/get-user', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/get-user', {
             enteredbyid: departmentdetails2
         }, {
             headers: {
@@ -309,7 +309,7 @@ const AllEmployeeList = () => {
         }, 400);
         if (statusId && statusNew) {
 
-            axios.post('https://devstronauts.com/public/api/employee/status/update', {
+            axios.post('https://hrms.dragnilifecare.in/public/api/employee/status/update', {
                 emp_id: statusId,
                 employee_status: statusNew
             }, {
@@ -821,7 +821,7 @@ const AllEmployeeList = () => {
                                                 {isStatusOpen &&
                                                     <>
                                                         {isOpen === index && (
-                                                        <div className="status-options" ref={statusRef}>
+                                                            <div className="status-options" ref={statusRef}>
                                                                 {statuses.map(status => (
                                                                     <div
                                                                         key={status}
@@ -891,4 +891,3 @@ const AllEmployeeList = () => {
 };
 
 export default AllEmployeeList;
-// 

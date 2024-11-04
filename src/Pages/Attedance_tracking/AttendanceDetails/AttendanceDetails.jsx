@@ -73,7 +73,7 @@ const AttendanceDetails = (ClosePop) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const token = localStorage.getItem('access_token');
-   
+
     console.log('data 👋', attendanceData)
 
     const HandleDelete = () => {
@@ -83,7 +83,7 @@ const AttendanceDetails = (ClosePop) => {
     }
     const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/attendance/delete', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/attendance/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -127,7 +127,7 @@ const AttendanceDetails = (ClosePop) => {
     }
     // Fetch  details based 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/attendance/details', { id:id}, {
+        axios.post('https://hrms.dragnilifecare.in/public/api/attendance/details', { id: id }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -226,7 +226,7 @@ const AttendanceDetails = (ClosePop) => {
                         <div className="about_user">
                             <h3>{attendanceData.user_name || ''}</h3>
                             {/* <p>Web Developer / Full-Time</p> */}
-                            <div className=''><h4></h4> <h5>{attendanceData.status == 1 ? 'Absent' : attendanceData.status == 0 ? 'Present' : 'Half Day' }</h5></div>
+                            <div className=''><h4></h4> <h5>{attendanceData.status == 1 ? 'Absent' : attendanceData.status == 0 ? 'Present' : 'Half Day'}</h5></div>
                         </div>
                     </div>
                     <div className="action_card">

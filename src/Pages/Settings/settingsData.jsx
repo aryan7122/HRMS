@@ -10,6 +10,7 @@ const settingsData = [
                 name: 'Manage Accounts',
                 description: 'Lorem ipsum dolor sit amet consectetur.',
                 buttonText: 'Visit Accounts',
+                url:'Manage Accounts/users',
                 svg: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" color="#9b9b9b" fill="none">
                     <path d="M14 8.99988H18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                     <path d="M14 12.4999H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
@@ -189,7 +190,7 @@ const SettingsDashboard = () => {
                                 <p className="setting-description">{item.description}</p>
                                 <button
                                     className="visit-button"
-                                    onClick={() => navigate(`/settings/${item.name.toLowerCase().replace(/\s+/g, '-')}`)}>
+                                    onClick={() => navigate(`/settings/${item.url.toLowerCase().replace(/\s+/g, '-')}`)}>
                                     {item.buttonText}
                                 </button>
                             </div>

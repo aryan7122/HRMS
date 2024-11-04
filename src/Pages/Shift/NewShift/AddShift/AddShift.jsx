@@ -61,7 +61,7 @@ const AddShift = ({ ClosePop }) => {
         };
         console.log('requestData', requestData)
         try {
-            const response = await axios.post(`https://devstronauts.com/public/api/shift/master/create/update`, requestData, {
+            const response = await axios.post(`https://hrms.dragnilifecare.in/public/api/shift/master/create/update`, requestData, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -206,7 +206,7 @@ const AddShift = ({ ClosePop }) => {
                                                     <div className="dropdown_I">
                                                         {Array.from({ length: 24 }, (_, i) => (
                                                             <div className="dropdown-item" onClick={() => selectTimeOption('extraHours', { hours: String(i).padStart(2, '0'), minutes: formData.extraHours.minutes })} key={i}>
-                                                                {String(i).padStart(2, '0')} 
+                                                                {String(i).padStart(2, '0')}
                                                             </div>
                                                         ))}
                                                     </div>
@@ -257,9 +257,9 @@ const AddShift = ({ ClosePop }) => {
                                     </div>
                                 </div>
                             </div>
-                                <div className="buttons">
-                                    <button type="submit" className="submit-btn">Submit</button>
-                                </div>
+                            <div className="buttons">
+                                <button type="submit" className="submit-btn">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>

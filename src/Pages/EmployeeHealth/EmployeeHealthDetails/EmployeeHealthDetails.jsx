@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './EmployeeHealthDetails.scss';
 import iconEdu from '../../../assets/icons/edu.png'
 import img_emp1 from '../../../assets/emp1.png'
@@ -19,12 +19,12 @@ const EmployeeHealthDetails = () => {
     const [activeTab, setActiveTab] = useState('experience');
     const navigate = useNavigate()
     const { id } = useParams();
-    
+
 
     const AllEmp = () => {
         navigate('/health')
     }
-   
+
     const projects = [
         {
             name: "E-commerce Website Redesign",
@@ -80,8 +80,8 @@ const EmployeeHealthDetails = () => {
     console.log('employees', employees)
     useEffect(() => {
         setLoading(true)
-        axios.post('https://devstronauts.com/public/api/employee/health/details', {
-           id:id
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/health/details', {
+            id: id
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -116,7 +116,7 @@ const EmployeeHealthDetails = () => {
     }
     const DelteConform = () => {
         if (id) {
-            axios.post('https://devstronauts.com/public/api/employee/health/delete', { id }, {
+            axios.post('https://hrms.dragnilifecare.in/public/api/employee/health/delete', { id }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -160,7 +160,7 @@ const EmployeeHealthDetails = () => {
     }
     // delete
     // Fetch  details based 
-  
+
     if (loading) {
         return <div id='notFounPageID'><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" /></div>; // Loading state
     }
@@ -255,7 +255,7 @@ const EmployeeHealthDetails = () => {
                                 <h4>Department </h4>
                                 <p>{employees.department_head || '-'}</p>
                             </div>
-                        
+
                             <div>
                                 <h4>Mobile no.</h4>
                                 <p>{employees.mobile_no || '-'}</p>

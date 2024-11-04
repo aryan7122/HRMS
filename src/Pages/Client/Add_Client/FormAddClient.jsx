@@ -40,13 +40,13 @@ const FormAddClient = ({ onSubmit }) => {
         attachment: [],
         jobTitle: '',
         client: '',
-        gender:'',
+        gender: '',
         description: '',
         Address: '',
         company_name: '',
-        phone:'',
+        phone: '',
         phone_Company: '',
-        website:''
+        website: ''
     });
     console.log('formData', formData)
     const [dropdowns, setDropdowns] = useState({
@@ -92,7 +92,7 @@ const FormAddClient = ({ onSubmit }) => {
     const handleSubmit = (event) => {
         event.preventDefault();  // Prevent default form submission
         // setLoading(true)
-        axios.post(`https://devstronauts.com/public/api/jobopening/create/update`,
+        axios.post(`https://hrms.dragnilifecare.in/public/api/jobopening/create/update`,
             {
                 job_title: formData.jobTitle,
                 department: formData.department,
@@ -194,7 +194,7 @@ const FormAddClient = ({ onSubmit }) => {
             ...prevState,
             [dropdown]: false
         }));
-       
+
         setDesignationOpen(false)
         setDepartmentOpen(false)
         setMaritalStatusOpen(false)
@@ -207,7 +207,7 @@ const FormAddClient = ({ onSubmit }) => {
         // // setRequiredSkillsOpen(false);
         setSearchQueryRequiredSkills('');
     };
-  
+
     if (loading) {
         return <div id='notFounPageID'><img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" /></div>; // Loading state
     }
@@ -349,7 +349,7 @@ const FormAddClient = ({ onSubmit }) => {
                                 />
                             </div>
                         </div>
-                       
+
 
                         <div id='Description' className='DescriptionJob'>
                             <div className="form-group">

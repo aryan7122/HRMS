@@ -150,7 +150,7 @@ const BirthdayList = () => {
 
 
     useEffect(() => {
-        axios.post('https://devstronauts.com/public/api/employee/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/employee/list', {
             search: searchQuery,
         }, {
             headers: {

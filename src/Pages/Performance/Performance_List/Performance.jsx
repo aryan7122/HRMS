@@ -322,7 +322,7 @@ const Performance = () => {
 
     useEffect(() => {
         setLoading(true)
-        axios.post('https://devstronauts.com/public/api/shift/master/list', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/shift/master/list', {
             search: searchQuery,
             status: selectedFilter,
             custom_date: selectedDate,
@@ -356,7 +356,7 @@ const Performance = () => {
         }, 400);
         // if (statusId && statusNew) {
 
-        axios.post('https://devstronauts.com/public/api/shift/master/status/update', {
+        axios.post('https://hrms.dragnilifecare.in/public/api/shift/master/status/update', {
             id: statusId,
             status: statusNew
         }, {
@@ -676,7 +676,7 @@ const Performance = () => {
                                                 {isStatusOpen &&
                                                     <>
                                                         {isOpen === index && (
-                                                        <div className="status-options" ref={statusRef}>
+                                                            <div className="status-options" ref={statusRef}>
                                                                 {statuses.map(status => (
                                                                     <div
                                                                         key={status}
@@ -697,18 +697,18 @@ const Performance = () => {
                             ))}
                         </tbody>
                     </table>
-                {loading ? (
-                    <div id='Loading'>
-                        <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
-                    </div> // Show loading text or spinner when data is being fetched
-                ) : ('')}
-                {loading ? '' : employees == '' ? (
-                    <div className="not-found-container">
-                        <img src="https://cdn.dribbble.com/userupload/11708150/file/original-825be68b3517931ad747e0180a4116d3.png?resize=1200x900" alt="" />
-                        <h1 className="grey-text">No matching records found</h1>
-                        <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
-                    </div>
-                ) : ('')}
+                    {loading ? (
+                        <div id='Loading'>
+                            <img src="https://i.pinimg.com/originals/6a/59/dd/6a59dd0f354bb0beaeeb90a065d2c8b6.gif" alt="" />
+                        </div> // Show loading text or spinner when data is being fetched
+                    ) : ('')}
+                    {loading ? '' : employees == '' ? (
+                        <div className="not-found-container">
+                            <img src="https://cdn.dribbble.com/userupload/11708150/file/original-825be68b3517931ad747e0180a4116d3.png?resize=1200x900" alt="" />
+                            <h1 className="grey-text">No matching records found</h1>
+                            <p className="grey-text">Sorry, we couldn't find the data you're looking for.</p>
+                        </div>
+                    ) : ('')}
                 </div>
                 <div className="pagination">
                     <div className="rows-per-page">
