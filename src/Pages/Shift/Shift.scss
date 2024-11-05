@@ -1,23 +1,29 @@
 .sift_hours_td{
-    // border: 1px dashed rgb(21, 188, 13);
     padding: 5px;
     border-radius: 5px;
     font-size: 12px;
 }
 #DateDropdowns{
+    border: 1px solid #730fad00 !important;
     z-index: 99;
+    // border: 1px solid rgb(240, 0, 0) !important;
+    width: 120px;
+    margin-top: -30px !important;
+    height: 30px;
+    overflow: hidden;
+    background: #00000000 !important;
 }
 
 .week_TD{
     min-width: 105px;
-   text-align: center !important;
+    text-align: center !important;
 }
 
 @media only screen and (max-width: 1333px) {
-.week_sift{
-    overflow-y: auto !important;
-    // padding-left: 50px !important;
-}
+    .week_sift{
+        overflow-y: auto !important;
+        // padding-left: 50px !important;
+    }
 .week_TD{
     min-width: 130px;
    text-align: center !important;

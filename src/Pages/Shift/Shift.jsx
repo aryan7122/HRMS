@@ -18,9 +18,11 @@ import { OutsideClick } from '../Employee_onboarding/AddEmployee/OutsideClick'
 import OutsideClick4 from '../Employee_onboarding/AllEmployeeList/OutSideClick4';
 import axios from 'axios';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
+import { Box, Typography } from '@mui/material';
 
 import './Shift.scss';
 import { Button, Dialog, DialogDismiss, DialogHeading } from "@ariakit/react";
@@ -67,27 +69,27 @@ const Shift = () => {
         setTogglNewAdd(false);
     };
     const [employees, setEmployees] = useState([
-        {
-            name: "John Doe",
-            isChecked: false,
-            department: "Cloud",
-            shifts: [
-                { date: "10/05/2024", start: "08:00", end: "19:00" },
-                { date: "10/14/2024", start: "16:00", end: "00:00" },
-                { date: "10/03/2024", start: "00:00", end: "08:00" },
-                { date: "10/06/2024", start: "16:00", end: "00:00" },
-            ]
-        },
-        {
-            name: 'John Smith',
-            isChecked: false,
-            department: "Web Development",
-            shifts: [
-                { date: "10/03/2024", start: "00:00", end: "08:00" },
-                { date: "10/15/2024", start: "12:00", end: "20:00" },
-                { date: "10/07/2024", start: "09:00", end: "18:00" },
-            ]
-        },
+        // {
+        //     name: "John Doe",
+        //     isChecked: false,
+        //     department: "Cloud",
+        //     shifts: [
+        //         { date: "10/05/2024", start: "08:00", end: "19:00" },
+        //         { date: "10/14/2024", start: "16:00", end: "00:00" },
+        //         { date: "10/03/2024", start: "00:00", end: "08:00" },
+        //         { date: "10/06/2024", start: "16:00", end: "00:00" },
+        //     ]
+        // },
+        // {
+        //     name: 'John Smith',
+        //     isChecked: false,
+        //     department: "Web Development",
+        //     shifts: [
+        //         { date: "10/03/2024", start: "00:00", end: "08:00" },
+        //         { date: "10/15/2024", start: "12:00", end: "20:00" },
+        //         { date: "10/07/2024", start: "09:00", end: "18:00" },
+        //     ]
+        // },
         // {
         //     name: 'Emily Davis',
         //     isChecked: false,
@@ -161,7 +163,7 @@ const Shift = () => {
     ]);
 
 
-    console.log('employees@', employees)
+    // console.log('employees@', employees)
     const [filteredEmployees, setFilteredEmployees] = useState(employees);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartment, setSelectedDepartment] = useState('All');
@@ -445,6 +447,7 @@ const Shift = () => {
             const shiftData = shiftResponse.data.result;
 
             // Employee aur shift data ko match karo
+            console.log('emp',empData)
             const updatedEmployees = empData
                 .filter(emp => shiftData.some(shift => shift.user_id === emp.id))  // Sirf matched employees ko filter karo
                 .map(emp => {
@@ -458,6 +461,7 @@ const Shift = () => {
 
                     return {
                         name: `${emp.first_name} ${emp.last_name}`,
+                        img: emp.image || '' ,
                         isChecked: false,
                         department: deptData.find(dept => dept.id === emp.id)?.department_name || " ",
                         shifts: matchedShifts
@@ -468,12 +472,12 @@ const Shift = () => {
             setFilteredEmployees(updatedEmployees)
             setLoading(false);
 
+            console.log('updatedEmployees', updatedEmployees)
         } catch (error) {
             console.error("Error fetching data: ", error);
             setLoading(false);
         }
     };
-
     // useEffect me ab ek hi baar fetchData ko call karo
     useEffect(() => {
         if (token) {
@@ -642,13 +646,15 @@ const Shift = () => {
                                 Select Week {!isFilterOpen4 ? <IoIosArrowDown /> : <IoIosArrowUp />}
                             </span>
                         </div>
-                        {isFilterOpen4 &&
-                            <div id='DateDropdowns' ref={filterRef4}>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DateCalendar onChange={(newDate) => handleDateChange(newDate)} />
-                                </LocalizationProvider>
-                            </div>
-                        }
+                        {/* {isFilterOpen4 && */}
+                        <div id='DateDropdowns' ref={filterRef4}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <Box>
+                                    <DesktopDatePicker onChange={(newDate) => handleDateChange(newDate)} />
+                                </Box>
+                            </LocalizationProvider>
+                        </div>
+                        {/* } */}
                     </div>
                     <div className="refresh divRight" onClick={handleRefresh}>
                         <div className='div_box'>
