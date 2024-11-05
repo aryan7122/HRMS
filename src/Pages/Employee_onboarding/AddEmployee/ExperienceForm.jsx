@@ -13,29 +13,56 @@ const ExperienceForm = ({ onSubmit, next }) => {
     // Using the 'experiences' key inside the state as per your suggestion
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const handleStartDateChange = (date) => {
-        setStartDate(date);
-    };
+    const [startDate, setStartDate] = useState([]);
+    const [endDate, setEndDate] = useState([]);
 
-    const handleEndDateChange = (date) => {
-        setEndDate(date);
-    };
     const [experienceForms, setExperienceForms] = useState({
         experiences: [
             {
                 company_name: "",
                 industry: "",
                 job_title: "",
-                duration: "",
-                from_date: startDate,
-                to_date: endDate,
+                duration: null,
+                from_date: null,
+                to_date: null,
                 description: "",
                 experience_letter: [],
             }
         ]
     });
+
+    const calculateDaysDifference = (start, end) => {
+        if (!start || !end) return 0;
+        const diffTime = Math.abs(new Date(end) - new Date(start));
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include both dates
+    };
+
+    const handleStartDateChange = (index, date) => {
+        setExperienceForms((prevExperienceForms) => {
+            const updatedExperiences = [...prevExperienceForms.experiences];
+            updatedExperiences[index] = {
+                ...updatedExperiences[index],
+                from_date: date,
+                duration: calculateDaysDifference(date, updatedExperiences[index].to_date)
+            };
+            return { experiences: updatedExperiences };
+        });
+    };
+
+    const handleEndDateChange = (index, date) => {
+        setExperienceForms((prevExperienceForms) => {
+            const updatedExperiences = [...prevExperienceForms.experiences];
+            updatedExperiences[index] = {
+                ...updatedExperiences[index],
+                to_date: date,
+                duration: calculateDaysDifference(updatedExperiences[index].from_date, date)
+            };
+            return { experiences: updatedExperiences };
+        });
+    };
+
+
+
     const [formData, setFormData] = useState({
     });
     console.log('formData 👋', formData)
@@ -217,8 +244,10 @@ const ExperienceForm = ({ onSubmit, next }) => {
                             <div className="form-group" id='form_group_Duration'>
                                
                                 <div className='divDate'>
-                                    <DatePicker label="From" onDateChange={handleStartDateChange} />
-                                    <DatePicker label="to" onDateChange={handleEndDateChange} />
+                                    <DatePicker label="From" onDateChange={(date) => handleStartDateChange(index, date)}
+                                        initialDate={form.from_date} />
+                                    <DatePicker label="to" onDateChange={(date) => handleEndDateChange(index, date)}
+                                        initialDate={form.to_date} />
                                 </div>
                             </div>
                             {/* <div className="form-group">

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import './AddEmloyee.scss';
 import './NavbarForm.scss';
 import { CiCircleChevRight } from "react-icons/ci";
@@ -28,7 +28,17 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [endDateExit, setEndDateExit] = useState(null);
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
 
+    };
+    const handleStartDateChangeExit = (date) => {
+        setEndDateExit(date);
+    };
+
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+    };
     const [formData, setFormData] = useState({
         employeeId: '',
         firstName: '',
@@ -47,20 +57,19 @@ const BasicDetailsForm = ({ onSubmit, next }) => {
         doe: endDateExit,
         employmentType: '',
         employeeStatus: '',
-        sourceOfHire: '',
         attachment: []
     });
-  
-    const handleStartDateChange = (date) => {
-        setStartDate(date);
-    };
-    const handleStartDateChangeExit = (date) => {
-        setEndDateExit(date);
-    };
 
-    const handleEndDateChange = (date) => {
-        setEndDate(date);
-    };
+    useEffect(() => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            dob: startDate,
+            doj: endDate,
+            doe: endDateExit,
+        }));
+    }, [startDate, endDate, endDateExit]);
+
+    console.log('formData', formData)
 
     const [searchQuery_2, setSearchQuery_2] = useState('');
     const handleSearchQueryChange_2 = (event) => {

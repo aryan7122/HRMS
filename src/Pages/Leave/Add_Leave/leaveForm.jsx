@@ -20,27 +20,21 @@ const JobForm = ({ onSubmit }) => {
     const { isOpen: isLeaveTypeOpen, ref: leaveTypeRef, buttonRef: leaveTypeButtonRef, handleToggle: toggleLeaveType, setIsOpen: setLeaveTypeOpen } = OutsideClick();
     const { isOpen: isTypeOpen, ref: typeRef, buttonRef: typeButtonRef, handleToggle: toggleType, setIsOpen: setTypeOpen } = OutsideClick();
     const { isOpen: isEmployeeNameOpen, ref: EmployeeNameRef, buttonRef: EmployeeNameButtonRef, handleToggle: toggleEmployeeName, setIsOpen: setEmployeeNameOpen } = OutsideClick();
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [totalDays, setTotalDays] = useState(null);
 
+    
     const [formData, setFormData] = useState({
-        employeeName: '',
         leaveType: '',
-        fromDate: '',
-        toDate: '',
-        totalDays: '',
+        fromDate: null,
+        toDate: null,
+        totalDays: null,
         type: '',
         leaveReason: '',
         user_id: '',
         leave_type_id: ''
     });
-
-    const [loading, setLoading] = useState(false);
-    const [searchQueryLeaveType, setSearchQueryLeaveType] = useState('');
-    const [searchQueryType, setSearchQueryType] = useState('');
-    const token = localStorage.getItem('access_token'); // Get token from local storage or set it directly
-    const [searchQueryEmployeeName, setSearchQueryEmployeeName] = useState('');
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [totalDays, setTotalDays] = useState(null);
 
     const handleStartDateChange = (date) => {
         setStartDate(date);
@@ -61,6 +55,20 @@ const JobForm = ({ onSubmit }) => {
             setTotalDays(diffDays + 1); // Add 1 to include both start and end dates
         }
     };
+    useEffect(() => {
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            fromDate: startDate,
+            toDate: endDate,
+            totalDays: totalDays
+        }));
+    }, [startDate, endDate, totalDays]);
+    const [loading, setLoading] = useState(false);
+    const [searchQueryLeaveType, setSearchQueryLeaveType] = useState('');
+    const [searchQueryType, setSearchQueryType] = useState('');
+    const token = localStorage.getItem('access_token'); // Get token from local storage or set it directly
+    const [searchQueryEmployeeName, setSearchQueryEmployeeName] = useState('');
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData(prevState => ({
@@ -106,7 +114,7 @@ const JobForm = ({ onSubmit }) => {
             days: formData.totalDays,
             resion: formData.leaveReason,
         };
-
+        console.log('requestData', requestData)
         try {
             const response = await axios.post('https://hrms.dragnilifecare.in/public/api/leave/create/update', requestData, {
                 headers: {
@@ -327,10 +335,10 @@ const JobForm = ({ onSubmit }) => {
                                 </div>
                             </div>
 
-                            <DatePicker label="Start Date" onDateChange={handleStartDateChange} />
-                            <DatePicker label="End Date" onDateChange={handleEndDateChange} />
+                            <DatePicker label="From Date" onDateChange={handleStartDateChange} />
+                            <DatePicker label="To Date" onDateChange={handleEndDateChange} />
                             <div className="form-group">
-                                <label>Duration</label>
+                                <label>Total Day</label>
                                 <input type="number" name="totalDays" placeholder='Select Start and End Date' disabled value={totalDays} onChange={handleChange} />
                             </div>
 

@@ -16,21 +16,30 @@ import DatePicker from '../../../utils/Form/DatePicker';
 const EducationForm = ({ onSubmit, next, update }) => {
     const [fileName, setFileName] = useState('');
     const [isUploaded, setIsUploaded] = useState(false);
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [completionDate, setCompletionDate] = useState(null);
 
-    const handleCompletionDateChange = (date) => {
-        setCompletionDate(date);
-    };
-    const handleStartDateChange = (date) => {
-        setStartDate(date);
+
+    const [startDates, setStartDates] = useState([]);
+    const [endDates, setEndDates] = useState([]);
+    const [completionDates, setCompletionDates] = useState([]);
+
+    const handleCompletionDateChange = (index, date) => {
+        const updatedCompletionDates = [...completionDates];
+        updatedCompletionDates[index] = date;
+        setCompletionDates(updatedCompletionDates);
     };
 
-    const handleEndDateChange = (date) => {
-        setEndDate(date);
+    const handleStartDateChange = (index, date) => {
+        const updatedStartDates = [...startDates];
+        updatedStartDates[index] = date;
+        setStartDates(updatedStartDates);
     };
-    // Education forms state, nested under "educations" array
+
+    const handleEndDateChange = (index, date) => {
+        const updatedEndDates = [...endDates];
+        updatedEndDates[index] = date;
+        setEndDates(updatedEndDates);
+    };
+
     const [educationForms, setEducationForms] = useState({
         educations: [
             {
@@ -38,16 +47,31 @@ const EducationForm = ({ onSubmit, next, update }) => {
                 degree: "",
                 specialization: "",
                 attachment: [],
-                date_of_completion: completionDate,
-                from_date: startDate,
-                to_date: endDate
+                date_of_completion: null,
+                from_date: null,
+                to_date: null
             }
         ]
     });
+
+    useEffect(() => {
+        setEducationForms((prevEducationForms) => ({
+            educations: prevEducationForms.educations.map((education, index) => ({
+                ...education,
+                date_of_completion: completionDates[index] || null,
+                from_date: startDates[index] || null,
+                to_date: endDates[index] || null,
+            }))
+        }));
+    }, [startDates, endDates, completionDates]);
+
+
+
+    
     const [formData, setFormData] = useState({
     });
-    console.log('formData educationForms', formData)
-    console.log('educationForms :::', educationForms)
+    // console.log('startDates', startDates)
+    console.log('educationForms :::', educationForms.educations)
     useEffect(() => {
         // Loop through formData and update experienceForms based on index
         Object.keys(formData).forEach((key) => {
@@ -270,13 +294,15 @@ const EducationForm = ({ onSubmit, next, update }) => {
                             </div>
 
                             <div className="form-group">
-                                <DatePicker label="Date of Completion" onDateChange={handleCompletionDateChange} initialDate={form.date_of_completion} />
+                                <DatePicker label="Date of Completion" onDateChange={(date) => handleCompletionDateChange(index, date)}
+                                    initialDate={form.date_of_completion} />
 
                             </div>
                             <div className="form-group" id='form_group_Duration'>
                                 <div className='divDate'>
-                                    <DatePicker label="From" onDateChange={handleStartDateChange} initialDate={form.from_date} />
-                                    <DatePicker label="to" onDateChange={handleEndDateChange} initialDate={form.to_date} />
+                                    <DatePicker label="From" onDateChange={(date) => handleStartDateChange(index, date)}
+                                        initialDate={form.from_date} />
+                                    <DatePicker label="to" onDateChange={(date) => handleEndDateChange(index, date)} initialDate={form.to_date} />
                                 </div>
                             </div>
                         </div>

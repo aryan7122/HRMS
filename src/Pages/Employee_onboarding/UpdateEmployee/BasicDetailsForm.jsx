@@ -61,6 +61,18 @@ const BasicDetailsForm = ({ onSubmit, next, update }) => {
         employeeStatus: '',
         attachment: []
     });
+
+    useEffect(() => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            dob: startDate,
+            doj: endDate,
+            doe: endDateExit,
+        }));
+    }, [startDate, endDate, endDateExit]);
+
+
+
     const { id } = useParams();
     const token = localStorage.getItem('access_token');
     console.log('basic form', formData)
